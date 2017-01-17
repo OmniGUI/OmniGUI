@@ -1,4 +1,4 @@
-namespace AnotherTry
+namespace OmniGui
 {
     public struct Size
     {

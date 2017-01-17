@@ -1,4 +1,4 @@
-namespace AnotherTry
+namespace OmniGui
 {
     public struct Rect
     {
@@ -10,5 +10,10 @@ namespace AnotherTry
 
         public Point Point { get; set; }
         public Size Size { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Point)}: {Point}, {nameof(Size)}: {Size}";
+        }
     }
 }

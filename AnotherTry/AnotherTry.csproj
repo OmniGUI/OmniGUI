@@ -13,4 +13,7 @@
     <PackageReference Include="xunit" Version="2.2.0-beta4-build3444" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta4-build1194" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OmniGui\OmniGui.csproj" />
+  </ItemGroup>
 </Project>

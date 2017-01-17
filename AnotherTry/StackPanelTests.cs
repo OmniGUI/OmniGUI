@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using OmniGui;
 using Xunit;
 
 namespace AnotherTry
@@ -15,7 +15,7 @@ namespace AnotherTry
         [Fact]
         public void Second()
         {
-            AssertSize(new StackPanel() { RequestedSize = Size.OnlyHeight(100)}, Size.HeightAndZero(100));
+            AssertSize(new StackPanel() { RequestedSize = Size.OnlyHeight(100) }, Size.HeightAndZero(100));
         }
 
         [Fact]
@@ -30,11 +30,8 @@ namespace AnotherTry
             var stackPanel = new StackPanel()
             {
                 RequestedSize = Size.NoneSpecified,
-                Children = new List<StackPanel>()
-                {
-                    new StackPanel() { RequestedSize = Size.OnlyHeight(100)}
-                }
-            };
+            }.AddChild(new StackPanel { RequestedSize = Size.OnlyHeight(100) });
+
 
             AssertSize(stackPanel, Size.HeightAndZero(100));
         }
@@ -43,14 +40,11 @@ namespace AnotherTry
         public void WidthChild2()
         {
             var stackPanel = new StackPanel()
-            {
-                RequestedSize = Size.NoneSpecified,
-                Children = new List<StackPanel>()
                 {
-                    new StackPanel() { RequestedSize = Size.OnlyHeight(100)},
-                    new StackPanel() { RequestedSize = Size.OnlyHeight(200)},
+                    RequestedSize = Size.NoneSpecified,
                 }
-            };
+                .AddChild(new StackPanel() {RequestedSize = Size.OnlyHeight(100)})
+                .AddChild(new StackPanel {RequestedSize = Size.OnlyHeight(200)});
 
             AssertSize(stackPanel, Size.HeightAndZero(300));
         }
@@ -61,7 +55,7 @@ namespace AnotherTry
 
             var stackPanel = panel;
             stackPanel.Measure(avalialable);
-            Assert.Equal(desiredSize, stackPanel.DesiredSize);            
+            Assert.Equal(desiredSize, stackPanel.DesiredSize);
         }
     }
 }
