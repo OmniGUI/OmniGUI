@@ -1,6 +1,6 @@
 namespace OmniGui
 {
-    public class Layout : IChild
+    public abstract class Layout : IChild
     {
         protected Layout()
         {
@@ -11,7 +11,7 @@ namespace OmniGui
         public object Parent { get; set; }
         public Size RequestedSize { get; set; } = Size.Empty;
         public Size DesiredSize { get; set; }
-        private OwnedList<Layout> Children { get; }
+        protected OwnedList<Layout> Children { get; }
         public Rect Bounds { get; set; }
 
         public Rect VisualBounds
@@ -24,7 +24,7 @@ namespace OmniGui
                 }
                 else
                 {
-                    var parent = (StackPanel) Parent;
+                    var parent = (StackPanel)Parent;
                     var offset = parent.VisualBounds.Point.Offset(Bounds.Point);
                     return new Rect(offset, Bounds.Size);
                 }
@@ -39,47 +39,31 @@ namespace OmniGui
 
         public void Measure(Size availableSize)
         {
-            double desiredX = double.IsNaN(RequestedSize.Width) ? 0 : RequestedSize.Width;
-            double desiredY = 0D;
-
-            var sizeDesiredByChildren = 0D;
-            foreach (var child in Children)
-            {
-                child.Measure(availableSize);
-                sizeDesiredByChildren += child.DesiredSize.Height;
-            }
-
-            var desiredHeight = double.IsNaN(RequestedSize.Height)
-                ? sizeDesiredByChildren
-                : RequestedSize.Height;
-
-            DesiredSize = new Size(desiredX, desiredHeight);
+            var desiredSize = MeasureOverride(availableSize);
+            DesiredSize = desiredSize;
         }
+
+        protected abstract Size MeasureOverride(Size availableSize);
 
         public void Arrange(Size finalSize)
         {
-            Arrange(new Rect(Point.Zero, finalSize));
+            ArrangeOverride(new Rect(Point.Zero, finalSize));
         }
 
-        private void Arrange(Rect finalSize)
+        public void Arrange(Rect rect)
         {
-            double top = 0;
-            foreach (var child in Children)
-            {
-                child.Arrange(new Rect(new Point(0, top), child.DesiredSize));
-                top += child.DesiredSize.Height;
-            }
-
-            this.Bounds = finalSize;
+            ArrangeOverride(rect);
         }
 
+        protected abstract Size ArrangeOverride(Rect rect);
+        
         public void Render(IDrawingContext drawingContext)
         {
             drawingContext.DrawRectangle(VisualBounds, Background);
             foreach (var child in Children)
             {
                 child.Render(drawingContext);
-            }            
+            }
         }
     }
 }
