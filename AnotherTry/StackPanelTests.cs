@@ -49,7 +49,7 @@ namespace AnotherTry
             AssertSize(stackPanel, Size.HeightAndZero(300));
         }
 
-        private void AssertSize(StackPanel panel, Size desiredSize)
+        private static void AssertSize(Layout panel, Size desiredSize)
         {
             var avalialable = new Size(20, 10);
 
