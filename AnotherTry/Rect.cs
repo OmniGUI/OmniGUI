@@ -2,9 +2,13 @@ namespace AnotherTry
 {
     public struct Rect
     {
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Width { get; set; }
-        public double Height { get; set; }
+        public Rect(Point point, Size size)
+        {
+            Point = point;
+            Size = size;
+        }
+
+        public Point Point { get; set; }
+        public Size Size { get; set; }
     }
 }

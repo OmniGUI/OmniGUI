@@ -27,5 +27,22 @@ namespace AnotherTry
 
             DesiredSize = new Size(desiredX, desiredHeight);
         }
+
+        public void Arrange(Size finalSize)
+        {
+            double top = 0;
+            foreach (var stackPanel in Children)
+            {
+                stackPanel.Arrange(new Rect(new Point(0, top), stackPanel.DesiredSize));
+                top += stackPanel.DesiredSize.Height;
+            }
+        }
+
+        private void Arrange(Rect finalSize)
+        {
+            this.Bounds = finalSize;
+        }
+
+        public Rect Bounds { get; set; }
     }
 }
