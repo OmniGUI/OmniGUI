@@ -8,12 +8,17 @@ namespace OmniGui
             Size = size;
         }
 
-        public Point Point { get; set; }
-        public Size Size { get; set; }
+        public Point Point { get; }
+        public Size Size { get; }
 
         public override string ToString()
         {
             return $"{nameof(Point)}: {Point}, {nameof(Size)}: {Size}";
+        }
+
+        public static Rect FromZero(Size size)
+        {
+            return new Rect(Point.Zero, size);
         }
     }
 }

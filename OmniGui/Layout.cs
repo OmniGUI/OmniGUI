@@ -24,7 +24,7 @@ namespace OmniGui
                 }
                 else
                 {
-                    var parent = (StackPanel)Parent;
+                    var parent = (Layout)Parent;
                     var offset = parent.VisualBounds.Point.Offset(Bounds.Point);
                     return new Rect(offset, Bounds.Size);
                 }
@@ -45,17 +45,13 @@ namespace OmniGui
 
         protected abstract Size MeasureOverride(Size availableSize);
 
-        public void Arrange(Size finalSize)
-        {
-            ArrangeOverride(new Rect(Point.Zero, finalSize));
-        }
-
         public void Arrange(Rect rect)
         {
-            ArrangeOverride(rect);
+            var size = ArrangeOverride(rect.Size);
+            Bounds = rect;
         }
 
-        protected abstract Size ArrangeOverride(Rect rect);
+        protected abstract Size ArrangeOverride(Size size);
         
         public void Render(IDrawingContext drawingContext)
         {

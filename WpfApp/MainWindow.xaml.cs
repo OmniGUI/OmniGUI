@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using OmniGui;
+using Point = OmniGui.Point;
 using StackPanel = OmniGui.StackPanel;
 
 namespace WpfApp
@@ -35,32 +37,50 @@ namespace WpfApp
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            var sp = new StackPanel()
-                .AddChild(new StackPanel()
-                {
-                    RequestedSize = new OmniGui.Size(100, 100),
-                    Background = OmniGui.Colors.Red,
-                }.AddChild(new StackPanel()
-                {
-                    RequestedSize = new OmniGui.Size(50, 100),
-                    Background = OmniGui.Color.FromArgb(128, 128, 128, 128)
-                }))
-                .AddChild(new StackPanel()
-                {
-                    RequestedSize = new OmniGui.Size(100, 100),
-                    Background = OmniGui.Colors.Green
-                })
-                .AddChild(new StackPanel()
-                {
-                    RequestedSize = new OmniGui.Size(100, 100),
-                    Background = OmniGui.Colors.Blue
-                });
+            var inner = new StackPanel()
+            {                
+                Background = OmniGui.Colors.Gray,
+            };
+
+            inner.AddChild(new StackPanel()
+            {
+                RequestedSize = new OmniGui.Size(100, 100),
+                Background = OmniGui.Colors.Red,
+            });
+
+            inner.AddChild(new StackPanel()
+            {
+                RequestedSize = new OmniGui.Size(100, 100),
+                Background = OmniGui.Colors.Green,
+            });
 
 
-            sp.Measure(new OmniGui.Size(1000, 1000));
-            sp.Arrange(new OmniGui.Size(1000, 1000));
+            inner.AddChild(new StackPanel()
+            {
+                RequestedSize = new OmniGui.Size(100, 100),
+                Background = OmniGui.Colors.Blue,
+            });
 
-            sp.Render(new WpfContext(drawingContext));
+            //var sp = new SimpleGrid()
+            //    .AddChild(inner)
+            //    .AddChild(new StackPanel
+            //    {                    
+            //        Background = OmniGui.Colors.Green
+            //    })
+            //    .AddChild(new StackPanel
+            //    {                    
+            //        Background = OmniGui.Colors.Blue
+            //    });
+
+
+            var width = ActualWidth;
+            var height = ActualHeight;
+
+            var availableSize = new OmniGui.Size(width, height);
+            inner.Measure(availableSize);
+            inner.Arrange(new OmniGui.Rect(Point.Zero, availableSize));
+
+            inner.Render(new WpfContext(drawingContext));
         }
     }
 }

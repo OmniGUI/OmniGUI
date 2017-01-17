@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace OmniGui
 {
     public class SimpleGrid : Layout
@@ -7,9 +9,18 @@ namespace OmniGui
             return availableSize;
         }
 
-        protected override Size ArrangeOverride(Rect rect)
+        protected override Size ArrangeOverride(Size size)
         {
-            return rect.Size;
+            var childWidth = size.Width / Children.Count();
+
+            double x = 0;
+            foreach (var layout in Children)
+            {               
+                layout.Arrange(new Rect(new Point(x, 0), new Size(childWidth, size.Height)));
+                x += childWidth;
+            }
+
+            return size;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace OmniGui
             return desiredSize;
         }
 
-        protected override Size ArrangeOverride(Rect rect)
+        protected override Size ArrangeOverride(Size size)
         {
             double top = 0;
             foreach (var child in Children)
@@ -31,9 +31,9 @@ namespace OmniGui
                 top += child.DesiredSize.Height;
             }
 
-            Bounds = rect;
+            Bounds = new Rect(Point.Zero, size);
 
-            return rect.Size;
+            return size;
         }
     }
 }
