@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Windows.Media;
-using OmniGui;
-using Color = OmniGui.Color;
 
-namespace WpfApp
+namespace OmniGui.Wpf
 {
-    public class WpfContext : IDrawingContext
+    public class WpfDrawingContext : IDrawingContext
     {
         private readonly DrawingContext context;
 
-        public WpfContext(DrawingContext context)
+        public WpfDrawingContext(DrawingContext context)
         {
             this.context = context;
         }

@@ -6,8 +6,6 @@ namespace OmniGui
     {
         protected override Size MeasureOverride(Size availableSize)
         {
-            double desiredY = 0D;
-
             var childrenHeight = 0D;
             var childrenWidth = 0D;
             foreach (var child in Children)

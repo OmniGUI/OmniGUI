@@ -1,0 +1,5 @@
+﻿<StackPanel xmlns="root">
+    <StackPanel RequestedSize="80, 100" Background="Red" />
+    <StackPanel RequestedSize="90, 100" Background="Green" />
+    <StackPanel RequestedSize="100, 100" Background="Blue" />
+</StackPanel>

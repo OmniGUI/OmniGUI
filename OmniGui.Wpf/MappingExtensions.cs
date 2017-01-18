@@ -1,6 +1,4 @@
-﻿using OmniGui;
-
-namespace WpfApp
+﻿namespace OmniGui.Wpf
 {
     public static class MappingExtensions
     {

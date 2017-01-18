@@ -1,3 +1,5 @@
+using OmniXaml.Attributes;
+
 namespace OmniGui
 {
     public abstract class Layout : IChild
@@ -11,7 +13,8 @@ namespace OmniGui
         public object Parent { get; set; }
         public Size RequestedSize { get; set; } = Size.Empty;
         public Size DesiredSize { get; set; }
-        protected OwnedList<Layout> Children { get; }
+        [Content]
+        public OwnedList<Layout> Children { get; }
         public Rect Bounds { get; set; }
 
         public Rect VisualBounds

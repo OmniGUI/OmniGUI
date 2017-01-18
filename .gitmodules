@@ -1,0 +1,3 @@
+[submodule "OmniXAML"]
+	path = OmniXAML
+	url = https://github.com/SuperJMN/OmniXAML.git
