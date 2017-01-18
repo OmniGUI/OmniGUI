@@ -48,7 +48,7 @@ namespace OmniGui
         public void Arrange(Rect rect)
         {
             var size = ArrangeOverride(rect.Size);
-            Bounds = rect;
+            Bounds = new Rect(rect.Point, size);
         }
 
         protected abstract Size ArrangeOverride(Size size);

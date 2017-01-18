@@ -1,24 +1,31 @@
+using System;
+
 namespace OmniGui
 {
     public class StackPanel : Layout
     {
         protected override Size MeasureOverride(Size availableSize)
         {
-            double desiredX = double.IsNaN(RequestedSize.Width) ? 0 : RequestedSize.Width;
             double desiredY = 0D;
 
-            var sizeDesiredByChildren = 0D;
+            var childrenHeight = 0D;
+            var childrenWidth = 0D;
             foreach (var child in Children)
             {
                 child.Measure(availableSize);
-                sizeDesiredByChildren += child.DesiredSize.Height;
+                childrenHeight += child.DesiredSize.Height;
+                childrenWidth = Math.Max(childrenWidth, child.DesiredSize.Width);
             }
 
             var desiredHeight = double.IsNaN(RequestedSize.Height)
-                ? sizeDesiredByChildren
+                ? childrenHeight
                 : RequestedSize.Height;
 
-            var desiredSize = new Size(desiredX, desiredHeight);
+            var desiredWidth = double.IsNaN(RequestedSize.Width)
+                ? childrenWidth
+                : RequestedSize.Width;
+
+            var desiredSize = new Size(desiredWidth, desiredHeight);
             return desiredSize;
         }
 
@@ -33,7 +40,7 @@ namespace OmniGui
 
             Bounds = new Rect(Point.Zero, size);
 
-            return size;
+            return DesiredSize;
         }
     }
 }

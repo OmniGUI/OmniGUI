@@ -44,13 +44,13 @@ namespace WpfApp
 
             inner.AddChild(new StackPanel()
             {
-                RequestedSize = new OmniGui.Size(100, 100),
+                RequestedSize = new OmniGui.Size(80, 100),
                 Background = OmniGui.Colors.Red,
             });
 
             inner.AddChild(new StackPanel()
             {
-                RequestedSize = new OmniGui.Size(100, 100),
+                RequestedSize = new OmniGui.Size(90, 100),
                 Background = OmniGui.Colors.Green,
             });
 
