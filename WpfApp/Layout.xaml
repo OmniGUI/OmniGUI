@@ -1,5 +1,8 @@
-﻿<StackPanel xmlns="root">
-    <StackPanel RequestedSize="8, 10" Background="Red" />
-    <StackPanel RequestedSize="9, 10" Background="Green" />
-    <StackPanel RequestedSize="10, 10" Background="Blue" />
-</StackPanel>
+﻿<SimpleGrid xmlns="root">
+    <StackPanel RequestedSize="-,10" Background="Red" />
+    <StackPanel RequestedSize="-,10" Background="Green" />
+    <StackPanel RequestedSize="-,10" Background="Blue" />
+</SimpleGrid>
+
+
+

@@ -27,18 +27,61 @@ namespace OmniGui
             return desiredSize;
         }
 
-        protected override Size ArrangeOverride(Size size)
+        protected override Size ArrangeOverride(Size finalSize)
         {
-            double top = 0;
-            foreach (var child in Children)
+            var orientation = Orientation;
+            double arrangedWidth = finalSize.Width;
+            double arrangedHeight = finalSize.Height;
+
+            if (Orientation == Orientation.Vertical)
             {
-                child.Arrange(new Rect(new Point(0, top), child.DesiredSize));
-                top += child.DesiredSize.Height;
+                arrangedHeight = 0;
+            }
+            else
+            {
+                arrangedWidth = 0;
             }
 
-            Bounds = new Rect(Point.Zero, size);
+            foreach (var child in Children)
+            {
+                double childWidth = child.DesiredSize.Width;
+                double childHeight = child.DesiredSize.Height;
 
-            return DesiredSize;
+                if (orientation == Orientation.Vertical)
+                {
+                    double width = Math.Max(childWidth, arrangedWidth);
+                    var childFinal = new Rect(new Point(0, arrangedHeight), new Size(width, childHeight));
+                    child.Arrange(childFinal);
+                    arrangedWidth = Math.Max(arrangedWidth, childWidth);
+                    arrangedHeight += childHeight;
+                }
+                else
+                {
+                    double height = Math.Max(childHeight, arrangedHeight);
+                    var childFinal = new Rect(new Point(arrangedWidth, 0), new Size(childWidth, height));
+                    child.Arrange(childFinal);
+                    arrangedWidth += childWidth;
+                    arrangedHeight = Math.Max(arrangedHeight, childHeight);
+                }
+            }
+
+            if (orientation == Orientation.Vertical)
+            {
+                arrangedHeight = Math.Max(arrangedHeight, finalSize.Height);
+            }
+            else
+            {
+                arrangedWidth = Math.Max(arrangedWidth, finalSize.Width);
+            }
+
+            return new Size(arrangedWidth, arrangedHeight);
         }
+
+        public Orientation Orientation { get; set; }
+    }
+
+    public enum Orientation
+    {
+        Vertical
     }
 }
