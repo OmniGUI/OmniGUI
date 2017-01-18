@@ -13,6 +13,5 @@
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />
     <ProjectReference Include="..\OmniXAML\Glass.Core\Glass.Core.csproj" />
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj" />
-    <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj" />
   </ItemGroup>
 </Project>

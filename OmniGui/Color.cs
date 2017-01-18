@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Avalonia.Media;
 
 namespace OmniGui
 {
@@ -69,6 +68,29 @@ namespace OmniGui
                 (byte)((value >> 8) & 0xff),
                 (byte)(value & 0xff)
             );
+        }
+
+        public bool Equals(Color other)
+        {
+            return Alpha == other.Alpha && Red == other.Red && Green == other.Green && Blue == other.Blue;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is Color && Equals((Color) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Alpha.GetHashCode();
+                hashCode = (hashCode * 397) ^ Red.GetHashCode();
+                hashCode = (hashCode * 397) ^ Green.GetHashCode();
+                hashCode = (hashCode * 397) ^ Blue.GetHashCode();
+                return hashCode;
+            }
         }
     }
 }

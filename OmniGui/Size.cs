@@ -10,9 +10,11 @@ namespace OmniGui
 
         public double Width { get; set; }
         public double Height { get; set; }
-        public static Size Empty => new Size(double.NaN, double.NaN);
+        public static Size Unspecified => new Size(double.NaN, double.NaN);
         public static Size Zero => new Size(0, 0);
         public static Size NoneSpecified => new Size(double.NaN, double.NaN);
+        public bool IsEmpty => this.Width == 0 || this.Height==0;
+        public static Size Empty => Zero; 
 
         public override string ToString()
         {

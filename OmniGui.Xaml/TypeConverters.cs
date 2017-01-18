@@ -14,7 +14,7 @@ namespace OmniGui.Xaml
 
         private static Color ColorConvert(string contextValue)
         {
-            return Color.Parse(contextValue);
+            return Color.Parse(contextValue);            
         }
 
         private static object MyConvert(string contextValue)

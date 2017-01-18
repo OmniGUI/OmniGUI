@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5D7A3C49-8B5C-45FD-8F96-BFDB13CA9328}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>WpfApp</RootNamespace>
     <AssemblyName>WpfApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
@@ -33,8 +33,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WpfApp.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -95,6 +99,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OmniGui.Console\OmniGui.Console.csproj">
+      <Project>{65127FA4-29EA-4607-8230-64D856AAB758}</Project>
+      <Name>OmniGui.Console</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OmniGui.Wpf\OmniGui.Wpf.csproj">
       <Project>{8DF3CF78-57C9-4A80-9FC5-249466573267}</Project>
       <Name>OmniGui.Wpf</Name>

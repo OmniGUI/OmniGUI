@@ -10,6 +10,7 @@ namespace OmniGui
 
         public Point Point { get; }
         public Size Size { get; }
+        public bool IsEmpty => Size.IsEmpty;
 
         public override string ToString()
         {

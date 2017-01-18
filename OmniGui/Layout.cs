@@ -11,7 +11,7 @@ namespace OmniGui
 
         public Color Background { get; set; } = Color.Transparent;
         public object Parent { get; set; }
-        public Size RequestedSize { get; set; } = Size.Empty;
+        public Size RequestedSize { get; set; } = Size.Unspecified;
         public Size DesiredSize { get; set; }
         [Content]
         public OwnedList<Layout> Children { get; }
