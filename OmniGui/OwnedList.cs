@@ -28,5 +28,7 @@ namespace OmniGui
         {
             return inner.GetEnumerator();
         }
+
+        public int Count => inner.Count;
     }
 }

@@ -205,5 +205,19 @@ namespace OmniGui
                 child.Render(drawingContext);
             }
         }
+
+        public object GetValue(Property property)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetValue(Property columnProperty, object value)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class Property
+    {
     }
 }
