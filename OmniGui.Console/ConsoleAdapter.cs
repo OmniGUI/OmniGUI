@@ -9,25 +9,26 @@
                 return;
             }
 
-            System.Console.ForegroundColor = ColorExtensions.ClosestConsoleColor(fillColor);
-            for (var y = rect.Point.Y; y < rect.Point.Y + rect.Size.Height; y++)
+            try
             {
-                for (var x = rect.Point.X; x < rect.Point.X + rect.Size.Width; x++)
+                System.Console.ForegroundColor = ColorExtensions.ClosestConsoleColor(fillColor);
+                for (var y = rect.Point.Y; y < rect.Point.Y + rect.Size.Height; y++)
                 {
-                    Plot(x, y);
+                    for (var x = rect.Point.X; x < rect.Point.X + rect.Size.Width; x++)
+                    {
+                        Plot(x, y);
+                    }
                 }
-            }            
+            }
+            catch
+            {
+            }
         }
 
         private static void Plot(double x, double y)
         {
-            var left = (int) x;
-            var top = (int) y;
-
-            if (top <= 0)
-            {
-                return;
-            }
+            var left = (int)x;
+            var top = (int)y;
 
             System.Console.SetCursorPosition(left, top);
             System.Console.Write("█");

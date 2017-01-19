@@ -1,8 +1,16 @@
 ﻿<SimpleGrid xmlns="root">
-    <StackPanel RequestedSize="-,10" Background="Red" />
-    <StackPanel RequestedSize="-,10" Background="Green" />
-    <StackPanel RequestedSize="-,10" Background="Blue" />
+    <StackPanel RequestedSize="-,20" Background="White">
+        <StackPanel RequestedSize="-, 5" Background="Red" />
+        <StackPanel RequestedSize="-, 5" Background="Green" />
+        <StackPanel RequestedSize="-, 5" Background="Blue" />
+    </StackPanel>
+    <StackPanel RequestedSize="-,40" Background="LightGray" />
+    <StackPanel RequestedSize="-,60" Background="Gray" />
 </SimpleGrid>
+
+
+
+
 
 
 

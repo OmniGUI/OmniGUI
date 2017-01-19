@@ -6,6 +6,11 @@ namespace OmniGui
     {
         protected override Size MeasureOverride(Size availableSize)
         {
+            foreach (var layout in Children)
+            {
+                layout.Measure(availableSize);
+            }
+
             return availableSize;
         }
 
@@ -16,7 +21,7 @@ namespace OmniGui
             double x = 0;
             foreach (var layout in Children)
             {               
-                layout.Arrange(new Rect(new Point(x, 0), new Size(childWidth, size.Height)));
+                layout.Arrange(new Rect(new Point(x, 0), new Size(childWidth, layout.DesiredSize.Height)));
                 x += childWidth;
             }
 

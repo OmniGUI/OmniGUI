@@ -22,12 +22,12 @@ namespace WpfApp
         {
             base.OnStartup(e);
 
-            //var xamlLoader = new XamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
+            var xamlLoader = new XamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
 
-            //layout = (Layout)xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
-            //consoleAdapter = new ConsoleAdapter();
-            
-            //Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(_ => UpdateConsole());
+            layout = (Layout)xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
+            consoleAdapter = new ConsoleAdapter();
+
+            Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(_ => UpdateConsole());
         }
 
         private void UpdateConsole()
