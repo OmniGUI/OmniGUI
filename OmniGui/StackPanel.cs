@@ -6,26 +6,59 @@ namespace OmniGui
     {
         protected override Size MeasureOverride(Size availableSize)
         {
-            var childrenHeight = 0D;
-            var childrenWidth = 0D;
-            foreach (var child in Children)
+            double childAvailableWidth = double.PositiveInfinity;
+            double childAvailableHeight = double.PositiveInfinity;
+
+            if (Orientation == Orientation.Vertical)
             {
-                child.Measure(availableSize);
-                childrenHeight += child.DesiredSize.Height;
-                childrenWidth = Math.Max(childrenWidth, child.DesiredSize.Width);
+                childAvailableWidth = availableSize.Width;
+
+                if (!double.IsNaN(Width))
+                {
+                    childAvailableWidth = Width;
+                }
+
+                childAvailableWidth = Math.Min(childAvailableWidth, MaxWidth);
+                childAvailableWidth = Math.Max(childAvailableWidth, MinWidth);
+            }
+            else
+            {
+                childAvailableHeight = availableSize.Height;
+
+                if (!double.IsNaN(Height))
+                {
+                    childAvailableHeight = Height;
+                }
+
+                childAvailableHeight = Math.Min(childAvailableHeight, MaxHeight);
+                childAvailableHeight = Math.Max(childAvailableHeight, MinHeight);
             }
 
-            var desiredHeight = double.IsNaN(RequestedSize.Height)
-                ? childrenHeight
-                : RequestedSize.Height;
+            double measuredWidth = 0;
+            double measuredHeight = 0;
+            double gap = Gap;
 
-            var desiredWidth = double.IsNaN(RequestedSize.Width)
-                ? childrenWidth
-                : RequestedSize.Width;
+            foreach (var child in Children)
+            {
+                child.Measure(new Size(childAvailableWidth, childAvailableHeight));
+                Size size = child.DesiredSize;
 
-            var desiredSize = new Size(desiredWidth, desiredHeight);
-            return desiredSize;
+                if (Orientation == Orientation.Vertical)
+                {
+                    measuredHeight += size.Height + gap;
+                    measuredWidth = Math.Max(measuredWidth, size.Width);
+                }
+                else
+                {
+                    measuredWidth += size.Width + gap;
+                    measuredHeight = Math.Max(measuredHeight, size.Height);
+                }
+            }
+
+            return new Size(measuredWidth, measuredHeight);
         }
+
+        public double Gap { get; set; }
 
         protected override Size ArrangeOverride(Size finalSize)
         {

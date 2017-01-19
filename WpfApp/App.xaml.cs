@@ -31,11 +31,13 @@ namespace WpfApp
         }
 
         private void UpdateConsole()
-        {
+        {            
             var availableSize = new OmniGui.Size(Console.WindowWidth, Console.WindowHeight);
 
             layout.Measure(availableSize);
             layout.Arrange(Rect.FromZero(availableSize));
+
+            Console.Clear();
             layout.Render(consoleAdapter);
         }
     }
