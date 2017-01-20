@@ -6,8 +6,8 @@ namespace OmniGui.Grid
 {
     public class Grid : Layout
     {
-        public ColumnDefinitions ColumnDefinitions { get; set; }
-        public ColumnDefinitions RowDefinitions { get; set; }
+        public ColumnDefinitions ColumnDefinitions { get; set; } = new ColumnDefinitions();
+        public RowDefinitions RowDefinitions { get; set; } = new RowDefinitions();
 
         private Segment[,] _rowMatrix;
 
@@ -131,6 +131,7 @@ namespace OmniGui.Grid
         /// <returns>The control's column span.</returns>
         public static int GetColumnSpan(Layout element)
         {
+            return 1;
             return (int) element.GetValue(ColumnSpanProperty);
         }
 
@@ -155,6 +156,7 @@ namespace OmniGui.Grid
         /// <returns>The control's row span.</returns>
         public static int GetRowSpan(Layout element)
         {
+            return 1;
             return (int) element.GetValue(RowSpanProperty);
         }
 

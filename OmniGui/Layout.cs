@@ -35,12 +35,6 @@ namespace OmniGui
             }
         }
 
-        public Layout AddChild(Layout child)
-        {
-            Children.Add(child);
-            return this;
-        }
-
         public void Measure(Size availableSize)
         {
             if (double.IsNaN(availableSize.Width) || double.IsNaN(availableSize.Height))
@@ -208,12 +202,12 @@ namespace OmniGui
 
         public object GetValue(Property property)
         {
-            throw new NotImplementedException();
+            var myValue = 0;
+            return myValue;
         }
 
         public void SetValue(Property columnProperty, object value)
         {
-            throw new NotImplementedException();
         }
     }
 

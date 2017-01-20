@@ -1,6 +1,8 @@
-﻿<StackPanel xmlns="root" RequestedSize="5,2" Background="White" VerticalAlignment="Center" />
-    
-    <!--<SimpleGrid xmlns="root">-->
+﻿<Grid xmlns="root" Background="White">
+    <StackPanel RequestedSize="-,20" Background="Red"/>
+</Grid>
+
+<!--<SimpleGrid xmlns="root">-->
     
     <!--<StackPanel RequestedSize="-,20" Background="White">
         <StackPanel RequestedSize="-, 5" Background="Red" />
