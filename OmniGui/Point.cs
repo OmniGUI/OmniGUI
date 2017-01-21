@@ -22,5 +22,15 @@ namespace OmniGui
         {
             return $"{nameof(X)}: {X}, {nameof(Y)}: {Y}";
         }
+
+        public static Point operator +(Point point, Vector vector)
+        {
+            return new Point(point.X + vector.X, point.Y + vector.Y);
+        }
+
+        public static Point operator -(Point point, Vector vector)
+        {
+            return new Point(point.X - vector.X, point.Y - vector.Y);
+        }
     }
 }

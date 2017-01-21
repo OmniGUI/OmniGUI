@@ -22,5 +22,10 @@
         {
             return new System.Windows.Size(size.Width, size.Height);
         }
+
+        public static System.Windows.Vector ToWpf(this Vector size)
+        {
+            return new System.Windows.Vector(size.X, size.Y);
+        }
     }
 }
