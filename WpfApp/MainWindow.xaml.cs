@@ -25,8 +25,8 @@ namespace WpfApp
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            var width = ActualWidth;
-            var height = ActualHeight;
+            var width = LayoutRoot.ActualWidth;
+            var height = LayoutRoot.ActualHeight;
 
             var availableSize = new OmniGui.Size(width, height);
             layout.Measure(availableSize);

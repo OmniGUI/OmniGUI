@@ -1,5 +1,16 @@
 ﻿<Grid xmlns="root" Background="White">
-    <StackPanel RequestedSize="-,20" Background="Red"/>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid Background="Red"/>
+    <Grid Grid.Column="1" Background="Orange"/>
+    <Grid Grid.Column="0" Grid.Row="1" Background="Yellow"/>
+    <Grid Grid.Column="1" Grid.Row="1" Background="Gold"/>
 </Grid>
 
 <!--<SimpleGrid xmlns="root">-->
@@ -12,6 +23,30 @@
     <StackPanel RequestedSize="-,40" Background="LightGray" />
     <StackPanel RequestedSize="-,60" Background="Gray" />-->
 <!--</SimpleGrid>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

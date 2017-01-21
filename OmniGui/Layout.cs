@@ -7,7 +7,7 @@ namespace OmniGui
     {
         protected Layout()
         {
-            Children = new OwnedList<Layout>(this);            
+            Children = new OwnedList<Layout>(this);
         }
 
         public Color Background { get; set; } = Color.Transparent;
@@ -187,10 +187,10 @@ namespace OmniGui
         public double MinWidth => MinSize.Width;
         public Size MinSize { get; set; } = Size.Zero;
 
-        public double MinHeight=> MinSize.Height;
+        public double MinHeight => MinSize.Height;
 
         protected abstract Size ArrangeOverride(Size size);
-        
+
         public void Render(IDrawingContext drawingContext)
         {
             drawingContext.DrawRectangle(VisualBounds, Background);
@@ -199,19 +199,5 @@ namespace OmniGui
                 child.Render(drawingContext);
             }
         }
-
-        public object GetValue(Property property)
-        {
-            var myValue = 0;
-            return myValue;
-        }
-
-        public void SetValue(Property columnProperty, object value)
-        {
-        }
-    }
-
-    public class Property
-    {
     }
 }

@@ -4,20 +4,19 @@
 namespace OmniGui.Grid
 {
     /// <summary>
-    /// Holds a row definitions for a <see cref="Grid"/>.
+    ///     Holds a row definitions for a <see cref="Grid" />.
     /// </summary>
     public class RowDefinition : DefinitionBase
     {
-     
         /// <summary>
-        /// Initializes a new instance of the <see cref="RowDefinition"/> class.
+        ///     Initializes a new instance of the <see cref="RowDefinition" /> class.
         /// </summary>
         public RowDefinition()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RowDefinition"/> class.
+        ///     Initializes a new instance of the <see cref="RowDefinition" /> class.
         /// </summary>
         /// <param name="value">The height of the row.</param>
         /// <param name="type">The height unit of the column.</param>
@@ -27,7 +26,7 @@ namespace OmniGui.Grid
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RowDefinition"/> class.
+        ///     Initializes a new instance of the <see cref="RowDefinition" /> class.
         /// </summary>
         /// <param name="height">The height of the column.</param>
         public RowDefinition(GridLength height)
@@ -36,30 +35,23 @@ namespace OmniGui.Grid
         }
 
         /// <summary>
-        /// Gets the actual calculated height of the row.
+        ///     Gets the actual calculated height of the row.
         /// </summary>
-        public double ActualHeight
-        {
-            get;
-            internal set;
-        }
+        public double ActualHeight { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the maximum height of the row in DIPs.
+        ///     Gets or sets the maximum height of the row in DIPs.
         /// </summary>
-        public double MaxHeight
-        { get; set; }
+        public double MaxHeight { get; set; } = double.PositiveInfinity;
 
         /// <summary>
-        /// Gets or sets the minimum height of the row in DIPs.
+        ///     Gets or sets the minimum height of the row in DIPs.
         /// </summary>
-        public double MinHeight
-        { get; set; }
+        public double MinHeight { get; set; } = 0;
 
         /// <summary>
-        /// Gets or sets the height of the row.
+        ///     Gets or sets the height of the row.
         /// </summary>
-        public GridLength Height
-        { get; set; }
+        public GridLength Height { get; set; } = new GridLength(1, GridUnitType.Star);
     }
 }
