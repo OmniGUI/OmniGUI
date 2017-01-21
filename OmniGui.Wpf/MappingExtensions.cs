@@ -27,5 +27,25 @@
         {
             return new System.Windows.Vector(size.X, size.Y);
         }
+
+        public static System.Windows.Media.SolidColorBrush ToWpf(this Brush brush)
+        {
+            if (brush == null)
+            {
+                return null;
+            }
+
+            return new System.Windows.Media.SolidColorBrush(brush.Color.ToWpf());
+        }
+
+        public static System.Windows.Media.Pen ToWpf(this Pen pen)
+        {
+            if (pen == null)
+            {
+                return null;
+            }
+
+            return new System.Windows.Media.Pen(pen.Brush.ToWpf(), pen.Thickness);
+        }
     }
 }

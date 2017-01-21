@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using OmniXaml;
 using OmniXaml.Attributes;
 
@@ -12,10 +16,17 @@ namespace OmniGui.Xaml
         [TypeConverterMember(typeof(Color))]
         public static Func<ConverterValueContext, object> ColorConverter = context => ColorConvert((string)context.Value);
 
+        [TypeConverterMember(typeof(Brush))]
+        public static Func<ConverterValueContext, object> BrushConverter = context => new Brush(ColorConvert((string) context.Value));
+
+        [TypeConverterMember(typeof(Thickness))]
+        public static Func<ConverterValueContext, object> ThicknessConverter = context => Thickness.Parse((string)context.Value, CultureInfo.CurrentCulture);
+
+
         private static Color ColorConvert(string contextValue)
         {
             return Color.Parse(contextValue);            
-        }
+        }      
 
         private static object MyConvert(string contextValue)
         {

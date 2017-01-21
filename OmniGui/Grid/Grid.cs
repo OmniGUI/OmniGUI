@@ -594,6 +594,15 @@ namespace OmniGui.Grid
                         RowDefinitions[i].ActualHeight = rowMatrix[i, i].OfferedSize;
         }
 
+        public override void Render(IDrawingContext drawingContext)
+        {
+            drawingContext.DrawRectangle(VisualBounds, Background, null);
+            foreach (var child in Children)
+            {
+                child.Render(drawingContext);
+            }
+        }
+
         private struct Segment
         {
             public double OriginalSize;

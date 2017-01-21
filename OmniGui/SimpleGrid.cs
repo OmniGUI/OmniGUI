@@ -27,5 +27,14 @@ namespace OmniGui
 
             return size;
         }
+
+        public override void Render(IDrawingContext drawingContext)
+        {
+            drawingContext.DrawRectangle(VisualBounds, Background, null);
+            foreach (var child in Children)
+            {
+                child.Render(drawingContext);
+            }
+        }
     }
 }

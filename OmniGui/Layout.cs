@@ -10,7 +10,7 @@ namespace OmniGui
             Children = new OwnedList<Layout>(this);
         }
 
-        public Color Background { get; set; } = Color.Transparent;
+        public Brush Background { get; set; } = new Brush(Color.Transparent);
         public object Parent { get; set; }
         public Size RequestedSize { get; set; } = Size.Unspecified;
         public Size DesiredSize { get; set; }
@@ -191,13 +191,6 @@ namespace OmniGui
 
         protected abstract Size ArrangeOverride(Size size);
 
-        public void Render(IDrawingContext drawingContext)
-        {
-            drawingContext.DrawRectangle(VisualBounds, Background);
-            foreach (var child in Children)
-            {
-                child.Render(drawingContext);
-            }
-        }
+        public abstract void Render(IDrawingContext drawingContext);
     }
 }

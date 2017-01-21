@@ -1,6 +1,6 @@
 ﻿namespace OmniGui
 {
-    public class Border :Layout
+    public class Border : Layout
     {
         protected override Size MeasureOverride(Size availableSize)
         {
@@ -40,6 +40,16 @@
             return finalSize;
         }
 
+
         public double BorderThickness { get; set; }
+
+        public double CornerRadius { get; set; }
+
+        public override void Render(IDrawingContext drawingContext)
+        {
+            drawingContext.DrawRoundedRectangle(VisualBounds, Background, new Pen(BorderBrush, BorderThickness), new CornerRadius(CornerRadius));
+        }
+
+        public Brush BorderBrush { get; set; }
     }
 }

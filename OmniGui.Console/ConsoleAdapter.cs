@@ -34,12 +34,12 @@
             System.Console.Write("█");
         }
 
-        public void DrawRoundedRectangle(Rect rect, Color fillColor, Color borderColor)
+        public void DrawRoundedRectangle(Rect rect, Brush brush, Pen pen, CornerRadius cornerRadius)
         {
             throw new System.NotImplementedException();
         }
 
-        public void DrawRoundedRectangle(Rect rect, Color fillColor, Color borderColor, CornerRadius cornerRadius)
+        public void DrawRectangle(Rect rect, Brush brush, Pen pen)
         {
             throw new System.NotImplementedException();
         }
