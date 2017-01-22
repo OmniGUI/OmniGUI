@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using System.Globalization;
+using System.Windows;
+using System.Windows.Media;
 
 namespace OmniGui.Wpf
 {
@@ -46,6 +48,12 @@ namespace OmniGui.Wpf
             }
 
             context.DrawGeometry(brush.ToWpf(), pen.ToWpf(), geometry);
+        }
+
+        public void DrawText(Point point, Brush brush, string text)
+        {
+            var formattedText = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, brush.ToWpf(), new NumberSubstitution(), 3D);
+            context.DrawText(formattedText, point.ToWpf());
         }
     }
 }

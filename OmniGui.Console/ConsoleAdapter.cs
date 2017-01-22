@@ -43,5 +43,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public void DrawText(Point point, Brush brush, string text)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

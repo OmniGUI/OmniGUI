@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Windows;
 using OmniGui;
 using OmniGui.Console;
+using OmniGui.Wpf;
 using OmniXaml.Services;
 using Rect = OmniGui.Rect;
 
@@ -18,17 +19,19 @@ namespace WpfApp
         private Layout layout;
         private ConsoleAdapter consoleAdapter;
 
-        //protected override void OnStartup(StartupEventArgs e)
-        //{
-        //    base.OnStartup(e);
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            Platform.Current = new Platform();
+            Platform.Current.TextEngine = new WpfTextEngine();
+            //base.OnStartup(e);
 
-        //    var xamlLoader = new XamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
+            //var xamlLoader = new XamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
 
-        //    layout = (Layout)xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
-        //    consoleAdapter = new ConsoleAdapter();
+            //layout = (Layout)xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
+            //consoleAdapter = new ConsoleAdapter();
 
-        //    Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(_ => UpdateConsole());
-        //}
+            //Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(_ => UpdateConsole());
+        }
 
         private void UpdateConsole()
         {            

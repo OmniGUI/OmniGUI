@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Reflection;
 using OmniXaml;
 using OmniXaml.Attributes;
 
@@ -11,7 +8,7 @@ namespace OmniGui.Xaml
     public static class TypeConverters
     {
         [TypeConverterMember(typeof(Size))]
-        public static Func<ConverterValueContext, object> SizeConverter = context => MyConvert((string) context.Value);
+        public static Func<ConverterValueContext, object> SizeConverter = context => ToSize((string) context.Value);
 
         [TypeConverterMember(typeof(Color))]
         public static Func<ConverterValueContext, object> ColorConverter = context => ColorConvert((string)context.Value);
@@ -28,7 +25,7 @@ namespace OmniGui.Xaml
             return Color.Parse(contextValue);            
         }      
 
-        private static object MyConvert(string contextValue)
+        private static Size ToSize(string contextValue)
         {
             var values = contextValue.Split(',');
             var w = values[0];

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="MappingExtensions.cs" />
     <Compile Include="WpfDrawingContext.cs" />
+    <Compile Include="WpfTextEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />
