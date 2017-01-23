@@ -1,6 +1,10 @@
-﻿<Grid xmlns="root" Background="White">
-    <TextBlock  Text="Toallitas Kandoo para que tu ojal brille" Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Center" />
-</Grid>
+﻿<StackPanel xmlns="root" Background="White">
+    
+    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" TextWrapping="Wrap" HorizontalAlignment="Center" />
+    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" HorizontalAlignment="Center" />
+    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" TextWrapping="Wrap" HorizontalAlignment="Center" />
+    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" TextWrapping="Wrap" HorizontalAlignment="Center" />
+</StackPanel>
 
 
 <!--<Grid.ColumnDefinitions>

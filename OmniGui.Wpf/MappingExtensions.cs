@@ -50,7 +50,7 @@ namespace OmniGui.Wpf
                 new Typeface("Arial"), 15, 
                 ft.Brush.ToWpf(), new NumberSubstitution(), 3D);
 
-            formattedText.MaxTextWidth = ft.Constraint.Width;
+            formattedText.MaxTextWidth = double.IsInfinity(ft.Constraint.Width) ? 0: ft.Constraint.Width;
             formattedText.MaxTextHeight = ft.Constraint.Height;
 
             return formattedText;
