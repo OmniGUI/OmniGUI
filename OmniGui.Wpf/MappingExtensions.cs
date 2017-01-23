@@ -1,4 +1,8 @@
-﻿namespace OmniGui.Wpf
+﻿using System.Globalization;
+using System.Windows;
+using System.Windows.Media;
+
+namespace OmniGui.Wpf
 {
     public static class MappingExtensions
     {
@@ -36,6 +40,20 @@
             }
 
             return new System.Windows.Media.SolidColorBrush(brush.Color.ToWpf());
+        }
+
+        public static System.Windows.Media.FormattedText ToWpf(this FormattedText ft)
+        {
+            var formattedText = new System.Windows.Media.FormattedText(ft.Text, 
+                CultureInfo.CurrentCulture, 
+                FlowDirection.LeftToRight, 
+                new Typeface("Arial"), 15, 
+                ft.Brush.ToWpf(), new NumberSubstitution(), 3D);
+
+            formattedText.MaxTextWidth = ft.Constraint.Width;
+            formattedText.MaxTextHeight = ft.Constraint.Height;
+
+            return formattedText;
         }
 
         public static System.Windows.Media.Pen ToWpf(this Pen pen)

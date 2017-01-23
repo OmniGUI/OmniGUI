@@ -52,8 +52,13 @@ namespace OmniGui.Wpf
 
         public void DrawText(Point point, Brush brush, string text)
         {
-            var formattedText = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, brush.ToWpf(), new NumberSubstitution(), 3D);
+            var formattedText = new System.Windows.Media.FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, brush.ToWpf(), new NumberSubstitution(), 3D);
             context.DrawText(formattedText, point.ToWpf());
+        }
+
+        public void DrawText(FormattedText text, Point point)
+        {
+            context.DrawText(text.ToWpf(), point.ToWpf());
         }
     }
 }

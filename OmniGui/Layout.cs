@@ -97,7 +97,20 @@ namespace OmniGui
             return new Size(Math.Max(size.Width, 0), Math.Max(size.Height, 0));
         }
 
-        protected abstract Size MeasureOverride(Size availableSize);
+        protected virtual Size MeasureOverride(Size availableSize)
+        {
+            double width = 0;
+            double height = 0;
+
+            foreach (var child in Children)
+            {
+                child.Measure(availableSize);
+                width = Math.Max(width, child.DesiredSize.Width);
+                height = Math.Max(height, child.DesiredSize.Height);
+            }
+
+            return new Size(width, height);
+        }
 
         public void Arrange(Rect rect)
         {
@@ -181,7 +194,7 @@ namespace OmniGui
         public double Width => RequestedSize.Width;
         public double Height => RequestedSize.Height;
         public double MaxWidth => MaxSize.Width;
-        public Size MaxSize { get; set; } = Size.Maximum;
+        public Size MaxSize { get; set; } = Size.Infinite;
 
         public double MaxHeight => MaxSize.Height;
         public double MinWidth => MinSize.Width;
@@ -189,7 +202,15 @@ namespace OmniGui
 
         public double MinHeight => MinSize.Height;
 
-        protected abstract Size ArrangeOverride(Size size);
+        protected virtual Size ArrangeOverride(Size finalSize)
+        {
+            foreach (var child in Children)
+            {
+                child.Arrange(new Rect(finalSize));
+            }
+
+            return finalSize;
+        }
 
         public abstract void Render(IDrawingContext drawingContext);
     }

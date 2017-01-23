@@ -15,10 +15,10 @@ namespace OmniGui
         public static Size Unspecified => new Size(double.NaN, double.NaN);
         public static Size Zero => new Size(0, 0);
         public static Size NoneSpecified => new Size(double.NaN, double.NaN);
-        public bool IsEmpty => this.Width == 0 || this.Height==0;
+        public bool IsEmpty => Width == 0 || Height == 0;
         public static Size Empty => Zero;
-        public static Size Maximum => new Size(double.PositiveInfinity, double.PositiveInfinity);
-
+        public static Size Infinite => new Size(double.PositiveInfinity, double.PositiveInfinity);
+        
         public override string ToString()
         {
             return $"{nameof(Width)}: {Width}, {nameof(Height)}: {Height}";
@@ -47,12 +47,12 @@ namespace OmniGui
 
         public Size WithWidth(double width)
         {
-            return new Size(width, double.NaN);
+            return new Size(width, Height);
         }
 
         public Size WithHeight(double height)
         {
-            return new Size(double.NaN, height);
+            return new Size(Width, height);
         }
 
         public Size Constrain(Size constraint)
