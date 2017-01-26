@@ -99,10 +99,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.PropertySystem\Glass.PropertySystem.csproj">
-      <Project>{3918cce1-ed60-4786-8615-9da3eff245c6}</Project>
-      <Name>Glass.PropertySystem</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OmniGui.Console\OmniGui.Console.csproj">
       <Project>{65127FA4-29EA-4607-8230-64D856AAB758}</Project>
       <Name>OmniGui.Console</Name>
@@ -119,6 +115,10 @@
       <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
       <Name>OmniGui</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OmniXAML\Glass.Core\Glass.Core.csproj">
+      <Project>{96af7ada-c057-4d11-b41c-2d10047d0aef}</Project>
+      <Name>Glass.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj">
       <Project>{987b8746-b2a9-4a84-bba5-482ffcc6399e}</Project>
       <Name>OmniXaml.Attributes</Name>
@@ -130,6 +130,14 @@
     <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj">
       <Project>{74503677-d755-47d7-a56c-4fc7c6fa1f7d}</Project>
       <Name>OmniXaml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj">
+      <Project>{1d971911-3c12-461d-8b96-c4e631ec1b7c}</Project>
+      <Name>Zafiro.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
+      <Project>{e9a9dcff-5b62-4f12-abc7-148e384ff805}</Project>
+      <Name>Zafiro.PropertySystem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

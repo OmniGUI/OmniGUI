@@ -1,3 +1,6 @@
 [submodule "OmniXAML"]
 	path = OmniXAML
 	url = https://github.com/SuperJMN/OmniXAML.git
+[submodule "Zafiro"]
+	path = Zafiro
+	url = https://github.com/SuperJMN/Zafiro.git

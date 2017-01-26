@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" />
@@ -10,9 +10,10 @@
     <PackageReference Include="NETStandard.Library" Version="1.6.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Glass.PropertySystem\Glass.PropertySystem.csproj" />
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />
     <ProjectReference Include="..\OmniXAML\Glass.Core\Glass.Core.csproj" />
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj" />
+    <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj" />
+    <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj" />
   </ItemGroup>
 </Project>

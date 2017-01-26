@@ -1,10 +1,10 @@
 using System;
-using Glass.PropertySystem;
 using OmniXaml.Attributes;
 
 namespace OmniGui
 {
-    using Glass.PropertySystem.Attached;
+    using Zafiro.PropertySystem;
+    using Zafiro.PropertySystem.Attached;
 
     public abstract class Layout : IChild
     {
