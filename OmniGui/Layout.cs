@@ -1,10 +1,25 @@
 using System;
+using Glass.PropertySystem;
 using OmniXaml.Attributes;
 
 namespace OmniGui
 {
+    using Glass.PropertySystem.Attached;
+
     public abstract class Layout : IChild
     {
+        protected static readonly PropertyEngine PropertyEngine = new PropertyEngine(o => ((IChild)o).Parent);
+
+        public void SetValue(AttachedProperty property, object value)
+        {
+            PropertyEngine.SetValue(property, this, value);
+        }
+
+        public object GetValue(AttachedProperty property)
+        {
+            return PropertyEngine.GetValue(property, this);
+        }
+
         protected Layout()
         {
             Children = new OwnedList<Layout>(this);
@@ -14,8 +29,10 @@ namespace OmniGui
         public object Parent { get; set; }
         public Size RequestedSize { get; set; } = Size.Unspecified;
         public Size DesiredSize { get; set; }
+
         [Content]
         public OwnedList<Layout> Children { get; }
+
         public Rect Bounds { get; set; }
 
         public Rect VisualBounds
@@ -28,7 +45,7 @@ namespace OmniGui
                 }
                 else
                 {
-                    var parent = (Layout)Parent;
+                    var parent = (Layout) Parent;
                     var offset = parent.VisualBounds.Point.Offset(Bounds.Point);
                     return new Rect(offset, Bounds.Size);
                 }
@@ -55,8 +72,8 @@ namespace OmniGui
         private static bool IsInvalidSize(Size size)
         {
             return size.Width < 0 || size.Height < 0 ||
-                double.IsInfinity(size.Width) || double.IsInfinity(size.Height) ||
-                double.IsNaN(size.Width) || double.IsNaN(size.Height);
+                   double.IsInfinity(size.Width) || double.IsInfinity(size.Height) ||
+                   double.IsNaN(size.Width) || double.IsNaN(size.Height);
         }
 
         private Size MeasureCore(Size availableSize)
@@ -180,10 +197,10 @@ namespace OmniGui
         private static bool IsInvalidRect(Rect rect)
         {
             return rect.Width < 0 || rect.Height < 0 ||
-                double.IsInfinity(rect.X) || double.IsInfinity(rect.Y) ||
-                double.IsInfinity(rect.Width) || double.IsInfinity(rect.Height) ||
-                double.IsNaN(rect.X) || double.IsNaN(rect.Y) ||
-                double.IsNaN(rect.Width) || double.IsNaN(rect.Height);
+                   double.IsInfinity(rect.X) || double.IsInfinity(rect.Y) ||
+                   double.IsInfinity(rect.Width) || double.IsInfinity(rect.Height) ||
+                   double.IsNaN(rect.X) || double.IsNaN(rect.Y) ||
+                   double.IsNaN(rect.Width) || double.IsNaN(rect.Height);
         }
 
         public VerticalAlignment VerticalAlignment { get; set; }

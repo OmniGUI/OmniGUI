@@ -1,13 +1,5 @@
-﻿<StackPanel xmlns="root" Background="White">
-    
-    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" TextWrapping="Wrap" HorizontalAlignment="Center" />
-    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" HorizontalAlignment="Center" />
-    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" TextWrapping="Wrap" HorizontalAlignment="Center" />
-    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" TextWrapping="Wrap" HorizontalAlignment="Center" />
-</StackPanel>
-
-
-<!--<Grid.ColumnDefinitions>
+﻿<Grid xmlns="root" Background="White">
+    <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition />
     </Grid.ColumnDefinitions>
@@ -16,49 +8,7 @@
         <RowDefinition />
     </Grid.RowDefinitions>
     <Grid Background="Red"/>
-    
+    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" Grid.Column="1" />
     <Grid Grid.Column="0" Grid.Row="1" Background="Yellow"/>
     <Border Margin="8"  Grid.Column="1" Grid.Row="1" Background="Gold" BorderBrush="Black" BorderThickness="2" CornerRadius="6"/>
-</Grid>-->
-
-<!--<SimpleGrid xmlns="root">-->
-
-<!--<StackPanel RequestedSize="-,20" Background="White">
-        <StackPanel RequestedSize="-, 5" Background="Red" />
-        <StackPanel RequestedSize="-, 5" Background="Green" />
-        <StackPanel RequestedSize="-, 5" Background="Blue" />
-    </StackPanel>
-    <StackPanel RequestedSize="-,40" Background="LightGray" />
-    <StackPanel RequestedSize="-,60" Background="Gray" />-->
-<!--</SimpleGrid>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</Grid>

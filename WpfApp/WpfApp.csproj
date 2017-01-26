@@ -99,6 +99,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Glass.PropertySystem\Glass.PropertySystem.csproj">
+      <Project>{3918cce1-ed60-4786-8615-9da3eff245c6}</Project>
+      <Name>Glass.PropertySystem</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OmniGui.Console\OmniGui.Console.csproj">
       <Project>{65127FA4-29EA-4607-8230-64D856AAB758}</Project>
       <Name>OmniGui.Console</Name>

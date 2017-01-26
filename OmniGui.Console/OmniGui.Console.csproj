@@ -10,6 +10,7 @@
     <PackageReference Include="NETStandard.Library" Version="1.6.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Glass.PropertySystem\Glass.PropertySystem.csproj" />
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />
     <ProjectReference Include="..\OmniXAML\Glass.Core\Glass.Core.csproj" />
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj" />

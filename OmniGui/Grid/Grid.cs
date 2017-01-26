@@ -1,18 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace OmniGui.Grid
+﻿namespace OmniGui.Grid
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Glass.PropertySystem.Attached;
+
     public class Grid : Layout
     {
-        private static readonly IDictionary<Layout, int> columnSpan = new Dictionary<Layout, int>();
-        private static readonly IDictionary<Layout, int> rowSpan = new Dictionary<Layout, int>();
-        private static readonly IDictionary<Layout, int> row = new Dictionary<Layout, int>();
-        private static readonly IDictionary<Layout, int> column = new Dictionary<Layout, int>();
-        private Segment[,] colMatrix;
+        public static readonly AttachedProperty ColumnProperty = PropertyEngine.RegisterProperty("Column", typeof(Grid),
+            typeof(int), new AttachedPropertyMetadata {DefaultValue = 0});
 
+        public static readonly AttachedProperty RowProperty = PropertyEngine.RegisterProperty("Row", typeof(Grid), typeof(int),
+            new AttachedPropertyMetadata {DefaultValue = 0});
+
+        public static readonly AttachedProperty ColumnSpanProperty = PropertyEngine.RegisterProperty("ColumnSpan", typeof(Grid),
+            typeof(int), new AttachedPropertyMetadata {DefaultValue = 1});
+
+        public static readonly AttachedProperty RowSpanProperty = PropertyEngine.RegisterProperty("RowSpan", typeof(Grid),
+            typeof(int), new AttachedPropertyMetadata {DefaultValue = 1});
+
+        private Segment[,] colMatrix;
         private Segment[,] rowMatrix;
+
         public ColumnDefinitions ColumnDefinitions { get; set; } = new ColumnDefinitions();
         public RowDefinitions RowDefinitions { get; set; } = new RowDefinitions();
 
@@ -35,47 +44,47 @@ namespace OmniGui.Grid
 
         public static int GetColumn(Layout element)
         {
-            return column.TryGet(element, 0);
+            return (int) element.GetValue(ColumnProperty);
         }
 
         public static int GetColumnSpan(Layout element)
         {
-            return columnSpan.TryGet(element, 1);
+            return (int) element.GetValue(ColumnSpanProperty);
         }
 
 
         public static int GetRow(Layout element)
         {
-            return row.TryGet(element, 0);
+            return (int) element.GetValue(RowProperty);
         }
 
 
         public static int GetRowSpan(Layout element)
         {
-            return rowSpan.TryGet(element, 1);
+            return (int) element.GetValue(RowSpanProperty);
         }
 
         public static void SetColumn(Layout element, int value)
         {
-            column.Add(element, value);
+            element.SetValue(ColumnProperty, value);
         }
 
 
         public static void SetColumnSpan(Layout element, int value)
         {
-            columnSpan.Add(element, value);
+            element.SetValue(ColumnSpanProperty, value);
         }
 
 
         public static void SetRow(Layout element, int value)
         {
-            row.Add(element, value);
+            element.SetValue(RowProperty, value);
         }
 
 
         public static void SetRowSpan(Layout element, int value)
         {
-            rowSpan.Add(element, value);
+            element.SetValue(RowSpanProperty, value);
         }
 
         protected override Size MeasureOverride(Size constraint)
@@ -90,10 +99,14 @@ namespace OmniGui.Grid
             var hasChildren = Children.Count > 0;
 
             if (emptyRows)
+            {
                 rowCount = 1;
+            }
 
             if (emptyCols)
+            {
                 colCount = 1;
+            }
 
             CreateMatrices(rowCount, colCount);
 
@@ -235,7 +248,9 @@ namespace OmniGui.Grid
                     if (autoRow && autoCol && !starRow && !starCol)
                     {
                         if (!autoAuto)
+                        {
                             continue;
+                        }
 
                         childSizeX = double.PositiveInfinity;
                         childSizeY = double.PositiveInfinity;
@@ -243,47 +258,67 @@ namespace OmniGui.Grid
                     else if (starRow && autoCol && !starCol)
                     {
                         if (!(starAuto || starAutoAgain))
+                        {
                             continue;
+                        }
 
                         if (starAuto && gridWalker.HasAutoStar)
+                        {
                             childSizeY = double.PositiveInfinity;
+                        }
 
                         childSizeX = double.PositiveInfinity;
                     }
                     else if (autoRow && starCol && !starRow)
                     {
                         if (!autoStar)
+                        {
                             continue;
+                        }
 
                         childSizeY = double.PositiveInfinity;
                     }
                     else if ((autoRow || autoCol) && !(starRow || starCol))
                     {
                         if (!nonStar)
+                        {
                             continue;
+                        }
 
                         if (autoRow)
+                        {
                             childSizeY = double.PositiveInfinity;
+                        }
 
                         if (autoCol)
+                        {
                             childSizeX = double.PositiveInfinity;
+                        }
                     }
                     else if (!(starRow || starCol))
                     {
                         if (!nonStar)
+                        {
                             continue;
+                        }
                     }
                     else
                     {
                         if (!remainingStar)
+                        {
                             continue;
+                        }
                     }
 
                     for (var r = row; r < row + rowspan; r++)
+                    {
                         childSizeY += rowMatrix[r, r].OfferedSize;
+                    }
 
                     for (var c = col; c < col + colspan; c++)
+                    {
                         childSizeX += colMatrix[c, c].OfferedSize;
+                    }
 
                     child.Measure(new Size(childSizeX, childSizeY));
                     var desired = child.DesiredSize;
@@ -332,10 +367,14 @@ namespace OmniGui.Grid
             double gridSizeY = 0;
 
             for (var c = 0; c < colCount; c++)
+            {
                 gridSizeX += colMatrix[c, c].DesiredSize;
+            }
 
             for (var r = 0; r < rowCount; r++)
+            {
                 gridSizeY += rowMatrix[r, r].DesiredSize;
+            }
 
             return new Size(gridSizeX, gridSizeY);
         }
@@ -347,11 +386,15 @@ namespace OmniGui.Grid
 
             for (var i = 0; i < rowMatrixDim; i++)
             for (var j = 0; j < rowMatrixDim; j++)
+            {
                 rowMatrix[i, j].OfferedSize = rowMatrix[i, j].OriginalSize;
+            }
 
             for (var i = 0; i < colMatrixDim; i++)
             for (var j = 0; j < colMatrixDim; j++)
+            {
                 colMatrix[i, j].OfferedSize = colMatrix[i, j].OriginalSize;
+            }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -379,16 +422,24 @@ namespace OmniGui.Grid
             }
 
             if (totalConsumedX != finalSize.Width)
+            {
                 ExpandStarCols(finalSize);
+            }
 
             if (totalConsumedY != finalSize.Height)
+            {
                 ExpandStarRows(finalSize);
+            }
 
             for (var c = 0; c < colCount; c++)
+            {
                 ColumnDefinitions[c].ActualWidth = colMatrix[c, c].OfferedSize;
+            }
 
             for (var r = 0; r < rowCount; r++)
+            {
                 RowDefinitions[r].ActualHeight = rowMatrix[r, r].OfferedSize;
+            }
 
             foreach (var child in Children)
             {
@@ -403,16 +454,24 @@ namespace OmniGui.Grid
                 double childFinalH = 0;
 
                 for (var c = 0; c < col; c++)
+                {
                     childFinalX += colMatrix[c, c].OfferedSize;
+                }
 
                 for (var c = col; c < col + colspan; c++)
+                {
                     childFinalW += colMatrix[c, c].OfferedSize;
+                }
 
                 for (var r = 0; r < row; r++)
+                {
                     childFinalY += rowMatrix[r, r].OfferedSize;
+                }
 
                 for (var r = row; r < row + rowspan; r++)
+                {
                     childFinalH += rowMatrix[r, r].OfferedSize;
+                }
 
                 child.Arrange(new Rect(childFinalX, childFinalY, childFinalW, childFinalH));
             }
@@ -434,7 +493,9 @@ namespace OmniGui.Grid
                 {
                     var spansStar = false;
                     for (var j = row; j >= col; j--)
+                    {
                         spansStar |= matrix[j, j].Type == GridUnitType.Star;
+                    }
 
                     // This is the amount of pixels which must be available between the grid rows
                     // at index 'col' and 'row'. i.e. if 'row' == 0 and 'col' == 2, there must
@@ -448,7 +509,9 @@ namespace OmniGui.Grid
                     double totalAllocated = 0;
 
                     for (var k = row; k >= col; k--)
+                    {
                         totalAllocated += matrix[k, k].DesiredSize;
+                    }
 
                     // If the size requirement has not been met, allocate the additional required
                     // size between 'pixel' rows, then 'star' rows, finally 'auto' rows, until all
@@ -474,10 +537,14 @@ namespace OmniGui.Grid
             var colMatrixDim = colMatrix.GetLength(0);
 
             for (var r = 0; r < rowMatrixDim; r++)
+            {
                 rowMatrix[r, r].OfferedSize = rowMatrix[r, r].DesiredSize;
+            }
 
             for (var c = 0; c < colMatrixDim; c++)
+            {
                 colMatrix[c, c].OfferedSize = colMatrix[c, c].DesiredSize;
+            }
         }
 
         private void SaveMeasureResults()
@@ -487,19 +554,27 @@ namespace OmniGui.Grid
 
             for (var i = 0; i < rowMatrixDim; i++)
             for (var j = 0; j < rowMatrixDim; j++)
+            {
                 rowMatrix[i, j].OriginalSize = rowMatrix[i, j].OfferedSize;
+            }
 
             for (var i = 0; i < colMatrixDim; i++)
             for (var j = 0; j < colMatrixDim; j++)
+            {
                 colMatrix[i, j].OriginalSize = colMatrix[i, j].OfferedSize;
+            }
         }
 
         private static double Clamp(double val, double min, double max)
         {
             if (val < min)
+            {
                 return min;
+            }
             if (val > max)
+            {
                 return max;
+            }
             return val;
         }
 
@@ -520,7 +595,9 @@ namespace OmniGui.Grid
             {
                 var segmentSize = desiredSize ? matrix[i, i].DesiredSize : matrix[i, i].OfferedSize;
                 if (segmentSize < matrix[i, i].Max)
+                {
                     count += type == GridUnitType.Star ? matrix[i, i].Stars : 1;
+                }
             }
 
             do
@@ -534,7 +611,9 @@ namespace OmniGui.Grid
                     var segmentSize = desiredSize ? matrix[i, i].DesiredSize : matrix[i, i].OfferedSize;
 
                     if (!(matrix[i, i].Type == type && segmentSize < matrix[i, i].Max))
+                    {
                         continue;
+                    }
 
                     var newsize = segmentSize;
                     newsize += contribution * (type == GridUnitType.Star ? matrix[i, i].Stars : 1);
@@ -543,9 +622,13 @@ namespace OmniGui.Grid
                     size -= newsize - segmentSize;
 
                     if (desiredSize)
+                    {
                         matrix[i, i].DesiredSize = newsize;
+                    }
                     else
+                    {
                         matrix[i, i].OfferedSize = newsize;
+                    }
                 }
             } while (assigned);
         }
@@ -557,18 +640,30 @@ namespace OmniGui.Grid
             var width = availableSize.Width;
 
             for (var i = 0; i < matrixCount; i++)
+            {
                 if (colMatrix[i, i].Type == GridUnitType.Star)
+                {
                     colMatrix[i, i].OfferedSize = 0;
+                }
                 else
+                {
                     width = Math.Max(width - colMatrix[i, i].OfferedSize, 0);
+                }
+            }
 
             AssignSize(colMatrix, 0, matrixCount - 1, ref width, GridUnitType.Star, false);
             width = Math.Max(0, width);
 
             if (columnsCount > 0)
+            {
                 for (var i = 0; i < matrixCount; i++)
+                {
                     if (colMatrix[i, i].Type == GridUnitType.Star)
+                    {
                         ColumnDefinitions[i].ActualWidth = colMatrix[i, i].OfferedSize;
+                    }
+                }
+            }
         }
 
         private void ExpandStarRows(Size availableSize)
@@ -581,17 +676,29 @@ namespace OmniGui.Grid
             // calling AssignSize. AssignSize takes care of distributing the
             // available size when there are Mins and Maxs applied.
             for (var i = 0; i < matrixCount; i++)
+            {
                 if (rowMatrix[i, i].Type == GridUnitType.Star)
+                {
                     rowMatrix[i, i].OfferedSize = 0.0;
+                }
                 else
+                {
                     height = Math.Max(height - rowMatrix[i, i].OfferedSize, 0);
+                }
+            }
 
             AssignSize(rowMatrix, 0, matrixCount - 1, ref height, GridUnitType.Star, false);
 
             if (rowCount > 0)
+            {
                 for (var i = 0; i < matrixCount; i++)
+                {
                     if (rowMatrix[i, i].Type == GridUnitType.Star)
+                    {
                         RowDefinitions[i].ActualHeight = rowMatrix[i, i].OfferedSize;
+                    }
+                }
+            }
         }
 
         public override void Render(IDrawingContext drawingContext)
