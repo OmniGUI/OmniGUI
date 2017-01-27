@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniGui.Tests", "AnotherTry\OmniGui.Tests.csproj", "{70D8DE97-FDE0-49D5-8A2D-EB912730519E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp", "WpfApp\WpfApp.csproj", "{5D7A3C49-8B5C-45FD-8F96-BFDB13CA9328}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniGui", "OmniGui\OmniGui.csproj", "{4F0F11A7-EFFC-4384-98EC-51C6E1FC90B2}"
@@ -31,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.PropertySystem", "Za
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.Core", "OmniXAML\Zafiro\Zafiro.Core\Zafiro.Core.csproj", "{DD5C9C3C-23AA-4DE7-BA5D-A89967826E4B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniGui.Tests", "OmniGui.Tests\OmniGui.Tests.csproj", "{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,18 +41,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Debug|x64.ActiveCfg = Debug|x64
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Debug|x64.Build.0 = Debug|x64
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Debug|x86.ActiveCfg = Debug|x86
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Debug|x86.Build.0 = Debug|x86
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Release|x64.ActiveCfg = Release|x64
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Release|x64.Build.0 = Release|x64
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Release|x86.ActiveCfg = Release|x86
-		{70D8DE97-FDE0-49D5-8A2D-EB912730519E}.Release|x86.Build.0 = Release|x86
 		{5D7A3C49-8B5C-45FD-8F96-BFDB13CA9328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D7A3C49-8B5C-45FD-8F96-BFDB13CA9328}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D7A3C49-8B5C-45FD-8F96-BFDB13CA9328}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -185,6 +173,18 @@ Global
 		{DD5C9C3C-23AA-4DE7-BA5D-A89967826E4B}.Release|x64.Build.0 = Release|x64
 		{DD5C9C3C-23AA-4DE7-BA5D-A89967826E4B}.Release|x86.ActiveCfg = Release|x86
 		{DD5C9C3C-23AA-4DE7-BA5D-A89967826E4B}.Release|x86.Build.0 = Release|x86
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Debug|x64.ActiveCfg = Debug|x64
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Debug|x64.Build.0 = Debug|x64
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Debug|x86.ActiveCfg = Debug|x86
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Debug|x86.Build.0 = Debug|x86
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Release|x64.ActiveCfg = Release|x64
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Release|x64.Build.0 = Release|x64
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Release|x86.ActiveCfg = Release|x86
+		{74C0A3BC-B2DB-486C-90F3-A9CD5DAE4433}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
