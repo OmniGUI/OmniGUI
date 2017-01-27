@@ -115,10 +115,6 @@
       <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
       <Name>OmniGui</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OmniXAML\Glass.Core\Glass.Core.csproj">
-      <Project>{96af7ada-c057-4d11-b41c-2d10047d0aef}</Project>
-      <Name>Glass.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj">
       <Project>{987b8746-b2a9-4a84-bba5-482ffcc6399e}</Project>
       <Name>OmniXaml.Attributes</Name>
