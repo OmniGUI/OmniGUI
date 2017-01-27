@@ -229,6 +229,12 @@ namespace OmniGui
             return finalSize;
         }
 
-        public abstract void Render(IDrawingContext drawingContext);
+        public virtual void Render(IDrawingContext drawingContext)
+        {
+            foreach (var layout in Children)
+            {
+                layout.Render(drawingContext);
+            }
+        }
     }
 }

@@ -2,6 +2,8 @@
 {
     public class Border : Layout
     {
+        private Layout child;
+
         protected override Size MeasureOverride(Size availableSize)
         {
             var child = Child;
@@ -20,7 +22,16 @@
 
         public Thickness Padding { get; set; }
 
-        public Layout Child { get; set; }
+        public Layout Child
+        {
+            get { return child; }
+            set
+            {
+                child = value;
+                Children.Clear();
+                Children.Add(value);
+            }
+        }
 
         /// <summary>
         /// Arranges the control's child.
@@ -48,6 +59,7 @@
         public override void Render(IDrawingContext drawingContext)
         {
             drawingContext.DrawRoundedRectangle(VisualBounds, Background, new Pen(BorderBrush, BorderThickness), new CornerRadius(CornerRadius));
+            base.Render(drawingContext);
         }
 
         public Brush BorderBrush { get; set; }

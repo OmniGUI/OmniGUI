@@ -7,38 +7,29 @@ namespace OmniGui.Grid
 {
     public struct GridLength : IEquatable<GridLength>
     {
-        private readonly GridUnitType _type;
+        private readonly GridUnitType type;
 
-        private readonly double _value;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GridLength"/> struct.
-        /// </summary>
-        /// <param name="value">The size of the GridLength in device independent pixels.</param>
-        public GridLength(double value)
-            : this(value, GridUnitType.Pixel)
-        {
-        }
+        private readonly double value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GridLength"/> struct.
         /// </summary>
         /// <param name="value">The size of the GridLength.</param>
         /// <param name="type">The unit of the GridLength.</param>
-        public GridLength(double value, GridUnitType type)
+        public GridLength(double value, GridUnitType type = GridUnitType.Pixel)
         {
             if (value < 0 || double.IsNaN(value) || double.IsInfinity(value))
             {
-                throw new ArgumentException("Invalid value", "value");
+                throw new ArgumentException("Invalid value", nameof(value));
             }
 
             if (type < GridUnitType.Auto || type > GridUnitType.Star)
             {
-                throw new ArgumentException("Invalid value", "type");
+                throw new ArgumentException("Invalid value", nameof(type));
             }
 
-            _type = type;
-            _value = value;
+            this.type = type;
+            this.value = value;
         }
 
         /// <summary>
@@ -50,27 +41,27 @@ namespace OmniGui.Grid
         /// <summary>
         /// Gets the unit of the <see cref="GridLength"/>.
         /// </summary>
-        public GridUnitType GridUnitType => _type;
+        public GridUnitType GridUnitType => type;
 
         /// <summary>
         /// Gets a value that indicates whether the <see cref="GridLength"/> has a <see cref="GridUnitType"/> of Pixel.
         /// </summary>
-        public bool IsAbsolute => _type == GridUnitType.Pixel;
+        public bool IsAbsolute => type == GridUnitType.Pixel;
 
         /// <summary>
         /// Gets a value that indicates whether the <see cref="GridLength"/> has a <see cref="GridUnitType"/> of Auto.
         /// </summary>
-        public bool IsAuto => _type == GridUnitType.Auto;
+        public bool IsAuto => type == GridUnitType.Auto;
 
         /// <summary>
         /// Gets a value that indicates whether the <see cref="GridLength"/> has a <see cref="GridUnitType"/> of Star.
         /// </summary>
-        public bool IsStar => _type == GridUnitType.Star;
+        public bool IsStar => type == GridUnitType.Star;
 
         /// <summary>
         /// Gets the length.
         /// </summary>
-        public double Value => _value;
+        public double Value => value;
 
         /// <summary>
         /// Compares two GridLength structures for equality.
@@ -80,7 +71,7 @@ namespace OmniGui.Grid
         /// <returns>True if the structures are equal, otherwise false.</returns>
         public static bool operator ==(GridLength a, GridLength b)
         {
-            return (a.IsAuto && b.IsAuto) || (a._value == b._value && a._type == b._type);
+            return (a.IsAuto && b.IsAuto) || (a.value == b.value && a.type == b.type);
         }
 
         /// <summary>
@@ -130,7 +121,7 @@ namespace OmniGui.Grid
         /// <returns>The hash code.</returns>
         public override int GetHashCode()
         {
-            return _value.GetHashCode() ^ _type.GetHashCode();
+            return value.GetHashCode() ^ type.GetHashCode();
         }
 
         /// <summary>
@@ -144,7 +135,7 @@ namespace OmniGui.Grid
                 return "Auto";
             }
 
-            string s = _value.ToString();
+            string s = value.ToString();
             return IsStar ? s + "*" : s;
         }
 

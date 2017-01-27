@@ -30,5 +30,10 @@ namespace OmniGui
         }
 
         public int Count => inner.Count;
+
+        public void Clear()
+        {
+            inner.Clear();
+        }
     }
 }

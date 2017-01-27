@@ -704,10 +704,8 @@
         public override void Render(IDrawingContext drawingContext)
         {
             drawingContext.DrawRectangle(VisualBounds, Background, null);
-            foreach (var child in Children)
-            {
-                child.Render(drawingContext);
-            }
+
+            base.Render(drawingContext);            
         }
 
         private struct Segment
