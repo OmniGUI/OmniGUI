@@ -8,5 +8,5 @@
     xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d">
 
-    <xaml:CanvasControl Draw="CanvasControl_OnDraw"></xaml:CanvasControl>
+    <xaml:CanvasControl x:Name="Canvas" Draw="CanvasControl_OnDraw"></xaml:CanvasControl>
 </Page>

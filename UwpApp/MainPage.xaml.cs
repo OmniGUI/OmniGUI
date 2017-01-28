@@ -25,6 +25,7 @@ namespace UwpApp
         {
             this.InitializeComponent();
 
+            Platform.Current.TextEngine = new Win2DTextEngine();
           
             Loaded += OnLoaded;
         }
@@ -48,6 +49,15 @@ namespace UwpApp
             {
                 return;
             }
+
+            var width = Canvas.ActualWidth;
+            var height = Canvas.ActualHeight;
+
+            var availableSize = new OmniGui.Size(width, height);
+            layout.Measure(availableSize);
+            layout.Arrange(new OmniGui.Rect(Point.Zero, availableSize));
+
+            layout.Render(new Win2DDrawingContext(args.DrawingSession));
         }
 
         private static async Task<string> GetXaml(string fileName)
