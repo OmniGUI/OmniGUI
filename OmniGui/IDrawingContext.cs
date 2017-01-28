@@ -6,6 +6,6 @@ namespace OmniGui
         void DrawRoundedRectangle(Rect rect, Brush brush, Pen pen, CornerRadius cornerRadius);
         void DrawText(Point point, Brush brush, string text);
 
-        void DrawText(FormattedText text, Point point);
+        void DrawText(FormattedText formattedText, Point point);
     }
 }

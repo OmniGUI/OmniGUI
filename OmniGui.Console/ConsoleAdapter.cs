@@ -49,7 +49,7 @@
             throw new System.NotImplementedException();
         }
 
-        public void DrawText(FormattedText text, Point point)
+        public void DrawText(FormattedText formattedText, Point point)
         {
             throw new System.NotImplementedException();
         }

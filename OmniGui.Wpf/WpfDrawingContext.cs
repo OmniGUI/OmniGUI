@@ -56,9 +56,9 @@ namespace OmniGui.Wpf
             context.DrawText(formattedText, point.ToWpf());
         }
 
-        public void DrawText(FormattedText text, Point point)
+        public void DrawText(FormattedText formattedText, Point point)
         {
-            context.DrawText(text.ToWpf(), point.ToWpf());
+            context.DrawText(formattedText.ToWpf(), point.ToWpf());
         }
     }
 }

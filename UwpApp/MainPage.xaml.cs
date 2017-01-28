@@ -20,13 +20,14 @@ namespace UwpApp
     public sealed partial class MainPage : Page
     {
         private Layout layout;
+        private readonly Win2DTextEngine textEngine = new Win2DTextEngine();
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            Platform.Current.TextEngine = new Win2DTextEngine();
-          
+            Platform.Current.TextEngine = textEngine;
+
             Loaded += OnLoaded;
         }
 
@@ -45,6 +46,8 @@ namespace UwpApp
 
         private void CanvasControl_OnDraw(CanvasControl sender, CanvasDrawEventArgs args)
         {
+            textEngine.SetDrawingSession(args.DrawingSession);
+
             if (layout == null)
             {
                 return;
@@ -53,9 +56,9 @@ namespace UwpApp
             var width = Canvas.ActualWidth;
             var height = Canvas.ActualHeight;
 
-            var availableSize = new OmniGui.Size(width, height);
+            var availableSize = new Size(width, height);
             layout.Measure(availableSize);
-            layout.Arrange(new OmniGui.Rect(Point.Zero, availableSize));
+            layout.Arrange(new Rect(Point.Zero, availableSize));
 
             layout.Render(new Win2DDrawingContext(args.DrawingSession));
         }
