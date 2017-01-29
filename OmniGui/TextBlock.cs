@@ -8,20 +8,53 @@
         private Brush foreground;
 
         public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock),
-            typeof(float), new PropertyMetadata() {DefaultValue = 16F});
+            typeof(float), new PropertyMetadata() { DefaultValue = 16F });
+        public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock),
+    typeof(float), new PropertyMetadata() { DefaultValue = FontWeight.Normal });
+        public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock),
+typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
 
         public TextBlock()
         {
             Foreground = new Brush(Colors.Black);
         }
 
+        private void UpdateFormattedText()
+        {
+            FormattedText.Text = Text;
+            FormattedText.FontFamily = FontFamily;
+            FormattedText.Brush = Foreground;
+            FormattedText.FontSize = FontSize;
+            FormattedText.FontWeight = FontWeight;
+        }
+
+        public string FontFamily
+        {
+            get { return (string)GetValue(FontFamilyProperty); }
+            set
+            {
+                SetValue(FontFamilyProperty, value);
+                UpdateFormattedText();
+            }
+        }
+
+        public FontWeight FontWeight
+        {
+            get { return (FontWeight)GetValue(FontWeightProperty); }
+            set
+            {
+                SetValue(FontWeightProperty, value);
+                UpdateFormattedText();
+            }
+        }
+
         public float FontSize
         {
-            get { return (float) GetValue(FontSizeProperty); }
+            get { return (float)GetValue(FontSizeProperty); }
             set
             {
                 SetValue(FontSizeProperty, value);
-                FormattedText.FontSize = value;
+                UpdateFormattedText();
             }
         }
 
@@ -60,7 +93,7 @@
             set
             {
                 foreground = value;
-                this.FormattedText.Brush = value;
+                UpdateFormattedText();
             }
         }
 
@@ -70,11 +103,11 @@
             set
             {
                 text = value;
-                FormattedText.Text = value;
+                UpdateFormattedText();
             }
         }
 
-        private FormattedText FormattedText { get; set; } = new FormattedText() { FontSize = 16};
+        private FormattedText FormattedText { get; set; } = new FormattedText() { FontSize = 16 };
 
         public TextWrapping TextWrapping { get; set; }
     }
