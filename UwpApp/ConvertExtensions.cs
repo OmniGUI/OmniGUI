@@ -8,7 +8,7 @@
     {
         public static Windows.Foundation.Rect ToWin2D(this Rect rect)
         {
-            return new Windows.Foundation.Rect(rect.Point.ToWin2D(), rect.Size.ToWin2D());
+            return new Windows.Foundation.Rect(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         public static Windows.Foundation.Point ToWin2D(this Point rect)

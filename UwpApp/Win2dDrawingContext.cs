@@ -17,7 +17,9 @@
 
         public void DrawRectangle(Rect rect, Brush brush, Pen pen)
         {
-            drawingSession.FillRectangle(rect.ToWin2D(), brush.ToWin2D(drawingSession));
+            var wRect = rect.ToWin2D();
+            var wBrush = brush.ToWin2D(drawingSession);
+            drawingSession.FillRectangle(wRect, wBrush);
         }
 
         public void DrawRoundedRectangle(Rect rect, Brush brush, Pen pen, CornerRadius cornerRadius)
