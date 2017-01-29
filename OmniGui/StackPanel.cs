@@ -113,7 +113,7 @@ namespace OmniGui
         public Orientation Orientation { get; set; }
         public override void Render(IDrawingContext drawingContext)
         {
-            drawingContext.DrawRectangle(VisualBounds, Background, null);
+            drawingContext.FillRectangle(VisualBounds, Background);
             base.Render(drawingContext);
         }
     }

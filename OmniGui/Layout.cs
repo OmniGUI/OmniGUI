@@ -5,6 +5,7 @@ namespace OmniGui
 {
     using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
+    using Zafiro.PropertySystem.Standard;
 
     public abstract class Layout : IChild
     {
@@ -14,8 +15,16 @@ namespace OmniGui
         {
             PropertyEngine.SetValue(property, this, value);
         }
+        public void SetValue(ExtendedProperty property, object value)
+        {
+            PropertyEngine.SetValue(property, this, value);
+        }
 
         public object GetValue(AttachedProperty property)
+        {
+            return PropertyEngine.GetValue(property, this);
+        }
+        public object GetValue(ExtendedProperty property)
         {
             return PropertyEngine.GetValue(property, this);
         }

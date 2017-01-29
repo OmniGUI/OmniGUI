@@ -1,13 +1,28 @@
 ﻿namespace OmniGui
 {
+    using Zafiro.PropertySystem.Standard;
+
     public class TextBlock : Layout
     {
         private string text;
         private Brush foreground;
 
+        public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock),
+            typeof(float), new PropertyMetadata() {DefaultValue = 16F});
+
         public TextBlock()
         {
             Foreground = new Brush(Colors.Black);
+        }
+
+        public float FontSize
+        {
+            get { return (float) GetValue(FontSizeProperty); }
+            set
+            {
+                SetValue(FontSizeProperty, value);
+                FormattedText.FontSize = value;
+            }
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -59,7 +74,7 @@
             }
         }
 
-        private FormattedText FormattedText { get; set; } = new FormattedText();
+        private FormattedText FormattedText { get; set; } = new FormattedText() { FontSize = 16};
 
         public TextWrapping TextWrapping { get; set; }
     }

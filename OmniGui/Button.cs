@@ -14,9 +14,9 @@
                 },
                 Padding = new Thickness(4),
                 Background = new Brush(Colors.LightGray),
-                BorderThickness = 1,
+                BorderThickness = 2,
                 CornerRadius = 5,
-                BorderBrush = new Brush(Colors.DarkGray)
+                BorderBrush = new Brush(Colors.Black)
             });
         }
     }

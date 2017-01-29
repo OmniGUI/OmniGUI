@@ -39,7 +39,7 @@
             throw new System.NotImplementedException();
         }
 
-        public void DrawRectangle(Rect rect, Brush brush, Pen pen)
+        public void DrawRectangle(Rect rect, Pen pen)
         {
             throw new System.NotImplementedException();
         }
@@ -50,6 +50,21 @@
         }
 
         public void DrawText(FormattedText formattedText, Point point)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void FillRectangle(Rect rect, Brush brush)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
         {
             throw new System.NotImplementedException();
         }

@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace OmniGui.Wpf
 {
@@ -13,12 +11,22 @@ namespace OmniGui.Wpf
             this.context = context;
         }
 
-        public void DrawRectangle(Rect rect, Brush brush, Pen pen)
+        public void DrawRectangle(Rect rect, Pen pen)
         {
-            context.DrawRectangle(brush.ToWpf(), pen.ToWpf(), rect.ToWpf());
+            context.DrawRectangle(null, pen.ToWpf(), rect.ToWpf());
         }
 
-        public void DrawRoundedRectangle(Rect rect, Brush brush, Pen pen, CornerRadius cornerRadius)
+        public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
+        {
+            DrawWpfRoundedRectangle(rect, brush, null, cornerRadius);
+        }
+
+        public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
+        {
+            DrawWpfRoundedRectangle(rect, null, pen, cornerRadius);
+        }
+
+        private void DrawWpfRoundedRectangle(Rect rect, Brush brush, Pen pen, CornerRadius cornerRadius)
         {
             var geometry = new StreamGeometry();
             using (var gc = geometry.Open())
@@ -42,7 +50,8 @@ namespace OmniGui.Wpf
                     90, false, SweepDirection.Clockwise, isStroked, isSmoothJoin);
                 gc.LineTo((rect.BottomLeft + new Vector(cornerRadius.BottomLeft, 0)).ToWpf(), isStroked, isSmoothJoin);
                 gc.ArcTo(new Point(rect.BottomLeft.X, rect.BottomLeft.Y - cornerRadius.BottomLeft).ToWpf(),
-                    new Size(cornerRadius.BottomLeft, cornerRadius.BottomLeft).ToWpf(), 90, false, SweepDirection.Clockwise, isStroked, isSmoothJoin);
+                    new Size(cornerRadius.BottomLeft, cornerRadius.BottomLeft).ToWpf(), 90, false, SweepDirection.Clockwise,
+                    isStroked, isSmoothJoin);
 
                 gc.Close();
             }
@@ -50,15 +59,14 @@ namespace OmniGui.Wpf
             context.DrawGeometry(brush.ToWpf(), pen.ToWpf(), geometry);
         }
 
-        public void DrawText(Point point, Brush brush, string text)
-        {
-            var formattedText = new System.Windows.Media.FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, brush.ToWpf(), new NumberSubstitution(), 3D);
-            context.DrawText(formattedText, point.ToWpf());
-        }
-
         public void DrawText(FormattedText formattedText, Point point)
         {
             context.DrawText(formattedText.ToWpf(), point.ToWpf());
+        }
+
+        public void FillRectangle(Rect rect, Brush brush)
+        {
+            context.DrawRectangle(brush.ToWpf(), null, rect.ToWpf());
         }
     }
 }

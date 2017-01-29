@@ -58,7 +58,9 @@
 
         public override void Render(IDrawingContext drawingContext)
         {
-            drawingContext.DrawRoundedRectangle(VisualBounds, Background, new Pen(BorderBrush, BorderThickness), new CornerRadius(CornerRadius));
+            drawingContext.FillRoundedRectangle(VisualBounds, Background, new CornerRadius(CornerRadius));
+            drawingContext.DrawRoundedRectangle(VisualBounds, new Pen(BorderBrush, BorderThickness), new CornerRadius(CornerRadius));
+            
             base.Render(drawingContext);
         }
 
