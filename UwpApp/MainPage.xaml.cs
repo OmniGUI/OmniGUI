@@ -7,11 +7,15 @@ namespace UwpApp
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+    using System.Windows.Input;
     using Windows.ApplicationModel;
     using Windows.Storage;
+    using Windows.UI.Popups;
     using Windows.UI.Xaml;
     using Microsoft.Graphics.Canvas.UI.Xaml;
     using OmniGui;
+    using OmniXaml;
+    using OmniXaml.Attributes;
     using OmniXaml.Services;
 
     /// <summary>
@@ -27,6 +31,7 @@ namespace UwpApp
             this.InitializeComponent();
 
             Platform.Current.TextEngine = textEngine;
+            Platform.Current.EventDriver = new UwpEventProcessor(this);
 
             Loaded += OnLoaded;
         }
@@ -37,6 +42,7 @@ namespace UwpApp
           {
                 Assembly.Load(new AssemblyName("OmniGui")),
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
+                 Assembly.Load(new AssemblyName("UwpApp")),
             });
             var xaml = await GetXaml("Layout.xaml");
 
@@ -70,5 +76,8 @@ namespace UwpApp
             var xaml = await FileIO.ReadTextAsync(file);
             return xaml;
         }
+
+        [TypeConverterMember(typeof(ICommand))]
+        public static Func<ConverterValueContext, object> CommandConverter = context => new DelegateCommand(async () => await new MessageDialog("Tapped!!").ShowAsync());
     }
 }
