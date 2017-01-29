@@ -21,7 +21,7 @@
                 BorderBrush = new Brush(Colors.Black)
             });
 
-            Platform.Current.EventDriver.Pointer.Subscribe(p => { });
+            Pointer.Down.Subscribe(p => { });
         }
     }
 }
