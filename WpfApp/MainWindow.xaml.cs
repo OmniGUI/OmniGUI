@@ -18,6 +18,10 @@ namespace WpfApp
         {
             InitializeComponent();
 
+            Platform.Current = new Platform();
+            Platform.Current.TextEngine = new WpfTextEngine();
+            Platform.Current.EventDriver = new WpfEventProcessor(this);
+
             var xamlLoader = new XamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;

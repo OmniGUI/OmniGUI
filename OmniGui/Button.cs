@@ -1,5 +1,7 @@
 ﻿namespace OmniGui
 {
+    using System;
+
     public class Button : ContentLayout
     {
         public Button()
@@ -18,6 +20,8 @@
                 CornerRadius = 5,
                 BorderBrush = new Brush(Colors.Black)
             });
+
+            Platform.Current.EventDriver.Pointer.Subscribe(p => { });
         }
     }
 }

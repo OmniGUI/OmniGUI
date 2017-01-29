@@ -12,8 +12,7 @@ namespace WpfApp
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            Platform.Current = new Platform();
-            Platform.Current.TextEngine = new WpfTextEngine();          
+           
         }
     }
 }

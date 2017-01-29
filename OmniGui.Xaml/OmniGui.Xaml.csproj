@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFramework>netstandard1.2</TargetFramework>
-  </PropertyGroup> 
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj" />
