@@ -1,6 +1,7 @@
 ﻿namespace OmniGui
 {
     using System;
+    using System.Windows.Input;
 
     public class Button : ContentLayout
     {
@@ -21,7 +22,15 @@
                 BorderBrush = new Brush(Colors.Black)
             });
 
-            Pointer.Down.Subscribe(p => { });
+            Pointer.Down.Subscribe(p =>
+            {
+                if (Command?.CanExecute(null) == true)
+                {
+                    Command.Execute(null);
+                }
+            });
         }
+
+        public ICommand Command { get; set; }
     }
 }
