@@ -10,6 +10,12 @@ using Point = OmniGui.Point;
 
 namespace WpfApp
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Input;
+    using OmniXaml;
+    using OmniXaml.Attributes;
+
     public partial class MainWindow : Window
     {
         private readonly Layout layout;
@@ -38,5 +44,9 @@ namespace WpfApp
 
             layout.Render(new WpfDrawingContext(drawingContext));
         }
+
+
+        [TypeConverterMember(typeof(ICommand))]
+        public static Func<ConverterValueContext, object> CommandConverter = context => new DelegateCommand(() => MessageBox.Show("Click!"));
     }
 }

@@ -11,5 +11,5 @@
     <TextBlock Text="Toallitas Kandoo para que tu ojal brille" Grid.Column="1" FontSize="10" FontWeight="Bold" />
     <Grid Grid.Column="0" Grid.Row="1" Background="Yellow"/>
     <!--<Border Margin="8"  Grid.Column="1" Grid.Row="1" Background="Gold" BorderBrush="Black" BorderThickness="2" CornerRadius="6"/>-->
-    <Button  Grid.Column="1" Grid.Row="1"/>
+    <Button Command="Whatever" Grid.Column="1" Grid.Row="1"/>
 </Grid>

@@ -1,41 +1,24 @@
-using System;
-using OmniXaml.Attributes;
-
 namespace OmniGui
 {
+    using System;
+    using OmniXaml.Attributes;
     using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
     using Zafiro.PropertySystem.Standard;
 
     public abstract class Layout : IChild
     {
-        protected static readonly PropertyEngine PropertyEngine = new PropertyEngine(o => ((IChild)o).Parent);
-
-        public void SetValue(AttachedProperty property, object value)
-        {
-            PropertyEngine.SetValue(property, this, value);
-        }
-        public void SetValue(ExtendedProperty property, object value)
-        {
-            PropertyEngine.SetValue(property, this, value);
-        }
-
-        public object GetValue(AttachedProperty property)
-        {
-            return PropertyEngine.GetValue(property, this);
-        }
-        public object GetValue(ExtendedProperty property)
-        {
-            return PropertyEngine.GetValue(property, this);
-        }
+        protected static readonly PropertyEngine PropertyEngine = new PropertyEngine(o => ((IChild) o).Parent);
 
         protected Layout()
         {
             Children = new OwnedList<Layout>(this);
+            Pointer = new PointerEvents(this, Platform.Current.EventDriver);
         }
 
+        public PointerEvents Pointer { get; set; }
+
         public Brush Background { get; set; } = new Brush(Color.Transparent);
-        public object Parent { get; set; }
         public Size RequestedSize { get; set; } = Size.Unspecified;
         public Size DesiredSize { get; set; }
 
@@ -52,13 +35,47 @@ namespace OmniGui
                 {
                     return Bounds;
                 }
-                else
-                {
-                    var parent = (Layout) Parent;
-                    var offset = parent.VisualBounds.Point.Offset(Bounds.Point);
-                    return new Rect(offset, Bounds.Size);
-                }
+                var parent = (Layout) Parent;
+                var offset = parent.VisualBounds.Point.Offset(Bounds.Point);
+                return new Rect(offset, Bounds.Size);
             }
+        }
+
+        public VerticalAlignment VerticalAlignment { get; set; }
+
+        public HorizontalAlignment HorizontalAlignment { get; set; }
+
+        public Thickness Margin { get; set; }
+        public double Width => RequestedSize.Width;
+        public double Height => RequestedSize.Height;
+        public double MaxWidth => MaxSize.Width;
+        public Size MaxSize { get; set; } = Size.Infinite;
+
+        public double MaxHeight => MaxSize.Height;
+        public double MinWidth => MinSize.Width;
+        public Size MinSize { get; set; } = Size.Zero;
+
+        public double MinHeight => MinSize.Height;
+        public object Parent { get; set; }
+
+        public void SetValue(AttachedProperty property, object value)
+        {
+            PropertyEngine.SetValue(property, this, value);
+        }
+
+        public void SetValue(ExtendedProperty property, object value)
+        {
+            PropertyEngine.SetValue(property, this, value);
+        }
+
+        public object GetValue(AttachedProperty property)
+        {
+            return PropertyEngine.GetValue(property, this);
+        }
+
+        public object GetValue(ExtendedProperty property)
+        {
+            return PropertyEngine.GetValue(property, this);
         }
 
         public void Measure(Size availableSize)
@@ -211,22 +228,6 @@ namespace OmniGui
                    double.IsNaN(rect.X) || double.IsNaN(rect.Y) ||
                    double.IsNaN(rect.Width) || double.IsNaN(rect.Height);
         }
-
-        public VerticalAlignment VerticalAlignment { get; set; }
-
-        public HorizontalAlignment HorizontalAlignment { get; set; }
-
-        public Thickness Margin { get; set; }
-        public double Width => RequestedSize.Width;
-        public double Height => RequestedSize.Height;
-        public double MaxWidth => MaxSize.Width;
-        public Size MaxSize { get; set; } = Size.Infinite;
-
-        public double MaxHeight => MaxSize.Height;
-        public double MinWidth => MinSize.Width;
-        public Size MinSize { get; set; } = Size.Zero;
-
-        public double MinHeight => MinSize.Height;
 
         protected virtual Size ArrangeOverride(Size finalSize)
         {

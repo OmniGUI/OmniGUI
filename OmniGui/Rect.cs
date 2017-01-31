@@ -56,6 +56,13 @@ namespace OmniGui
                 new Point(X + thickness.Left, Y + thickness.Top),
                 Size.Deflate(thickness));
         }
-    }
 
+        public bool Contains(Point point)
+        {
+            var isInsideHorz = point.X >= X && point.X <= X + Width;
+            var isInsideVert = point.Y >= Y && point.Y <= Y + Height;
+
+            return isInsideHorz && isInsideVert;
+        }
+    }
 }
