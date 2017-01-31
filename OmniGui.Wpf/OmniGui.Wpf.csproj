@@ -37,9 +37,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Reactive" Version="3.1.1" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -62,6 +59,9 @@
       <Project>{4F0F11A7-EFFC-4384-98EC-51C6E1FC90B2}</Project>
       <Name>OmniGui</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="project.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
