@@ -13,12 +13,6 @@
             this.session = session;
         }
 
-        public Size MeasureText(string text)
-        {
-            var t = new CanvasTextLayout(session, text, new CanvasTextFormat(), 0, 0);
-            return new Size(t.DrawBounds.Width, t.DrawBounds.Height);
-        }
-
         public Size Measure(FormattedText formattedText)
         {
             var constraintWidth = (float) (double.IsInfinity(formattedText.Constraint.Width) ? 1000 : formattedText.Constraint.Width);

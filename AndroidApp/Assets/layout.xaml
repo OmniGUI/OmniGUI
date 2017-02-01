@@ -1,0 +1,15 @@
+﻿<Grid xmlns="root" Background="White">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid Background="Red"/>
+    <TextBlock VerticalAlignment="Center"  Text="Toallitas Kandoo para que tu ojal brille" Grid.Column="1" />
+    <Grid Grid.Column="0" Grid.Row="1" Background="Yellow"/>
+    <!--<Border Margin="8"  Grid.Column="1" Grid.Row="1" Background="Gold" BorderBrush="Black" BorderThickness="2" CornerRadius="6"/>-->
+    <Button Grid.Column="1" Command="Whatever"  Grid.Row="1"/>
+</Grid>
