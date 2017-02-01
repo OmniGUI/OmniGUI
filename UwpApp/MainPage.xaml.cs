@@ -14,6 +14,7 @@ namespace UwpApp
     using Windows.UI.Xaml;
     using Microsoft.Graphics.Canvas.UI.Xaml;
     using OmniGui;
+    using OmniGui.Xaml;
     using OmniXaml;
     using OmniXaml.Attributes;
     using OmniXaml.Services;
@@ -38,7 +39,7 @@ namespace UwpApp
 
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            var xamlLoader = new XamlLoader(new[]
+            var xamlLoader = new OmniGuiXamlLoader(new[]
           {
                 Assembly.Load(new AssemblyName("OmniGui")),
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),

@@ -28,7 +28,7 @@ namespace WpfApp
             Platform.Current.TextEngine = new WpfTextEngine();
             Platform.Current.EventDriver = new WpfEventProcessor(this);
 
-            var xamlLoader = new XamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
+            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
         }
