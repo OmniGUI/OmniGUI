@@ -4,13 +4,14 @@ namespace OmniGui.Wpf
     using System.Reactive.Linq;
     using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Threading;
     using Point = Point;
 
     public class WpfEventProcessor : IEventProcessor
     {
-        private readonly IFrameworkInputElement inputElement;
+        private readonly FrameworkElement inputElement;
 
-        public WpfEventProcessor(IFrameworkInputElement inputElement)
+        public WpfEventProcessor(FrameworkElement inputElement)
         {
             this.inputElement = inputElement;
             var fromEventPattern = Observable.FromEventPattern<MouseButtonEventHandler, MouseEventArgs>(
@@ -24,5 +25,9 @@ namespace OmniGui.Wpf
 
         }
         public IObservable<Point> Pointer { get; }
+        public void Invalidate()
+        {
+            Application.Current.Dispatcher.Invoke(() => inputElement.InvalidateVisual(), DispatcherPriority.Render);
+        }     
     }
 }

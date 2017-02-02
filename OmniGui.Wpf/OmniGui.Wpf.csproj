@@ -48,20 +48,20 @@
   <ItemGroup>
     <Compile Include="MappingExtensions.cs" />
     <Compile Include="WpfDrawingContext.cs" />
-    <Compile Include="WpfEventProcessor.cs" />
+    <Compile Include="WpfEventDriver.cs" />
     <Compile Include="WpfTextEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OmniGui\OmniGui.csproj">
-      <Project>{4F0F11A7-EFFC-4384-98EC-51C6E1FC90B2}</Project>
-      <Name>OmniGui</Name>
-    </ProjectReference>
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="project.json" />
+    <ProjectReference Include="..\OmniGui\OmniGui.csproj">
+      <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
+      <Name>OmniGui</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

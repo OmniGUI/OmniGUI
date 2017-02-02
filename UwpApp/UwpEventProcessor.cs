@@ -23,5 +23,8 @@ namespace UwpApp
 
         }
         public IObservable<Point> Pointer { get; }
+        public void Invalidate()
+        {            
+        }
     }
 }

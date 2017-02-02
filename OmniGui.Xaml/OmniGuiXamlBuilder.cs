@@ -32,14 +32,14 @@
             var sourceObs = (IObservable<object>) sourceProp.GetValue(model);
 
             var targetObj = (Layout) assignment.TargetInstance;
-            var observer = targetObj.GetObserver(assignment.AssignmentMember.MemberName);
+            var observer = targetObj.GetSubject(assignment.AssignmentMember.MemberName);
 
-            sourceObs.Subscribe(o => { });
+            sourceObs.Subscribe(observer);
         }
     }
 
     public class Model
     {
-        public IObservable<string> Text { get; } = Observable.Timer(TimeSpan.FromSeconds(5)).Select(p => p.ToString());
+        public IObservable<string> Text { get; } = Observable.Interval(TimeSpan.FromSeconds(2)).Select(p => p.ToString());
     }
 }

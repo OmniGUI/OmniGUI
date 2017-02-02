@@ -248,10 +248,15 @@ namespace OmniGui
             }
         }
 
-        public IObserver<object> GetObserver(string propertyName)
+        public ISubject<object> GetSubject(ExtendedProperty property)
+        {
+            return PropertyEngine.GetSubject(property, this);
+        }
+
+        public IObserver<object> GetSubject(string propertyName)
         {
             ExtendedProperty property = PropertyEngine.GetProperty(propertyName, GetType());
-            return new Subject<object>();
+            return PropertyEngine.GetSubject(property, this);
         }
     }
 }
