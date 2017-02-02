@@ -1,7 +1,6 @@
 ﻿namespace OmniGui.Xaml
 {
     using System;
-    using System.Reactive.Linq;
     using System.Reflection;
     using OmniXaml;
 
@@ -36,10 +35,5 @@
 
             sourceObs.Subscribe(observer);
         }
-    }
-
-    public class Model
-    {
-        public IObservable<string> Text { get; } = Observable.Interval(TimeSpan.FromSeconds(2)).Select(p => p.ToString());
     }
 }
