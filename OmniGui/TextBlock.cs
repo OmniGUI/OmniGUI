@@ -13,6 +13,8 @@
     typeof(float), new PropertyMetadata() { DefaultValue = FontWeight.Normal });
         public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock),
 typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
+        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBlock),
+typeof(string), new PropertyMetadata() { DefaultValue = null });
 
         public TextBlock()
         {
@@ -99,10 +101,10 @@ typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
 
         public string Text
         {
-            get { return text; }
+            get { return (string) GetValue(TextProperty); }
             set
             {
-                text = value;
+                SetValue(TextProperty, value);
                 UpdateFormattedText();
             }
         }

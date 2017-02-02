@@ -1,6 +1,7 @@
 namespace OmniGui
 {
     using System;
+    using System.Reactive.Subjects;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
@@ -245,6 +246,12 @@ namespace OmniGui
             {
                 layout.Render(drawingContext);
             }
+        }
+
+        public IObserver<object> GetObserver(string propertyName)
+        {
+            ExtendedProperty property = PropertyEngine.GetProperty(propertyName, GetType());
+            return new Subject<object>();
         }
     }
 }
