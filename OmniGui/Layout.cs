@@ -1,7 +1,8 @@
 namespace OmniGui
 {
     using System;
-    using System.Reactive.Subjects;
+    using System.Linq;
+    using System.Reactive.Linq;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
@@ -15,6 +16,20 @@ namespace OmniGui
         {
             Children = new OwnedList<Layout>(this);
             Pointer = new PointerEvents(this, Platform.Current.EventDriver);
+        }
+
+        protected void NotifyRenderAffectedBy(params ExtendedProperty[] properties)
+        {
+            var observables = properties
+                .Select(GetChangedObservable);
+
+            var ticks = observables.Merge();
+            ticks.Subscribe(_ => InvalidateRender());
+        }
+
+        private void InvalidateRender()
+        {
+            Platform.Current.EventDriver.Invalidate();
         }
 
         public PointerEvents Pointer { get; set; }
@@ -248,15 +263,19 @@ namespace OmniGui
             }
         }
 
-        public ISubject<object> GetSubject(ExtendedProperty property)
+        public IObservable<object> GetChangedObservable(ExtendedProperty property)
         {
-            return PropertyEngine.GetSubject(property, this);
+            return PropertyEngine.GetChangedObservable(property, this);
         }
 
-        public IObserver<object> GetSubject(string propertyName)
+        public IObserver<object> GetObserver(ExtendedProperty property)
         {
-            ExtendedProperty property = PropertyEngine.GetProperty(propertyName, GetType());
-            return PropertyEngine.GetSubject(property, this);
+            return PropertyEngine.GetObserver(property, this);
+        }
+
+        public ExtendedProperty GetProperty(string assignmentMemberMemberName)
+        {
+            return PropertyEngine.GetProperty(assignmentMemberMemberName, GetType());
         }
     }
 }

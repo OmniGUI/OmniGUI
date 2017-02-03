@@ -31,7 +31,8 @@
             var sourceObs = (IObservable<object>) sourceProp.GetValue(model);
 
             var targetObj = (Layout) assignment.TargetInstance;
-            var observer = targetObj.GetSubject(assignment.AssignmentMember.MemberName);
+            var extProp = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
+            var observer = targetObj.GetObserver(extProp);
 
             sourceObs.Subscribe(observer);
         }

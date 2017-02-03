@@ -1,6 +1,7 @@
 ﻿namespace OmniGui
 {
     using System;
+    using System.Linq;
     using System.Reactive.Linq;
     using System.Reactive.Subjects;
     using Zafiro.PropertySystem.Standard;
@@ -17,19 +18,16 @@
         public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock),
 typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
         public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBlock),
-typeof(ISubject<string>), new PropertyMetadata() { DefaultValue = new Subject<string>() });
+typeof(string), new PropertyMetadata() { DefaultValue = null });
 
         private string currentText;
 
         public TextBlock()
         {
             Foreground = new Brush(Colors.Black);
-            var textSubject = GetSubject(TextProperty);
-            textSubject.Distinct().Subscribe(t =>
-            {
-                Text = (string)t;
-                Platform.Current.EventDriver.Invalidate();
-            });
+            GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
+
+            NotifyRenderAffectedBy(TextProperty);                        
         }
 
         private void UpdateFormattedText()
@@ -112,14 +110,11 @@ typeof(ISubject<string>), new PropertyMetadata() { DefaultValue = new Subject<st
 
         public string Text
         {
-            get
-            {
-                return currentText;
-            }
+            get { return currentText; }
             set
             {
                 currentText = value;
-                var subject = GetSubject(TextProperty);
+                var subject = GetObserver(TextProperty);
                 subject.OnNext(value);
                 UpdateFormattedText();
             }

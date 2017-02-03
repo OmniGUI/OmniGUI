@@ -32,7 +32,7 @@ namespace OmniGui.Wpf
             return new System.Windows.Vector(size.X, size.Y);
         }
 
-        public static System.Windows.Media.SolidColorBrush ToWpf(this Brush brush)
+        public static SolidColorBrush ToWpf(this Brush brush)
         {
             if (brush == null)
             {
