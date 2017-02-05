@@ -10,5 +10,7 @@ namespace OmniGui
         {
             
         }
+
+        public IObservable<TextInputArgs> TextInput { get; set; }
     }
 }

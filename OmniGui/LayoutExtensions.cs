@@ -1,4 +1,4 @@
-﻿namespace OmniGui.Tests
+﻿namespace OmniGui
 {
     public static class LayoutExtensions
     {

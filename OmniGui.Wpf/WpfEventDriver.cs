@@ -14,17 +14,34 @@ namespace OmniGui.Wpf
         public WpfEventProcessor(FrameworkElement inputElement)
         {
             this.inputElement = inputElement;
+            SetPointer(inputElement);
+            SetKeyboard(inputElement);
+        }
+
+        private void SetKeyboard(IInputElement element)
+        {
+            var fromEventPattern = Observable.FromEventPattern<TextCompositionEventHandler, TextCompositionEventArgs>(
+    ev => element.PreviewTextInput += ev,
+    ev => element.PreviewTextInput -= ev);
+            TextInput = fromEventPattern.Select(ep => new TextInputArgs(ep.EventArgs.Text));
+        }
+
+        public IObservable<TextInputArgs> TextInput { get; set; }
+
+        private void SetPointer(IInputElement element)
+        {
             var fromEventPattern = Observable.FromEventPattern<MouseButtonEventHandler, MouseEventArgs>(
-                ev => inputElement.PreviewMouseLeftButtonDown += ev,
-                ev => inputElement.PreviewMouseLeftButtonDown -= ev);
+                ev => element.PreviewMouseLeftButtonDown += ev,
+                ev => element.PreviewMouseLeftButtonDown -= ev);
             Pointer = fromEventPattern.Select(pattern =>
             {
-                var position = pattern.EventArgs.GetPosition(inputElement);
+                var position = pattern.EventArgs.GetPosition(element);
                 return new Point(position.X, position.Y);
             });
-
         }
-        public IObservable<Point> Pointer { get; }
+
+        public IObservable<Point> Pointer { get; private set; }
+
         public void Invalidate()
         {
             Application.Current.Dispatcher.Invoke(() => inputElement.InvalidateVisual(), DispatcherPriority.Render);

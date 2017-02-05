@@ -1,5 +1,7 @@
 ﻿namespace OmniGui
 {
+    using System.Linq;
+
     public class Border : Layout
     {
         private Layout child;
@@ -24,10 +26,9 @@
 
         public Layout Child
         {
-            get { return child; }
+            get { return Children.FirstOrDefault(); }
             set
             {
-                child = value;
                 Children.Clear();
                 Children.Add(value);
             }

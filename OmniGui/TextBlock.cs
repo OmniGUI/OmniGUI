@@ -1,9 +1,6 @@
 ﻿namespace OmniGui
 {
     using System;
-    using System.Linq;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBlock : Layout
@@ -13,10 +10,13 @@
 
         public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock),
             typeof(float), new PropertyMetadata() { DefaultValue = 16F });
+
         public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock),
     typeof(float), new PropertyMetadata() { DefaultValue = FontWeight.Normal });
+
         public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock),
 typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
+
         public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBlock),
 typeof(string), new PropertyMetadata() { DefaultValue = null });
 
@@ -26,7 +26,6 @@ typeof(string), new PropertyMetadata() { DefaultValue = null });
         {
             Foreground = new Brush(Colors.Black);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
-
             NotifyRenderAffectedBy(TextProperty);                        
         }
 

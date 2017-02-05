@@ -26,5 +26,7 @@ namespace UwpApp
         public void Invalidate()
         {            
         }
+
+        public IObservable<TextInputArgs> TextInput { get; set; }
     }
 }

@@ -16,7 +16,10 @@ namespace OmniGui
         {
             Children = new OwnedList<Layout>(this);
             Pointer = new PointerEvents(this, Platform.Current.EventDriver);
+            Keyboard = new KeyboardEvents(Platform.Current.EventDriver);
         }
+
+        public KeyboardEvents Keyboard { get; set; }
 
         protected void NotifyRenderAffectedBy(params ExtendedProperty[] properties)
         {
