@@ -1,4 +1,6 @@
-﻿namespace OmniGui.Xaml
+﻿using System.Reactive.Linq;
+
+namespace OmniGui.Xaml
 {
     using System;
     using System.Reflection;
@@ -12,12 +14,12 @@
 
         protected override void PerformAssigment(Assignment assignment, BuildContext buildContext)
         {
-            var model = new Model();
+
 
             var bd = assignment.Value as BindingDefinition;
             if (bd != null)
             {
-                CreateBinding(model, bd);
+                CreateBinding(bd);
             }
             else
             {
@@ -25,16 +27,20 @@
             }            
         }
 
-        private void CreateBinding(object model, BindingDefinition assignment)
+        private void CreateBinding(BindingDefinition assignment)
         {
-            var sourceProp = model.GetType().GetRuntimeProperty(assignment.ObservableName);
-            var sourceObs = (IObservable<object>) sourceProp.GetValue(model);
-
             var targetObj = (Layout) assignment.TargetInstance;
-            var extProp = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
-            var observer = targetObj.GetObserver(extProp);
+            var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
+            obs.Where(o => o != null)
+                .Subscribe(context =>
+            {
+                var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
+                var sourceObs = (IObservable<object>)sourceProp.GetValue(context);
+                var extProp = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
+                var observer = targetObj.GetObserver(extProp);
 
-            sourceObs.Subscribe(observer);
+                sourceObs.Subscribe(observer);
+            });
         }
     }
 }

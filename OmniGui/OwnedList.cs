@@ -1,23 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DynamicData;
 
 namespace OmniGui
 {
-    public class OwnedList<T>  : IEnumerable<T> where T : IChild
+    public class OwnedList<T> : IEnumerable<T> where T : IChild
     {
+        private readonly SourceList<T> inner = new SourceList<T>();
         private readonly object parent;
-        private readonly IList<T> inner = new List<T>();
+        private IDisposable subs;
 
         public OwnedList(object parent)
         {
             this.parent = parent;
         }
 
-        public void Add(T child)
-        {
-            child.Parent = parent;
-            inner.Add(child);
-        }
+        public int Count => inner.Count;
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -26,10 +25,20 @@ namespace OmniGui
 
         public IEnumerator<T> GetEnumerator()
         {
-            return inner.GetEnumerator();
+            return inner.Items.GetEnumerator();
         }
 
-        public int Count => inner.Count;
+        public void OnChildAdded(Action<T> action)
+        {
+            subs = inner.Connect().OnItemAdded(action)
+                .Subscribe();
+        }
+
+        public void Add(T child)
+        {
+            child.Parent = parent;
+            inner.Add(child);
+        }
 
         public void Clear()
         {

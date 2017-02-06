@@ -1,4 +1,7 @@
-﻿<Grid xmlns="root" Background="White">
+﻿<Grid xmlns="root" Background="White" xmlns:local="using:WpfApp;assembly=WpfApp">
+    <Grid.DataContext>
+        <local:SampleViewModel />
+    </Grid.DataContext>
     <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition />
@@ -10,9 +13,9 @@
     <Grid Background="Red"/>
     <StackPanel Grid.Column="1" VerticalAlignment="Center" >
         <TextBlock Text="{Binding Text}" />
-        <TextBox Text="SAMPLE"  />
+        <!--<TextBox Text="SAMPLE"  />-->
     </StackPanel>
     <Grid Grid.Column="0" Grid.Row="1" Background="Yellow"/>
     <Border Margin="8" Grid.Column="1" Grid.Row="1" Background="Gold" BorderBrush="Black" BorderThickness="2" CornerRadius="6"/>
-    <Button Command="Something" Grid.Column="1" Grid.Row="1"/>
+    <!--<Button Command="Something" Grid.Column="1" Grid.Row="1"/>-->
 </Grid>

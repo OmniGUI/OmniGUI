@@ -12,14 +12,28 @@ namespace OmniGui
     {
         protected static readonly PropertyEngine PropertyEngine = new PropertyEngine(o => ((IChild) o).Parent);
 
+        public static readonly ExtendedProperty DataContextProperty = PropertyEngine.RegisterProperty("DataContext",
+            typeof(Layout), typeof(object), new PropertyMetadata());
+
         protected Layout()
         {
             Children = new OwnedList<Layout>(this);
+            Children.OnChildAdded(layout =>
+            {
+                layout.DataContext = DataContext;
+                this.GetChangedObservable(DataContextProperty).Subscribe(o => layout.DataContext = o);
+            });
             Pointer = new PointerEvents(this, Platform.Current.EventDriver);
             Keyboard = new KeyboardEvents(Platform.Current.EventDriver);
         }
 
-        public KeyboardEvents Keyboard { get; set; }
+        public object DataContext
+        {
+            get { return GetValue(DataContextProperty); }
+            set { SetValue(DataContextProperty, value); }
+        }
+
+        public KeyboardEvents Keyboard { get; private set; }
 
         protected void NotifyRenderAffectedBy(params ExtendedProperty[] properties)
         {
