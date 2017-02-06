@@ -21,5 +21,10 @@
             var t = new CanvasTextLayout(session, formattedText.Text, new CanvasTextFormat(), constraintWidth, constraintHeight);
             return new Size(t.DrawBounds.Width, t.DrawBounds.Height);
         }
+
+        public double GetHeight(string fontFamily)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
