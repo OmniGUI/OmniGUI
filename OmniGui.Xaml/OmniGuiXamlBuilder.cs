@@ -34,13 +34,29 @@ namespace OmniGui.Xaml
             obs.Where(o => o != null)
                 .Subscribe(context =>
             {
-                var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
-                var sourceObs = (IObservable<object>)sourceProp.GetValue(context);
-                var extProp = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
-                var observer = targetObj.GetObserver(extProp);
-
-                sourceObs.Subscribe(observer);
+                //BindSourceToTarget(assignment, context, targetObj);
+                BindTargetToSource(assignment, context, targetObj);
             });
+        }
+
+        private static void BindSourceToTarget(BindingDefinition assignment, object context, Layout targetObj)
+        {
+            var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
+            var sourceObs = (IObservable<object>) sourceProp.GetValue(context);
+            var targetProperty = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
+            var observer = targetObj.GetObserver(targetProperty);
+
+            sourceObs.Subscribe(observer);
+        }
+
+        private static void BindTargetToSource(BindingDefinition assignment, object context, Layout targetObj)
+        {
+            var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
+            var sourceObs = (IObserver<object>)sourceProp.GetValue(context);
+            var targetProperty = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
+            var observer = targetObj.GetChangedObservable(targetProperty);
+
+            observer.Subscribe(sourceObs);
         }
     }
 }

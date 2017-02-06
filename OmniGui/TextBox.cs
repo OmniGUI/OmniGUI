@@ -86,9 +86,13 @@ namespace OmniGui
 
         public string Text
         {
-            get { return textBlock.Text; }
+            get
+            {
+                return textBlock.Text;
+            }
             set
             {
+                SetValue(TextProperty, value);
                 textBlock.Text = value;
             }
         }
