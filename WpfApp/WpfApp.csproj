@@ -94,7 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Layout.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </None>

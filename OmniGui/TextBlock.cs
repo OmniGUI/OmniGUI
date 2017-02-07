@@ -12,7 +12,7 @@
             typeof(float), new PropertyMetadata() { DefaultValue = 16F });
 
         public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock),
-    typeof(float), new PropertyMetadata() { DefaultValue = FontWeight.Normal });
+    typeof(float), new PropertyMetadata() { DefaultValue = FontWeights.Normal });
 
         public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock),
 typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
@@ -48,9 +48,9 @@ typeof(string), new PropertyMetadata() { DefaultValue = null });
             }
         }
 
-        public FontWeight FontWeight
+        public FontWeights FontWeight
         {
-            get { return (FontWeight)GetValue(FontWeightProperty); }
+            get { return (FontWeights)GetValue(FontWeightProperty); }
             set
             {
                 SetValue(FontWeightProperty, value);

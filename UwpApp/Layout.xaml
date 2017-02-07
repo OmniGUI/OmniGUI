@@ -1,15 +1,28 @@
-﻿<Grid xmlns="root" Background="White">
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition />
-        <ColumnDefinition />
-    </Grid.ColumnDefinitions>
+﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:WpfApp;assembly=WpfApp">
     <Grid.RowDefinitions>
         <RowDefinition />
-        <RowDefinition />
+        <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
-    <StackPanel>
-        <Button Command="Whatever" Grid.Column="1" Grid.Row="1" />
-        <TextBox Text="HOLA" />
+    <StackPanel  Grid.RowSpan="2">
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Name:"></TextBlock>
+            <TextBox Grid.Column="1" />
+        </Grid>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Identifier:" />
+            <TextBlock Grid.Column="1" Text="1-222-1" HorizontalAlignment="Center" />
+        </Grid>
+
     </StackPanel>
+    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" Text="Aceptar" RequestedSize="100,-"></Button>
+
 </Grid>

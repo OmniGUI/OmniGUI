@@ -6,7 +6,7 @@ using OmniGui;
 
 namespace UwpApp.Plugin
 {
-    using FontWeight = OmniGui.FontWeight;
+    using FontWeights = OmniGui.FontWeights;
 
     public static class ConvertExtensions
     {
@@ -35,16 +35,16 @@ namespace UwpApp.Plugin
             return new CanvasSolidColorBrush(resourceCreator, brush.Color.ToWin2D());
         }
 
-        public static Windows.UI.Text.FontWeight ToWin2D(this FontWeight fontWeight)
+        public static Windows.UI.Text.FontWeight ToWin2D(this FontWeights fontWeight)
         {
             switch (fontWeight)
             {
-                case FontWeight.Normal:
-                    return FontWeights.Normal;
-                case FontWeight.Bold:
-                    return FontWeights.Bold;
-                case FontWeight.ExtraBold:
-                    return FontWeights.ExtraBold;
+                case FontWeights.Normal:
+                    return Windows.UI.Text.FontWeights.Normal;
+                case FontWeights.Bold:
+                    return Windows.UI.Text.FontWeights.Bold;
+                case FontWeights.ExtraBold:
+                    return Windows.UI.Text.FontWeights.ExtraBold;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fontWeight), fontWeight, null);
             }

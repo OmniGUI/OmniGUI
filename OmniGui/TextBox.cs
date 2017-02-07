@@ -13,7 +13,7 @@ namespace OmniGui
             typeof(float), new PropertyMetadata { DefaultValue = 16F });
 
         public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBox),
-            typeof(float), new PropertyMetadata { DefaultValue = FontWeight.Normal });
+            typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
 
         public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBox),
             typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
@@ -69,9 +69,9 @@ namespace OmniGui
             }
         }
 
-        public FontWeight FontWeight
+        public FontWeights FontWeight
         {
-            get { return (FontWeight)GetValue(FontWeightProperty); }
+            get { return (FontWeights)GetValue(FontWeightProperty); }
             set
             {
                 SetValue(FontWeightProperty, value);

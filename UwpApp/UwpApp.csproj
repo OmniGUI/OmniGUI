@@ -128,7 +128,7 @@
     </ApplicationDefinition>
     <Content Include="Layout.xaml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>

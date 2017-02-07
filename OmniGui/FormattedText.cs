@@ -8,20 +8,11 @@ namespace OmniGui
         public Brush Brush { get; set; }
         public Size Constraint { get; set; }
         public float FontSize { get; set; }
-        public FontWeight FontWeight { get; set; }
+        public FontWeights FontWeight { get; set; }
 
         public Size Measure()
         {
             return Platform.Current.TextEngine.Measure(this);
         }
-
-
-    }
-
-    public enum FontWeight
-    {
-        Normal,
-        Bold,
-        ExtraBold,
     }
 }
