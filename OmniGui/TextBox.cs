@@ -33,9 +33,21 @@ namespace OmniGui
                 
             }.AddChild(textBlock));
 
+            this.NotifyRenderAffectedBy(TextProperty);
+
             Foreground = new Brush(Colors.Black);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
-            Keyboard.TextInput.Subscribe(args => Text = ProcessTextInput(args));
+            Keyboard.KeyInput.Subscribe(args => Text = ProcessKeyInput(args));
+        }
+
+        private string ProcessKeyInput(KeyInputArgs args)
+        {
+            if (args.Text.First() == Chars.Backspace)
+            {
+                return new string(Text.DropLast(1).ToArray());
+            }
+
+            return string.Concat(Text, args.Text);
         }
 
         private string ProcessTextInput(TextInputArgs args)

@@ -1,9 +1,9 @@
-﻿namespace UwpApp
-{
-    using Microsoft.Graphics.Canvas;
-    using Microsoft.Graphics.Canvas.Text;
-    using OmniGui;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
+using OmniGui;
 
+namespace UwpApp.Plugin
+{
     public class Win2DTextEngine : ITextEngine
     {
         private CanvasDrawingSession session;

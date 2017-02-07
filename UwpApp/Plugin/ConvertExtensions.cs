@@ -1,10 +1,11 @@
-﻿namespace UwpApp
+﻿using System;
+using Windows.UI.Text;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
+using OmniGui;
+
+namespace UwpApp.Plugin
 {
-    using System;
-    using Windows.UI.Text;
-    using Microsoft.Graphics.Canvas;
-    using Microsoft.Graphics.Canvas.Brushes;
-    using OmniGui;
     using FontWeight = OmniGui.FontWeight;
 
     public static class ConvertExtensions

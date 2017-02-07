@@ -1,11 +1,9 @@
-﻿namespace UwpApp
-{
-    using Microsoft.Graphics.Canvas;
-    using Microsoft.Graphics.Canvas.Geometry;
-    using Microsoft.Graphics.Canvas.Text;
-    using OmniGui;
-    using Color = Windows.UI.Color;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
+using OmniGui;
 
+namespace UwpApp.Plugin
+{
     internal class Win2DDrawingContext : IDrawingContext
     {
         private readonly CanvasDrawingSession drawingSession;

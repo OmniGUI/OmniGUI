@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
+using UwpApp.Plugin;
 
 namespace UwpApp
 {
