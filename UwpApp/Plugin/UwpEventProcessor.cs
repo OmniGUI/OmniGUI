@@ -9,15 +9,18 @@ using OmniGui;
 
 namespace UwpApp.Plugin
 {
+    using Microsoft.Graphics.Canvas.UI.Xaml;
     using Point = OmniGui.Point;
 
     public class UwpEventProcessor : IEventProcessor
     {
         private readonly FrameworkElement inputElement;
+        private readonly CanvasControl canvas;
 
-        public UwpEventProcessor(FrameworkElement inputElement)
+        public UwpEventProcessor(FrameworkElement inputElement, CanvasControl canvas)
         {
             this.inputElement = inputElement;
+            this.canvas = canvas;
             Pointer = GetPointerObservable(inputElement);
             KeyInput = GetKeyInputObservable();
         }
@@ -50,7 +53,7 @@ namespace UwpApp.Plugin
         public IObservable<Point> Pointer { get; }
         public void Invalidate()
         {
-            Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => inputElement.InvalidateMeasure());
+            Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => canvas.Invalidate());
         }
 
         public IObservable<TextInputArgs> TextInput => new Subject<TextInputArgs>();

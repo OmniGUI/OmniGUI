@@ -33,7 +33,7 @@ namespace UwpApp
             this.InitializeComponent();
 
             Platform.Current.TextEngine = textEngine;
-            Platform.Current.EventDriver = new UwpEventProcessor(this);
+            Platform.Current.EventDriver = new UwpEventProcessor(this, Canvas);
 
             Loaded += OnLoaded;
         }
