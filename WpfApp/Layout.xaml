@@ -1,4 +1,7 @@
 ﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:WpfApp;assembly=WpfApp">
+    <Grid.DataContext>
+        <local:SampleViewModel />
+    </Grid.DataContext>
     <Grid.RowDefinitions>
         <RowDefinition />
         <RowDefinition Height="Auto"/>
@@ -19,7 +22,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Identifier:" />
-            <TextBlock Grid.Column="1" Text="1-222-1" HorizontalAlignment="Center" />
+            <TextBlock Grid.Column="1" Text="{Observe Text}" HorizontalAlignment="Center" />
         </Grid>
 
     </StackPanel>

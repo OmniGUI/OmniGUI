@@ -1,47 +1,45 @@
-﻿using System.Reactive.Linq;
-
-namespace OmniGui.Xaml
+﻿namespace OmniGui.Xaml
 {
     using System;
+    using System.Reactive.Linq;
     using System.Reflection;
     using OmniXaml;
 
     public class OmniGuiXamlBuilder : ExtendedObjectBuilder
     {
-        public OmniGuiXamlBuilder(IInstanceCreator creator, ObjectBuilderContext objectBuilderContext, IContextFactory contextFactory) : base(creator, objectBuilderContext, contextFactory)
+        public OmniGuiXamlBuilder(IInstanceCreator creator, ObjectBuilderContext objectBuilderContext,
+            IContextFactory contextFactory) : base(creator, objectBuilderContext, contextFactory)
         {
         }
 
         protected override void PerformAssigment(Assignment assignment, BuildContext buildContext)
         {
-
-
-            var bd = assignment.Value as BindDefinition;
+            var bd = assignment.Value as ObserveDefinition;
             if (bd != null)
             {
-                CreateBinding(bd);
+                BindToObservable(bd);
             }
             else
             {
                 base.PerformAssigment(assignment, buildContext);
-            }            
+            }
         }
 
-        private void CreateBinding(BindDefinition assignment)
+        private static void BindToObservable(ObserveDefinition assignment)
         {
             var targetObj = (Layout) assignment.TargetInstance;
             var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
             obs.Where(o => o != null)
                 .Subscribe(context =>
-            {
-                //BindSourceToTarget(assignment, context, targetObj);
-                BindTargetToSource(assignment, context, targetObj);
-            });
+                {
+                    BindSourceToTarget(assignment, context, targetObj);
+                    //BindTargetToSource(assignment, context, targetObj);
+                });
         }
 
-        private static void BindSourceToTarget(BindDefinition assignment, object context, Layout targetObj)
+        private static void BindSourceToTarget(ObserveDefinition assignment, object context, Layout targetObj)
         {
-            var sourceProp = context.GetType().GetRuntimeProperty(assignment.TargetProperty);
+            var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
             var sourceObs = (IObservable<object>) sourceProp.GetValue(context);
             var targetProperty = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
             var observer = targetObj.GetObserver(targetProperty);
@@ -49,10 +47,10 @@ namespace OmniGui.Xaml
             sourceObs.Subscribe(observer);
         }
 
-        private static void BindTargetToSource(BindDefinition assignment, object context, Layout targetObj)
+        private static void BindTargetToSource(ObserveDefinition assignment, object context, Layout targetObj)
         {
-            var sourceProp = context.GetType().GetRuntimeProperty(assignment.TargetProperty);
-            var sourceObs = (IObserver<object>)sourceProp.GetValue(context);
+            var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
+            var sourceObs = (IObserver<object>) sourceProp.GetValue(context);
             var targetProperty = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
             var observer = targetObj.GetChangedObservable(targetProperty);
 
