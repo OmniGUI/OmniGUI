@@ -6,15 +6,15 @@
     {
         private readonly LinkMode linkMode;
         public object TargetInstance { get; }
-        public Member AssignmentMember { get; }
-        public string TargetProperty { get; }
+        public Member TargetMember { get; }
+        public string SourceProperty { get; }
 
-        public BindDefinition(object targetInstance, Member assignmentMember, string targetProperty, LinkMode linkMode)
+        public BindDefinition(object targetInstance, Member targetMember, string sourceProperty, LinkMode linkMode)
         {
             this.linkMode = linkMode;
             TargetInstance = targetInstance;
-            AssignmentMember = assignmentMember;
-            TargetProperty = targetProperty;
+            TargetMember = targetMember;
+            SourceProperty = sourceProperty;
         }
         public LinkMode LinkMode { get; set; }
         public bool SourceFollowsTarget => linkMode == LinkMode.FullLink || linkMode == LinkMode.SourceFollowsTarget;

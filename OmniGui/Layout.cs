@@ -24,7 +24,7 @@ namespace OmniGui
                 this.GetChangedObservable(DataContextProperty).Subscribe(o => layout.DataContext = o);
             });
             Pointer = new PointerEvents(this, Platform.Current.EventDriver);
-            Keyboard = new KeyboardEvents(Platform.Current.EventDriver);
+            Keyboard = new KeyboardEvents(this, Platform.Current.EventDriver, Platform.Current.FocusedElement);
         }
 
         public object DataContext

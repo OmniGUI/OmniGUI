@@ -14,7 +14,15 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Name:"></TextBlock>
-            <TextBox Grid.Column="1" Text="{Bind Text, LinkMode=FullLink}" />
+            <TextBox Grid.Column="1" Text="{Bind Name, LinkMode=FullLink}" />
+        </Grid>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Surname:"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Bind Surname, LinkMode=FullLink}" />
         </Grid>
         <Grid Margin="5">
             <Grid.ColumnDefinitions>

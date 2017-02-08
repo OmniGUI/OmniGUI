@@ -113,9 +113,9 @@ typeof(string), new PropertyMetadata() { DefaultValue = null });
             set
             {
                 currentText = value;
-                var subject = GetObserver(TextProperty);
-                subject.OnNext(value);
                 UpdateFormattedText();
+                var subject = GetObserver(TextProperty);
+                subject.OnNext(value);                
             }
         }
 

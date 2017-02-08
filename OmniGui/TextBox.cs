@@ -33,6 +33,8 @@ namespace OmniGui
                 
             }.AddChild(textBlock));
 
+            Pointer.Down.Subscribe(point => Platform.Current.SetFocusedElement(this));
+
             this.NotifyRenderAffectedBy(TextProperty);
 
             Foreground = new Brush(Colors.Black);

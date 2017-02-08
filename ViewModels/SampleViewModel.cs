@@ -7,7 +7,8 @@
 
     public class SampleViewModel : INotifyPropertyChanged
     {
-        private string text;
+        private string name;
+        private string surname;
 
         public SampleViewModel()
         {
@@ -17,12 +18,22 @@
 
         public ISubject<object> WrittenText { get; }
 
-        public string Text
+        public string Name
         {
-            get { return text; }
+            get { return name; }
             set
             {
-                text = value;
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Surname
+        {
+            get { return surname; }
+            set
+            {
+                surname = value;
                 OnPropertyChanged();
             }
         }

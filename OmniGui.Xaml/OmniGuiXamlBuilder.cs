@@ -42,12 +42,12 @@
                 {
                     if (definition.TargetFollowsSource)
                     {
-                        SubscribeTargetToSource(definition.AssignmentMember.MemberName, model, targetObj, targetObj.GetProperty(definition.TargetProperty));
+                        SubscribeTargetToSource(definition.SourceProperty, model, targetObj, targetObj.GetProperty(definition.TargetMember.MemberName));
                     }
 
                     if (definition.SourceFollowsTarget)
                     {
-                        SubscribeSourceToTarget(definition.AssignmentMember.MemberName, model, targetObj, targetObj.GetProperty(definition.TargetProperty));
+                        SubscribeSourceToTarget(definition.SourceProperty, model, targetObj, targetObj.GetProperty(definition.TargetMember.MemberName));
                     }
                 });
         }
