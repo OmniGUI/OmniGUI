@@ -16,7 +16,7 @@ namespace OmniGui.Xaml
         {
 
 
-            var bd = assignment.Value as BindingDefinition;
+            var bd = assignment.Value as BindDefinition;
             if (bd != null)
             {
                 CreateBinding(bd);
@@ -27,7 +27,7 @@ namespace OmniGui.Xaml
             }            
         }
 
-        private void CreateBinding(BindingDefinition assignment)
+        private void CreateBinding(BindDefinition assignment)
         {
             var targetObj = (Layout) assignment.TargetInstance;
             var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
@@ -39,9 +39,9 @@ namespace OmniGui.Xaml
             });
         }
 
-        private static void BindSourceToTarget(BindingDefinition assignment, object context, Layout targetObj)
+        private static void BindSourceToTarget(BindDefinition assignment, object context, Layout targetObj)
         {
-            var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
+            var sourceProp = context.GetType().GetRuntimeProperty(assignment.TargetProperty);
             var sourceObs = (IObservable<object>) sourceProp.GetValue(context);
             var targetProperty = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
             var observer = targetObj.GetObserver(targetProperty);
@@ -49,9 +49,9 @@ namespace OmniGui.Xaml
             sourceObs.Subscribe(observer);
         }
 
-        private static void BindTargetToSource(BindingDefinition assignment, object context, Layout targetObj)
+        private static void BindTargetToSource(BindDefinition assignment, object context, Layout targetObj)
         {
-            var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
+            var sourceProp = context.GetType().GetRuntimeProperty(assignment.TargetProperty);
             var sourceObs = (IObserver<object>)sourceProp.GetValue(context);
             var targetProperty = targetObj.GetProperty(assignment.AssignmentMember.MemberName);
             var observer = targetObj.GetChangedObservable(targetProperty);
