@@ -15,9 +15,10 @@
 
         public object GetValue(ExtensionValueContext context)
         {
-            return new BindDefinition(context.Assignment.Target.Instance, context.Assignment.Member, TargetProperty);
+            return new BindDefinition(context.Assignment.Target.Instance, context.Assignment.Member, TargetProperty, LinkMode);
         }
 
-        public string TargetProperty { get; set; }
+        public string TargetProperty { get; }
+        public LinkMode LinkMode { get; set; }
     }
 }

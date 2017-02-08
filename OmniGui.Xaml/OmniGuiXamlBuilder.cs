@@ -1,9 +1,11 @@
 ﻿namespace OmniGui.Xaml
 {
     using System;
+    using System.ComponentModel;
     using System.Reactive.Linq;
     using System.Reflection;
     using OmniXaml;
+    using Zafiro.PropertySystem.Standard;
 
     public class OmniGuiXamlBuilder : ExtendedObjectBuilder
     {
@@ -14,10 +16,16 @@
 
         protected override void PerformAssigment(Assignment assignment, BuildContext buildContext)
         {
-            var bd = assignment.Value as ObserveDefinition;
-            if (bd != null)
+            var od = assignment.Value as ObserveDefinition;
+            var bd = assignment.Value as BindDefinition;
+
+            if (od != null)
             {
-                BindToObservable(bd);
+                BindToObservable(od);
+            }
+            else if (bd != null)
+            {
+                BindToProperty(bd);
             }
             else
             {
@@ -25,19 +33,63 @@
             }
         }
 
-        private static void BindToObservable(ObserveDefinition assignment)
+        private void BindToProperty(BindDefinition definition)
         {
-            var targetObj = (Layout) assignment.TargetInstance;
+            var targetObj = (Layout) definition.TargetInstance;
+            var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
+            obs.Where(o => o != null)
+                .Subscribe(model =>
+                {
+                    if (definition.TargetFollowsSource)
+                    {
+                        SubscribeTargetToSource(definition.AssignmentMember.MemberName, model, targetObj, targetObj.GetProperty(definition.TargetProperty));
+                    }
+
+                    if (definition.SourceFollowsTarget)
+                    {
+                        SubscribeSourceToTarget(definition.AssignmentMember.MemberName, model, targetObj, targetObj.GetProperty(definition.TargetProperty));
+                    }
+                });
+        }
+
+        private void SubscribeSourceToTarget(string modelProperty, object model, Layout layout, ExtendedProperty property)
+        {
+            var obs = layout.GetChangedObservable(property);
+            obs.Subscribe(o =>
+            {
+                var propInfo = model.GetType().GetRuntimeProperty(modelProperty);
+                propInfo.SetValue(model, o);
+            });
+        }
+
+        private static void SubscribeTargetToSource(string sourceMemberName, object sourceObject, Layout target, ExtendedProperty property)
+        {
+            var notifyProp = (INotifyPropertyChanged) sourceObject;
+            var obs = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                eh => notifyProp.PropertyChanged += eh, ev => notifyProp.PropertyChanged -= ev);
+            obs.Subscribe(pattern =>
+            {
+                if (pattern.EventArgs.PropertyName == sourceMemberName)
+                {
+                    var value = sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject);
+                    target.SetValue(property, value);
+                }
+            });
+        }
+
+        private static void BindToObservable(ObserveDefinition definition)
+        {
+            var targetObj = (Layout) definition.TargetInstance;
             var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
             obs.Where(o => o != null)
                 .Subscribe(context =>
                 {
-                    BindSourceToTarget(assignment, context, targetObj);
-                    //BindTargetToSource(assignment, context, targetObj);
+                    BindSourceObservableToTarget(definition, context, targetObj);
+                    //BindTargetToSource(definition, context, targetObj);
                 });
         }
 
-        private static void BindSourceToTarget(ObserveDefinition assignment, object context, Layout targetObj)
+        private static void BindSourceObservableToTarget(ObserveDefinition assignment, object context, Layout targetObj)
         {
             var sourceProp = context.GetType().GetRuntimeProperty(assignment.ObservableName);
             var sourceObs = (IObservable<object>) sourceProp.GetValue(context);

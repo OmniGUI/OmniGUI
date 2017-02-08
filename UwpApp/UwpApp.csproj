@@ -156,6 +156,10 @@
       <Project>{74503677-D755-47D7-A56C-4FC7C6FA1F7D}</Project>
       <Name>OmniXaml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
+      <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
+      <Name>ViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj">
       <Project>{1d971911-3c12-461d-8b96-c4e631ec1b7c}</Project>
       <Name>Zafiro.Core</Name>

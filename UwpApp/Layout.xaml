@@ -1,4 +1,7 @@
-﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:WpfApp;assembly=WpfApp">
+﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:ViewModels;assembly=ViewModels">
+    <Grid.DataContext>
+        <local:SampleViewModel />
+    </Grid.DataContext>
     <Grid.RowDefinitions>
         <RowDefinition />
         <RowDefinition Height="Auto"/>
@@ -11,7 +14,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Name:"></TextBlock>
-            <TextBox Grid.Column="1" />
+            <TextBox Grid.Column="1" Text="{Bind Text, LinkMode=FullLink}" />
         </Grid>
         <Grid Margin="5">
             <Grid.ColumnDefinitions>
@@ -19,7 +22,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Identifier:" />
-            <TextBlock Grid.Column="1" Text="1-222-1" HorizontalAlignment="Center" />
+            <TextBlock Grid.Column="1" Text="12345678" HorizontalAlignment="Center" />
         </Grid>
 
     </StackPanel>

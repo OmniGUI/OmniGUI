@@ -1,4 +1,4 @@
-﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:WpfApp;assembly=WpfApp">
+﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:ViewModels;assembly=ViewModels">
     <Grid.DataContext>
         <local:SampleViewModel />
     </Grid.DataContext>
@@ -22,7 +22,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Identifier:" />
-            <TextBlock Grid.Column="1" Text="{Observe Text}" HorizontalAlignment="Center" />
+            <TextBlock Grid.Column="1" Text="{Bind Text}" HorizontalAlignment="Center" />
         </Grid>
 
     </StackPanel>

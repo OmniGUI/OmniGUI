@@ -14,9 +14,12 @@
 
         public object GetValue(ExtensionValueContext context)
         {
-            return new ObserveDefinition(context.Assignment.Target.Instance, context.Assignment.Member, ObservableName);
+            return new ObserveDefinition(context.Assignment.Target.Instance, context.Assignment.Member, ObservableName, LinkMode);
         }
 
         public string ObservableName { get; set; }
+
+        public LinkMode LinkMode { get; set; }
+
     }
 }
