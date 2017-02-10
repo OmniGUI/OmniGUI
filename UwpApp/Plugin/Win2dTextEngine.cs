@@ -4,6 +4,9 @@ using OmniGui;
 
 namespace UwpApp.Plugin
 {
+    using System;
+    using Windows.UI.Xaml.Media;
+
     public class Win2DTextEngine : ITextEngine
     {
         private CanvasDrawingSession session;
@@ -15,7 +18,7 @@ namespace UwpApp.Plugin
 
         public Size Measure(FormattedText formattedText)
         {
-            var constraintWidth = (float) (double.IsInfinity(formattedText.Constraint.Width) ? 1000 : formattedText.Constraint.Width);
+            var constraintWidth = (float)(double.IsInfinity(formattedText.Constraint.Width) ? 1000 : formattedText.Constraint.Width);
             var constraintHeight = (float)(double.IsInfinity(formattedText.Constraint.Height) ? 1000 : formattedText.Constraint.Height);
 
             var t = new CanvasTextLayout(session, formattedText.Text, new CanvasTextFormat(), constraintWidth, constraintHeight);
@@ -24,7 +27,12 @@ namespace UwpApp.Plugin
 
         public double GetHeight(string fontFamily)
         {
-            throw new System.NotImplementedException();
+            var canvasTextFormat = new CanvasTextLayout(session, "", new CanvasTextFormat(), 0, 0);
+
+            var fontDpiSize = 16;
+            var fontHeight = Math.Ceiling(fontDpiSize * 1.2);
+            return fontHeight;
+
         }
     }
 }
