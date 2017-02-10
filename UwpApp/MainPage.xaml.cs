@@ -1,52 +1,53 @@
-﻿using Windows.UI.Xaml.Controls;
-
-namespace UwpApp
+﻿namespace UwpApp
 {
     using System;
-    using System.IO;
-    using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows.Input;
-    using Windows.ApplicationModel;
     using Windows.Storage;
     using Windows.UI.Popups;
     using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
     using Microsoft.Graphics.Canvas.UI.Xaml;
     using OmniGui;
+    using OmniGui.Xaml;
     using OmniXaml;
     using OmniXaml.Attributes;
-    using OmniXaml.Services;
+    using Plugin;
 
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Layout layout;
+        [TypeConverterMember(typeof(ICommand))] public static Func<ConverterValueContext, object> CommandConverter =
+            context => new DelegateCommand(async () => await new MessageDialog("Tapped!!").ShowAsync());
+
         private readonly Win2DTextEngine textEngine = new Win2DTextEngine();
+        private Layout layout;
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             Platform.Current.TextEngine = textEngine;
-            Platform.Current.EventDriver = new UwpEventProcessor(this);
+            Platform.Current.EventDriver = new UwpEventProcessor(this, Canvas);
 
             Loaded += OnLoaded;
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            var xamlLoader = new XamlLoader(new[]
-          {
+            var xamlLoader = new OmniGuiXamlLoader(new[]
+            {
                 Assembly.Load(new AssemblyName("OmniGui")),
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
-                 Assembly.Load(new AssemblyName("UwpApp")),
+                Assembly.Load(new AssemblyName("UwpApp")),
+                Assembly.Load(new AssemblyName("ViewModels"))
             });
             var xaml = await GetXaml("Layout.xaml");
 
-            layout = (Layout)xamlLoader.Load(xaml).Instance;
+            layout = (Layout) xamlLoader.Load(xaml).Instance;
         }
 
 
@@ -76,8 +77,5 @@ namespace UwpApp
             var xaml = await FileIO.ReadTextAsync(file);
             return xaml;
         }
-
-        [TypeConverterMember(typeof(ICommand))]
-        public static Func<ConverterValueContext, object> CommandConverter = context => new DelegateCommand(async () => await new MessageDialog("Tapped!!").ShowAsync());
     }
 }

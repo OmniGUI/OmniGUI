@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using OmniGui;
-using OmniGui.Wpf;
+﻿using System.Windows;
 
 namespace WpfApp
 {

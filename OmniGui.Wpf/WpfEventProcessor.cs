@@ -2,27 +2,61 @@ namespace OmniGui.Wpf
 {
     using System;
     using System.Reactive.Linq;
+    using System.Reactive.Subjects;
     using System.Windows;
     using System.Windows.Input;
-    using Point = Point;
+    using System.Windows.Threading;
+    using Point = OmniGui.Point;
 
     public class WpfEventProcessor : IEventProcessor
     {
-        private readonly IFrameworkInputElement inputElement;
+        private readonly FrameworkElement inputElement;
 
-        public WpfEventProcessor(IFrameworkInputElement inputElement)
+        public WpfEventProcessor(FrameworkElement inputElement)
         {
             this.inputElement = inputElement;
+            Pointer = GetPointerObservable(inputElement);
+            TextInput = GetKeyboardObservable(inputElement);
+            KeyInput = GetKeyInputObservable(inputElement);
+        }
+
+        public IObservable<TextInputArgs> TextInput { get; }
+
+        public IObservable<Point> Pointer { get; }
+
+        public IObservable<KeyInputArgs> KeyInput { get; }
+
+        public void Invalidate()
+        {
+            Application.Current.Dispatcher.Invoke(() => inputElement.InvalidateVisual(), DispatcherPriority.Render);
+        }
+
+        private IObservable<KeyInputArgs> GetKeyInputObservable(FrameworkElement element)
+        {
+            var fromEventPattern = Observable.FromEventPattern<TextCompositionEventHandler, TextCompositionEventArgs>(
+                ev => element.PreviewTextInput += ev,
+                ev => element.PreviewTextInput -= ev);
+            return fromEventPattern.Select(ep => new KeyInputArgs {Text = ep.EventArgs.Text});
+        }
+
+        private static IObservable<TextInputArgs> GetKeyboardObservable(IInputElement element)
+        {
+            var fromEventPattern = Observable.FromEventPattern<TextCompositionEventHandler, TextCompositionEventArgs>(
+                ev => element.PreviewTextInput += ev,
+                ev => element.PreviewTextInput -= ev);
+            return fromEventPattern.Select(ep => new TextInputArgs(ep.EventArgs.Text));
+        }
+
+        private static IObservable<Point> GetPointerObservable(IInputElement element)
+        {
             var fromEventPattern = Observable.FromEventPattern<MouseButtonEventHandler, MouseEventArgs>(
-                ev => inputElement.PreviewMouseLeftButtonDown += ev,
-                ev => inputElement.PreviewMouseLeftButtonDown -= ev);
-            Pointer = fromEventPattern.Select(pattern =>
+                ev => element.PreviewMouseLeftButtonDown += ev,
+                ev => element.PreviewMouseLeftButtonDown -= ev);
+            return fromEventPattern.Select(pattern =>
             {
-                var position = pattern.EventArgs.GetPosition(inputElement);
+                var position = pattern.EventArgs.GetPosition(element);
                 return new Point(position.X, position.Y);
             });
-
         }
-        public IObservable<Point> Pointer { get; }
     }
 }

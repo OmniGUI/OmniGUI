@@ -95,15 +95,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConvertExtensions.cs" />
-    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="Plugin\ConvertExtensions.cs" />
+    <Compile Include="Plugin\DelegateCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Win2dDrawingContext.cs" />
-    <Compile Include="Win2dTextEngine.cs" />
-    <Compile Include="UwpEventProcessor.cs" />
+    <Compile Include="Plugin\Win2dDrawingContext.cs" />
+    <Compile Include="Plugin\Win2dTextEngine.cs" />
+    <Compile Include="Plugin\UwpEventProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -128,7 +128,7 @@
     </ApplicationDefinition>
     <Content Include="Layout.xaml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -155,6 +155,14 @@
     <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj">
       <Project>{74503677-D755-47D7-A56C-4FC7C6FA1F7D}</Project>
       <Name>OmniXaml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
+      <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
+      <Name>ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj">
+      <Project>{1d971911-3c12-461d-8b96-c4e631ec1b7c}</Project>
+      <Name>Zafiro.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

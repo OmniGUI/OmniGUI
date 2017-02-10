@@ -1,15 +1,39 @@
-﻿<Grid xmlns="root" Background="White">
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition />
-        <ColumnDefinition />
-    </Grid.ColumnDefinitions>
+﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:ViewModels;assembly=ViewModels">
+    <Grid.DataContext>
+        <local:SampleViewModel />
+    </Grid.DataContext>
     <Grid.RowDefinitions>
         <RowDefinition />
-        <RowDefinition />
+        <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <Grid Background="Red"/>
-    <TextBlock Text="Toallitas Kandoo para que tu ojal brille" Grid.Column="1" />
-    <Grid Grid.Column="0" Grid.Row="1" Background="Yellow"/>
-    <!--<Border Margin="8"  Grid.Column="1" Grid.Row="1" Background="Gold" BorderBrush="Black" BorderThickness="2" CornerRadius="6"/>-->
-    <Button Command="Something" Grid.Column="1" Grid.Row="1"/>
+
+    <StackPanel  Grid.RowSpan="2">
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Name:"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Bind Name, LinkMode=FullLink}" />
+        </Grid>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Surname:"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Bind Surname, LinkMode=FullLink}" />
+        </Grid>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Identifier:" />
+            <TextBlock Grid.Column="1" Text="12345678" HorizontalAlignment="Center" />
+        </Grid>
+
+    </StackPanel>
+    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" Text="Aceptar" RequestedSize="100,-"></Button>
+
 </Grid>

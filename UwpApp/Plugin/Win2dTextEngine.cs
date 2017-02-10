@@ -1,9 +1,9 @@
-﻿namespace UwpApp
-{
-    using Microsoft.Graphics.Canvas;
-    using Microsoft.Graphics.Canvas.Text;
-    using OmniGui;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
+using OmniGui;
 
+namespace UwpApp.Plugin
+{
     public class Win2DTextEngine : ITextEngine
     {
         private CanvasDrawingSession session;
@@ -20,6 +20,11 @@
 
             var t = new CanvasTextLayout(session, formattedText.Text, new CanvasTextFormat(), constraintWidth, constraintHeight);
             return new Size(t.DrawBounds.Width, t.DrawBounds.Height);
+        }
+
+        public double GetHeight(string fontFamily)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

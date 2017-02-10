@@ -15,6 +15,11 @@ namespace AndroidApp.AndPlugin
             
             
             return new Size(rect.Width(), rect.Height());
-        }       
+        }
+
+        public double GetHeight(string fontFamily)
+        {
+            return 10D;
+        }
     }
 }

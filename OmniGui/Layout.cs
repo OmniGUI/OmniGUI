@@ -1,6 +1,8 @@
 namespace OmniGui
 {
     using System;
+    using System.Linq;
+    using System.Reactive.Linq;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
@@ -10,10 +12,41 @@ namespace OmniGui
     {
         protected static readonly PropertyEngine PropertyEngine = new PropertyEngine(o => ((IChild) o).Parent);
 
+        public static readonly ExtendedProperty DataContextProperty = PropertyEngine.RegisterProperty("DataContext",
+            typeof(Layout), typeof(object), new PropertyMetadata());
+
         protected Layout()
         {
             Children = new OwnedList<Layout>(this);
+            Children.OnChildAdded(layout =>
+            {
+                layout.DataContext = DataContext;
+                this.GetChangedObservable(DataContextProperty).Subscribe(o => layout.DataContext = o);
+            });
             Pointer = new PointerEvents(this, Platform.Current.EventDriver);
+            Keyboard = new KeyboardEvents(this, Platform.Current.EventDriver, Platform.Current.FocusedElement);
+        }
+
+        public object DataContext
+        {
+            get { return GetValue(DataContextProperty); }
+            set { SetValue(DataContextProperty, value); }
+        }
+
+        public KeyboardEvents Keyboard { get; private set; }
+
+        protected void NotifyRenderAffectedBy(params ExtendedProperty[] properties)
+        {
+            var observables = properties
+                .Select(GetChangedObservable);
+
+            var ticks = observables.Merge();
+            ticks.Subscribe(_ => InvalidateRender());
+        }
+
+        private void InvalidateRender()
+        {
+            Platform.Current.EventDriver.Invalidate();
         }
 
         public PointerEvents Pointer { get; set; }
@@ -245,6 +278,21 @@ namespace OmniGui
             {
                 layout.Render(drawingContext);
             }
+        }
+
+        public IObservable<object> GetChangedObservable(ExtendedProperty property)
+        {
+            return PropertyEngine.GetChangedObservable(property, this);
+        }
+
+        public IObserver<object> GetObserver(ExtendedProperty property)
+        {
+            return PropertyEngine.GetObserver(property, this);
+        }
+
+        public ExtendedProperty GetProperty(string assignmentMemberMemberName)
+        {
+            return PropertyEngine.GetProperty(assignmentMemberMemberName, GetType());
         }
     }
 }

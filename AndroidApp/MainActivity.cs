@@ -26,6 +26,7 @@ namespace AndroidApp
                 Assembly.Load(new AssemblyName("OmniGui")),
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
                 Assembly.Load(new AssemblyName("AndroidApp")),
+                Assembly.Load(new AssemblyName("ViewModels")),
             });
 
             string xaml;

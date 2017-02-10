@@ -1,5 +1,6 @@
 ﻿namespace OmniGui
 {
+    using System;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBlock : Layout
@@ -9,14 +10,23 @@
 
         public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock),
             typeof(float), new PropertyMetadata() { DefaultValue = 16F });
+
         public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock),
-    typeof(float), new PropertyMetadata() { DefaultValue = FontWeight.Normal });
+    typeof(float), new PropertyMetadata() { DefaultValue = FontWeights.Normal });
+
         public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock),
 typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
+
+        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBlock),
+typeof(string), new PropertyMetadata() { DefaultValue = null });
+
+        private string currentText;
 
         public TextBlock()
         {
             Foreground = new Brush(Colors.Black);
+            GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
+            NotifyRenderAffectedBy(TextProperty);                        
         }
 
         private void UpdateFormattedText()
@@ -38,9 +48,9 @@ typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
             }
         }
 
-        public FontWeight FontWeight
+        public FontWeights FontWeight
         {
-            get { return (FontWeight)GetValue(FontWeightProperty); }
+            get { return (FontWeights)GetValue(FontWeightProperty); }
             set
             {
                 SetValue(FontWeightProperty, value);
@@ -62,7 +72,8 @@ typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
         {
             if (Text == null)
             {
-                return Size.Empty;
+                var height = Platform.Current.TextEngine.GetHeight(FontFamily);
+                return new Size(0, height);
             }
 
             if (TextWrapping == TextWrapping.Wrap)
@@ -99,11 +110,13 @@ typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
 
         public string Text
         {
-            get { return text; }
+            get { return currentText; }
             set
             {
-                text = value;
+                currentText = value;
                 UpdateFormattedText();
+                var subject = GetObserver(TextProperty);
+                subject.OnNext(value);                
             }
         }
 

@@ -5,6 +5,7 @@ using OmniGui;
 
 namespace AndroidApp.AndPlugin
 {
+    using System.Reactive.Subjects;
     using Point = Point;
 
     public class AndroidEventProcessor : IEventProcessor
@@ -25,5 +26,16 @@ namespace AndroidApp.AndPlugin
         }
 
         public IObservable<Point> Pointer { get; }
+        IObservable<Point> IEventProcessor.Pointer
+        {
+            get { return Pointer; }
+        }
+
+        public IObservable<TextInputArgs> TextInput { get; } = new Subject<TextInputArgs>();
+        public IObservable<KeyInputArgs> KeyInput { get; } = new Subject<KeyInputArgs>();
+        public void Invalidate()
+        {
+            
+        }
     }
 }

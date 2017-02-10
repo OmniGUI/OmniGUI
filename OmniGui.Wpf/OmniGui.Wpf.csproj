@@ -33,9 +33,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Reactive.Linq, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
@@ -60,12 +57,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj">
-      <Project>{4F0F11A7-EFFC-4384-98EC-51C6E1FC90B2}</Project>
+      <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
       <Name>OmniGui</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="project.json" />
+    <PackageReference Include="System.Reactive">
+      <Version>3.1.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

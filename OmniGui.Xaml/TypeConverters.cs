@@ -5,6 +5,8 @@ using OmniXaml.Attributes;
 
 namespace OmniGui.Xaml
 {
+    using Grid;
+
     public static class TypeConverters
     {
         [TypeConverterMember(typeof(Size))]
@@ -18,6 +20,9 @@ namespace OmniGui.Xaml
 
         [TypeConverterMember(typeof(Thickness))]
         public static Func<ConverterValueContext, object> ThicknessConverter = context => Thickness.Parse((string)context.Value, CultureInfo.CurrentCulture);
+
+        [TypeConverterMember(typeof(GridLength))]
+        public static Func<ConverterValueContext, object> GridLengthConverter = context => GridLength.Parse((string)context.Value, CultureInfo.CurrentCulture);
 
 
         private static Color ColorConvert(string contextValue)

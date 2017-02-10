@@ -5,16 +5,25 @@
 
     public class Button : ContentLayout
     {
+        private readonly TextBlock textBlock;
+
+        public string Text
+        {
+            get { return textBlock.Text; }
+            set { textBlock.Text = value; }
+        }
+
         public Button()
         {
+            textBlock = new TextBlock
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            };
+
             this.Children.Add(new Border()
             {
-                Child = new TextBlock
-                {
-                    Text = "Botoncillo",
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                },
+                Child = textBlock,
                 Padding = new Thickness(4),
                 Background = new Brush(Colors.LightGray),
                 BorderThickness = 2,
