@@ -72,7 +72,8 @@ typeof(string), new PropertyMetadata() { DefaultValue = null });
         {
             if (Text == null)
             {
-                return Size.Empty;
+                var height = Platform.Current.TextEngine.GetHeight(FontFamily);
+                return new Size(0, height);
             }
 
             if (TextWrapping == TextWrapping.Wrap)
