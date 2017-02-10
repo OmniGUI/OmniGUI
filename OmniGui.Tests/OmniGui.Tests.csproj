@@ -4,8 +4,10 @@
     <TargetFramework>netcoreapp1.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj" />
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj" />
+    <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj" />
   </ItemGroup>
