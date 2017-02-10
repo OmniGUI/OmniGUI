@@ -43,7 +43,7 @@
                 Assembly.Load(new AssemblyName("OmniGui")),
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
                 Assembly.Load(new AssemblyName("UwpApp")),
-                Assembly.Load(new AssemblyName("ViewModels"))
+                Assembly.Load(new AssemblyName("Common"))
             });
             var xaml = await GetXaml("Layout.xaml");
 

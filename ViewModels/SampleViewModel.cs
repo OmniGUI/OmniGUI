@@ -1,4 +1,4 @@
-﻿namespace ViewModels
+﻿namespace Common
 {
     using System;
     using System.ComponentModel;

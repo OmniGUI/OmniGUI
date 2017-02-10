@@ -1,4 +1,4 @@
-﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:ViewModels;assembly=ViewModels">
+﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:Common;assembly=Common">
     <Grid.DataContext>
         <local:SampleViewModel />
     </Grid.DataContext>

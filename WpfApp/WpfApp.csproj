@@ -50,6 +50,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <None Include="..\ViewModels\Layout.xaml">
+      <Link>Layout.xaml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,12 +97,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Layout.xaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\OmniGui.Wpf\OmniGui.Wpf.csproj">
       <Project>{8df3cf78-57c9-4a80-9fc5-249466573267}</Project>
       <Name>OmniGui.Wpf</Name>
@@ -122,9 +121,9 @@
       <Project>{74503677-d755-47d7-a56c-4fc7c6fa1f7d}</Project>
       <Name>OmniXaml</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
+    <ProjectReference Include="..\ViewModels\Common.csproj">
       <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
-      <Name>ViewModels</Name>
+      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj">
       <Project>{1d971911-3c12-461d-8b96-c4e631ec1b7c}</Project>
