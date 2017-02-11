@@ -46,9 +46,10 @@
                 Assembly.Load(new AssemblyName("UwpApp")),
                 Assembly.Load(new AssemblyName("Common"))
             });
-            var xaml = await GetXaml("Layout.xaml");
 
-            layout = (Layout) xamlLoader.Load(xaml).Instance;
+            layout = (Layout) xamlLoader.Load(await ReadAllText("Layout.xaml")).Instance;
+            var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml")).Instance;
+            TemplateInflator.Inflate(layout, container.ControlTemplates);
         }
 
 
@@ -71,7 +72,7 @@
             layout.Render(new Win2DDrawingContext(args.DrawingSession));
         }
 
-        private static async Task<string> GetXaml(string fileName)
+        private static async Task<string> ReadAllText(string fileName)
         {
             var uri = new Uri($"ms-appx:///{fileName}");
             var file = await StorageFile.GetFileFromApplicationUriAsync(uri);

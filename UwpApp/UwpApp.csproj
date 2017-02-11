@@ -129,6 +129,11 @@
       <Link>Layout.xaml</Link>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="..\ViewModels\Container.xaml">
+      <Link>Container.xaml</Link>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
