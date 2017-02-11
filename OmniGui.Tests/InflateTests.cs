@@ -11,18 +11,6 @@ namespace OmniGui.Tests
     public class InflateTests
     {
         [Fact]
-        public void Inflate1()
-        {
-            var layout = new Inflatable();
-            var inflator = new Inflator();
-            var omniGuiXamlLoader = GetLoader();
-            var controlTemplate = (ControlTemplate) omniGuiXamlLoader.Load(@"<ControlTemplate xmlns=""root""><Border><TextBlock Text=""{TemplateBind Text}"" /></Border></ControlTemplate>").Instance;
-
-            Inflator.Inflate(layout, controlTemplate);
-            layout.Text = "Pepito";
-        }
-
-        [Fact]
         public void Inflate2()
         {
             var codeBaseUrl = new Uri(typeof(InflateTests).GetTypeInfo().Assembly.CodeBase);
@@ -32,11 +20,10 @@ namespace OmniGui.Tests
 
 
             var layout = new Button {Text = "Hola tío"};
-            var inflator = new Inflator();
             var omniGuiXamlLoader = GetLoader();
             var container = (Container)omniGuiXamlLoader.Load(File.ReadAllText(path)).Instance;
 
-            inflator.Inflate(layout, container.ControlTemplates);
+            TemplateInflator.Inflate(layout, container.ControlTemplates);
             layout.Text = "Pepito";
         }
 

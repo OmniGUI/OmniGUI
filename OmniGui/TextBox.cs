@@ -7,39 +7,20 @@ namespace OmniGui
 
     public class TextBox : Layout
     {
-        private Brush foreground;
-
-        public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBox),
-            typeof(float), new PropertyMetadata { DefaultValue = 16F });
-
-        public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBox),
-            typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
-
-        public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBox),
-            typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
-
-        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBox),
-            typeof(string), new PropertyMetadata { DefaultValue = null });
-
-        private readonly TextBlock textBlock = new TextBlock();
+        public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = 16F });
+        public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
+        public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
+        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBox), typeof(string), new PropertyMetadata { DefaultValue = null });
+        public static readonly ExtendedProperty ForegroundProperty = PropertyEngine.RegisterProperty("Foreground", typeof(TextBox), typeof(Brush), new PropertyMetadata { DefaultValue = new Brush(Colors.Black) });
+        public static readonly ExtendedProperty TextWrappingProperty = PropertyEngine.RegisterProperty("TextWrapping", typeof(TextBox), typeof(TextWrapping), new PropertyMetadata { DefaultValue = TextWrapping.NoWrap });
 
         public TextBox()
         {
-            this.AddChild(new Border
-            {
-                BorderBrush = new Brush(Colors.Black),
-                BorderThickness = 1,
-                Padding = new Thickness(2),
-                
-            }.AddChild(textBlock));
-
             Pointer.Down.Subscribe(point => Platform.Current.SetFocusedElement(this));
-
-            this.NotifyRenderAffectedBy(TextProperty);
-
-            Foreground = new Brush(Colors.Black);
-            GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
             Keyboard.KeyInput.Subscribe(args => Text = ProcessKeyInput(args));
+
+            NotifyRenderAffectedBy(TextProperty);
+            GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
         }
 
         private string ProcessKeyInput(KeyInputArgs args)
@@ -52,16 +33,6 @@ namespace OmniGui
             return string.Concat(Text, args.Text);
         }
 
-        private string ProcessTextInput(TextInputArgs args)
-        {
-            if (args.Text.First() == Chars.Backspace)
-            {
-                return new string(Text.DropLast(1).ToArray());
-            }
-
-            return string.Concat(Text, args.Text);
-        }
-      
         public string FontFamily
         {
             get { return (string)GetValue(FontFamilyProperty); }
@@ -91,26 +62,26 @@ namespace OmniGui
 
         public Brush Foreground
         {
-            get { return foreground; }
-            set
-            {
-                foreground = value;
-            }
+            get { return (Brush) GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
         }
 
         public string Text
         {
-            get
-            {
-                return textBlock.Text;
-            }
+            get { return (string) GetValue(TextProperty); }
             set
             {
                 SetValue(TextProperty, value);
-                textBlock.Text = value;
             }
         }
 
-        public TextWrapping TextWrapping { get; set; }
+        public TextWrapping TextWrapping
+        {
+            get { return (TextWrapping)GetValue(TextWrappingProperty); }
+            set
+            {
+                SetValue(TextProperty, value);
+            }
+        }
     }
 }

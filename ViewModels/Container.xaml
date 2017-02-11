@@ -8,7 +8,7 @@
         </ControlTemplate>
 
         <ControlTemplate Target="TextBox">
-            <Border Padding="4" BorderThickness="2" BorderBrush="Black" CornerRadius="5" Background="LightGray">
+            <Border Padding="2" BorderThickness="1" Background="White"  BorderBrush="Black">
                 <TextBlock Text="{TemplateBind Text}" HorizontalAlignment="Center" />
             </Border>
         </ControlTemplate>

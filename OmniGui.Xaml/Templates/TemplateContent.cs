@@ -18,7 +18,9 @@
         public Layout LoadFor(Layout layout)
         {
             trackingContext.Bag.Add("TemplatedParent", layout);
-            return (Layout) builder.Inflate(node, trackingContext);
+            var loadFor = (Layout) builder.Inflate(node, trackingContext);
+            trackingContext.Bag.Remove("TemplatedParent");
+            return loadFor;
         }
 
         protected bool Equals(TemplateContent other)
