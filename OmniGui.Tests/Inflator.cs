@@ -4,8 +4,9 @@ namespace OmniGui.Tests
 {
     public class Inflator
     {
-        public void Inflate(Layout layout, ControlTemplate inflateDef)
-        {            
+        public void Inflate(Layout layout, ControlTemplate template)
+        {
+            layout.AddChild(template.Build());
         }
     }
 }

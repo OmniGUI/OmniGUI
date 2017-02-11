@@ -1,8 +1,6 @@
 namespace OmniGui.Tests
 {
-    using OmniXaml;
     using OmniXaml.Attributes;
-    using OmniXaml.Metadata;
     using Xunit;
 
     public class StackPanelTests
@@ -61,22 +59,5 @@ namespace OmniGui.Tests
         }
 
 
-    }
-
-
-    public class ContentLoader : IConstructionFragmentLoader
-    {
-        public object Load(ConstructionNode node, IObjectBuilder builder, BuildContext context)
-        {
-            return builder.Inflate(node, context);
-        }
-    }
-
-    public class FragmentLoader
-    {
-    }
-
-    public class Inflatable : Layout
-    {
     }
 }

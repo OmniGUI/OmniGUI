@@ -25,12 +25,52 @@
             }
             else if (bd != null)
             {
-                BindToProperty(bd);
+                if (bd.Source == BindingSource.DataContext)
+                {
+                    var targetObj = (Layout)bd.TargetInstance;
+                    var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
+
+                    obs.Where(o => o != null)
+                        .Subscribe(model =>
+                        {
+                            if (bd.TargetFollowsSource)
+                            {
+                                SubscribeTargetToSource(bd.SourceProperty, model, targetObj, targetObj.GetProperty(bd.TargetMember.MemberName));
+                            }
+
+                            if (bd.SourceFollowsTarget)
+                            {
+                                SubscribeSourceToTarget(bd.SourceProperty, model, targetObj, targetObj.GetProperty(bd.TargetMember.MemberName));
+                            }
+                        });
+                }
+                else
+                {
+                    
+                }
             }
             else
             {
                 base.PerformAssigment(assignment, buildContext);
             }
+        }
+
+        private void BindToProperty(BindDefinition definition, IObservable<object> obs)
+        {
+            var targetObj = (Layout)definition.TargetInstance;
+            obs.Where(o => o != null)
+                .Subscribe(model =>
+                {
+                    if (definition.TargetFollowsSource)
+                    {
+                        SubscribeTargetToSource(definition.SourceProperty, model, targetObj, targetObj.GetProperty(definition.TargetMember.MemberName));
+                    }
+
+                    if (definition.SourceFollowsTarget)
+                    {
+                        SubscribeSourceToTarget(definition.SourceProperty, model, targetObj, targetObj.GetProperty(definition.TargetMember.MemberName));
+                    }
+                });
         }
 
         private void BindToProperty(BindDefinition definition)

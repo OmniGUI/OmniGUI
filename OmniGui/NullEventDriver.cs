@@ -7,11 +7,10 @@ namespace OmniGui
     {
         public IObservable<Point> Pointer { get; } = Observable.Never<Point>();
         public void Invalidate()
-        {
-            
+        {            
         }
 
-        public IObservable<TextInputArgs> TextInput { get; set; }
-        public IObservable<KeyInputArgs> KeyInput { get; }
+        public IObservable<TextInputArgs> TextInput => Observable.Never<TextInputArgs>();
+        public IObservable<KeyInputArgs> KeyInput => Observable.Never<KeyInputArgs>();
     }
 }

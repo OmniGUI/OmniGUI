@@ -19,5 +19,12 @@
         public LinkMode LinkMode { get; set; }
         public bool SourceFollowsTarget => linkMode == LinkMode.FullLink || linkMode == LinkMode.SourceFollowsTarget;
         public bool TargetFollowsSource => linkMode == LinkMode.FullLink || linkMode == LinkMode.TargetFollowsSource;
+        public BindingSource Source { get; set; }
+    }
+
+    public enum BindingSource
+    {
+        DataContext,
+        TemplatedParent,
     }
 }

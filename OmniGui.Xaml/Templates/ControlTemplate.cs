@@ -9,6 +9,7 @@ namespace OmniGui.Xaml.Templates
     public class ControlTemplate
     {
         [Content]
+        [FragmentLoader(FragmentLoader = typeof(ConstructionFragmentLoader))]
         public TemplateContent Content { get; set; }
 
         public Layout Build()
