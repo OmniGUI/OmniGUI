@@ -6,7 +6,7 @@ namespace OmniGui.Tests
     {
         public void Inflate(Layout layout, ControlTemplate template)
         {
-            layout.AddChild(template.Build());
+            layout.AddChild(template.BuildFor(layout));
         }
     }
 }

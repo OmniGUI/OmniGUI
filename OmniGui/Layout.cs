@@ -290,9 +290,9 @@ namespace OmniGui
             return PropertyEngine.GetObserver(property, this);
         }
 
-        public ExtendedProperty GetProperty(string assignmentMemberMemberName)
+        public ExtendedProperty GetProperty(string propertyName)
         {
-            return PropertyEngine.GetProperty(assignmentMemberMemberName, GetType());
+            return PropertyEngine.GetProperty(propertyName, GetType());
         }
     }
 }

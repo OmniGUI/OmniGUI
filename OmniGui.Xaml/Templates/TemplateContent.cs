@@ -15,8 +15,9 @@
             this.trackingContext = trackingContext;
         }
 
-        public Layout Load()
+        public Layout LoadFor(Layout layout)
         {
+            trackingContext.Bag.Add("TemplatedParent", layout);
             return (Layout) builder.Inflate(node, trackingContext);
         }
 

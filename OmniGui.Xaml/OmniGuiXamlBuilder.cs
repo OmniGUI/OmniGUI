@@ -46,7 +46,15 @@
                 }
                 else
                 {
-                    
+                    var source = (Layout)buildContext.Bag["TemplatedParent"];
+                    if (bd.TargetFollowsSource)
+                    {
+                        var sourceObs = source.GetChangedObservable(source.GetProperty(bd.SourceProperty));
+
+                        var targetLayout = (Layout)bd.TargetInstance;
+                        var observer = targetLayout.GetObserver(targetLayout.GetProperty(bd.TargetMember.MemberName));
+                        sourceObs.Subscribe(observer);
+                    }                  
                 }
             }
             else

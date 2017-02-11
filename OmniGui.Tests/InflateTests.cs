@@ -17,6 +17,7 @@ namespace OmniGui.Tests
             var controlTemplate = (ControlTemplate) omniGuiXamlLoader.Load(@"<ControlTemplate xmlns=""root""><Border><TextBlock Text=""{TemplateBind Text}"" /></Border></ControlTemplate>").Instance;
 
             inflator.Inflate(layout, controlTemplate);
+            layout.Text = "Pepito";
         }
 
         private static OmniGuiXamlLoader GetLoader()
