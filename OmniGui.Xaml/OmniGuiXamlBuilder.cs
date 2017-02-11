@@ -25,37 +25,7 @@
             }
             else if (bd != null)
             {
-                if (bd.Source == BindingSource.DataContext)
-                {
-                    var targetObj = (Layout)bd.TargetInstance;
-                    var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
-
-                    obs.Where(o => o != null)
-                        .Subscribe(model =>
-                        {
-                            if (bd.TargetFollowsSource)
-                            {
-                                SubscribeTargetToSource(bd.SourceProperty, model, targetObj, targetObj.GetProperty(bd.TargetMember.MemberName));
-                            }
-
-                            if (bd.SourceFollowsTarget)
-                            {
-                                SubscribeSourceToTarget(bd.SourceProperty, model, targetObj, targetObj.GetProperty(bd.TargetMember.MemberName));
-                            }
-                        });
-                }
-                else
-                {
-                    var source = (Layout)buildContext.Bag["TemplatedParent"];
-                    if (bd.TargetFollowsSource)
-                    {
-                        var sourceObs = source.GetChangedObservable(source.GetProperty(bd.SourceProperty));
-
-                        var targetLayout = (Layout)bd.TargetInstance;
-                        var observer = targetLayout.GetObserver(targetLayout.GetProperty(bd.TargetMember.MemberName));
-                        sourceObs.Subscribe(observer);
-                    }                  
-                }
+                BindToProperty(buildContext, bd);
             }
             else
             {
@@ -63,20 +33,70 @@
             }
         }
 
+        private void BindToProperty(BuildContext buildContext, BindDefinition bd)
+        {
+            if (bd.Source == BindingSource.DataContext)
+            {
+                BindToDataContext(bd);
+            }
+            else
+            {
+                BindToTemplatedParent(buildContext, bd);
+            }
+        }
+
+        private static void BindToTemplatedParent(BuildContext buildContext, BindDefinition bd)
+        {
+            var source = (Layout) buildContext.Bag["TemplatedParent"];
+            if (bd.TargetFollowsSource)
+            {
+                var property = source.GetProperty(bd.SourceProperty);
+                var sourceObs = source.GetChangedObservable(property).StartWith(source.GetValue(property));
+
+                var targetLayout = (Layout) bd.TargetInstance;
+                var observer = targetLayout.GetObserver(targetLayout.GetProperty(bd.TargetMember.MemberName));
+                sourceObs.Subscribe(observer);
+            }
+        }
+
+        private void BindToDataContext(BindDefinition bd)
+        {
+            var targetObj = (Layout) bd.TargetInstance;
+            var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
+
+            obs.Where(o => o != null)
+                .Subscribe(model =>
+                {
+                    if (bd.TargetFollowsSource)
+                    {
+                        SubscribeTargetToSource(bd.SourceProperty, model, targetObj,
+                            targetObj.GetProperty(bd.TargetMember.MemberName));
+                    }
+
+                    if (bd.SourceFollowsTarget)
+                    {
+                        SubscribeSourceToTarget(bd.SourceProperty, model, targetObj,
+                            targetObj.GetProperty(bd.TargetMember.MemberName));
+                    }
+                });
+        }
+
         private void BindToProperty(BindDefinition definition, IObservable<object> obs)
         {
-            var targetObj = (Layout)definition.TargetInstance;
+            var targetObj = (Layout) definition.TargetInstance;
             obs.Where(o => o != null)
                 .Subscribe(model =>
                 {
                     if (definition.TargetFollowsSource)
                     {
-                        SubscribeTargetToSource(definition.SourceProperty, model, targetObj, targetObj.GetProperty(definition.TargetMember.MemberName));
+                        SubscribeTargetToSource(definition.SourceProperty, model, targetObj,
+                            targetObj.GetProperty(definition.TargetMember.MemberName));
                     }
 
                     if (definition.SourceFollowsTarget)
                     {
-                        SubscribeSourceToTarget(definition.SourceProperty, model, targetObj, targetObj.GetProperty(definition.TargetMember.MemberName));
+                        SubscribeSourceToTarget(definition.SourceProperty, model, targetObj,
+                            targetObj.GetProperty(definition.TargetMember.MemberName));
                     }
                 });
         }
@@ -90,17 +110,20 @@
                 {
                     if (definition.TargetFollowsSource)
                     {
-                        SubscribeTargetToSource(definition.SourceProperty, model, targetObj, targetObj.GetProperty(definition.TargetMember.MemberName));
+                        SubscribeTargetToSource(definition.SourceProperty, model, targetObj,
+                            targetObj.GetProperty(definition.TargetMember.MemberName));
                     }
 
                     if (definition.SourceFollowsTarget)
                     {
-                        SubscribeSourceToTarget(definition.SourceProperty, model, targetObj, targetObj.GetProperty(definition.TargetMember.MemberName));
+                        SubscribeSourceToTarget(definition.SourceProperty, model, targetObj,
+                            targetObj.GetProperty(definition.TargetMember.MemberName));
                     }
                 });
         }
 
-        private void SubscribeSourceToTarget(string modelProperty, object model, Layout layout, ExtendedProperty property)
+        private void SubscribeSourceToTarget(string modelProperty, object model, Layout layout,
+            ExtendedProperty property)
         {
             var obs = layout.GetChangedObservable(property);
             obs.Subscribe(o =>
@@ -110,19 +133,23 @@
             });
         }
 
-        private static void SubscribeTargetToSource(string sourceMemberName, object sourceObject, Layout target, ExtendedProperty property)
+        private static void SubscribeTargetToSource(string sourceMemberName, object sourceObject, Layout target,
+            ExtendedProperty property)
         {
+            var currentValue = sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject);
+
             var notifyProp = (INotifyPropertyChanged) sourceObject;
-            var obs = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                eh => notifyProp.PropertyChanged += eh, ev => notifyProp.PropertyChanged -= ev);
-            obs.Subscribe(pattern =>
-            {
-                if (pattern.EventArgs.PropertyName == sourceMemberName)
+
+            Observable
+                .FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                    eh => notifyProp.PropertyChanged += eh, ev => notifyProp.PropertyChanged -= ev)
+                .Where(pattern => pattern.EventArgs.PropertyName == sourceMemberName)
+                .Select(_ => sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject))
+                .StartWith(currentValue)
+                .Subscribe(value =>
                 {
-                    var value = sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject);
                     target.SetValue(property, value);
-                }
-            });
+                });
         }
 
         private static void BindToObservable(ObserveDefinition definition)

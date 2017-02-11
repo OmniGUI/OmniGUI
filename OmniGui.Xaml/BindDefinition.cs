@@ -21,10 +21,4 @@
         public bool TargetFollowsSource => linkMode == LinkMode.FullLink || linkMode == LinkMode.TargetFollowsSource;
         public BindingSource Source { get; set; }
     }
-
-    public enum BindingSource
-    {
-        DataContext,
-        TemplatedParent,
-    }
 }

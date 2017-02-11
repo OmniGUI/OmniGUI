@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Layout.xaml">
+    <None Update="Layout - Copy.xaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

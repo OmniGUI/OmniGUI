@@ -1,0 +1,18 @@
+﻿<Container xmlns="root">
+
+    <Container.ControlTemplates>
+        <ControlTemplate Target="Button">
+            <Border Padding="4" BorderThickness="2" BorderBrush="Black" CornerRadius="5" Background="LightGray">
+                <TextBlock Text="{TemplateBind Text}" HorizontalAlignment="Center" />
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate Target="TextBox">
+            <Border Padding="4" BorderThickness="2" BorderBrush="Black" CornerRadius="5" Background="LightGray">
+                <TextBlock Text="{TemplateBind Text}" HorizontalAlignment="Center" />
+            </Border>
+        </ControlTemplate>
+
+    </Container.ControlTemplates>
+
+</Container>

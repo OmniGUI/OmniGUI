@@ -1,0 +1,11 @@
+﻿<Container xmlns="root">
+
+    <Container.ControlTemplates>
+        <ControlTemplate Target="Button">
+            <Border>
+                <TextBlock Text="{TemplateBind Text}" />
+            </Border>
+        </ControlTemplate>
+    </Container.ControlTemplates>
+
+</Container>

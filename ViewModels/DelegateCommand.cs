@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace UwpApp.Plugin
+﻿namespace Common
 {
+    using System;
+    using System.Windows.Input;
+
     public class DelegateCommand : ICommand
     {
         private readonly Action action;

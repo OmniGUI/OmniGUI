@@ -8,6 +8,7 @@
     using Windows.UI.Popups;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
+    using Common;
     using Microsoft.Graphics.Canvas.UI.Xaml;
     using OmniGui;
     using OmniGui.Xaml;

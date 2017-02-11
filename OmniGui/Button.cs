@@ -2,35 +2,21 @@
 {
     using System;
     using System.Windows.Input;
+    using Zafiro.PropertySystem.Standard;
 
     public class Button : ContentLayout
     {
-        private readonly TextBlock textBlock;
+        public readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(Button), typeof(string), new PropertyMetadata());
+        public readonly ExtendedProperty CommandProperty = PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
 
         public string Text
         {
-            get { return textBlock.Text; }
-            set { textBlock.Text = value; }
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
         }
 
         public Button()
-        {
-            textBlock = new TextBlock
-            {
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-            };
-
-            this.Children.Add(new Border()
-            {
-                Child = textBlock,
-                Padding = new Thickness(4),
-                Background = new Brush(Colors.LightGray),
-                BorderThickness = 2,
-                CornerRadius = 5,
-                BorderBrush = new Brush(Colors.Black)
-            });
-
+        {         
             Pointer.Down.Subscribe(p =>
             {
                 if (Command?.CanExecute(null) == true)
@@ -40,6 +26,10 @@
             });
         }
 
-        public ICommand Command { get; set; }
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
     }
 }

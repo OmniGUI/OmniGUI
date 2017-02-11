@@ -16,5 +16,7 @@ namespace OmniGui.Xaml.Templates
         {
             return Content.LoadFor(layout);
         }
+
+        public string Target { get; set; }
     }
 }

@@ -1,25 +1,19 @@
 ﻿namespace WpfApp
 {
-    using System;
     using System.IO;
     using System.Linq;
-    using System.Windows;
-    using System.Windows.Input;
     using System.Windows.Media;
+    using Common;
     using OmniGui;
+    using OmniGui.Tests;
     using OmniGui.Wpf;
     using OmniGui.Xaml;
-    using OmniXaml;
-    using OmniXaml.Attributes;
     using Point = OmniGui.Point;
     using Rect = OmniGui.Rect;
     using Size = OmniGui.Size;
 
     public partial class MainWindow
     {
-        [TypeConverterMember(typeof(ICommand))] public static Func<ConverterValueContext, object> CommandConverter =
-            context => new DelegateCommand(() => MessageBox.Show("Click!"));
-
         private readonly Layout layout;
 
         public MainWindow()
@@ -35,6 +29,10 @@
             var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
+            var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml")).Instance;
+            var inflator = new Inflator();
+            inflator.Inflate(layout, container.ControlTemplates);
+            layout.DataContext = new SampleViewModel(new WpfMessageBoxService());
         }
 
         protected override void OnRender(DrawingContext drawingContext)

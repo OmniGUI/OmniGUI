@@ -1,7 +1,5 @@
 ﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:Common;assembly=Common">
-    <Grid.DataContext>
-        <local:SampleViewModel />
-    </Grid.DataContext>
+
     <Grid.RowDefinitions>
         <RowDefinition />
         <RowDefinition Height="Auto"/>
@@ -34,6 +32,6 @@
         </Grid>
 
     </StackPanel>
-    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" Text="Aceptar" RequestedSize="100,-"></Button>
+    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" Text="Aceptar" Command="{Bind ShowMessageCommand}" RequestedSize="100,-"></Button>
 
 </Grid>
