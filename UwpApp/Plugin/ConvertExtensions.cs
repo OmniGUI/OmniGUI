@@ -39,7 +39,7 @@ namespace UwpApp.Plugin
 
         public static CanvasBitmap ToWin2D(this Bitmap bmp, ICanvasResourceCreator resourceCreator)
         {
-            return CanvasBitmap.CreateFromBytes(resourceCreator, bmp.Bytes, bmp.Width, bmp.Height, DirectXPixelFormat.R8G8B8A8UIntNormalized);
+            return CanvasBitmap.CreateFromBytes(resourceCreator, bmp.Bytes, bmp.Width, bmp.Height, DirectXPixelFormat.B8G8R8A8UIntNormalized);
         }
 
         public static Windows.UI.Text.FontWeight ToWin2D(this FontWeights fontWeight)

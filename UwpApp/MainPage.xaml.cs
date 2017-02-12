@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Windows.Storage;
+    using Windows.Storage.Streams;
     using Windows.UI.Popups;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
@@ -16,6 +17,7 @@
     using OmniXaml;
     using OmniXaml.Attributes;
     using Plugin;
+    using BitmapDecoder = Windows.Graphics.Imaging.BitmapDecoder;
 
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
@@ -80,6 +82,48 @@
             var file = await StorageFile.GetFileFromApplicationUriAsync(uri);
             var xaml = await FileIO.ReadTextAsync(file);
             return xaml;
+        }
+
+        [TypeConverterMember(typeof(Bitmap))]
+        public static Func<ConverterValueContext, object> BitmapConverter = context => GetBitmap(context).Result;
+
+        private static Bitmap GetResult(ConverterValueContext context)
+        {
+            return GetBitmap(context)
+                .ConfigureAwait(false)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        private static async Task<Bitmap> GetBitmap(ConverterValueContext context)
+        {
+            var stream = await GetStream((string) context.Value).ConfigureAwait(false);
+            using (stream)
+            {
+                return await CreateFromStream(stream);
+            }           
+        }
+
+        private static async Task<Bitmap> CreateFromStream(IRandomAccessStream stream)
+        {
+            var decoder = await BitmapDecoder.CreateAsync(BitmapDecoder.PngDecoderId, stream);
+            var frame = await decoder.GetFrameAsync(0);
+            var pixelData = await frame.GetPixelDataAsync();
+            var bytes = pixelData.DetachPixelData();
+
+            return new Bitmap
+            {
+                Bytes = bytes,
+                Width = (int) frame.PixelWidth,
+                Height = (int) frame.PixelHeight,
+            };
+        }
+
+        private static async Task<IRandomAccessStream> GetStream(string fileName)
+        {
+            var uri = new Uri($"ms-appx:///{fileName}");
+            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().ConfigureAwait(false);
+            return await storageFile.OpenAsync(FileAccessMode.Read).AsTask().ConfigureAwait(false);
         }
     }
 }
