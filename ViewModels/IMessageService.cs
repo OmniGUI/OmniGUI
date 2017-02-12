@@ -1,7 +1,9 @@
 ﻿namespace Common
 {
+    using System.Threading.Tasks;
+
     public interface IMessageService
     {
-        void ShowMessage(string message);
+        Task<int> ShowMessage(string message);
     }
 }

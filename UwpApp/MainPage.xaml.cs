@@ -50,6 +50,7 @@
             layout = (Layout) xamlLoader.Load(await ReadAllText("Layout.xaml")).Instance;
             var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml")).Instance;
             TemplateInflator.Inflate(layout, container.ControlTemplates);
+            layout.DataContext = new SampleViewModel(new UwpMessageService());
         }
 
 

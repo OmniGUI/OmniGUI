@@ -1,13 +1,15 @@
 ﻿namespace WpfApp
 {
+    using System.Threading.Tasks;
     using System.Windows;
     using Common;
+    using TCD.Controls;
 
     public class WpfMessageBoxService : IMessageService
     {
-        public void ShowMessage(string message)
+        public async Task<int> ShowMessage(string message)
         {
-            MessageBox.Show(message);
+            return await CustomMessageBox.ShowAsync("Mensaje", message, MessageBoxImage.Information, 0, "Aceptar");
         }
     }
 }
