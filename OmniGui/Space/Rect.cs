@@ -14,7 +14,7 @@ namespace OmniGui.Space
         }
 
         public Rect(Size size) : this(Point.Zero, size)
-        {            
+        {
         }
 
         public Point Point { get; }
@@ -64,5 +64,37 @@ namespace OmniGui.Space
 
             return isInsideHorz && isInsideVert;
         }
+
+        public Rect CenterIn(Rect rect)
+        {
+            return new Rect(X + (Width - rect.Width) / 2, Y + (Height - rect.Height) / 2, rect.Width, rect.Height);
+        }
+
+        /// <summary>
+        /// Gets the right position of the rectangle.
+        /// </summary>
+        public double Right => X + Width;
+
+        /// <summary>
+        /// Gets the bottom position of the rectangle.
+        /// </summary>
+        public double Bottom => Y + Height;
+
+        public Rect Intersect(Rect rect)
+        {
+            var newLeft = rect.X > X ? rect.X : X;
+            var newTop = rect.Y > Y ? rect.Y : Y;
+            var newRight = rect.Right < Right ? rect.Right : Right;
+            var newBottom = rect.Bottom < Bottom ? rect.Bottom : Bottom;
+
+            if (newRight > newLeft && newBottom > newTop)
+            {
+                return new Rect(newLeft, newTop, newRight - newLeft, newBottom - newTop);
+            }
+
+            return Empty;
+        }
+
+        public Rect Empty => default(Rect);
     }
 }

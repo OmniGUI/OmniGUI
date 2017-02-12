@@ -56,7 +56,7 @@
             throw new System.NotImplementedException();
         }
 
-        public void DrawBitmap(Bitmap bmp, Rect rect)
+        public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {
             throw new System.NotImplementedException();
         }

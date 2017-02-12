@@ -6,6 +6,7 @@
     public class Image : Layout
     {
         public readonly ExtendedProperty SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(Image), typeof(Bitmap), new PropertyMetadata() { DefaultValue = null });
+        public readonly ExtendedProperty StretchProperty = PropertyEngine.RegisterProperty("Stretch", typeof(Image), typeof(Stretch), new PropertyMetadata { DefaultValue = Stretch.Uniform });
 
         public Image()
         {
@@ -17,30 +18,43 @@
             set { SetValue(SourceProperty, value); }
         }
 
+        public Stretch Stretch
+        {
+            get { return (Stretch)GetValue(StretchProperty); }
+            set { SetValue(StretchProperty, value); }
+        }
+
+
         public override void Render(IDrawingContext drawingContext)
         {
-            drawingContext.DrawBitmap(Source, VisualBounds);
+            var viewPort = new Rect(Bounds.Size);
+            var sourceSize = new Size(Source.Width, Source.Height);
+            var scale = Stretch.CalculateScaling(Bounds.Size, sourceSize);
+            var scaledSize = sourceSize * scale;
+            var destRect = viewPort
+                .CenterIn(new Rect(scaledSize))
+                .Intersect(viewPort);
+            var sourceRect = new Rect(sourceSize)
+                .CenterIn(new Rect(destRect.Size / scale));
+
+            drawingContext.DrawBitmap(Source, sourceRect, VisualBounds);
         }
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var original = new Size(Source.Width, Source.Height);
-            var final = original.Constrain(availableSize);
+            if (Source == null)
+            {
+                return new Size();
+            }
 
-            var height = final.Width * original.GetProportion();
+            var sourceSize = new Size(Source.Width, Source.Height);
 
-            return new Size(final.Width, height);
+            if (double.IsInfinity(availableSize.Width) || double.IsInfinity(availableSize.Height))
+            {
+                return sourceSize;
+            }
 
-        }
-
-        protected override Size ArrangeOverride(Size finalSize)
-        {
-            var original = new Size(Source.Width, Source.Height);
-            var final = original.Constrain(finalSize);
-
-            var height = final.Width * original.GetProportion();
-
-            return new Size(final.Width, height);
-        }
+            return Stretch.CalculateSize(availableSize, sourceSize);
+        }       
     }
 }

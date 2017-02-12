@@ -67,7 +67,7 @@ namespace OmniGui.Wpf
             context.DrawText(formattedText.ToWpf(), point.ToWpf());
         }
 
-        public void DrawBitmap(Bitmap bmp, Rect rect)
+        public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {
             var width = bmp.Width;
             var height = bmp.Height;

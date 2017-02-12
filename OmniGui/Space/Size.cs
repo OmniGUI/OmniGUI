@@ -74,5 +74,81 @@ namespace OmniGui.Space
                 Width + thickness.Left + thickness.Right,
                 Height + thickness.Top + thickness.Bottom);
         }
+
+        /// <summary>
+        /// Checks for equality between two <see cref="Size"/>s.
+        /// </summary>
+        /// <param name="left">The first size.</param>
+        /// <param name="right">The second size.</param>
+        /// <returns>True if the sizes are equal; otherwise false.</returns>
+        public static bool operator ==(Size left, Size right)
+        {
+            return left.Width == right.Width && left.Height == right.Height;
+        }
+
+        /// <summary>
+        /// Checks for unequality between two <see cref="Size"/>s.
+        /// </summary>
+        /// <param name="left">The first size.</param>
+        /// <param name="right">The second size.</param>
+        /// <returns>True if the sizes are unequal; otherwise false.</returns>
+        public static bool operator !=(Size left, Size right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
+        /// Scales a size.
+        /// </summary>
+        /// <param name="size">The size</param>
+        /// <param name="scale">The scaling factor.</param>
+        /// <returns>The scaled size.</returns>
+        public static Size operator *(Size size, Vector scale)
+        {
+            return new Size(size.Width * scale.X, size.Height * scale.Y);
+        }
+
+        /// <summary>
+        /// Scales a size.
+        /// </summary>
+        /// <param name="size">The size</param>
+        /// <param name="scale">The scaling factor.</param>
+        /// <returns>The scaled size.</returns>
+        public static Size operator /(Size size, Vector scale)
+        {
+            return new Size(size.Width / scale.X, size.Height / scale.Y);
+        }
+
+        /// <summary>
+        /// Scales a size.
+        /// </summary>
+        /// <param name="size">The size</param>
+        /// <param name="scale">The scaling factor.</param>
+        /// <returns>The scaled size.</returns>
+        public static Size operator *(Size size, double scale)
+        {
+            return new Size(size.Width * scale, size.Height * scale);
+        }
+
+        /// <summary>
+        /// Scales a size.
+        /// </summary>
+        /// <param name="size">The size</param>
+        /// <param name="scale">The scaling factor.</param>
+        /// <returns>The scaled size.</returns>
+        public static Size operator /(Size size, double scale)
+        {
+            return new Size(size.Width / scale, size.Height / scale);
+        }
+
+        public static Size operator +(Size size, Size toAdd)
+        {
+            return new Size(size.Width + toAdd.Width, size.Height + toAdd.Height);
+        }
+
+        public static Size operator -(Size size, Size toSubstract)
+        {
+            return new Size(size.Width - toSubstract.Width, size.Height - toSubstract.Height);
+        }
     }
 }

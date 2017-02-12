@@ -52,7 +52,7 @@ namespace UwpApp.Plugin
             drawingSession.DrawText(text, vector2, canvasSolidColorBrush, canvasTextFormat);
         }
 
-        public void DrawBitmap(Bitmap bmp, Rect rect)
+        public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {            
             drawingSession.DrawImage(bmp.ToWin2D(drawingSession), rect.ToWin2D());
         }
