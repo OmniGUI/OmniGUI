@@ -2,6 +2,9 @@
 
 namespace OmniGui.Wpf
 {
+    using System.Windows.Media.Imaging;
+    using Space;
+
     public class WpfDrawingContext : IDrawingContext
     {
         private readonly DrawingContext context;
@@ -62,6 +65,20 @@ namespace OmniGui.Wpf
         public void DrawText(FormattedText formattedText, Point point)
         {
             context.DrawText(formattedText.ToWpf(), point.ToWpf());
+        }
+
+        public void DrawBitmap(Bitmap bmp, Rect rect)
+        {
+            var width = bmp.Width;
+            var height = bmp.Height;
+            var dpiX = 96d;
+            var dpiY = 96d;
+            var pixelFormat = PixelFormats.Bgra32; 
+
+            var bitmap = BitmapSource.Create(width, height, dpiX, dpiY,
+                pixelFormat, null, bmp.Bytes, bmp.Width * 4);
+
+            context.DrawImage(bitmap, rect.ToWpf());
         }
 
         public void FillRectangle(Rect rect, Brush brush)

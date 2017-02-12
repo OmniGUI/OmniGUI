@@ -2,6 +2,7 @@ namespace OmniGui.Wpf
 {
     using System;
     using System.Windows.Media;
+    using Space;
     using FormattedText = OmniGui.FormattedText;
 
     public class WpfTextEngine : ITextEngine

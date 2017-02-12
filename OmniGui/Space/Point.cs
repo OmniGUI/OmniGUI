@@ -1,4 +1,4 @@
-namespace OmniGui
+namespace OmniGui.Space
 {
     public struct Point
     {

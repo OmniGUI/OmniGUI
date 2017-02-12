@@ -1,8 +1,8 @@
-using System;
-using System.Globalization;
-
-namespace OmniGui
+namespace OmniGui.Space
 {
+    using System;
+    using System.Globalization;
+
     /// <summary>
     /// Defines a vector.
     /// </summary>

@@ -1,6 +1,7 @@
 ﻿namespace OmniGui
 {
     using System.Linq;
+    using Space;
 
     public class Border : Layout
     {

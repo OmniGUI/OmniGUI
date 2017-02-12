@@ -10,7 +10,7 @@ using OmniGui;
 namespace UwpApp.Plugin
 {
     using Microsoft.Graphics.Canvas.UI.Xaml;
-    using Point = OmniGui.Point;
+    using Point = OmniGui.Space.Point;
 
     public class UwpEventProcessor : IEventProcessor
     {

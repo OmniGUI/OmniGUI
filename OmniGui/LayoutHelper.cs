@@ -2,6 +2,8 @@ using System;
 
 namespace OmniGui
 {
+    using Space;
+
     public class LayoutHelper
     {
         public static Size ApplyLayoutConstraints(Layout control, Size constraints)

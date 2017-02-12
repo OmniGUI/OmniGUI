@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
         Background="Transparent"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="200">
     <Grid x:Name="LayoutRoot"></Grid>
 </Window>

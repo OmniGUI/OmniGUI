@@ -2,6 +2,8 @@ using System;
 
 namespace OmniGui
 {
+    using Space;
+
     public class StackPanel : Layout
     {
         protected override Size MeasureOverride(Size availableSize)

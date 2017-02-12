@@ -4,6 +4,9 @@ using OmniGui;
 
 namespace UwpApp.Plugin
 {
+    using System;
+    using OmniGui.Space;
+
     internal class Win2DDrawingContext : IDrawingContext
     {
         private readonly CanvasDrawingSession drawingSession;
@@ -47,6 +50,11 @@ namespace UwpApp.Plugin
             };
 
             drawingSession.DrawText(text, vector2, canvasSolidColorBrush, canvasTextFormat);
+        }
+
+        public void DrawBitmap(Bitmap bmp, Rect rect)
+        {            
+            drawingSession.DrawImage(bmp.ToWin2D(drawingSession), rect.ToWin2D());
         }
 
         public void DrawRectangle(Rect rect, Pen pen)

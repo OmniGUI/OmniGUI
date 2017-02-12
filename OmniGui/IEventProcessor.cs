@@ -1,6 +1,7 @@
 ﻿namespace OmniGui
 {
     using System;
+    using Space;
 
     public interface IEventProcessor
     {

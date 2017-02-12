@@ -6,6 +6,8 @@ using OmniGui;
 
 namespace UwpApp.Plugin
 {
+    using Windows.Graphics.DirectX;
+    using OmniGui.Space;
     using FontWeights = OmniGui.FontWeights;
 
     public static class ConvertExtensions
@@ -33,6 +35,11 @@ namespace UwpApp.Plugin
         public static CanvasSolidColorBrush ToWin2D(this Brush brush, ICanvasResourceCreator resourceCreator)
         {
             return new CanvasSolidColorBrush(resourceCreator, brush.Color.ToWin2D());
+        }
+
+        public static CanvasBitmap ToWin2D(this Bitmap bmp, ICanvasResourceCreator resourceCreator)
+        {
+            return CanvasBitmap.CreateFromBytes(resourceCreator, bmp.Bytes, bmp.Width, bmp.Height, DirectXPixelFormat.R8G8B8A8UIntNormalized);
         }
 
         public static Windows.UI.Text.FontWeight ToWin2D(this FontWeights fontWeight)

@@ -1,5 +1,7 @@
 ﻿namespace OmniGui.Console
 {
+    using Space;
+
     public class ConsoleAdapter : IDrawingContext
     {
         public void DrawRectangle(Rect rect, Color fillColor)
@@ -50,6 +52,11 @@
         }
 
         public void DrawText(FormattedText formattedText, Point point)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawBitmap(Bitmap bmp, Rect rect)
         {
             throw new System.NotImplementedException();
         }

@@ -146,5 +146,11 @@
       <Version>3.1.4</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ViewModels\mario.png">
+      <Link>mario.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

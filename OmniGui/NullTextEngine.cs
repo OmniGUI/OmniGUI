@@ -1,5 +1,7 @@
 ﻿namespace OmniGui
 {
+    using Space;
+
     public class NullTextEngine : ITextEngine
     {
         public Size Measure(FormattedText formattedText)

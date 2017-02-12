@@ -6,6 +6,7 @@ namespace UwpApp.Plugin
 {
     using System;
     using Windows.UI.Xaml.Media;
+    using OmniGui.Space;
 
     public class Win2DTextEngine : ITextEngine
     {

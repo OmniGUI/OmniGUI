@@ -6,7 +6,7 @@ namespace OmniGui.Wpf
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
-    using Point = OmniGui.Point;
+    using Point = Space.Point;
 
     public class WpfEventProcessor : IEventProcessor
     {

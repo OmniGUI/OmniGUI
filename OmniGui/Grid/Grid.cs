@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Space;
     using Zafiro.PropertySystem.Attached;
 
     public class Grid : Layout

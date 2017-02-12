@@ -1,7 +1,7 @@
-using System;
-
-namespace OmniGui
+namespace OmniGui.Space
 {
+    using System;
+
     public struct Size
     {
         public Size(double width, double height)
@@ -23,7 +23,6 @@ namespace OmniGui
         {
             return $"{nameof(Width)}: {Width}, {nameof(Height)}: {Height}";
         }
-
 
         public static Size OnlyHeight(double height)
         {

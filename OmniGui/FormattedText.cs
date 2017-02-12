@@ -1,5 +1,7 @@
 namespace OmniGui
 {
+    using Space;
+
     public class FormattedText
     {
         public string Text { get; set; }

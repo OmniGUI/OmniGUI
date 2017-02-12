@@ -1,15 +1,22 @@
 ﻿namespace WpfApp
 {
+    using System;
+    using System.Drawing.Imaging;
     using System.IO;
     using System.Linq;
+    using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.Media.Imaging;
     using Common;
     using OmniGui;
     using OmniGui.Wpf;
     using OmniGui.Xaml;
-    using Point = OmniGui.Point;
-    using Rect = OmniGui.Rect;
-    using Size = OmniGui.Size;
+    using OmniXaml;
+    using OmniXaml.Attributes;
+    using Point = OmniGui.Space.Point;
+    using Rect = OmniGui.Space.Rect;
+    using Size = OmniGui.Space.Size;
 
     public partial class MainWindow
     {
@@ -43,6 +50,33 @@
             layout.Arrange(new Rect(Point.Zero, availableSize));
 
             layout.Render(new WpfDrawingContext(drawingContext));
+        }
+
+        [TypeConverterMember(typeof(Bitmap))]
+        public static Func<ConverterValueContext, object> BitmapConverter = context => GetBitmap(context);
+
+        private static Bitmap GetBitmap(ConverterValueContext context)
+        {
+            var bitmap = new BitmapImage();
+            
+            using (var stream = File.OpenRead((string) context.Value))
+            {
+                bitmap.BeginInit();
+                bitmap.StreamSource = stream;
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+            }
+
+            var frame = BitmapFrame.Create(bitmap);
+            var buffer = new byte[frame.PixelWidth * frame.PixelHeight * 4];
+            frame.CopyPixels(buffer, frame.PixelWidth * 4, 0);
+
+            return new Bitmap
+            {
+                Height = frame.PixelHeight,
+                Width = frame.PixelWidth,
+                Bytes = buffer,
+            };
         }
     }
 }
