@@ -27,7 +27,7 @@
 
         public override void Render(IDrawingContext drawingContext)
         {
-            var viewPort = new Rect(Bounds.Size);
+            var viewPort = new Rect(VisualBounds.Point, VisualBounds.Size);
             var sourceSize = new Size(Source.Width, Source.Height);
             var scale = Stretch.CalculateScaling(Bounds.Size, sourceSize);
             var scaledSize = sourceSize * scale;
@@ -37,7 +37,7 @@
             var sourceRect = new Rect(sourceSize)
                 .CenterIn(new Rect(destRect.Size / scale));
 
-            drawingContext.DrawBitmap(Source, sourceRect, VisualBounds);
+            drawingContext.DrawBitmap(Source, sourceRect, destRect);
         }
 
         protected override Size MeasureOverride(Size availableSize)
