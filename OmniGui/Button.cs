@@ -6,14 +6,7 @@
 
     public class Button : ContentLayout
     {
-        public readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(Button), typeof(string), new PropertyMetadata());
         public readonly ExtendedProperty CommandProperty = PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
-
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
 
         public Button()
         {         

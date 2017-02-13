@@ -55,6 +55,7 @@
 
                 var targetLayout = (Layout) bd.TargetInstance;
                 var observer = targetLayout.GetObserver(targetLayout.GetProperty(bd.TargetMember.MemberName));
+
                 sourceObs.Subscribe(observer);
             }
         }

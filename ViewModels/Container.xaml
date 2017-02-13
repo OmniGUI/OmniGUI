@@ -3,7 +3,7 @@
     <Container.ControlTemplates>
         <ControlTemplate Target="Button">
             <Border Padding="4" BorderThickness="2" BorderBrush="Black" CornerRadius="5" Background="LightGray">
-                <TextBlock Text="{TemplateBind Text}" HorizontalAlignment="Center" />
+                <ContentPresenter Content="{TemplateBind Content}" />
             </Border>
         </ControlTemplate>
 
