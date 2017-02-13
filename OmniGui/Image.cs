@@ -5,8 +5,8 @@
 
     public class Image : Layout
     {
-        public readonly ExtendedProperty SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(Image), typeof(Bitmap), new PropertyMetadata() { DefaultValue = null });
-        public readonly ExtendedProperty StretchProperty = PropertyEngine.RegisterProperty("Stretch", typeof(Image), typeof(Stretch), new PropertyMetadata { DefaultValue = Stretch.Uniform });
+        public static readonly ExtendedProperty SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(Image), typeof(Bitmap), new PropertyMetadata() { DefaultValue = null });
+        public static readonly ExtendedProperty StretchProperty = PropertyEngine.RegisterProperty("Stretch", typeof(Image), typeof(Stretch), new PropertyMetadata { DefaultValue = Stretch.Uniform });
 
         public Image()
         {

@@ -40,6 +40,14 @@
         </Grid>
 
     </StackPanel>
-    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" Content="Aceptar" Command="{Bind ShowMessageCommand}" RequestedSize="100,-"></Button>
+    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" Command="{Bind ShowMessageCommand}">
+        <Button.Content>
+            <StackPanel>
+                <TextBlock Text="Oh mamma!" />
+                <TextBlock Text="Oh mamma!" />
+                <TextBox Text="Salud y buenos alimentos"></TextBox>
+            </StackPanel>
+        </Button.Content>
+    </Button>
 
 </Grid>
