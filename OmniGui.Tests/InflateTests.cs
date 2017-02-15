@@ -19,12 +19,11 @@ namespace OmniGui.Tests
             var path= Path.Combine(dirPath, "Container.xaml");
 
 
-            var layout = new Button {Text = "Hola tío"};
+            var layout = new Button {Content = "Hola tío"};
             var omniGuiXamlLoader = GetLoader();
             var container = (Container)omniGuiXamlLoader.Load(File.ReadAllText(path)).Instance;
 
             TemplateInflator.Inflate(layout, container.ControlTemplates);
-            layout.Text = "Pepito";
         }
 
         private static OmniGuiXamlLoader GetLoader()

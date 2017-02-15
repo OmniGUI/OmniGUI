@@ -2,6 +2,7 @@ namespace OmniGui
 {
     public enum Orientation
     {
-        Vertical
+        Vertical,
+        Horizontal,            
     }
 }

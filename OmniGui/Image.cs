@@ -49,11 +49,6 @@
 
             var sourceSize = new Size(Source.Width, Source.Height);
 
-            if (double.IsInfinity(availableSize.Width) || double.IsInfinity(availableSize.Height))
-            {
-                return sourceSize;
-            }
-
             return Stretch.CalculateSize(availableSize, sourceSize);
         }       
     }

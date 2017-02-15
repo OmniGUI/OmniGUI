@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
         Background="Transparent"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        RenderOptions.EdgeMode="Unspecified"
         Title="MainWindow" Height="350" Width="200">
-    <Grid x:Name="LayoutRoot"></Grid>
+    <Grid x:Name="LayoutRoot"  />
 </Window>
+

@@ -36,16 +36,14 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Image:" />
-            <Image Grid.Column="1" HorizontalAlignment="Center" Source="mario.png" />
         </Grid>
 
     </StackPanel>
-    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" Command="{Bind ShowMessageCommand}">
+    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Center" Command="{Bind ShowMessageCommand}">
         <Button.Content>
-            <StackPanel>
-                <TextBlock Text="Oh mamma!" />
-                <TextBlock Text="Oh mamma!" />
-                <TextBox Text="Salud y buenos alimentos"></TextBox>
+            <StackPanel Orientation="Horizontal">
+                <Image RequestedSize="-,60" Source="mario.png" Margin="5" />
+                <TextBlock Text="Aceptar" VerticalAlignment="Center" />
             </StackPanel>
         </Button.Content>
     </Button>
