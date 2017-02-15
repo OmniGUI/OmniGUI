@@ -2,7 +2,7 @@ using System;
 
 namespace OmniGui
 {
-    using Space;
+    using Geometry;
 
     public class LayoutHelper
     {

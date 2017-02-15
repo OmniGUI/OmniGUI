@@ -3,6 +3,7 @@
     using System;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem.Standard;
+    using OmniGui.Layouts;
 
     public class ContentLayout : Layout
     {

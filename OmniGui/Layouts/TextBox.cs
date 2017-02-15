@@ -1,4 +1,4 @@
-namespace OmniGui
+namespace OmniGui.Layouts
 {
     using System;
     using System.Linq;

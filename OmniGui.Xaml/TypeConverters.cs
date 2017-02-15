@@ -5,8 +5,8 @@ using OmniXaml.Attributes;
 
 namespace OmniGui.Xaml
 {
-    using Grid;
-    using Space;
+    using Geometry;
+    using Layouts.Grid;
 
     public static class TypeConverters
     {

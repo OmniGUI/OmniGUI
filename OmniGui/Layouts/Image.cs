@@ -1,6 +1,6 @@
-﻿namespace OmniGui
+﻿namespace OmniGui.Layouts
 {
-    using Space;
+    using Geometry;
     using Zafiro.PropertySystem.Standard;
 
     public class Image : Layout

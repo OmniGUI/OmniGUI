@@ -1,6 +1,6 @@
 ﻿namespace OmniGui.Console
 {
-    using Space;
+    using Geometry;
 
     public class ConsoleAdapter : IDrawingContext
     {

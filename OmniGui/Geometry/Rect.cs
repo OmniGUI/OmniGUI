@@ -1,4 +1,4 @@
-namespace OmniGui.Space
+namespace OmniGui.Geometry
 {
     public struct Rect
     {

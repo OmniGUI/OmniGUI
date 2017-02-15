@@ -2,7 +2,7 @@ namespace OmniGui
 {
     using System;
     using System.Reactive.Linq;
-    using Space;
+    using Geometry;
 
     public class PointerEvents
     {

@@ -1,6 +1,6 @@
-﻿namespace OmniGui.Space
+﻿namespace OmniGui.Geometry
 {
-    public static class SpaceExtensions
+    public static class GeometryExtensions
     {
         public static Size UniformResize(this Size size, Size target)
         {

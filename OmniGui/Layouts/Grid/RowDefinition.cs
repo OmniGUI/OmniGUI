@@ -1,4 +1,4 @@
-namespace OmniGui.Grid
+namespace OmniGui.Layouts.Grid
 {
     /// <summary>
     ///     Holds a row definitions for a <see cref="Grid" />.

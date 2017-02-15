@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-
-namespace OmniGui.Grid
+namespace OmniGui.Layouts.Grid
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+
     /// <summary>
     /// A collection of <see cref="ColumnDefinition"/>s.
     /// </summary>

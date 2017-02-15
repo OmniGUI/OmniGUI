@@ -5,7 +5,7 @@ using OmniGui;
 namespace UwpApp.Plugin
 {
     using System;
-    using OmniGui.Space;
+    using OmniGui.Geometry;
 
     internal class Win2DDrawingContext : IDrawingContext
     {

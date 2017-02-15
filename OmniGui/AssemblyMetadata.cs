@@ -1,4 +1,4 @@
 ﻿using OmniXaml.Attributes;
 
-[assembly: XmlnsDefinition("root", "OmniGui")]
-[assembly: XmlnsDefinition("root", "OmniGui.Grid")]
+[assembly: XmlnsDefinition("root", "OmniGui.Layouts")]
+[assembly: XmlnsDefinition("root", "OmniGui.Layouts.Grid")]

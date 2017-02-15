@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 
 namespace OmniGui
 {
-    using Space;
+    using Geometry;
 
     public class NullEventDriver : IEventProcessor
     {

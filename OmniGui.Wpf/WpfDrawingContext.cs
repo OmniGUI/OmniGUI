@@ -4,7 +4,7 @@ namespace OmniGui.Wpf
 {
     using System.Windows.Media.Animation;
     using System.Windows.Media.Imaging;
-    using Space;
+    using Geometry;
 
     public class WpfDrawingContext : IDrawingContext
     {

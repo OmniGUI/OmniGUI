@@ -3,8 +3,8 @@ namespace OmniGui
     using System;
     using System.Linq;
     using System.Reactive.Linq;
+    using Geometry;
     using OmniXaml.Attributes;
-    using Space;
     using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
     using Zafiro.PropertySystem.Standard;

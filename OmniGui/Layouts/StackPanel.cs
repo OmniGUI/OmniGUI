@@ -1,8 +1,7 @@
-using System;
-
-namespace OmniGui
+namespace OmniGui.Layouts
 {
-    using Space;
+    using System;
+    using Geometry;
 
     public class StackPanel : Layout
     {

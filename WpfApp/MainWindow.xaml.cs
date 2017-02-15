@@ -14,9 +14,9 @@
     using OmniGui.Xaml;
     using OmniXaml;
     using OmniXaml.Attributes;
-    using Point = OmniGui.Space.Point;
-    using Rect = OmniGui.Space.Rect;
-    using Size = OmniGui.Space.Size;
+    using Point = OmniGui.Geometry.Point;
+    using Rect = OmniGui.Geometry.Rect;
+    using Size = OmniGui.Geometry.Size;
 
     public partial class MainWindow
     {

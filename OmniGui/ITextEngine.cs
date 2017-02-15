@@ -1,6 +1,6 @@
 ﻿namespace OmniGui
 {
-    using Space;
+    using Geometry;
 
     public interface ITextEngine
     {

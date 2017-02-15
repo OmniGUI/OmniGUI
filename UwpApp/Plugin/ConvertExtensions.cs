@@ -7,7 +7,7 @@ using OmniGui;
 namespace UwpApp.Plugin
 {
     using Windows.Graphics.DirectX;
-    using OmniGui.Space;
+    using OmniGui.Geometry;
     using FontWeights = OmniGui.FontWeights;
 
     public static class ConvertExtensions

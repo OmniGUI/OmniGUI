@@ -12,7 +12,7 @@
     using Common;
     using Microsoft.Graphics.Canvas.UI.Xaml;
     using OmniGui;
-    using OmniGui.Space;
+    using OmniGui.Geometry;
     using OmniGui.Xaml;
     using OmniXaml;
     using OmniXaml.Attributes;

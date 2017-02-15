@@ -1,4 +1,4 @@
-namespace OmniGui.Grid
+namespace OmniGui.Layouts.Grid
 {
     public class DefinitionBase
     {

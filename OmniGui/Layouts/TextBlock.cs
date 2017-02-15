@@ -1,7 +1,7 @@
-﻿namespace OmniGui
+﻿namespace OmniGui.Layouts
 {
     using System;
-    using Space;
+    using Geometry;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBlock : Layout

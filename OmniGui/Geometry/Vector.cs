@@ -1,4 +1,4 @@
-namespace OmniGui.Space
+namespace OmniGui.Geometry
 {
     using System;
     using System.Globalization;

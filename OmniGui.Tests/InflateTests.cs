@@ -4,6 +4,7 @@ namespace OmniGui.Tests
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using Layouts;
     using Xaml.Templates;
     using Xaml;
     using Xunit;

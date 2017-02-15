@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-
-namespace OmniGui.Grid
+namespace OmniGui.Layouts.Grid
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+
     public struct GridLength : IEquatable<GridLength>
     {
         private readonly GridUnitType type;

@@ -1,7 +1,8 @@
 namespace OmniGui.Tests
 {
+    using Geometry;
+    using Layouts;
     using OmniXaml.Attributes;
-    using Space;
     using Xunit;
 
     public class StackPanelTests

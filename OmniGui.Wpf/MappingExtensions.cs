@@ -4,10 +4,10 @@ using System.Windows.Media;
 
 namespace OmniGui.Wpf
 {
-    using Space;
+    using Geometry;
     using FontWeight = System.Windows.FontWeight;
     using FontWeights = System.Windows.FontWeights;
-    using Rect = Space.Rect;
+    using Rect = Geometry.Rect;
 
     public static class MappingExtensions
     {

@@ -1,9 +1,9 @@
-﻿namespace OmniGui.Grid
+﻿namespace OmniGui.Layouts.Grid
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Space;
+    using Geometry;
     using Zafiro.PropertySystem.Attached;
 
     public class Grid : Layout
