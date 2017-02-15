@@ -1,51 +1,12 @@
 ﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:Common;assembly=Common">
 
-    <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
-
-    <StackPanel  Grid.RowSpan="2">
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock FontWeight="Bold" Text="Name:"></TextBlock>
-            <TextBox Grid.Column="1" Text="{Bind Name, LinkMode=FullLink}" />
-        </Grid>
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock FontWeight="Bold" Text="Surname:"></TextBlock>
-            <TextBox Grid.Column="1" Text="{Bind Surname, LinkMode=FullLink}" />
-        </Grid>
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock FontWeight="Bold" Text="Identifier:" />
-            <TextBlock Grid.Column="1" Text="12345678" HorizontalAlignment="Center" />
-        </Grid>
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock FontWeight="Bold" Text="Image:" />
-        </Grid>
-
-    </StackPanel>
-    <Button Grid.Row="1" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Center" Command="{Bind ShowMessageCommand}">
-        <Button.Content>
-            <StackPanel Orientation="Horizontal">
-                <Image RequestedSize="-,60" Source="mario.png" Margin="5" />
-                <TextBlock Text="Aceptar" VerticalAlignment="Center" />
-            </StackPanel>
-        </Button.Content>
-    </Button>
-
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <List Source="{Bind People}" />
+        <Button Grid.Column="1" Content="Añadir" VerticalAlignment="Top" Command="{Bind DeleteItemCommand}" />
+    </Grid>
+    
 </Grid>

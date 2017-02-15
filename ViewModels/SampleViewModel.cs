@@ -1,10 +1,14 @@
 ﻿namespace Common
 {
     using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Reactive.Subjects;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
+    using DynamicData;
+    using DynamicData.Binding;
 
     public class SampleViewModel : INotifyPropertyChanged
     {
@@ -18,6 +22,30 @@
             WrittenText = new Subject<object>();
             WrittenText.Subscribe(t => { });
             ShowMessageCommand = new DelegateCommand(() => messageService.ShowMessage("Saludos, colleiga!"));
+
+            var people = new List<Person>()
+            {
+                new Person()
+                {
+                    Name = "José Manuel",
+                    Surname = "Nieto",
+                },
+                new Person()
+                {
+                    Name = "Ana Isabel",
+                    Surname = "Meana",
+                },
+                new Person()
+                {
+                    Name = "Bichito",
+                    Surname = "LG",
+                }
+            };
+
+            ISourceList<object> sourceList = new SourceList<object>();
+            sourceList.AddRange(people);
+
+            People = sourceList;
         }
 
         public ISubject<object> WrittenText { get; }
@@ -33,6 +61,10 @@
         }
 
         public ICommand ShowMessageCommand { get; set; }
+
+        public ICommand DeleteItemCommand => new DelegateCommand(() => People.Add(new Person() { Name = "Nuevo", Surname = "Apps" }));
+
+        public ISourceList<object> People { get; }
 
         public string Surname
         {
