@@ -4,9 +4,9 @@ namespace OmniGui.Xaml
     using System.Linq;
     using Templates;
 
-    public class TemplateInflator
+    public class TemplateInflator : ITemplateInflator
     {
-        public static void Inflate(Layout layout, ICollection<ControlTemplate> controlTemplates)
+        public void Inflate(Layout layout, ICollection<ControlTemplate> controlTemplates)
         {
             Apply(controlTemplates, layout);
 

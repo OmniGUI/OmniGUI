@@ -24,7 +24,7 @@ namespace OmniGui.Tests
             var omniGuiXamlLoader = GetLoader();
             var container = (Container)omniGuiXamlLoader.Load(File.ReadAllText(path)).Instance;
 
-            TemplateInflator.Inflate(layout, container.ControlTemplates);
+            new TemplateInflator().Inflate(layout, container.ControlTemplates);
         }
 
         private static OmniGuiXamlLoader GetLoader()

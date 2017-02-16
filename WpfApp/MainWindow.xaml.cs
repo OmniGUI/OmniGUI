@@ -36,7 +36,7 @@
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
             var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml")).Instance;
-            TemplateInflator.Inflate(layout, container.ControlTemplates);
+            new TemplateInflator().Inflate(layout, container.ControlTemplates);
             layout.DataContext = new SampleViewModel(new WpfMessageBoxService());
         }
 

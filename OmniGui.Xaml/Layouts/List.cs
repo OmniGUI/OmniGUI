@@ -1,10 +1,10 @@
-﻿namespace OmniGui.Layouts
+﻿namespace OmniGui.Xaml.Layouts
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using DynamicData;
     using DynamicData.Binding;
+    using OmniGui.Layouts;
+    using Xaml;
     using Zafiro.PropertySystem.Standard;
 
     public class List : Layout
@@ -15,7 +15,7 @@
         private IDisposable subscription;
         private readonly StackPanel panel;
 
-        public List()
+        public List(TemplateInflator inflator)
         {
             panel = new StackPanel();
             this.AddChild(panel);
