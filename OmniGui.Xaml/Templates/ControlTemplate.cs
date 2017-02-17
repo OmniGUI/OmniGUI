@@ -4,14 +4,8 @@
 
 namespace OmniGui.Xaml.Templates
 {
-    using OmniXaml.Attributes;
-
-    public class ControlTemplate
+    public class ControlTemplate : Template
     {
-        [Content]
-        [FragmentLoader(FragmentLoader = typeof(ConstructionFragmentLoader))]
-        public TemplateContent Content { get; set; }
-
         public Layout ApplyTo(Layout layout)
         {
             return Content.LoadFor(layout);

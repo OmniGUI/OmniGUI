@@ -4,6 +4,7 @@
     using DynamicData;
     using DynamicData.Binding;
     using OmniGui.Layouts;
+    using Templates;
     using Xaml;
     using Zafiro.PropertySystem.Standard;
 
@@ -11,6 +12,10 @@
     {
         public static readonly ExtendedProperty SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(List),
             typeof(IObservableCollection<object>), new PropertyMetadata());
+
+        public static readonly ExtendedProperty ItemTemplateProperty = PropertyEngine.RegisterProperty("ItemTemplate", typeof(List),
+            typeof(DataTemplate), new PropertyMetadata());
+
 
         private IDisposable subscription;
         private readonly StackPanel panel;
@@ -35,17 +40,34 @@
 
         private void AddItem(object item)
         {
-            panel.AddChild(new TextBlock()
+            var wrappedItem = WrapItem(item);
+            panel.AddChild(wrappedItem);
+        }
+
+        private Layout WrapItem(object item)
+        {
+            if (ItemTemplate != null)
+            {
+                var inflated = (Layout) ItemTemplate.ApplyTo(item);
+                inflated.DataContext = item;
+            }
+
+            return new TextBlock
             {
                 Text = item.ToString(),
-                DataContext = item,
-            });
+            };
         }
 
         public IObservableCollection<object> Source
         {
             get { return (IObservableCollection<object>)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
+        }
+
+        public DataTemplate ItemTemplate
+        {
+            get { return (DataTemplate) GetValue(ItemTemplateProperty); }
+            set { SetValue(ItemTemplateProperty, value); }
         }
     }
 }
