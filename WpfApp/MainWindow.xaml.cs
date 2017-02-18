@@ -5,7 +5,6 @@
     using System.Drawing.Imaging;
     using System.IO;
     using System.Linq;
-    using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
@@ -28,11 +27,7 @@
         {
             InitializeComponent();
 
-            Platform.Current = new Platform
-            {
-                TextEngine = new WpfTextEngine(),
-                EventDriver = new WpfEventProcessor(this)
-            };
+            Platform.Current = new WpfPlatform(this);
 
             var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates);
 
@@ -43,7 +38,7 @@
             layout.DataContext = new SampleViewModel(new WpfMessageBoxService());
         }
 
-        public ICollection<ControlTemplate> ControlTemplates { get; set; }
+        public ICollection<ControlTemplate> ControlTemplates { get; }
 
         protected override void OnRender(DrawingContext drawingContext)
         {

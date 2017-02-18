@@ -5,7 +5,7 @@ namespace OmniGui
 {
     using Geometry;
 
-    public class NullEventDriver : IEventProcessor
+    public class NullEventDriver : IEventSource
     {
         public IObservable<Point> Pointer { get; } = Observable.Never<Point>();
         public void Invalidate()

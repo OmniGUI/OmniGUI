@@ -6,9 +6,9 @@ namespace OmniGui
 
     public class PointerEvents
     {
-        public PointerEvents(Layout layout, IEventProcessor eventProcessor)
+        public PointerEvents(Layout layout, IEventSource eventSource)
         {
-            Down = eventProcessor.Pointer.Where(point => IsHit(point, layout));
+            Down = eventSource.Pointer.Where(point => IsHit(point, layout));
         }
 
         private static bool IsHit(Point point, Layout layout)

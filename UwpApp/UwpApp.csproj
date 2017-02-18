@@ -102,8 +102,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Plugin\Win2dDrawingContext.cs" />
     <Compile Include="Plugin\Win2dTextEngine.cs" />
-    <Compile Include="Plugin\UwpEventProcessor.cs" />
+    <Compile Include="Plugin\UwpEventSource.cs" />
     <Compile Include="UwpMessageService.cs" />
+    <Compile Include="UwpPlatform.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

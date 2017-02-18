@@ -24,8 +24,8 @@ namespace OmniGui
                 layout.DataContext = DataContext;
                 this.GetChangedObservable(DataContextProperty).Subscribe(o => layout.DataContext = o);
             });
-            Pointer = new PointerEvents(this, Platform.Current.EventDriver);
-            Keyboard = new KeyboardEvents(this, Platform.Current.EventDriver, Platform.Current.FocusedElement);
+            Pointer = new PointerEvents(this, Platform.Current.EventSource);
+            Keyboard = new KeyboardEvents(this, Platform.Current.EventSource, Platform.Current.FocusedElement);
         }
 
         public object DataContext
@@ -47,7 +47,7 @@ namespace OmniGui
 
         private void InvalidateRender()
         {
-            Platform.Current.EventDriver.Invalidate();
+            Platform.Current.EventSource.Invalidate();
         }
 
         public PointerEvents Pointer { get; set; }

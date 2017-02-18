@@ -2,17 +2,16 @@ namespace OmniGui.Wpf
 {
     using System;
     using System.Reactive.Linq;
-    using System.Reactive.Subjects;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
     using Point = Geometry.Point;
 
-    public class WpfEventProcessor : IEventProcessor
+    public class WpfEventSource : IEventSource
     {
         private readonly FrameworkElement inputElement;
 
-        public WpfEventProcessor(FrameworkElement inputElement)
+        public WpfEventSource(FrameworkElement inputElement)
         {
             this.inputElement = inputElement;
             Pointer = GetPointerObservable(inputElement);
@@ -35,7 +34,7 @@ namespace OmniGui.Wpf
         {            
         }
 
-        private IObservable<KeyInputArgs> GetKeyInputObservable(FrameworkElement element)
+        private static IObservable<KeyInputArgs> GetKeyInputObservable(IInputElement element)
         {
             var fromEventPattern = Observable.FromEventPattern<TextCompositionEventHandler, TextCompositionEventArgs>(
                 ev => element.PreviewTextInput += ev,

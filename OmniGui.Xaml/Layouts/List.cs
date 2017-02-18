@@ -36,11 +36,11 @@
             {
                 var source = (ISourceList<object>)obj;
 
-                Platform.Current.EventDriver.Invalidate();
+                Platform.Current.EventSource.Invalidate();
 
                 source.Connect()
                     .OnItemAdded(AddItem)                    
-                    .ForEachChange(_ => Platform.Current.EventDriver.Invalidate())
+                    .ForEachChange(_ => Platform.Current.EventSource.Invalidate())
                     .Subscribe();
             });
         }

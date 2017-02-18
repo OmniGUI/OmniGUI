@@ -26,16 +26,17 @@
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private readonly Win2DTextEngine textEngine = new Win2DTextEngine();
+        private readonly Win2DTextEngine textEngine;
+        private readonly Win2DDrawingContext drawingContext = new Win2DDrawingContext();
         private Layout layout;
 
         public MainPage()
         {
             InitializeComponent();
 
-            Platform.Current.TextEngine = textEngine;
-            Platform.Current.EventDriver = new UwpEventProcessor(this, Canvas);
-
+            Platform.Current = new UwpPlatform(this, Canvas);
+            textEngine = (Win2DTextEngine) Platform.Current.TextEngine;
+            
             Loaded += OnLoaded;
         }
 
@@ -66,6 +67,7 @@
         private void CanvasControl_OnDraw(CanvasControl sender, CanvasDrawEventArgs args)
         {
             textEngine.SetDrawingSession(args.DrawingSession);
+            drawingContext.SetDrawingSession(args.DrawingSession);
 
             if (layout == null)
             {
@@ -79,7 +81,7 @@
             layout.Measure(availableSize);
             layout.Arrange(new Rect(Point.Zero, availableSize));
 
-            layout.Render(new Win2DDrawingContext(args.DrawingSession));
+            layout.Render(drawingContext);
         }
 
         private static async Task<string> ReadAllText(string fileName)

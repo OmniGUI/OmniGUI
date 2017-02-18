@@ -13,12 +13,12 @@ namespace UwpApp.Plugin
     using Microsoft.Graphics.Canvas.UI.Xaml;
     using Point = OmniGui.Geometry.Point;
 
-    public class UwpEventProcessor : IEventProcessor
+    public class UwpEventSource : IEventSource
     {
         private readonly FrameworkElement inputElement;
         private readonly CanvasControl canvas;
 
-        public UwpEventProcessor(FrameworkElement inputElement, CanvasControl canvas)
+        public UwpEventSource(FrameworkElement inputElement, CanvasControl canvas)
         {
             this.inputElement = inputElement;
             this.canvas = canvas;

@@ -5,7 +5,7 @@ namespace OmniGui
 
     public class KeyboardEvents
     {
-        public KeyboardEvents(Layout layout, IEventProcessor eventDriver, IObservable<Layout> focusedElement)
+        public KeyboardEvents(Layout layout, IEventSource eventDriver, IObservable<Layout> focusedElement)
         {
             FocusedElement = focusedElement;
             TextInput = eventDriver.TextInput;

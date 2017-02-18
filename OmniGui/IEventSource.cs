@@ -3,7 +3,7 @@
     using System;
     using Geometry;
 
-    public interface IEventProcessor
+    public interface IEventSource
     {
         IObservable<Point> Pointer { get; }
         IObservable<TextInputArgs> TextInput { get; }

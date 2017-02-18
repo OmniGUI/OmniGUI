@@ -4,17 +4,11 @@ using OmniGui;
 
 namespace UwpApp.Plugin
 {
-    using System;
     using OmniGui.Geometry;
 
     internal class Win2DDrawingContext : IDrawingContext
     {
-        private readonly CanvasDrawingSession drawingSession;
-
-        public Win2DDrawingContext(CanvasDrawingSession drawingSession)
-        {
-            this.drawingSession = drawingSession;
-        }
+        private CanvasDrawingSession drawingSession;
 
         public void FillRectangle(Rect rect, Brush brush)
         {
@@ -32,10 +26,6 @@ namespace UwpApp.Plugin
             var color = pen.Brush.Color.ToWin2D();
 
             drawingSession.DrawRoundedRectangle(winRect, radius, radius, color);
-        }
-
-        public void DrawText(Point point, Brush brush, string text)
-        {
         }
 
         public void DrawText(FormattedText formattedText, Point point)
@@ -68,6 +58,11 @@ namespace UwpApp.Plugin
             var radius = (float)cornerRadius.BottomLeft;
 
             drawingSession.FillRoundedRectangle(winRect, radius, radius, brush.ToWin2D(drawingSession));
+        }
+
+        public void SetDrawingSession(CanvasDrawingSession drawingSession)
+        {
+            this.drawingSession = drawingSession;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace OmniGui.Layouts
             Pointer.Down.Subscribe(point =>
             {
                 Platform.Current.SetFocusedElement(this);
-                Platform.Current.EventDriver.ShowVirtualKeyboard();
+                Platform.Current.EventSource.ShowVirtualKeyboard();
             });
             Keyboard.KeyInput.Subscribe(args => Text = ProcessKeyInput(args));
 

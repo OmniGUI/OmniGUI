@@ -51,6 +51,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="WpfMessageBoxService.cs" />
+    <Compile Include="WpfPlatform.cs" />
     <None Include="..\ViewModels\Layout.xaml">
       <Link>Layout.xaml</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="MappingExtensions.cs" />
     <Compile Include="WpfDrawingContext.cs" />
-    <Compile Include="WpfEventProcessor.cs" />
+    <Compile Include="WpfEventSource.cs" />
     <Compile Include="WpfTextEngine.cs" />
   </ItemGroup>
   <ItemGroup>
