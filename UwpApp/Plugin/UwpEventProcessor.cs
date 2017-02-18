@@ -9,6 +9,7 @@ using OmniGui;
 
 namespace UwpApp.Plugin
 {
+    using Windows.UI.ViewManagement;
     using Microsoft.Graphics.Canvas.UI.Xaml;
     using Point = OmniGui.Geometry.Point;
 
@@ -22,7 +23,7 @@ namespace UwpApp.Plugin
             this.inputElement = inputElement;
             this.canvas = canvas;
             Pointer = GetPointerObservable(inputElement);
-            KeyInput = GetKeyInputObservable();
+            KeyInput = GetKeyInputObservable();            
         }
 
         public IObservable<KeyInputArgs> KeyInput { get; set; }
@@ -54,6 +55,12 @@ namespace UwpApp.Plugin
         public void Invalidate()
         {
             Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => canvas.Invalidate());
+        }
+
+        public void ShowVirtualKeyboard()
+        {
+            InputPane pane = InputPane.GetForCurrentView();
+            pane.TryShow();
         }
 
         public IObservable<TextInputArgs> TextInput => new Subject<TextInputArgs>();

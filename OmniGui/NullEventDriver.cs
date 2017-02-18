@@ -12,6 +12,10 @@ namespace OmniGui
         {            
         }
 
+        public void ShowVirtualKeyboard()
+        {            
+        }
+
         public IObservable<TextInputArgs> TextInput => Observable.Never<TextInputArgs>();
         public IObservable<KeyInputArgs> KeyInput => Observable.Never<KeyInputArgs>();
     }

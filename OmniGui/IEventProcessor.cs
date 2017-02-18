@@ -9,5 +9,6 @@
         IObservable<TextInputArgs> TextInput { get; }
         IObservable<KeyInputArgs> KeyInput { get; }
         void Invalidate();
+        void ShowVirtualKeyboard();
     }
 }

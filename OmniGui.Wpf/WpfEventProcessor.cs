@@ -31,6 +31,10 @@ namespace OmniGui.Wpf
             Application.Current.Dispatcher.Invoke(() => inputElement.InvalidateVisual(), DispatcherPriority.Render);
         }
 
+        public void ShowVirtualKeyboard()
+        {            
+        }
+
         private IObservable<KeyInputArgs> GetKeyInputObservable(FrameworkElement element)
         {
             var fromEventPattern = Observable.FromEventPattern<TextCompositionEventHandler, TextCompositionEventArgs>(

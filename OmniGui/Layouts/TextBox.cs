@@ -16,7 +16,11 @@ namespace OmniGui.Layouts
 
         public TextBox()
         {
-            Pointer.Down.Subscribe(point => Platform.Current.SetFocusedElement(this));
+            Pointer.Down.Subscribe(point =>
+            {
+                Platform.Current.SetFocusedElement(this);
+                Platform.Current.EventDriver.ShowVirtualKeyboard();
+            });
             Keyboard.KeyInput.Subscribe(args => Text = ProcessKeyInput(args));
 
             NotifyRenderAffectedBy(TextProperty);
