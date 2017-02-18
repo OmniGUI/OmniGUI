@@ -1,6 +1,5 @@
 ﻿namespace OmniGui.Tests
 {
-    using System;
     using Layouts;
     using Xunit;
 
@@ -9,19 +8,37 @@
         [Fact]
         public void Refresh()
         {
-            Platform.Current = new TestPlatform();
-            var textBox = new TextBox() {Text = "Hi"};            
+            var testPlatform = new TestPlatform();
+            Platform.Current = testPlatform;
+            var textBox = new TextBox() {Text = "Hi"};
+            textBox.Text = "New";
+            var testPlatformEventSource = (TestEventSource)testPlatform.EventSource;
+            Assert.Equal(2, testPlatformEventSource.InvalidateCount);
         }
-    }
 
-    public class TestPlatform : IPlatform
-    {
-        public ITextEngine TextEngine { get; set; }
-        public IEventSource EventSource { get; set; }
-        public IObservable<Layout> FocusedElement { get; }
-        public void SetFocusedElement(Layout layout)
+        [Fact]
+        public void SendKey()
         {
-            throw new NotImplementedException();
+            var testPlatform = new TestPlatform();
+            Platform.Current = testPlatform;
+            var textBox = new TextBox { Text = "Hi" };
+            var testPlatformEventSource = (TestEventSource)testPlatform.EventSource;
+            testPlatform.SetFocusedElement(textBox);
+            testPlatformEventSource.SendKey('a');
+            Assert.Equal("Hia", textBox.Text);
+        }
+
+        [Fact]
+        public void SendBackspace()
+        {
+            var testPlatform = new TestPlatform();
+            Platform.Current = testPlatform;
+            var textBox = new TextBox { Text = "Hi" };
+            var testPlatformEventSource = (TestEventSource)testPlatform.EventSource;
+            testPlatform.SetFocusedElement(textBox);
+            testPlatformEventSource.SendKey(Chars.Backspace);
+            Assert.Equal("H", textBox.Text);
+            Assert.Equal(2, testPlatformEventSource.InvalidateCount);
         }
     }
 }
