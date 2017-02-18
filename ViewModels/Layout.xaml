@@ -2,23 +2,26 @@
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition />
-        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition />
     </Grid.ColumnDefinitions>
 
-    <List Source="{Bind People}">
+    <List Source="{Bind People}" Margin="15">
         <List.ItemTemplate>
             <DataTemplate>
-                <Button>
-                    <Button.Content>
-                        <TextBlock Text="{Bind Name}" />
-                    </Button.Content>
-                </Button>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="mario.png" />
+                    <TextBlock Margin="15" VerticalAlignment="Center" Grid.Column="1" Text="{Bind Name}" />
+                </Grid>
             </DataTemplate>
         </List.ItemTemplate>
     </List>
 
-    <StackPanel Grid.Column="1">
-        <Grid>
+    <StackPanel Grid.Column="1" Margin="15">
+        <Grid Margin="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -26,7 +29,7 @@
             <TextBlock FontWeight="Bold" Text="Name:"></TextBlock>
             <TextBox Grid.Column="1" Text="{Bind Name, LinkMode=FullLink}" />
         </Grid>
-        <Grid>
+        <Grid Margin="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -34,7 +37,7 @@
             <TextBlock FontWeight="Bold" Text="Surname:"></TextBlock>
             <TextBox Grid.Column="1" Text="{Bind Surname, LinkMode=FullLink}" />
         </Grid>
-        <Grid>
+        <Grid Margin="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -42,14 +45,13 @@
             <TextBlock FontWeight="Bold" Text="Identifier:" />
             <TextBlock Grid.Column="1" Text="12345678" HorizontalAlignment="Center" />
         </Grid>
-        <Grid>
+        <Grid Margin="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Image:" />
         </Grid>
-        <Button Content="Añadir" VerticalAlignment="Top" Command="{Bind DeleteItemCommand}" />
     </StackPanel>
-      
+
 </Grid>

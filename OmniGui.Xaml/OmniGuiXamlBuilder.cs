@@ -1,7 +1,9 @@
 ﻿namespace OmniGui.Xaml
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Reactive.Disposables;
     using System.Reactive.Linq;
     using System.Reflection;
     using OmniXaml;
@@ -9,6 +11,8 @@
 
     public class OmniGuiXamlBuilder : ExtendedObjectBuilder
     {
+        private readonly IDictionary<BindDefinition, IDisposable> bindings = new Dictionary<BindDefinition, IDisposable>();
+
         public OmniGuiXamlBuilder(IInstanceCreator creator, ObjectBuilderContext objectBuilderContext,
             IContextFactory contextFactory) : base(creator, objectBuilderContext, contextFactory)
         {
@@ -26,8 +30,8 @@
             else if (bd != null)
             {
                 ClearExistingBinding(bd);
-                BindToProperty(buildContext, bd);
-                AddExistingBinding(bd);
+                var bindingSubscription = BindToProperty(buildContext, bd);
+                AddExistingBinding(bd, bindingSubscription);
             }
             else
             {
@@ -35,27 +39,33 @@
             }
         }
 
-        private void AddExistingBinding(BindDefinition bd)
-        {            
+        private void AddExistingBinding(BindDefinition bd, IDisposable subs)
+        {
+            bindings.Add(bd, subs);
         }
 
         private void ClearExistingBinding(BindDefinition bd)
-        {            
+        {
+            if (bindings.ContainsKey(bd))
+            {
+                bindings[bd].Dispose();
+                bindings.Remove(bd);
+            }
         }
 
-        private void BindToProperty(BuildContext buildContext, BindDefinition bd)
+        private IDisposable BindToProperty(BuildContext buildContext, BindDefinition bd)
         {
             if (bd.Source == BindingSource.DataContext)
             {
-                BindToDataContext(bd);
+                return BindToDataContext(bd);
             }
             else
             {
-                BindToTemplatedParent(buildContext, bd);
+                return BindToTemplatedParent(buildContext, bd);
             }
         }
 
-        private static void BindToTemplatedParent(BuildContext buildContext, BindDefinition bd)
+        private static IDisposable BindToTemplatedParent(BuildContext buildContext, BindDefinition bd)
         {
             var source = (Layout) buildContext.Bag["TemplatedParent"];
             if (bd.TargetFollowsSource)
@@ -68,100 +78,14 @@
 
                 sourceObs.Subscribe(observer);
             }
+
+            return Disposable.Empty;
         }
 
-        private void BindToDataContext(BindDefinition bd)
+        private IDisposable BindToDataContext(BindDefinition bd)
         {
-            var targetObj = (Layout) bd.TargetInstance;
-            var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
-
-            obs.Where(o => o != null)
-                .Subscribe(model =>
-                {
-                    if (bd.TargetFollowsSource)
-                    {
-                        SubscribeTargetToSource(bd.SourceProperty, model, targetObj,
-                            targetObj.GetProperty(bd.TargetMember.MemberName));
-                    }
-
-                    if (bd.SourceFollowsTarget)
-                    {
-                        SubscribeSourceToTarget(bd.SourceProperty, model, targetObj,
-                            targetObj.GetProperty(bd.TargetMember.MemberName));
-                    }
-                });
-        }
-
-        private void BindToProperty(BindDefinition definition, IObservable<object> obs)
-        {
-            var targetObj = (Layout) definition.TargetInstance;
-            obs.Where(o => o != null)
-                .Subscribe(model =>
-                {
-                    if (definition.TargetFollowsSource)
-                    {
-                        SubscribeTargetToSource(definition.SourceProperty, model, targetObj,
-                            targetObj.GetProperty(definition.TargetMember.MemberName));
-                    }
-
-                    if (definition.SourceFollowsTarget)
-                    {
-                        SubscribeSourceToTarget(definition.SourceProperty, model, targetObj,
-                            targetObj.GetProperty(definition.TargetMember.MemberName));
-                    }
-                });
-        }
-
-        private void BindToProperty(BindDefinition definition)
-        {
-            var targetObj = (Layout) definition.TargetInstance;
-            var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
-            obs.Where(o => o != null)
-                .Subscribe(model =>
-                {
-                    if (definition.TargetFollowsSource)
-                    {
-                        SubscribeTargetToSource(definition.SourceProperty, model, targetObj,
-                            targetObj.GetProperty(definition.TargetMember.MemberName));
-                    }
-
-                    if (definition.SourceFollowsTarget)
-                    {
-                        SubscribeSourceToTarget(definition.SourceProperty, model, targetObj,
-                            targetObj.GetProperty(definition.TargetMember.MemberName));
-                    }
-                });
-        }
-
-        private void SubscribeSourceToTarget(string modelProperty, object model, Layout layout,
-            ExtendedProperty property)
-        {
-            var obs = layout.GetChangedObservable(property);
-            obs.Subscribe(o =>
-            {
-                var propInfo = model.GetType().GetRuntimeProperty(modelProperty);
-                propInfo.SetValue(model, o);
-            });
-        }
-
-        private static void SubscribeTargetToSource(string sourceMemberName, object sourceObject, Layout target,
-            ExtendedProperty property)
-        {
-            var currentValue = sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject);
-
-            var notifyProp = (INotifyPropertyChanged) sourceObject;
-
-            Observable
-                .FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                    eh => notifyProp.PropertyChanged += eh, ev => notifyProp.PropertyChanged -= ev)
-                .Where(pattern => pattern.EventArgs.PropertyName == sourceMemberName)
-                .Select(_ => sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject))
-                .StartWith(currentValue)
-                .Subscribe(value =>
-                {
-                    target.SetValue(property, value);
-                });
-        }
+            return new DataContextSubscription(bd);
+        }    
 
         private static void BindToObservable(ObserveDefinition definition)
         {
@@ -193,6 +117,71 @@
             var observer = targetObj.GetChangedObservable(targetProperty);
 
             observer.Subscribe(sourceObs);
+        }
+    }
+
+    internal class DataContextSubscription : IDisposable
+    {
+        private IDisposable valueChangeSubs;
+        private readonly IDisposable dataContextSubs;
+
+        public DataContextSubscription(BindDefinition bd)
+        {
+            var targetObj = (Layout)bd.TargetInstance;
+            var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
+
+            dataContextSubs = obs.Where(o => o != null)
+                .Subscribe(model =>
+                {
+                    valueChangeSubs?.Dispose();
+                    if (bd.TargetFollowsSource)
+                    {
+                        valueChangeSubs = SubscribeTargetToSource(bd.SourceProperty, model, targetObj,
+                            targetObj.GetProperty(bd.TargetMember.MemberName));
+                    }
+
+                    if (bd.SourceFollowsTarget)
+                    {
+                        valueChangeSubs = SubscribeSourceToTarget(bd.SourceProperty, model, targetObj,
+                            targetObj.GetProperty(bd.TargetMember.MemberName));
+                    }                    
+                });
+        }
+
+        private static IDisposable SubscribeSourceToTarget(string modelProperty, object model, Layout layout,
+            ExtendedProperty property)
+        {
+            var obs = layout.GetChangedObservable(property);
+            return obs.Subscribe(o =>
+            {
+                var propInfo = model.GetType().GetRuntimeProperty(modelProperty);
+                propInfo.SetValue(model, o);
+            });
+        }
+
+        private static IDisposable SubscribeTargetToSource(string sourceMemberName, object sourceObject, Layout target,
+            ExtendedProperty property)
+        {
+            var currentValue = sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject);
+
+            var notifyProp = (INotifyPropertyChanged)sourceObject;
+
+            return Observable
+                .FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                    eh => notifyProp.PropertyChanged += eh, ev => notifyProp.PropertyChanged -= ev)
+                .Where(pattern => pattern.EventArgs.PropertyName == sourceMemberName)
+                .Select(_ => sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject))
+                .StartWith(currentValue)
+                .Subscribe(value =>
+                {
+                    target.SetValue(property, value);
+                });
+        }
+
+        public void Dispose()
+        {
+            valueChangeSubs?.Dispose();
+            dataContextSubs?.Dispose();
         }
     }
 }

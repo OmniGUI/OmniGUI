@@ -62,7 +62,12 @@
 
         public ICommand ShowMessageCommand { get; set; }
 
-        public ICommand DeleteItemCommand => new DelegateCommand(() => People.Add(new Person() { Name = "Nuevo", Surname = "Apps" }));
+        public ICommand DeleteItemCommand => new DelegateCommand(() =>
+        {
+            People.Add(new Person {Name = Name, Surname = Surname});
+            Name = string.Empty;
+            Surname = string.Empty;
+        });
 
         public ISourceList<object> People { get; }
 
