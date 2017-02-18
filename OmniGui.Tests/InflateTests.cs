@@ -34,7 +34,7 @@ namespace OmniGui.Tests
                 Assembly.Load(new AssemblyName("OmniGui")),
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
                 Assembly.Load(new AssemblyName("OmniGui.Tests"))
-            });
+            }, () => new List<ControlTemplate>());
             return omniGuiXamlLoader;
         }
     }

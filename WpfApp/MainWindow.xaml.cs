@@ -1,6 +1,7 @@
 ﻿namespace WpfApp
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing.Imaging;
     using System.IO;
     using System.Linq;
@@ -12,6 +13,7 @@
     using OmniGui;
     using OmniGui.Wpf;
     using OmniGui.Xaml;
+    using OmniGui.Xaml.Templates;
     using OmniXaml;
     using OmniXaml.Attributes;
     using Point = OmniGui.Geometry.Point;
@@ -32,13 +34,16 @@
                 EventDriver = new WpfEventProcessor(this)
             };
 
-            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray());
+            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates);
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
             var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml")).Instance;
             new TemplateInflator().Inflate(layout, container.ControlTemplates);
+            ControlTemplates = container.ControlTemplates;
             layout.DataContext = new SampleViewModel(new WpfMessageBoxService());
         }
+
+        public ICollection<ControlTemplate> ControlTemplates { get; set; }
 
         protected override void OnRender(DrawingContext drawingContext)
         {

@@ -1,6 +1,7 @@
 ﻿namespace UwpApp
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows.Input;
@@ -18,6 +19,7 @@
     using OmniXaml.Attributes;
     using Plugin;
     using BitmapDecoder = Windows.Graphics.Imaging.BitmapDecoder;
+    using ControlTemplate = OmniGui.Xaml.Templates.ControlTemplate;
 
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
@@ -48,14 +50,17 @@
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
                 Assembly.Load(new AssemblyName("UwpApp")),
                 Assembly.Load(new AssemblyName("Common"))
-            });
+            }, () => ControlTemplates);
 
             layout = (Layout) xamlLoader.Load(await ReadAllText("Layout.xaml")).Instance;
             var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml")).Instance;
             var inflator = new TemplateInflator();
             inflator.Inflate(layout, container.ControlTemplates);
+            ControlTemplates = container.ControlTemplates;
             layout.DataContext = new SampleViewModel(new UwpMessageService());
         }
+
+        public ICollection<ControlTemplate> ControlTemplates { get; set; }
 
 
         private void CanvasControl_OnDraw(CanvasControl sender, CanvasDrawEventArgs args)

@@ -6,7 +6,7 @@
 
     public class Button : ContentLayout
     {
-        public readonly ExtendedProperty CommandProperty = PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
+        public static readonly ExtendedProperty CommandProperty = PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
 
         public Button()
         {         

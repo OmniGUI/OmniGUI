@@ -25,12 +25,22 @@
             }
             else if (bd != null)
             {
+                ClearExistingBinding(bd);
                 BindToProperty(buildContext, bd);
+                AddExistingBinding(bd);
             }
             else
             {
                 base.PerformAssigment(assignment, buildContext);
             }
+        }
+
+        private void AddExistingBinding(BindDefinition bd)
+        {            
+        }
+
+        private void ClearExistingBinding(BindDefinition bd)
+        {            
         }
 
         private void BindToProperty(BuildContext buildContext, BindDefinition bd)

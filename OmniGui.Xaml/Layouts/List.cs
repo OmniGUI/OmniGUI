@@ -1,6 +1,8 @@
 ﻿namespace OmniGui.Xaml.Layouts
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using DynamicData;
     using DynamicData.Binding;
     using OmniGui.Layouts;
@@ -10,6 +12,8 @@
 
     public class List : Layout
     {
+        private readonly TemplateInflator controlTemplateInflator;
+
         public static readonly ExtendedProperty SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(List),
             typeof(IObservableCollection<object>), new PropertyMetadata());
 
@@ -19,9 +23,12 @@
 
         private IDisposable subscription;
         private readonly StackPanel panel;
+        private readonly Func<ICollection<ControlTemplate>> controlTemplates;
 
-        public List(TemplateInflator inflator)
+        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> controlTemplates)
         {
+            this.controlTemplateInflator = controlTemplateInflator;
+            this.controlTemplates = controlTemplates;
             panel = new StackPanel();
             this.AddChild(panel);
 
@@ -40,16 +47,21 @@
 
         private void AddItem(object item)
         {
-            var wrappedItem = WrapItem(item);
+            var wrappedItem = GenerateTemplateFor(item);
             panel.AddChild(wrappedItem);
+
+            // Set the data context after adding the child, because the act of adding the child to a panel automatically sets the data context to its parent's            
+            wrappedItem.DataContext = item;
         }
 
-        private Layout WrapItem(object item)
+        private Layout GenerateTemplateFor(object item)
         {
             if (ItemTemplate != null)
             {
-                var inflated = (Layout) ItemTemplate.ApplyTo(item);
-                inflated.DataContext = item;
+                var withDataTemplateApplied = (Layout) ItemTemplate.ApplyTo(item);
+                controlTemplateInflator.Inflate(withDataTemplateApplied, controlTemplates());
+                
+                return withDataTemplateApplied;
             }
 
             return new TextBlock
