@@ -57,7 +57,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Image:" />
         </Grid>
-        <Button Content="Añadir" VerticalAlignment="Top"  />
+        <Button Content="Añadir" VerticalAlignment="Top" Command="{Bind AddItemCommand}" />
     </StackPanel>
 
 </Grid>

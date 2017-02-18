@@ -49,11 +49,14 @@
                 Assembly.Load(new AssemblyName("Common"))
             }, () => ControlTemplates);
 
-            layout = (Layout) xamlLoader.Load(await ReadAllText("Layout.xaml")).Instance;
             var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml")).Instance;
+            ControlTemplates = container.ControlTemplates;
+
+            layout = (Layout) xamlLoader.Load(await ReadAllText("Layout.xaml")).Instance;
+            
             var inflator = new TemplateInflator();
             inflator.Inflate(layout, container.ControlTemplates);
-            ControlTemplates = container.ControlTemplates;
+            
             layout.DataContext = new SampleViewModel(new UwpMessageService());
         }
 

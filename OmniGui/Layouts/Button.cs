@@ -6,7 +6,11 @@
 
     public class Button : ContentLayout
     {
-        public static readonly ExtendedProperty CommandProperty = PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
+        public static ExtendedProperty CommandProperty;
+        static Button()
+        {
+            CommandProperty = PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
+        }
 
         public Button()
         {         
