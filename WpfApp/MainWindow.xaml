@@ -7,8 +7,11 @@
         mc:Ignorable="d"
         Background="Transparent"
         RenderOptions.BitmapScalingMode="HighQuality"
-        RenderOptions.EdgeMode="Unspecified"
+        RenderOptions.EdgeMode="Aliased"
         Title="MainWindow" >
-    <Grid x:Name="LayoutRoot"  />
+    <Grid x:Name="LayoutRoot" SnapsToDevicePixels="True">
+        <Button Click="ButtonBase_OnClick" VerticalAlignment="Bottom" HorizontalAlignment="Center">Invalidate</Button>
+        <TextBox VerticalAlignment="Bottom" HorizontalAlignment="Right">Invalidate</TextBox>
+    </Grid>
 </Window>
 

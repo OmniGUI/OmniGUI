@@ -33,7 +33,7 @@ namespace UwpApp.Plugin
             var text = formattedText.Text;
             var vector2 = new System.Numerics.Vector2((float)point.X, (float)point.Y);
             var canvasSolidColorBrush = formattedText.Brush.ToWin2D(drawingSession);
-            var canvasTextFormat = new CanvasTextFormat()
+            var canvasTextFormat = new CanvasTextFormat
             {
                 FontSize = formattedText.FontSize,
                 FontWeight = formattedText.FontWeight.ToWin2D(),

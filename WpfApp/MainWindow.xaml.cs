@@ -5,6 +5,7 @@
     using System.Drawing.Imaging;
     using System.IO;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
@@ -77,6 +78,11 @@
                 Width = frame.PixelWidth,
                 Bytes = buffer,
             };
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Platform.Current.EventSource.Invalidate();
         }
     }
 }

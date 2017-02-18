@@ -6,20 +6,19 @@
 
     public class TextBlock : Layout
     {
-        private string text;
         private Brush foreground;
 
         public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock),
-            typeof(float), new PropertyMetadata() { DefaultValue = 16F });
+            typeof(float), new PropertyMetadata { DefaultValue = 14F });
 
         public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock),
-    typeof(float), new PropertyMetadata() { DefaultValue = FontWeights.Normal });
+    typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
 
         public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock),
-typeof(float), new PropertyMetadata() { DefaultValue = "Arial" });
+typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
 
         public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBlock),
-typeof(string), new PropertyMetadata() { DefaultValue = null });
+typeof(string), new PropertyMetadata { DefaultValue = null });
 
         private string currentText;
 
