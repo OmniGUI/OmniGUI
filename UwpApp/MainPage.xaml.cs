@@ -26,9 +26,6 @@
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        [TypeConverterMember(typeof(ICommand))] public static Func<ConverterValueContext, object> CommandConverter =
-            context => new DelegateCommand(async () => await new MessageDialog("Tapped!!").ShowAsync());
-
         private readonly Win2DTextEngine textEngine = new Win2DTextEngine();
         private Layout layout;
 

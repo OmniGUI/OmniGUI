@@ -8,7 +8,7 @@
         Background="Transparent"
         RenderOptions.BitmapScalingMode="HighQuality"
         RenderOptions.EdgeMode="Unspecified"
-        Title="MainWindow" Height="350" Width="200">
+        Title="MainWindow" >
     <Grid x:Name="LayoutRoot"  />
 </Window>
 

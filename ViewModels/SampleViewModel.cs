@@ -62,7 +62,7 @@
 
         public ICommand ShowMessageCommand { get; set; }
 
-        public ICommand DeleteItemCommand => new DelegateCommand(() =>
+        public ICommand AddItemCommand => new DelegateCommand(() =>
         {
             People.Add(new Person {Name = Name, Surname = Surname});
             Name = string.Empty;

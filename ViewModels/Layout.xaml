@@ -8,14 +8,19 @@
     <List Source="{Bind People}" Margin="15">
         <List.ItemTemplate>
             <DataTemplate>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Image Source="mario.png" />
-                    <TextBlock Margin="15" VerticalAlignment="Center" Grid.Column="1" Text="{Bind Name}" />
-                </Grid>
+                <Border BorderThickness="1" BorderBrush="Aquamarine">
+                    <Grid Margin="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="mario.png" />
+                        <TextBlock Margin="15" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center"
+                                   Text="{Bind Name}" />
+                        <TextBlock FontWeight="Bold" Margin="15" VerticalAlignment="Center" Grid.Column="2"
+                                   Text="{Bind Surname}" />
+                    </Grid></Border>
             </DataTemplate>
         </List.ItemTemplate>
     </List>
@@ -26,7 +31,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBlock FontWeight="Bold" Text="Name:"></TextBlock>
+            <TextBlock FontWeight="Bold" Text="Name:" />
             <TextBox Grid.Column="1" Text="{Bind Name, LinkMode=FullLink}" />
         </Grid>
         <Grid Margin="8">
@@ -34,7 +39,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBlock FontWeight="Bold" Text="Surname:"></TextBlock>
+            <TextBlock FontWeight="Bold" Text="Surname:" />
             <TextBox Grid.Column="1" Text="{Bind Surname, LinkMode=FullLink}" />
         </Grid>
         <Grid Margin="8">
@@ -52,6 +57,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" Text="Image:" />
         </Grid>
+        <Button Content="Añadir" VerticalAlignment="Top"  />
     </StackPanel>
 
 </Grid>
