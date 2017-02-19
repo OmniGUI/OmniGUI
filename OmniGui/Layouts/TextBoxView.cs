@@ -3,6 +3,7 @@
     using System;
     using System.Reactive.Linq;
     using Geometry;
+    using Zafiro.PropertySystem.Standard;
 
     public class TextBoxView : Layout
     {
@@ -10,12 +11,20 @@
         private bool isCursorVisible;
         private int cursorPositionOrdinal;
 
+        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBoxView),
+            typeof(string), new PropertyMetadata { DefaultValue = null });
+
         public TextBoxView()
         {
             cursorToggleChanger = Observable.Interval(TimeSpan.FromSeconds(0.4)).Subscribe(_ => SwitchCursorVisibility());
-            Text = "Hola tío";
             Platform.Current.EventSource.KeyInput.Subscribe(args => AddText(args.Text));
             Platform.Current.EventSource.SpecialKeys.Subscribe(ProcessSpecialKey);
+            NotifyRenderAffectedBy(TextProperty);
+            GetChangedObservable(TextProperty).Subscribe(o =>
+            {
+                FormattedText.Text = (string) o;
+                Invalidate();
+            });
         }
 
         private void ProcessSpecialKey(SpecialKeysArgs args)
@@ -56,6 +65,11 @@
 
         public override void Render(IDrawingContext drawingContext)
         {
+            if (FormattedText.Text == null)
+            {
+                return;
+            }
+
             drawingContext.DrawText(FormattedText, VisualBounds.Point);
             DrawCursor(drawingContext);
         }
@@ -74,8 +88,8 @@
             var x = GetCursorX();
             var y = GetCursorY();
 
-            var startPoint = new Point(x, 0);
-            var endPoint = new Point(x, y);
+            var startPoint = new Point(x + VisualBounds.X, VisualBounds.Y);
+            var endPoint = new Point(x + VisualBounds.X, y + VisualBounds.Y);
 
             return new Segment(startPoint, endPoint);
         }
@@ -104,11 +118,10 @@
 
         public string Text
         {
-            get { return FormattedText.Text; }
+            get { return (string)GetValue(TextProperty); }
             set
             {
-                FormattedText.Text = value;
-                Invalidate();
+                SetValue(TextProperty, value);
             }
         }
 
@@ -133,12 +146,19 @@
 
         public void AddText(string text)
         {
-            var firstPart = Text.Substring(0, CursorPositionOrdinal);
-            var secondPart = Text.Substring(CursorPositionOrdinal, Text.Length - CursorPositionOrdinal);
+            if (Text == null)
+            {
+                Text = text;
+            }
+            else
+            {
+                var firstPart = Text.Substring(0, CursorPositionOrdinal);
+                var secondPart = Text.Substring(CursorPositionOrdinal, Text.Length - CursorPositionOrdinal);
 
-            Text = firstPart + text + secondPart;
+                Text = firstPart + text + secondPart;
+            }
+
             CursorPositionOrdinal++;
-            Invalidate();
         }
 
         public void RemoveBefore()

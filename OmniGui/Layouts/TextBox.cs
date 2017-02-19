@@ -25,6 +25,14 @@ namespace OmniGui.Layouts
 
             NotifyRenderAffectedBy(TextProperty);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
+            Children.OnChildAdded(AttachToTextBoxView);
+
+        }
+
+        private void AttachToTextBoxView(Layout child)
+        {
+            var textBoxView = child.FindChild<TextBoxView>();
+            textBoxView.GetChangedObservable(TextBoxView.TextProperty).Subscribe(o => Text = (string)o);
         }
 
         private string ProcessKeyInput(KeyInputArgs args)

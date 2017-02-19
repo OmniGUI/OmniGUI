@@ -1,5 +1,5 @@
 ﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:Common;assembly=Common">
 
-    <TextBoxView></TextBoxView>
+    <TextBox VerticalAlignment="Center" />
 
 </Grid>
