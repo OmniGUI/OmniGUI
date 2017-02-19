@@ -28,8 +28,6 @@ namespace OmniGui.Wpf
             return fromEventPattern.Select(ep => new SpecialKeysArgs() { Key = ep.EventArgs.Key.ToOmniGui() });
         }
 
-        public IObservable<TextInputArgs> TextInput { get; }
-
         public IObservable<Point> Pointer { get; }
 
         public IObservable<KeyInputArgs> KeyInput { get; }

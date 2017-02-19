@@ -7,6 +7,7 @@
         RightArrow,
         UpArrow,
         DownArrow,
-        Backspace
+        Backspace,
+        Delete
     }
 }

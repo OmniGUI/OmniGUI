@@ -167,7 +167,7 @@ namespace OmniGui.Wpf
                 case Key.Insert:
                     break;
                 case Key.Delete:
-                    break;
+                    return MyKey.Delete;
                 case Key.Help:
                     break;
                 case Key.D0:
