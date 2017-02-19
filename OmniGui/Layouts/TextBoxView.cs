@@ -22,11 +22,11 @@
         {
             if (args.Key == MyKey.RightArrow)
             {
-                MoveCursorToRight();
+                CursorPositionOrdinal++;
             }
             else if (args.Key == MyKey.LeftArrow)
             {
-                MoveCursorToLeft();
+                CursorPositionOrdinal--;
             }
             else if (args.Key == MyKey.Backspace)
             {
@@ -36,22 +36,6 @@
             else if (args.Key == MyKey.Delete)
             {
                 RemoveAfter();
-            }
-        }
-
-        private void MoveCursorToRight()
-        {
-            if (CursorPositionOrdinal < Text.Length)
-            {
-                CursorPositionOrdinal++;
-            }
-        }
-
-        private void MoveCursorToLeft()
-        {
-            if (CursorPositionOrdinal > 0)
-            {
-                CursorPositionOrdinal--;
             }
         }
 
@@ -102,7 +86,12 @@
         }
 
         private double GetCursorX()
-        {            
+        {
+            if (Text == String.Empty)
+            {
+                return 0;
+            }
+
             var textBeforeCursor = Text.Substring(0, CursorPositionOrdinal);
             var formattedTextCopy = new FormattedText(FormattedText)
             {
@@ -128,6 +117,10 @@
             get { return cursorPositionOrdinal; }
             set
             {
+                if (value > Text.Length || value < 0)
+                {
+                    return;
+                }
                 cursorPositionOrdinal = value;
                 Invalidate();
             }
