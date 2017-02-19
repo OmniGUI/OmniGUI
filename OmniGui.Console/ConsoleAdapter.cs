@@ -61,6 +61,10 @@
             throw new System.NotImplementedException();
         }
 
+        public void DrawLine(Point startPoint, Point endPoint, Pen pen)
+        {            
+        }
+
         public void FillRectangle(Rect rect, Brush brush)
         {
             throw new System.NotImplementedException();

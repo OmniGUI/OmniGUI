@@ -27,6 +27,7 @@ namespace UwpApp.Plugin
         }
 
         public IObservable<KeyInputArgs> KeyInput { get; set; }
+        public IObservable<SpecialKeysArgs> SpecialKeys { get; }
 
         private static IObservable<KeyInputArgs> GetKeyInputObservable()
         {

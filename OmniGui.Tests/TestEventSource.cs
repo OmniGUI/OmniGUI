@@ -13,6 +13,8 @@ namespace OmniGui.Tests
         public IObservable<Point> Pointer => Observable.Never<Point>();
         public IObservable<TextInputArgs> TextInput => Observable.Never<TextInputArgs>();
         public IObservable<KeyInputArgs> KeyInput => keyInputSubject;
+        public IObservable<SpecialKeysArgs> SpecialKeys { get; }
+
         public void Invalidate()
         {
             invalidateCount++;

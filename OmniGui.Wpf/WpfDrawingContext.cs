@@ -2,7 +2,6 @@
 
 namespace OmniGui.Wpf
 {
-    using System.Windows.Media.Animation;
     using System.Windows.Media.Imaging;
     using Geometry;
 
@@ -80,6 +79,11 @@ namespace OmniGui.Wpf
                 pixelFormat, null, bmp.Bytes, bmp.Width * 4);
 
             context.DrawImage(bitmap, rect.ToWpf());
+        }
+
+        public void DrawLine(Point startPoint, Point endPoint, Pen pen)
+        {
+            context.DrawLine(pen.ToWpf(), startPoint.ToWpf(), endPoint.ToWpf());
         }
 
         public void FillRectangle(Rect rect, Brush brush)

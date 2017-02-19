@@ -10,5 +10,6 @@ namespace OmniGui
         void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius);
         void DrawText(FormattedText formattedText, Point point);
         void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect);
+        void DrawLine(Point startPoint, Point endPoint, Pen pen);
     }
 }

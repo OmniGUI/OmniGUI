@@ -3,7 +3,6 @@
     using System.Threading.Tasks;
     using System.Windows;
     using Common;
-    using OmniGui.Layouts.Grid;
     using TCD.Controls;
 
     public class WpfMessageBoxService : IMessageService
@@ -12,10 +11,5 @@
         {
             return await CustomMessageBox.ShowAsync("Mensaje", message, MessageBoxImage.Information, 0, "Aceptar");
         }
-    }
-
-    public class MyGrid : Grid
-    {
-        
     }
 }

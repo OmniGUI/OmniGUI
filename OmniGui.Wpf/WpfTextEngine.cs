@@ -15,7 +15,7 @@ namespace OmniGui.Wpf
             }
 
             var ft = formattedText.ToWpf();
-            return new Size(ft.Width, ft.Height);
+            return new Size(ft.WidthIncludingTrailingWhitespace, ft.Height);
         }
 
         public double GetHeight(string fontFamilyName)

@@ -7,6 +7,7 @@
     {
         IObservable<Point> Pointer { get; }
         IObservable<KeyInputArgs> KeyInput { get; }
+        IObservable<SpecialKeysArgs> SpecialKeys { get; }
         void Invalidate();
         void ShowVirtualKeyboard();
     }

@@ -47,6 +47,11 @@ namespace UwpApp.Plugin
             drawingSession.DrawImage(bmp.ToWin2D(drawingSession), rect.ToWin2D());
         }
 
+        public void DrawLine(Point startPoint, Point endPoint, Pen pen)
+        {
+            
+        }
+
         public void DrawRectangle(Rect rect, Pen pen)
         {
             drawingSession.DrawRectangle(rect.ToWin2D(), pen.Brush.Color.ToWin2D());

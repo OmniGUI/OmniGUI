@@ -8,6 +8,8 @@ namespace OmniGui
     public class NullEventDriver : IEventSource
     {
         public IObservable<Point> Pointer { get; } = Observable.Never<Point>();
+        public IObservable<SpecialKeysArgs> SpecialKeys { get; }
+
         public void Invalidate()
         {            
         }
