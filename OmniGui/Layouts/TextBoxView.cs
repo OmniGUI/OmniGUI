@@ -2,29 +2,49 @@
 {
     using System;
     using System.Reactive.Linq;
+    using System.Threading;
     using Geometry;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBoxView : Layout
     {
         private IDisposable cursorToggleChanger;
+        private IDisposable changedSubscription;
+
         private bool isCursorVisible;
         private int cursorPositionOrdinal;
+
 
         public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBoxView),
             typeof(string), new PropertyMetadata { DefaultValue = null });
 
         public TextBoxView()
         {
-            cursorToggleChanger = Observable.Interval(TimeSpan.FromSeconds(0.4)).Subscribe(_ => SwitchCursorVisibility());
-            Platform.Current.EventSource.KeyInput.Subscribe(args => AddText(args.Text));
-            Platform.Current.EventSource.SpecialKeys.Subscribe(ProcessSpecialKey);
+            var changedObservable = GetChangedObservable(TextProperty);
+            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.1)).ObserveOn(SynchronizationContext.Current);
+
+            cursorToggleChanger = timelyObs.Subscribe(_ => SwitchCursorVisibility());
+            Platform.Current.EventSource.KeyInput.ObserveOn(SynchronizationContext.Current).Subscribe(args => AddText(args.Text));
+            Platform.Current.EventSource.SpecialKeys.ObserveOn(SynchronizationContext.Current).Subscribe(ProcessSpecialKey);
             NotifyRenderAffectedBy(TextProperty);
-            GetChangedObservable(TextProperty).Subscribe(o =>
+
+            changedSubscription = changedObservable
+                .Subscribe(o =>
+                {
+                    FormattedText.Text = (string)o;
+                    EnforceCursorLimits();
+                    Invalidate();
+                });
+
+            //changedObservable.Connect();
+        }
+
+        private void EnforceCursorLimits()
+        {
+            if (Text.Length > CursorPositionOrdinal)
             {
-                FormattedText.Text = (string) o;
-                Invalidate();
-            });
+                CursorPositionOrdinal = Text.Length;
+            }
         }
 
         private void ProcessSpecialKey(SpecialKeysArgs args)
@@ -40,7 +60,6 @@
             else if (args.Key == MyKey.Backspace)
             {
                 RemoveBefore();
-                CursorPositionOrdinal--;
             }
             else if (args.Key == MyKey.Delete)
             {
