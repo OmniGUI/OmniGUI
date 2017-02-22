@@ -21,7 +21,7 @@
         public TextBoxView()
         {
             var changedObservable = GetChangedObservable(TextProperty);
-            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.1)).ObserveOn(SynchronizationContext.Current);
+            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.4)).ObserveOn(SynchronizationContext.Current);
 
             cursorToggleChanger = timelyObs.Subscribe(_ => SwitchCursorVisibility());
             Platform.Current.EventSource.KeyInput.ObserveOn(SynchronizationContext.Current).Subscribe(args => AddText(args.Text));
@@ -34,9 +34,7 @@
                     FormattedText.Text = (string)o;
                     EnforceCursorLimits();
                     Invalidate();
-                });
-
-            //changedObservable.Connect();
+                });            
         }
 
         private void EnforceCursorLimits()
