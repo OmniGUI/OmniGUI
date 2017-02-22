@@ -1,8 +1,6 @@
 namespace OmniGui.Layouts
 {
     using System;
-    using System.Linq;
-    using Zafiro.Core;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBox : Layout
@@ -21,28 +19,18 @@ namespace OmniGui.Layouts
                 Platform.Current.SetFocusedElement(this);
                 Platform.Current.EventSource.ShowVirtualKeyboard();
             });
-            Keyboard.KeyInput.Subscribe(args => Text = ProcessKeyInput(args));
 
             NotifyRenderAffectedBy(TextProperty);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
             Children.OnChildAdded(AttachToTextBoxView);
-
+            
         }
 
         private void AttachToTextBoxView(Layout child)
         {
             var textBoxView = child.FindChild<TextBoxView>();
             textBoxView.GetChangedObservable(TextBoxView.TextProperty).Subscribe(o => Text = (string)o);
-        }
-
-        private string ProcessKeyInput(KeyInputArgs args)
-        {
-            if (args.Text.First() == Chars.Backspace)
-            {
-                return new string(Text.DropLast(1).ToArray());
-            }
-
-            return string.Concat(Text, args.Text);
+            GetChangedObservable(TextProperty).Subscribe(o => textBoxView.Text = (string) o);
         }
 
         public string FontFamily

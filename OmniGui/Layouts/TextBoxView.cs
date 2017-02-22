@@ -24,7 +24,9 @@
             var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.4));
 
             cursorToggleChanger = timelyObs.Subscribe(_ => SwitchCursorVisibility());
-            Platform.Current.EventSource.KeyInput.Subscribe(args => AddText(args.Text));
+
+            Pointer.Down.Subscribe(point => Platform.Current.SetFocusedElement(this));
+            Keyboard.KeyInput.Subscribe(args => AddText(args.Text));
             Platform.Current.EventSource.SpecialKeys.Subscribe(ProcessSpecialKey);
             NotifyRenderAffectedBy(TextProperty);
 
@@ -41,7 +43,7 @@
 
         private void EnforceCursorLimits()
         {
-            if (Text.Length < CursorPositionOrdinal)
+            if (Text?.Length < CursorPositionOrdinal)
             {
                 CursorPositionOrdinal = Text.Length;
             }
