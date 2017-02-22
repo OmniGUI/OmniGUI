@@ -14,16 +14,9 @@ namespace OmniGui.Layouts
 
         public TextBox()
         {
-            Pointer.Down.Subscribe(point =>
-            {
-                Platform.Current.SetFocusedElement(this);
-                Platform.Current.EventSource.ShowVirtualKeyboard();
-            });
-
             NotifyRenderAffectedBy(TextProperty);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
-            Children.OnChildAdded(AttachToTextBoxView);
-            
+            Children.OnChildAdded(AttachToTextBoxView);            
         }
 
         private void AttachToTextBoxView(Layout child)

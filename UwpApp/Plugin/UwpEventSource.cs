@@ -28,7 +28,7 @@ namespace UwpApp.Plugin
             SpecialKeys = GetSpecialKeysObservable();
         }
 
-        private IObservable<SpecialKeysArgs> GetSpecialKeysObservable()
+        private static IObservable<SpecialKeysArgs> GetSpecialKeysObservable()
         {
             var element = Window.Current.CoreWindow;
 

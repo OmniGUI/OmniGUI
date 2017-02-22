@@ -44,7 +44,7 @@ namespace UwpApp.Plugin
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
-        {            
+        {    
             drawingSession.DrawImage(bmp.ToWin2D(drawingSession), rect.ToWin2D());
         }
 

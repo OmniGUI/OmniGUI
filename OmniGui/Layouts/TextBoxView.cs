@@ -1,46 +1,129 @@
 ﻿namespace OmniGui.Layouts
 {
     using System;
+    using System.Linq;
     using System.Reactive.Linq;
-    using System.Threading;
     using Geometry;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBoxView : Layout
     {
-        private IDisposable cursorToggleChanger;
+        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text",
+            typeof(TextBoxView),
+            typeof(string), new PropertyMetadata {DefaultValue = null});
+
         private IDisposable changedSubscription;
+        private int cursorPositionOrdinal;
+        private IDisposable cursorToggleChanger;
 
         private bool isCursorVisible;
-        private int cursorPositionOrdinal;
-
-
-        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBoxView),
-            typeof(string), new PropertyMetadata { DefaultValue = null });
-
-        public bool IsFocused { get; set; }
+        private bool isFocused;
 
         public TextBoxView()
         {
             var changedObservable = GetChangedObservable(TextProperty);
-            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.4));
 
-            cursorToggleChanger = timelyObs.Subscribe(_ => SwitchCursorVisibility());
 
-            Pointer.Down.Subscribe(point => Platform.Current.SetFocusedElement(this));
-            Keyboard.KeyInput.Subscribe(args => AddText(args.Text));
+            Pointer.Down.Subscribe(point =>
+            {
+                Platform.Current.EventSource.ShowVirtualKeyboard();
+                Platform.Current.SetFocusedElement(this);                
+            });
+
+            Keyboard.KeyInput.Where(Filter).Subscribe(args => AddText(args.Text));
             Keyboard.SpecialKeys.Subscribe(ProcessSpecialKey);
             NotifyRenderAffectedBy(TextProperty);
-            Platform.Current.FocusedElement.Select(layout => layout == this).Subscribe(isFocused => IsFocused = isFocused);
+            Platform.Current.FocusedElement.Select(layout => layout == this)
+                .Subscribe(isFocused => IsFocused = isFocused);
 
             changedSubscription = changedObservable
                 .Subscribe(o =>
                 {
-                    FormattedText.Text = (string)o;
+                    FormattedText.Text = (string) o;
                     EnforceCursorLimits();
                     Invalidate();
                 });
         }
+
+        private static Func<KeyInputArgs, bool> Filter
+        {
+            get { return args => args.Text.ToCharArray().First() != Chars.Backspace; }
+        }
+
+        private bool IsFocused
+        {
+            get { return isFocused; }
+            set
+            {
+                if (isFocused != value)
+                {
+                    if (value)
+                    {
+                        CreateCaretBlink();
+                    }
+                    else
+                    {
+                        DisableCaretBlink();
+                    }
+                }
+
+                isFocused = value;
+            }
+        }
+
+        private void DisableCaretBlink()
+        {
+            cursorToggleChanger?.Dispose();
+        }
+
+        private void CreateCaretBlink()
+        {
+            cursorToggleChanger?.Dispose();
+            IsCursorVisible = true;
+            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.4));
+            cursorToggleChanger = timelyObs.Subscribe(_ => SwitchCursorVisibility());
+        }
+
+        private bool IsCursorVisible
+        {
+            get { return isCursorVisible; }
+            set
+            {
+                isCursorVisible = value;
+                Invalidate();
+            }
+        }
+
+        public string Text
+        {
+            get { return (string) GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        private int CursorPositionOrdinal
+        {
+            get { return cursorPositionOrdinal; }
+            set
+            {
+                if (value > Text.Length || value < 0)
+                {
+                    return;
+                }
+                cursorPositionOrdinal = value;
+                Invalidate();
+            }
+        }
+
+        public string FontFamily => FormattedText.FontFamily;
+
+        private FormattedText FormattedText { get; } = new FormattedText
+        {
+            FontSize = 14,
+            Brush = new Brush(Colors.Black),
+            Constraint = Size.Infinite,
+            FontFamily = "Arial",
+            FontWeight = FontWeights.Normal
+        };
 
         private void EnforceCursorLimits()
         {
@@ -75,24 +158,13 @@
             IsCursorVisible = !IsCursorVisible;
         }
 
-        private bool IsCursorVisible
-        {
-            get { return isCursorVisible; }
-            set
-            {
-                isCursorVisible = value;
-                Invalidate();
-            }
-        }
-
         public override void Render(IDrawingContext drawingContext)
         {
-            if (FormattedText.Text == null)
+            if (!string.IsNullOrEmpty(Text))
             {
-                return;
+                drawingContext.DrawText(FormattedText, VisualBounds.Point);
             }
 
-            drawingContext.DrawText(FormattedText, VisualBounds.Point);
             DrawCursor(drawingContext);
         }
 
@@ -123,7 +195,7 @@
 
         private double GetCursorX()
         {
-            if (Text == String.Empty)
+            if (string.IsNullOrEmpty(Text))
             {
                 return 0;
             }
@@ -136,29 +208,6 @@
 
             var x = formattedTextCopy.DesiredSize.Width;
             return x;
-        }
-
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set
-            {
-                SetValue(TextProperty, value);
-            }
-        }
-
-        private int CursorPositionOrdinal
-        {
-            get { return cursorPositionOrdinal; }
-            set
-            {
-                if (value > Text.Length || value < 0)
-                {
-                    return;
-                }
-                cursorPositionOrdinal = value;
-                Invalidate();
-            }
         }
 
         private static void Invalidate()
@@ -220,21 +269,10 @@
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var textDesired  = FormattedText.Text != null ? FormattedText.DesiredSize : Size.Empty;
-            
+            var textDesired = FormattedText.Text != null ? FormattedText.DesiredSize : Size.Empty;
+
             var height = Math.Max(textDesired.Height, Platform.Current.TextEngine.GetHeight(FontFamily));
             return new Size(textDesired.Width, height);
         }
-
-        public string FontFamily => FormattedText.FontFamily;
-
-        private FormattedText FormattedText { get; } = new FormattedText()
-        {
-            FontSize = 14,
-            Brush = new Brush(Colors.Black),
-            Constraint = Size.Infinite,
-            FontFamily = "Arial",
-            FontWeight = FontWeights.Normal,
-        };
     }
 }

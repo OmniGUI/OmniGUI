@@ -1,6 +1,7 @@
 namespace WpfApp
 {
     using System;
+    using System.Reactive.Linq;
     using System.Reactive.Subjects;
     using System.Windows;
     using OmniGui;
@@ -18,7 +19,7 @@ namespace WpfApp
 
         public ITextEngine TextEngine { get; }
         public IEventSource EventSource { get; }
-        public IObservable<Layout> FocusedElement => focusedElementSubject;
+        public IObservable<Layout> FocusedElement => focusedElementSubject.DistinctUntilChanged();
         public void SetFocusedElement(Layout layout)
         {
             focusedElementSubject.OnNext(layout);
