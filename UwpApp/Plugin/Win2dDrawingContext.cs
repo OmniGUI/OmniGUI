@@ -4,6 +4,7 @@ using OmniGui;
 
 namespace UwpApp.Plugin
 {
+    using Microsoft.Graphics.Canvas.Brushes;
     using OmniGui.Geometry;
 
     internal class Win2DDrawingContext : IDrawingContext
@@ -49,7 +50,11 @@ namespace UwpApp.Plugin
 
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)
         {
-            
+            ICanvasBrush canvasSolidColorBrush = new CanvasSolidColorBrush(drawingSession, pen.Brush.Color.ToWin2D());
+            var start = ((Vector)startPoint).ToWin2D();
+            var end = ((Vector)endPoint).ToWin2D();
+            var penThickness = (float) pen.Thickness;
+            drawingSession.DrawLine(start, end, canvasSolidColorBrush, penThickness);
         }
 
         public void DrawRectangle(Rect rect, Pen pen)

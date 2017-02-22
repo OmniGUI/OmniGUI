@@ -8,6 +8,7 @@
         UpArrow,
         DownArrow,
         Backspace,
-        Delete
+        Delete,
+        Enter
     }
 }

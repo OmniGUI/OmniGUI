@@ -220,7 +220,8 @@
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var textDesired = FormattedText.DesiredSize;
+            var textDesired  = FormattedText.Text != null ? FormattedText.DesiredSize : Size.Empty;
+            
             var height = Math.Max(textDesired.Height, Platform.Current.TextEngine.GetHeight(FontFamily));
             return new Size(textDesired.Width, height);
         }

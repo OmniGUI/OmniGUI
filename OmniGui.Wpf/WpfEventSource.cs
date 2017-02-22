@@ -25,7 +25,7 @@ namespace OmniGui.Wpf
             var fromEventPattern = Observable.FromEventPattern<KeyEventHandler, KeyEventArgs>(
                 ev => element.PreviewKeyDown += ev,
                 ev => element.PreviewKeyDown -= ev);
-            return fromEventPattern.Select(ep => new SpecialKeysArgs() { Key = ep.EventArgs.Key.ToOmniGui() });
+            return fromEventPattern.Select(ep => new SpecialKeysArgs(ep.EventArgs.Key.ToOmniGui()));
         }
 
         public IObservable<Point> Pointer { get; }

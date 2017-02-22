@@ -11,6 +11,7 @@ namespace UwpApp.Plugin
 {
     using Windows.UI.ViewManagement;
     using Microsoft.Graphics.Canvas.UI.Xaml;
+    using Microsoft.Toolkit.Uwp;
     using Point = OmniGui.Geometry.Point;
 
     public class UwpEventSource : IEventSource
@@ -23,10 +24,21 @@ namespace UwpApp.Plugin
             this.inputElement = inputElement;
             this.canvas = canvas;
             Pointer = GetPointerObservable(inputElement);
-            KeyInput = GetKeyInputObservable();            
+            KeyInput = GetKeyInputObservable();
+            SpecialKeys = GetSpecialKeysObservable();
         }
 
-        public IObservable<KeyInputArgs> KeyInput { get; set; }
+        private IObservable<SpecialKeysArgs> GetSpecialKeysObservable()
+        {
+            var element = Window.Current.CoreWindow;
+
+            var fromEventPattern = Observable.FromEventPattern<TypedEventHandler<CoreWindow, KeyEventArgs>, KeyEventArgs>(
+                ev => element.KeyDown += ev,
+                ev => element.KeyDown -= ev);
+            return fromEventPattern.Select(ep => new SpecialKeysArgs(ep.EventArgs.VirtualKey.ToOmniGui()));
+        }
+
+        public IObservable<KeyInputArgs> KeyInput { get; }
         public IObservable<SpecialKeysArgs> SpecialKeys { get; }
 
         private static IObservable<KeyInputArgs> GetKeyInputObservable()
@@ -55,7 +67,7 @@ namespace UwpApp.Plugin
         public IObservable<Point> Pointer { get; }
         public void Invalidate()
         {
-            Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => canvas.Invalidate());
+            DispatcherHelper.ExecuteOnUIThreadAsync(() => canvas.Invalidate());
         }
 
         public void ShowVirtualKeyboard()
