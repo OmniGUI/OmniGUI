@@ -21,11 +21,11 @@
         public TextBoxView()
         {
             var changedObservable = GetChangedObservable(TextProperty);
-            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.1)).ObserveOn(SynchronizationContext.Current);
+            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.4));
 
             cursorToggleChanger = timelyObs.Subscribe(_ => SwitchCursorVisibility());
-            Platform.Current.EventSource.KeyInput.ObserveOn(SynchronizationContext.Current).Subscribe(args => AddText(args.Text));
-            Platform.Current.EventSource.SpecialKeys.ObserveOn(SynchronizationContext.Current).Subscribe(ProcessSpecialKey);
+            Platform.Current.EventSource.KeyInput.Subscribe(args => AddText(args.Text));
+            Platform.Current.EventSource.SpecialKeys.Subscribe(ProcessSpecialKey);
             NotifyRenderAffectedBy(TextProperty);
 
             changedSubscription = changedObservable
@@ -41,7 +41,7 @@
 
         private void EnforceCursorLimits()
         {
-            if (Text.Length > CursorPositionOrdinal)
+            if (Text.Length < CursorPositionOrdinal)
             {
                 CursorPositionOrdinal = Text.Length;
             }
