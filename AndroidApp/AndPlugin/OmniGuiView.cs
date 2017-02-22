@@ -3,10 +3,11 @@ using Android.Content;
 using Android.Graphics;
 using Android.Views;
 using OmniGui;
-using OmniGui.Grid;
 
 namespace AndroidApp.AndPlugin
 {
+    using OmniGui.Geometry;
+
     public class OmniGuiView : View
     {
         private readonly Layout layout;
@@ -21,7 +22,7 @@ namespace AndroidApp.AndPlugin
         {
             var availableSize = new Size(canvas.Width, canvas.Height);
             layout.Measure(availableSize);
-            layout.Arrange(new OmniGui.Rect(OmniGui.Point.Zero, availableSize));
+            layout.Arrange(new Rect(Point.Zero, availableSize));
             var context = new AndroidDrawingContext(canvas);
             layout.Render(context);
         }

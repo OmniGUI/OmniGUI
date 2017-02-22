@@ -1,10 +1,11 @@
 ﻿using Android.Graphics;
 using OmniGui;
-using Rect = Android.Graphics.Rect;
-using Size = OmniGui.Size;
 
 namespace AndroidApp.AndPlugin
 {
+    using OmniGui.Geometry;
+    using Rect = Rect;
+
     public class AndroidTextEngine : ITextEngine
     {
         public Size Measure(FormattedText formattedText)

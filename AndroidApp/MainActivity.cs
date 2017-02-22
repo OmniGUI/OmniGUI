@@ -39,8 +39,7 @@ namespace AndroidApp
 
             var omniGuiView = new OmniGuiView(ApplicationContext, layout);
 
-            Platform.Current.TextEngine = new AndroidTextEngine();
-            Platform.Current.EventDriver = new AndroidEventProcessor(omniGuiView);
+            Platform.Current = new AndroidPlatform(omniGuiView);
             SetContentView(omniGuiView);
         }
 
@@ -52,5 +51,5 @@ namespace AndroidApp
             .SetMessage("Se me va la vida a puñaos")
             .Show();
         });
-    } 
+    }
 }

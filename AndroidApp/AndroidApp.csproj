@@ -86,6 +86,7 @@
     <Compile Include="AndPlugin\Android.cs" />
     <Compile Include="AndPlugin\AndroidDrawingContext.cs" />
     <Compile Include="AndPlugin\AndroidEventProcessor.cs" />
+    <Compile Include="AndPlugin\AndroidPlatform.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="AndPlugin\OmniGuiView.cs" />
@@ -114,35 +115,31 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\layout.xaml">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
       <Project>{ff6d5507-1f7c-4161-b5cb-36fa484bbee9}</Project>
       <Name>OmniGui.Xaml</Name>
     </ProjectReference>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj">
-      <Project>{4F0F11A7-EFFC-4384-98EC-51C6E1FC90B2}</Project>
+      <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
       <Name>OmniGui</Name>
     </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj">
-      <Project>{987B8746-B2A9-4A84-BBA5-482FFCC6399E}</Project>
+      <Project>{987b8746-b2a9-4a84-bba5-482ffcc6399e}</Project>
       <Name>OmniXaml.Attributes</Name>
     </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj">
-      <Project>{B9A9C91A-8266-4738-8C54-D4B3955E5DF8}</Project>
+      <Project>{b9a9c91a-8266-4738-8c54-d4b3955e5df8}</Project>
       <Name>OmniXaml.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj">
-      <Project>{74503677-D755-47D7-A56C-4FC7C6FA1F7D}</Project>
+      <Project>{74503677-d755-47d7-a56c-4fc7c6fa1f7d}</Project>
       <Name>OmniXaml</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
-      <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
-      <Name>ViewModels</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\layout.xaml">
-      <SubType>Designer</SubType>
-    </AndroidAsset>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

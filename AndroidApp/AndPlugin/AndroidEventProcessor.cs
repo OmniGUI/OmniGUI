@@ -6,9 +6,9 @@ using OmniGui;
 namespace AndroidApp.AndPlugin
 {
     using System.Reactive.Subjects;
-    using Point = Point;
+    using OmniGui.Geometry;
 
-    public class AndroidEventProcessor : IEventProcessor
+    public class AndroidEventProcessor : IEventSource
     {
         public AndroidEventProcessor(View view)
         {
@@ -26,16 +26,17 @@ namespace AndroidApp.AndPlugin
         }
 
         public IObservable<Point> Pointer { get; }
-        IObservable<Point> IEventProcessor.Pointer
-        {
-            get { return Pointer; }
-        }
-
         public IObservable<TextInputArgs> TextInput { get; } = new Subject<TextInputArgs>();
         public IObservable<KeyInputArgs> KeyInput { get; } = new Subject<KeyInputArgs>();
+        public IObservable<SpecialKeysArgs> SpecialKeys { get; }
+
         public void Invalidate()
+        {            
+        }
+
+        public void ShowVirtualKeyboard()
         {
-            
+            throw new NotImplementedException();
         }
     }
 }
