@@ -10,8 +10,8 @@
         RenderOptions.EdgeMode="Aliased"
         Title="MainWindow" >
     <Grid x:Name="LayoutRoot" SnapsToDevicePixels="True">
-        <Button Click="ButtonBase_OnClick" VerticalAlignment="Bottom" HorizontalAlignment="Center">Invalidate</Button>
-        <TextBox VerticalAlignment="Bottom" HorizontalAlignment="Right">Invalidate</TextBox>
+        <!--<Button Click="ButtonBase_OnClick" VerticalAlignment="Bottom" HorizontalAlignment="Center">Invalidate</Button>
+        <TextBox VerticalAlignment="Bottom" HorizontalAlignment="Right">Invalidate</TextBox>-->
     </Grid>
 </Window>
 

@@ -18,6 +18,8 @@
         public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBoxView),
             typeof(string), new PropertyMetadata { DefaultValue = null });
 
+        public bool IsFocused { get; set; }
+
         public TextBoxView()
         {
             var changedObservable = GetChangedObservable(TextProperty);
@@ -27,8 +29,9 @@
 
             Pointer.Down.Subscribe(point => Platform.Current.SetFocusedElement(this));
             Keyboard.KeyInput.Subscribe(args => AddText(args.Text));
-            Platform.Current.EventSource.SpecialKeys.Subscribe(ProcessSpecialKey);
+            Keyboard.SpecialKeys.Subscribe(ProcessSpecialKey);
             NotifyRenderAffectedBy(TextProperty);
+            Platform.Current.FocusedElement.Select(layout => layout == this).Subscribe(isFocused => IsFocused = isFocused);
 
             changedSubscription = changedObservable
                 .Subscribe(o =>
@@ -37,8 +40,6 @@
                     EnforceCursorLimits();
                     Invalidate();
                 });
-
-            //changedObservable.Connect();
         }
 
         private void EnforceCursorLimits()
@@ -97,7 +98,7 @@
 
         private void DrawCursor(IDrawingContext drawingContext)
         {
-            if (isCursorVisible)
+            if (IsCursorVisible && IsFocused)
             {
                 var line = GetCursorSegment();
                 drawingContext.DrawLine(line.P1, line.P2, new Pen(new Brush(Colors.Black), 1));
@@ -219,8 +220,12 @@
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            return FormattedText.DesiredSize;
+            var textDesired = FormattedText.DesiredSize;
+            var height = Math.Max(textDesired.Height, Platform.Current.TextEngine.GetHeight(FontFamily));
+            return new Size(textDesired.Width, height);
         }
+
+        public string FontFamily => FormattedText.FontFamily;
 
         private FormattedText FormattedText { get; } = new FormattedText()
         {
