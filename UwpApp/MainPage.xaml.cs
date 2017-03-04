@@ -11,6 +11,7 @@
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
     using Common;
+    using Grace.DependencyInjection;
     using Microsoft.Graphics.Canvas.UI.Xaml;
     using OmniGui;
     using OmniGui.Geometry;
@@ -38,6 +39,7 @@
             textEngine = (Win2DTextEngine) Platform.Current.TextEngine;
             
             Loaded += OnLoaded;
+            resolver = new TypeResolver(() => ControlTemplates);
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -48,7 +50,7 @@
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
                 Assembly.Load(new AssemblyName("UwpApp")),
                 Assembly.Load(new AssemblyName("Common"))
-            }, () => ControlTemplates);
+            }, () => ControlTemplates, resolver);
 
             var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml")).Instance;
             ControlTemplates = container.ControlTemplates;
@@ -94,6 +96,8 @@
 
         [TypeConverterMember(typeof(Bitmap))]
         public static Func<ConverterValueContext, object> BitmapConverter = context => GetBitmap(context).Result;
+
+        private readonly TypeResolver resolver;
 
         private static Bitmap GetResult(ConverterValueContext context)
         {

@@ -10,6 +10,7 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Common;
+    using Grace.DependencyInjection;
     using OmniGui;
     using OmniGui.Wpf;
     using OmniGui.Xaml;
@@ -30,7 +31,10 @@
 
             Platform.Current = new WpfPlatform(this);
 
-            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates);
+            
+
+            resolver = new TypeResolver(() => ControlTemplates);
+            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, resolver);
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
             var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml")).Instance;
@@ -55,6 +59,8 @@
 
         [TypeConverterMember(typeof(Bitmap))]
         public static Func<ConverterValueContext, object> BitmapConverter = context => GetBitmap(context);
+
+        private ITypeResolver resolver;
 
         private static Bitmap GetBitmap(ConverterValueContext context)
         {

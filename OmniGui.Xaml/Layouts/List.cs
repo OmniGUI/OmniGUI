@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using DynamicData;
+    using DynamicData.Annotations;
     using DynamicData.Binding;
     using OmniGui.Layouts;
     using Templates;
@@ -23,12 +24,12 @@
 
         private IDisposable subscription;
         private readonly StackPanel panel;
-        private readonly Func<ICollection<ControlTemplate>> controlTemplates;
+        private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
 
-        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> controlTemplates)
-        {
+        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates)
+        {        
             this.controlTemplateInflator = controlTemplateInflator;
-            this.controlTemplates = controlTemplates;
+            this.getControlTemplates = getControlTemplates;
             panel = new StackPanel();
             this.AddChild(panel);
 
@@ -59,7 +60,7 @@
             if (ItemTemplate != null)
             {
                 var withDataTemplateApplied = (Layout) ItemTemplate.ApplyTo(item);
-                controlTemplateInflator.Inflate(withDataTemplateApplied, controlTemplates());
+                controlTemplateInflator.Inflate(withDataTemplateApplied, getControlTemplates());
                 
                 return withDataTemplateApplied;
             }

@@ -3,6 +3,9 @@
     <TargetFramework>netstandard1.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Grace" Version="5.1.0" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj" />
     <ProjectReference Include="..\OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj" />

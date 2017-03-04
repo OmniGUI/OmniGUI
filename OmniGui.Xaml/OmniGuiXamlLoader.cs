@@ -11,10 +11,12 @@
     public class OmniGuiXamlLoader : XamlLoader
     {
         private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
+        private readonly ITypeResolver resolver;
 
-        public OmniGuiXamlLoader(IList<Assembly> assemblies, Func<ICollection<ControlTemplate>> getControlTemplates) : base(assemblies)
+        public OmniGuiXamlLoader(IList<Assembly> assemblies, Func<ICollection<ControlTemplate>> getControlTemplates, ITypeResolver resolver) : base(assemblies)
         {
             this.getControlTemplates = getControlTemplates;
+            this.resolver = resolver;
         }
 
         protected override IObjectBuilder GetObjectBuilder(IInstanceCreator instanceCreator, ObjectBuilderContext context, ContextFactory factory)
@@ -24,7 +26,7 @@
 
         protected override IInstanceCreator GetInstanceCreator(ISourceValueConverter sourceValueConverter, ObjectBuilderContext context, ITypeDirectory typeDirectory)
         {
-            return new OmniGuiInstanceCreator(sourceValueConverter, context, typeDirectory, getControlTemplates);
+            return new OmniGuiInstanceCreator(sourceValueConverter, context, typeDirectory, resolver);
         }
     }
 }

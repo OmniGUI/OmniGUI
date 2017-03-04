@@ -2,32 +2,33 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Reflection;
-    using Layouts;
     using OmniXaml;
     using OmniXaml.TypeLocation;
-    using Templates;
 
     public class OmniGuiInstanceCreator : IInstanceCreator
     {
-        private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
+        private readonly ITypeResolver typeResolver;
         private readonly InstanceCreator inner;
 
-        public OmniGuiInstanceCreator(ISourceValueConverter sourceValueConverter, ObjectBuilderContext context, ITypeDirectory typeDirectory, Func<ICollection<ControlTemplate>> getControlTemplates)
+        public OmniGuiInstanceCreator(ISourceValueConverter sourceValueConverter, ObjectBuilderContext context, ITypeDirectory typeDirectory, ITypeResolver typeResolver)
         {
-            this.getControlTemplates = getControlTemplates;
+            this.typeResolver = typeResolver;
             inner = new InstanceCreator(sourceValueConverter, context, typeDirectory);
         }
 
 
         public object Create(Type type, BuildContext context, IEnumerable<InjectableMember> injectableMembers = null)
         {
-            if (typeof(List).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
+            try
             {
-                return new List(new TemplateInflator(), getControlTemplates);
+                var o = inner.Create(type, context, injectableMembers);
+                return o;
             }
-
-            return inner.Create(type, context, injectableMembers);
+            catch (Exception e)
+            {
+                typeResolver.TryResolve(type, out var instance);
+                return instance;
+            }         
         }
     }
 }
