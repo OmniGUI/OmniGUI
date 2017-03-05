@@ -1,19 +1,31 @@
 namespace OmniGui.Layouts
 {
     using System;
+    using System.Runtime.InteropServices.ComTypes;
+    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBox : Layout
     {
-        public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = 16F });
-        public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
-        public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
-        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBox), typeof(string), new PropertyMetadata { DefaultValue = null });
-        public static readonly ExtendedProperty ForegroundProperty = PropertyEngine.RegisterProperty("Foreground", typeof(TextBox), typeof(Brush), new PropertyMetadata { DefaultValue = new Brush(Colors.Black) });
-        public static readonly ExtendedProperty TextWrappingProperty = PropertyEngine.RegisterProperty("TextWrapping", typeof(TextBox), typeof(TextWrapping), new PropertyMetadata { DefaultValue = TextWrapping.NoWrap });
+        public static ExtendedProperty FontSizeProperty;
+        public static ExtendedProperty FontWeightProperty;
+        public static ExtendedProperty FontFamilyProperty;
+        public static ExtendedProperty TextProperty;
+        public static ExtendedProperty ForegroundProperty;
+        public static ExtendedProperty TextWrappingProperty;
 
-        public TextBox()
+        public TextBox(IPropertyEngine propertyEngine) : base(propertyEngine)
         {
+            RegistrationGuard.RegisterFor<TextBox>(() =>
+            {
+                TextWrappingProperty = PropertyEngine.RegisterProperty("TextWrapping", typeof(TextBox), typeof(TextWrapping), new PropertyMetadata { DefaultValue = TextWrapping.NoWrap });
+                ForegroundProperty = PropertyEngine.RegisterProperty("Foreground", typeof(TextBox), typeof(Brush), new PropertyMetadata { DefaultValue = new Brush(Colors.Black) });
+                TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBox), typeof(string), new PropertyMetadata { DefaultValue = null });
+                FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
+                FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
+                FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = 16F });
+            });
+            
             NotifyRenderAffectedBy(TextProperty);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
             Children.OnChildAdded(AttachToTextBoxView);            

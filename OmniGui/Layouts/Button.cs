@@ -2,18 +2,20 @@
 {
     using System;
     using System.Windows.Input;
+    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class Button : ContentLayout
     {
         public static ExtendedProperty CommandProperty;
-        static Button()
-        {
-            CommandProperty = PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
-        }
 
-        public Button()
-        {         
+        public Button(IPropertyEngine propertyEngine) : base(propertyEngine)
+        {
+            RegistrationGuard.RegisterFor<Button>(() =>
+            {
+                CommandProperty = PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
+            });
+
             Pointer.Down.Subscribe(p =>
             {
                 if (Command?.CanExecute(null) == true)

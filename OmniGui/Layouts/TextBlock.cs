@@ -2,28 +2,33 @@
 {
     using System;
     using Geometry;
+    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBlock : Layout
     {
         private Brush foreground;
 
-        public static readonly ExtendedProperty FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock),
-            typeof(float), new PropertyMetadata { DefaultValue = 14F });
+        public static ExtendedProperty FontSizeProperty;
 
-        public static readonly ExtendedProperty FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock),
-    typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
+        public static ExtendedProperty FontWeightProperty;
 
-        public static readonly ExtendedProperty FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock),
-typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
+        public static ExtendedProperty FontFamilyProperty;
 
-        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBlock),
-typeof(string), new PropertyMetadata { DefaultValue = null });
+        public static ExtendedProperty TextProperty;
 
         private string currentText;
 
-        public TextBlock()
+        public TextBlock(IPropertyEngine propertyEngine) : base(propertyEngine)
         {
+            RegistrationGuard.RegisterFor<TextBlock>(() =>
+            {
+                TextProperty = PropertyEngine.RegisterProperty("Text", typeof(TextBlock), typeof(string), new PropertyMetadata { DefaultValue = null });
+                FontFamilyProperty = PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
+                FontWeightProperty = PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
+                FontSizeProperty = PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = 14F });
+            });
+
             Foreground = new Brush(Colors.Black);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
             NotifyRenderAffectedBy(TextProperty);                        

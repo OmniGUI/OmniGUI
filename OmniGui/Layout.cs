@@ -4,6 +4,7 @@ namespace OmniGui
     using System.Linq;
     using System.Reactive.Linq;
     using Geometry;
+    using Layouts;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
@@ -11,46 +12,38 @@ namespace OmniGui
 
     public abstract class Layout : IChild
     {
-        protected static readonly PropertyEngine PropertyEngine = new PropertyEngine(o => ((IChild) o).Parent);
+        public static ExtendedProperty DataContextProperty;
 
-        public static readonly ExtendedProperty DataContextProperty = PropertyEngine.RegisterProperty("DataContext",
-            typeof(Layout), typeof(object), new PropertyMetadata());
-
-        protected Layout()
+        protected Layout(IPropertyEngine propertyEngine)
         {
+            PropertyEngine = propertyEngine;
+
+            RegistrationGuard.RegisterFor<Layout>(() =>
+            {
+                DataContextProperty = DataContextProperty = PropertyEngine.RegisterProperty("DataContext", typeof(Layout), typeof(object), new PropertyMetadata());
+            });
+
             Children = new OwnedList<Layout>(this);
             Children.OnChildAdded(layout =>
             {
                 layout.DataContext = DataContext;
-                this.GetChangedObservable(DataContextProperty).Subscribe(o => layout.DataContext = o);
+                GetChangedObservable(DataContextProperty).Subscribe(o => layout.DataContext = o);
             });
             Pointer = new PointerEvents(this, Platform.Current.EventSource);
             Keyboard = new KeyboardEvents(this, Platform.Current.EventSource, Platform.Current.FocusedElement);
         }
 
+        protected IPropertyEngine PropertyEngine { get; }
+
         public object DataContext
         {
-            get { return GetValue(DataContextProperty); }
-            set { SetValue(DataContextProperty, value); }
+            get => GetValue(DataContextProperty);
+            set => SetValue(DataContextProperty, value);
         }
 
-        public KeyboardEvents Keyboard { get; private set; }
+        public KeyboardEvents Keyboard { get; }
 
-        protected void NotifyRenderAffectedBy(params ExtendedProperty[] properties)
-        {
-            var observables = properties
-                .Select(GetChangedObservable);
-
-            var ticks = observables.Merge();
-            ticks.Subscribe(_ => InvalidateRender());
-        }
-
-        private void InvalidateRender()
-        {
-            Platform.Current.EventSource.Invalidate();
-        }
-
-        public PointerEvents Pointer { get; set; }
+        public PointerEvents Pointer { get; }
 
         public Brush Background { get; set; } = new Brush(Color.Transparent);
         public Size RequestedSize { get; set; } = Size.Unspecified;
@@ -91,6 +84,20 @@ namespace OmniGui
 
         public double MinHeight => MinSize.Height;
         public object Parent { get; set; }
+
+        protected void NotifyRenderAffectedBy(params ExtendedProperty[] properties)
+        {
+            var observables = properties
+                .Select(GetChangedObservable);
+
+            var ticks = observables.Merge();
+            ticks.Subscribe(_ => InvalidateRender());
+        }
+
+        private void InvalidateRender()
+        {
+            Platform.Current.EventSource.Invalidate();
+        }
 
         public void SetValue(AttachedProperty property, object value)
         {

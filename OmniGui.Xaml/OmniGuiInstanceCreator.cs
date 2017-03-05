@@ -27,6 +27,11 @@
             catch (Exception e)
             {
                 typeResolver.TryResolve(type, out var instance);
+
+                if (instance == null)
+                {
+                    throw new Exception($"Cannot create instance of type {type}");
+                }
                 return instance;
             }         
         }

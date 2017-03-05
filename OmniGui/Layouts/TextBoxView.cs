@@ -4,13 +4,12 @@
     using System.Linq;
     using System.Reactive.Linq;
     using Geometry;
+    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBoxView : Layout
     {
-        public static readonly ExtendedProperty TextProperty = PropertyEngine.RegisterProperty("Text",
-            typeof(TextBoxView),
-            typeof(string), new PropertyMetadata {DefaultValue = null});
+        public static ExtendedProperty TextProperty;
 
         private IDisposable changedSubscription;
         private int cursorPositionOrdinal;
@@ -19,15 +18,18 @@
         private bool isCursorVisible;
         private bool isFocused;
 
-        public TextBoxView()
+        public TextBoxView(IPropertyEngine propertyEngine) : base(propertyEngine)
         {
-            var changedObservable = GetChangedObservable(TextProperty);
+            RegistrationGuard.RegisterFor<TextBoxView>(() => TextProperty = PropertyEngine.RegisterProperty("Text",
+                typeof(TextBoxView),
+                typeof(string), new PropertyMetadata {DefaultValue = null}));
 
+            var changedObservable = GetChangedObservable(TextProperty);
 
             Pointer.Down.Subscribe(point =>
             {
                 Platform.Current.EventSource.ShowVirtualKeyboard();
-                Platform.Current.SetFocusedElement(this);                
+                Platform.Current.SetFocusedElement(this);
             });
 
             Keyboard.KeyInput.Where(Filter).Subscribe(args => AddText(args.Text));
@@ -52,7 +54,7 @@
 
         private bool IsFocused
         {
-            get { return isFocused; }
+            get => isFocused;
             set
             {
                 if (isFocused != value)
@@ -71,22 +73,9 @@
             }
         }
 
-        private void DisableCaretBlink()
-        {
-            cursorToggleChanger?.Dispose();
-        }
-
-        private void CreateCaretBlink()
-        {
-            cursorToggleChanger?.Dispose();
-            IsCursorVisible = true;
-            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.4));
-            cursorToggleChanger = timelyObs.Subscribe(_ => SwitchCursorVisibility());
-        }
-
         private bool IsCursorVisible
         {
-            get { return isCursorVisible; }
+            get => isCursorVisible;
             set
             {
                 isCursorVisible = value;
@@ -96,13 +85,13 @@
 
         public string Text
         {
-            get { return (string) GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get => (string) GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
 
         private int CursorPositionOrdinal
         {
-            get { return cursorPositionOrdinal; }
+            get => cursorPositionOrdinal;
             set
             {
                 if (value > Text.Length || value < 0)
@@ -124,6 +113,19 @@
             FontFamily = "Arial",
             FontWeight = FontWeights.Normal
         };
+
+        private void DisableCaretBlink()
+        {
+            cursorToggleChanger?.Dispose();
+        }
+
+        private void CreateCaretBlink()
+        {
+            cursorToggleChanger?.Dispose();
+            IsCursorVisible = true;
+            var timelyObs = Observable.Interval(TimeSpan.FromSeconds(0.4));
+            cursorToggleChanger = timelyObs.Subscribe(_ => SwitchCursorVisibility());
+        }
 
         private void EnforceCursorLimits()
         {

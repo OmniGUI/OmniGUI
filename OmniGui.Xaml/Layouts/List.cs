@@ -2,35 +2,36 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using DynamicData;
-    using DynamicData.Annotations;
     using DynamicData.Binding;
     using OmniGui.Layouts;
     using Templates;
     using Xaml;
+    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class List : Layout
     {
         private readonly TemplateInflator controlTemplateInflator;
 
-        public static readonly ExtendedProperty SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(List),
-            typeof(IObservableCollection<object>), new PropertyMetadata());
-
-        public static readonly ExtendedProperty ItemTemplateProperty = PropertyEngine.RegisterProperty("ItemTemplate", typeof(List),
-            typeof(DataTemplate), new PropertyMetadata());
-
-
+        public static ExtendedProperty SourceProperty;
+        public static ExtendedProperty ItemTemplateProperty;
+        
         private IDisposable subscription;
         private readonly StackPanel panel;
         private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
 
-        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates)
-        {        
+        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates, IPropertyEngine propertyEngine) : base(propertyEngine)
+        {
+            RegistrationGuard.RegisterFor<List>(() =>
+            {
+                ItemTemplateProperty = ItemTemplateProperty = PropertyEngine.RegisterProperty("ItemTemplate", typeof(List), typeof(DataTemplate), new PropertyMetadata());
+                SourceProperty = SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(List), typeof(IObservableCollection<object>), new PropertyMetadata());
+            });
+
             this.controlTemplateInflator = controlTemplateInflator;
             this.getControlTemplates = getControlTemplates;
-            panel = new StackPanel();
+            panel = new StackPanel(propertyEngine);
             this.AddChild(panel);
 
             subscription = GetChangedObservable(SourceProperty).Subscribe(obj =>
@@ -65,7 +66,7 @@
                 return withDataTemplateApplied;
             }
 
-            return new TextBlock
+            return new TextBlock(PropertyEngine)
             {
                 Text = item.ToString(),
             };

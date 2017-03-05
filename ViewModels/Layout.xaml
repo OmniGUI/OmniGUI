@@ -5,13 +5,13 @@
         <ColumnDefinition />
     </Grid.ColumnDefinitions>
 
-    <!--<VisualStateManager.VisualStateGroups>
+    <VisualStateManager.VisualStateGroups>
         <VisualStateGroup>
             <VisualStateGroup.StateTriggers>
                 <StateTrigger IsActive="true"></StateTrigger>
             </VisualStateGroup.StateTriggers>
         </VisualStateGroup>
-    </VisualStateManager.VisualStateGroups>-->
+    </VisualStateManager.VisualStateGroups>
 
     <List Source="{Bind People}" Margin="15">
         <List.ItemTemplate>

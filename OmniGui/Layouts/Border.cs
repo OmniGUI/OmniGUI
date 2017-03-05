@@ -2,10 +2,15 @@ namespace OmniGui.Layouts
 {
     using System.Linq;
     using Geometry;
+    using Zafiro.PropertySystem;
 
     public class Border : Layout
     {
         private Layout child;
+
+        public Border(IPropertyEngine propertyEngine) : base(propertyEngine)
+        {
+        }
 
         protected override Size MeasureOverride(Size availableSize)
         {

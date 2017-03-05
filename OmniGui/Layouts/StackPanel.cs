@@ -2,13 +2,22 @@ namespace OmniGui.Layouts
 {
     using System;
     using Geometry;
+    using Zafiro.PropertySystem;
 
     public class StackPanel : Layout
     {
+        public StackPanel(IPropertyEngine propertyEngine) : base(propertyEngine)
+        {
+        }
+
+        public double Gap { get; set; }
+
+        public Orientation Orientation { get; set; }
+
         protected override Size MeasureOverride(Size availableSize)
         {
-            double childAvailableWidth = double.PositiveInfinity;
-            double childAvailableHeight = double.PositiveInfinity;
+            var childAvailableWidth = double.PositiveInfinity;
+            var childAvailableHeight = double.PositiveInfinity;
 
             if (Orientation == Orientation.Vertical)
             {
@@ -37,12 +46,12 @@ namespace OmniGui.Layouts
 
             double measuredWidth = 0;
             double measuredHeight = 0;
-            double gap = Gap;
+            var gap = Gap;
 
             foreach (var child in Children)
             {
                 child.Measure(new Size(childAvailableWidth, childAvailableHeight));
-                Size size = child.DesiredSize;
+                var size = child.DesiredSize;
 
                 if (Orientation == Orientation.Vertical)
                 {
@@ -59,13 +68,11 @@ namespace OmniGui.Layouts
             return new Size(measuredWidth, measuredHeight);
         }
 
-        public double Gap { get; set; }
-
         protected override Size ArrangeOverride(Size finalSize)
         {
             var orientation = Orientation;
-            double arrangedWidth = finalSize.Width;
-            double arrangedHeight = finalSize.Height;
+            var arrangedWidth = finalSize.Width;
+            var arrangedHeight = finalSize.Height;
 
             if (Orientation == Orientation.Vertical)
             {
@@ -78,12 +85,12 @@ namespace OmniGui.Layouts
 
             foreach (var child in Children)
             {
-                double childWidth = child.DesiredSize.Width;
-                double childHeight = child.DesiredSize.Height;
+                var childWidth = child.DesiredSize.Width;
+                var childHeight = child.DesiredSize.Height;
 
                 if (orientation == Orientation.Vertical)
                 {
-                    double width = Math.Max(childWidth, arrangedWidth);
+                    var width = Math.Max(childWidth, arrangedWidth);
                     var childFinal = new Rect(new Point(0, arrangedHeight), new Size(width, childHeight));
                     child.Arrange(childFinal);
                     arrangedWidth = Math.Max(arrangedWidth, childWidth);
@@ -91,7 +98,7 @@ namespace OmniGui.Layouts
                 }
                 else
                 {
-                    double height = Math.Max(childHeight, arrangedHeight);
+                    var height = Math.Max(childHeight, arrangedHeight);
                     var childFinal = new Rect(new Point(arrangedWidth, 0), new Size(childWidth, height));
                     child.Arrange(childFinal);
                     arrangedWidth += childWidth;
@@ -111,7 +118,6 @@ namespace OmniGui.Layouts
             return new Size(arrangedWidth, arrangedHeight);
         }
 
-        public Orientation Orientation { get; set; }
         public override void Render(IDrawingContext drawingContext)
         {
             drawingContext.FillRectangle(VisualBounds, Background);

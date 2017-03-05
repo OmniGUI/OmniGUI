@@ -4,15 +4,20 @@
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem.Standard;
     using OmniGui.Layouts;
+    using Zafiro.PropertySystem;
 
     public class ContentLayout : Layout
     {
-        public static readonly ExtendedProperty ContentProperty = PropertyEngine.RegisterProperty("Content", typeof(ContentLayout), typeof(object), new PropertyMetadata { DefaultValue = null });
+        public static ExtendedProperty ContentProperty;
 
-        public ContentLayout()
+        public ContentLayout(IPropertyEngine propertyEngine) : base(propertyEngine)
         {
-            GetChangedObservable(ContentProperty).Subscribe(SetContent);
+            RegistrationGuard.RegisterFor<ContentLayout>(() =>
+            {
+                ContentProperty = PropertyEngine.RegisterProperty("Content", typeof(ContentLayout), typeof(object), new PropertyMetadata { DefaultValue = null });
+            });
 
+            GetChangedObservable(ContentProperty).Subscribe(SetContent);            
         }
 
         private void SetContent(object o)
@@ -23,7 +28,7 @@
                 return;
             }
 
-            var layout = o as Layout ?? new TextBlock { Text = o.ToString()};
+            var layout = o as Layout ?? new TextBlock(PropertyEngine) { Text = o.ToString()};
             Children.Add(layout);
         }
 

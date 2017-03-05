@@ -4,24 +4,32 @@
     using System.Collections.Generic;
     using System.Linq;
     using Geometry;
+    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
 
     public class Grid : Layout
     {
-        public static readonly AttachedProperty ColumnProperty = PropertyEngine.RegisterProperty("Column", typeof(Grid),
-            typeof(int), new AttachedPropertyMetadata {DefaultValue = 0});
+        public static AttachedProperty ColumnProperty;
 
-        public static readonly AttachedProperty RowProperty = PropertyEngine.RegisterProperty("Row", typeof(Grid), typeof(int),
-            new AttachedPropertyMetadata {DefaultValue = 0});
+        public static AttachedProperty RowProperty;
 
-        public static readonly AttachedProperty ColumnSpanProperty = PropertyEngine.RegisterProperty("ColumnSpan", typeof(Grid),
-            typeof(int), new AttachedPropertyMetadata {DefaultValue = 1});
+        public static AttachedProperty ColumnSpanProperty;
 
-        public static readonly AttachedProperty RowSpanProperty = PropertyEngine.RegisterProperty("RowSpan", typeof(Grid),
-            typeof(int), new AttachedPropertyMetadata {DefaultValue = 1});
+        public static AttachedProperty RowSpanProperty;
 
         private Segment[,] colMatrix;
         private Segment[,] rowMatrix;
+
+        public Grid(IPropertyEngine propertyEngine) : base(propertyEngine)
+        {
+            RegistrationGuard.RegisterFor<Grid>(() =>
+            {
+                RowSpanProperty = PropertyEngine.RegisterProperty("RowSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
+                ColumnSpanProperty = PropertyEngine.RegisterProperty("ColumnSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
+                RowProperty = PropertyEngine.RegisterProperty("Row", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
+                ColumnProperty = PropertyEngine.RegisterProperty("Column", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
+            });
+        }
 
         public ColumnDefinitions ColumnDefinitions { get; set; } = new ColumnDefinitions();
         public RowDefinitions RowDefinitions { get; set; } = new RowDefinitions();
