@@ -9,7 +9,7 @@
     {
         public static ExtendedProperty CommandProperty;
 
-        public Button(IPropertyEngine propertyEngine) : base(propertyEngine)
+        public Button(IPropertyEngine propertyEngine, IDisposable able) : base(propertyEngine)
         {
             RegistrationGuard.RegisterFor<Button>(() =>
             {

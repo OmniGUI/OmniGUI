@@ -7,33 +7,30 @@
 
     public class OmniGuiInstanceCreator : IInstanceCreator
     {
-        private readonly ITypeResolver typeResolver;
+        private readonly ITypeLocator typeLocator;
         private readonly InstanceCreator inner;
 
-        public OmniGuiInstanceCreator(ISourceValueConverter sourceValueConverter, ObjectBuilderContext context, ITypeDirectory typeDirectory, ITypeResolver typeResolver)
+        public OmniGuiInstanceCreator(ISourceValueConverter sourceValueConverter, ObjectBuilderContext context,
+            ITypeDirectory typeDirectory, ITypeLocator typeLocator)
         {
-            this.typeResolver = typeResolver;
+            this.typeLocator = typeLocator;
             inner = new InstanceCreator(sourceValueConverter, context, typeDirectory);
         }
 
-
         public object Create(Type type, BuildContext context, IEnumerable<InjectableMember> injectableMembers = null)
         {
-            try
+            var instance = inner.Create(type, context, injectableMembers);
+            if (instance == null)
             {
-                var o = inner.Create(type, context, injectableMembers);
-                return o;
-            }
-            catch (Exception e)
-            {
-                typeResolver.TryResolve(type, out var instance);
-
-                if (instance == null)
+                if (typeLocator.TryLocate(type, out instance))
                 {
-                    throw new Exception($"Cannot create instance of type {type}");
+                    return instance;
                 }
-                return instance;
-            }         
+
+                throw new Exception($"Cannot create instance of type {type}");
+            }
+
+            return instance;
         }
     }
 }

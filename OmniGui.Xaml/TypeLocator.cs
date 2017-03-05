@@ -3,17 +3,18 @@ namespace OmniGui.Xaml
     using System;
     using System.Collections.Generic;
     using Grace.DependencyInjection;
+    using Serilog;
     using Templates;
     using Zafiro.PropertySystem;
 
-    public class TypeResolver : ITypeResolver
+    public class TypeLocator : ITypeLocator
     {
         private readonly DependencyInjectionContainer container;
 
-        public TypeResolver(Func<ICollection<ControlTemplate>> getControlTemplates)
+        public TypeLocator(Func<ICollection<ControlTemplate>> getControlTemplates)
         {
-            var container = new DependencyInjectionContainer();
-            container.Configure(block =>
+            var injectionContainer = new DependencyInjectionContainer();
+            injectionContainer.Configure(block =>
             {
                 block.ExportInstance(new PropertyEngine(GetParent)).As<IPropertyEngine>();
                 block.Export<TemplateInflator>().As<ITemplateInflator>().Lifestyle.Singleton();
@@ -21,20 +22,16 @@ namespace OmniGui.Xaml
             });
             
             
-            this.container = container;
+            container = injectionContainer;
         }
 
-        private object GetParent(object o)
+        private static object GetParent(object o)
         {
-            if (o is IChild)
-            {
-                return ((IChild) o).Parent;
-            }
-
-            return null;
+            var child = o as IChild;
+            return child?.Parent;
         }
 
-        public bool TryResolve(Type type, out object instance)
+        public bool TryLocate(Type type, out object instance)
         {
             try
             {
@@ -42,6 +39,7 @@ namespace OmniGui.Xaml
             }
             catch (Exception e)
             {
+                Log.Error(e, "Cannot resolve {Type}", type);
                 instance = null;
                 return false;
             }

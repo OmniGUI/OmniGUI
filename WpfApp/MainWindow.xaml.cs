@@ -33,8 +33,8 @@
 
             
 
-            resolver = new TypeResolver(() => ControlTemplates);
-            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, resolver);
+            locator = new TypeLocator(() => ControlTemplates);
+            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator);
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
             var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml")).Instance;
@@ -60,7 +60,7 @@
         [TypeConverterMember(typeof(Bitmap))]
         public static Func<ConverterValueContext, object> BitmapConverter = context => GetBitmap(context);
 
-        private ITypeResolver resolver;
+        private ITypeLocator locator;
 
         private static Bitmap GetBitmap(ConverterValueContext context)
         {

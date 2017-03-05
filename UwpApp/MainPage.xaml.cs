@@ -39,7 +39,7 @@
             textEngine = (Win2DTextEngine) Platform.Current.TextEngine;
             
             Loaded += OnLoaded;
-            resolver = new TypeResolver(() => ControlTemplates);
+            locator = new TypeLocator(() => ControlTemplates);
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -50,7 +50,7 @@
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
                 Assembly.Load(new AssemblyName("UwpApp")),
                 Assembly.Load(new AssemblyName("Common"))
-            }, () => ControlTemplates, resolver);
+            }, () => ControlTemplates, locator);
 
             var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml")).Instance;
             ControlTemplates = container.ControlTemplates;
@@ -97,7 +97,7 @@
         [TypeConverterMember(typeof(Bitmap))]
         public static Func<ConverterValueContext, object> BitmapConverter = context => GetBitmap(context).Result;
 
-        private readonly TypeResolver resolver;
+        private readonly TypeLocator locator;
 
         private static Bitmap GetResult(ConverterValueContext context)
         {
