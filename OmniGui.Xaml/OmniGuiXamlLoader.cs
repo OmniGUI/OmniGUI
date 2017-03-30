@@ -28,7 +28,7 @@
 
         protected override ISmartInstanceCreator GetInstanceCreator(IStringSourceValueConverter converter)
         {
-            return new OmniGuiInstanceCreator2(converter, locator);
+            return new Rework.OmniGuiInstanceCreator(converter, locator);
         }
     }
 }

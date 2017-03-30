@@ -4,11 +4,11 @@
     using OmniXaml;
     using OmniXaml.Rework;
 
-    public class OmniGuiInstanceCreator2 : ISmartInstanceCreator
+    public class OmniGuiInstanceCreator : ISmartInstanceCreator
     {
         private readonly ITypeLocator locator;
-
-        public OmniGuiInstanceCreator2(IStringSourceValueConverter converter, ITypeLocator locator)
+        
+        public OmniGuiInstanceCreator(IStringSourceValueConverter converter, ITypeLocator locator)
         {
             this.locator = locator;
         }
@@ -21,10 +21,9 @@
             if (tryLocate)
             {
                 return new CreationResult(instance);
-
             }
 
-            throw new InvalidOperationException($"Cannot create instance ot type {type}");
+            return new CreationResult(Activator.CreateInstance(type));           
         }
     }
 }

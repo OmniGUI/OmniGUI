@@ -1,6 +1,12 @@
 ﻿<Grid xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
 
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition></ColumnDefinition>
+        <ColumnDefinition></ColumnDefinition>
+    </Grid.ColumnDefinitions>
 
+    <Button Content="Text"></Button>
+    <Button Grid.Column="2" Content="Otro texto"></Button>
 
 </Grid>
 
