@@ -52,10 +52,10 @@
                 Assembly.Load(new AssemblyName("Common"))
             }, () => ControlTemplates, locator);
 
-            var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml")).Instance;
+            var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml"));
             ControlTemplates = container.ControlTemplates;
 
-            layout = (Layout) xamlLoader.Load(await ReadAllText("Layout.xaml")).Instance;
+            layout = (Layout) xamlLoader.Load(await ReadAllText("Layout.xaml"));
             
             var inflator = new TemplateInflator();
             inflator.Inflate(layout, container.ControlTemplates);

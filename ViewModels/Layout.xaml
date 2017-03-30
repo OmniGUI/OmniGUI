@@ -1,5 +1,11 @@
-﻿<Grid xmlns="root" Background="GhostWhite" xmlns:local="using:Common;assembly=Common">
+﻿<Grid xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
 
+
+
+</Grid>
+
+<!--
+    <Grid xmlns="root" Background="GhostWhite" xmlns:local="using:Common;assembly=Common">
     <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition />
@@ -68,5 +74,5 @@
         </Grid>
         <Button Content="Añadir" VerticalAlignment="Top" Command="{Bind AddItemCommand}" />
     </StackPanel>
-
 </Grid>
+-->

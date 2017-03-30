@@ -17,7 +17,7 @@
             inner = new InstanceCreator(sourceValueConverter, context, typeDirectory);
         }
 
-        public object Create(Type type, BuildContext context, IEnumerable<InjectableMember> injectableMembers = null)
+        public object Create(Type type, IBuildContext context, IEnumerable<InjectableMember> injectableMembers = null)
         {
             var instance = inner.Create(type, context, injectableMembers);
             if (instance == null)

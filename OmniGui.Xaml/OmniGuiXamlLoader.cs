@@ -5,8 +5,10 @@
     using System.Reflection;
     using OmniXaml;
     using OmniXaml.Services;
-    using OmniXaml.TypeLocation;
+    using Rework;
     using Templates;
+    using IObjectBuilder = OmniXaml.Services.IObjectBuilder;
+    using ObjectBuilder = OmniXaml.Services.ObjectBuilder;
 
     public class OmniGuiXamlLoader : XamlLoader
     {
@@ -19,14 +21,14 @@
             this.locator = locator;
         }
 
-        protected override IObjectBuilder GetObjectBuilder(IInstanceCreator instanceCreator, ObjectBuilderContext context, ContextFactory factory)
+        protected override IObjectBuilder GetObjectBuilder(ISmartInstanceCreator instanceCreator, IStringSourceValueConverter converter)
         {
-            return new OmniGuiXamlBuilder(instanceCreator, context, factory);
+            return new ObjectBuilder(instanceCreator, converter);
         }
 
-        protected override IInstanceCreator GetInstanceCreator(ISourceValueConverter sourceValueConverter, ObjectBuilderContext context, ITypeDirectory typeDirectory)
+        protected override ISmartInstanceCreator GetInstanceCreator(IStringSourceValueConverter converter)
         {
-            return new OmniGuiInstanceCreator(sourceValueConverter, context, typeDirectory, locator);
+            return new OmniGuiInstanceCreator2(converter, locator);
         }
     }
 }

@@ -11,19 +11,19 @@ namespace OmniGui.Xaml
     public static class TypeConverters
     {
         [TypeConverterMember(typeof(Size))]
-        public static Func<ConverterValueContext, object> SizeConverter = context => ToSize((string) context.Value);
+        public static Func<string, object> SizeConverter = context => ToSize((string) context);
 
         [TypeConverterMember(typeof(Color))]
-        public static Func<ConverterValueContext, object> ColorConverter = context => ColorConvert((string)context.Value);
+        public static Func<string, object> ColorConverter = context => ColorConvert((string)context);
 
         [TypeConverterMember(typeof(Brush))]
-        public static Func<ConverterValueContext, object> BrushConverter = context => new Brush(ColorConvert((string) context.Value));
+        public static Func<string, object> BrushConverter = context => new Brush(ColorConvert((string) context));
 
         [TypeConverterMember(typeof(Thickness))]
-        public static Func<ConverterValueContext, object> ThicknessConverter = context => Thickness.Parse((string)context.Value, CultureInfo.CurrentCulture);
+        public static Func<string, object> ThicknessConverter = context => Thickness.Parse((string)context, CultureInfo.CurrentCulture);
 
         [TypeConverterMember(typeof(GridLength))]
-        public static Func<ConverterValueContext, object> GridLengthConverter = context => GridLength.Parse((string)context.Value, CultureInfo.CurrentCulture);
+        public static Func<string, object> GridLengthConverter = context => GridLength.Parse((string)context, CultureInfo.CurrentCulture);
 
 
         private static Color ColorConvert(string contextValue)

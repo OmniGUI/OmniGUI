@@ -36,8 +36,8 @@
             locator = new TypeLocator(() => ControlTemplates);
             var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator);
 
-            layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml")).Instance;
-            var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml")).Instance;
+            layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml"));
+            var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml"));
             new TemplateInflator().Inflate(layout, container.ControlTemplates);
             ControlTemplates = container.ControlTemplates;
             layout.DataContext = new SampleViewModel(new WpfMessageBoxService());
@@ -58,15 +58,15 @@
         }
 
         [TypeConverterMember(typeof(Bitmap))]
-        public static Func<ConverterValueContext, object> BitmapConverter = context => GetBitmap(context);
+        public static Func<string, object> BitmapConverter = context => GetBitmap(context);
 
         private ITypeLocator locator;
 
-        private static Bitmap GetBitmap(ConverterValueContext context)
+        private static Bitmap GetBitmap(string context)
         {
             var bitmap = new BitmapImage();
             
-            using (var stream = File.OpenRead((string) context.Value))
+            using (var stream = File.OpenRead(context))
             {
                 bitmap.BeginInit();
                 bitmap.StreamSource = stream;
