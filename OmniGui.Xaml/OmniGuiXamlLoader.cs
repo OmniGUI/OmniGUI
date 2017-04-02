@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Reflection;
     using OmniXaml;
+    using OmniXaml.Rework;
+    using OmniXaml.ReworkPhases;
     using OmniXaml.Services;
     using Rework;
     using Templates;
@@ -21,14 +23,37 @@
             this.locator = locator;
         }
 
-        protected override IObjectBuilder GetObjectBuilder(ISmartInstanceCreator instanceCreator, IStringSourceValueConverter converter)
+        protected override IObjectBuilder GetObjectBuilder(ISmartInstanceCreator instanceCreator, IStringSourceValueConverter converter, IMemberAssigmentApplier memberAssigmentApplier)
         {
-            return new ObjectBuilder(instanceCreator, converter);
+            return new ObjectBuilder(instanceCreator, converter, memberAssigmentApplier);
         }
 
         protected override ISmartInstanceCreator GetInstanceCreator(IStringSourceValueConverter converter)
         {
             return new Rework.OmniGuiInstanceCreator(converter, locator);
+        }
+
+        protected override IMemberAssigmentApplier GetMemberAssignmentApplier(IStringSourceValueConverter converter)
+        {
+            return new OmniGuiMemberAssignmentApplier(converter, new OmniGuiValuePipeline());
+        }
+    }
+
+    public class OmniGuiValuePipeline : IValuePipeline
+    {
+        public void Process(object parent, Member member, MutablePipelineUnit mutable)
+        {
+            if (mutable.Value is IMarkupExtension)
+            {
+                mutable.Handled = true;
+            }
+        }
+    }
+
+    public class OmniGuiMemberAssignmentApplier : MemberAssigmentApplier
+    {
+        public OmniGuiMemberAssignmentApplier(IStringSourceValueConverter converter, IValuePipeline pipeline) : base(converter, pipeline)
+        {
         }
     }
 }

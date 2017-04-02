@@ -46,7 +46,10 @@
             sourceList.AddRange(people);
 
             People = sourceList;
+            Title = "Sample App";
         }
+
+        public string Title { get; set; }
 
         public ISubject<object> WrittenText { get; }
 
