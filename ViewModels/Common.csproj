@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Reference Include="DynamicData">
-      <HintPath>C:\Users\SuperJMN\.nuget\packages\DynamicData\5.1.4.2124\lib\net45\DynamicData.dll</HintPath>
+      <HintPath>C:\Users\super\.nuget\packages\DynamicData\5.1.4.2124\lib\net45\DynamicData.dll</HintPath>
     </Reference>
   </ItemGroup>
 

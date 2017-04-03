@@ -35,17 +35,62 @@
 
         protected override IMemberAssigmentApplier GetMemberAssignmentApplier(IStringSourceValueConverter converter)
         {
-            return new OmniGuiMemberAssignmentApplier(converter, new OmniGuiValuePipeline());
+            return new OmniGuiMemberAssignmentApplier(converter, new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new NoActionValuePipeline())));
         }
     }
 
-    public class OmniGuiValuePipeline : IValuePipeline
+    public abstract class ValuePipeline : IValuePipeline
     {
-        public void Process(object parent, Member member, MutablePipelineUnit mutable)
+        private readonly IValuePipeline pipeline;
+
+        protected ValuePipeline(IValuePipeline pipeline)
         {
-            if (mutable.Value is IMarkupExtension)
+            this.pipeline = pipeline;
+        }
+
+        public void Handle(object parent, Member member, MutablePipelineUnit mutable)
+        {
+            if (!mutable.Handled)
+            {
+                pipeline.Handle(parent, member, mutable);
+                HandleCore(parent, member, mutable);
+            }
+        }
+
+        protected abstract void HandleCore(object parent, Member member, MutablePipelineUnit mutable);
+    }
+
+    public class OmniGuiValuePipeline : ValuePipeline
+    {
+        public OmniGuiValuePipeline(IValuePipeline inner) : base(inner)
+        {
+        }
+
+        protected override void HandleCore(object parent, Member member, MutablePipelineUnit mutable)
+        {
+            var bindDefinition = mutable.Value as BindDefinition;
+            if (bindDefinition != null)
             {
                 mutable.Handled = true;
+            }
+        }
+    }
+
+    public class MarkupExtensionValuePipeline : ValuePipeline
+    {
+        public MarkupExtensionValuePipeline(IValuePipeline inner) : base(inner)
+        {
+        }
+
+        protected override void HandleCore(object parent, Member member, MutablePipelineUnit mutable)
+        {
+            var extension = mutable.Value as IMarkupExtension;
+            if (extension != null)
+            {
+                var keyedInstance = new KeyedInstance(parent);
+                var assignment = new Assignment(keyedInstance, member, mutable.Value);
+                var finalValue = extension.GetValue(new ExtensionValueContext(assignment, null, null, null));
+                mutable.Value = finalValue;
             }
         }
     }
