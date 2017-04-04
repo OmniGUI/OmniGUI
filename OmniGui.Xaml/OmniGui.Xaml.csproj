@@ -3,7 +3,7 @@
     <TargetFramework>netstandard1.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Grace" Version="5.1.0" />
+    <PackageReference Include="Grace" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />

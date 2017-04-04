@@ -5,10 +5,16 @@
         <ColumnDefinition></ColumnDefinition>
     </Grid.ColumnDefinitions>
 
-    <Button Content="{Bind Title}"></Button>
-    <Button Grid.Column="2" Content="Otro texto"></Button>
+    <Button Content="{Bind TargetProperty=Title}"></Button>
+    <!--<Button Content="Otro texto"></Button>-->
 
 </Grid>
+
+
+<!--<Button xmlns="root"  Content="{Bind TargetProperty=Title}"></Button>-->
+
+
+
 
 <!--
     <Grid xmlns="root" Background="GhostWhite" xmlns:local="using:Common;assembly=Common">
