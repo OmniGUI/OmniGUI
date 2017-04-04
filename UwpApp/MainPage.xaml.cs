@@ -39,7 +39,7 @@
             textEngine = (Win2DTextEngine) Platform.Current.TextEngine;
             
             Loaded += OnLoaded;
-            locator = new TypeLocator(() => ControlTemplates);
+            //locator = new TypeLocator(() => ControlTemplates, Assemblies);
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)

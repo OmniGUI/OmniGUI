@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using OmniGui.Layouts;
 using OmniXaml.Rework;
 using Xunit;
@@ -15,7 +16,7 @@ namespace OmniGui.Xaml.Tests
         public void BindTest()
         {
             var converter = new TypeConverterSourceValueConverter();
-            var omniGuiInstanceCreator = new Rework.OmniGuiInstanceCreator(converter, new TypeLocator(() => new List<ControlTemplate>()));
+            var omniGuiInstanceCreator = new Rework.OmniGuiInstanceCreator(converter, new TypeLocator(() => new List<ControlTemplate>(), new List<Assembly>()));
             var valuePipeline = new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new NoActionValuePipeline()));
             var assignmentApplier = new OmniGuiMemberAssignmentApplier(converter, valuePipeline);
             var sut = new OmniGuiObjectBuilder(omniGuiInstanceCreator, converter, assignmentApplier);

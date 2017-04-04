@@ -1,3 +1,6 @@
+using System.Windows.Input;
+using OmniGui.Layouts.Grid;
+
 namespace OmniGui
 {
     using System;
@@ -10,6 +13,30 @@ namespace OmniGui
     using Zafiro.PropertySystem.Attached;
     using Zafiro.PropertySystem.Standard;
 
+    public static class Registrator
+    {
+        public static void Register(IPropertyEngine propertyEngine)
+        {
+            RegistrationGuard.RegisterFor<Layout>(() =>
+            {
+                Layout.DataContextProperty = propertyEngine.RegisterProperty("DataContext", typeof(Layout), typeof(object), new PropertyMetadata());
+            });
+
+            RegistrationGuard.RegisterFor<Grid>(() =>
+            {
+                Grid.RowSpanProperty = propertyEngine.RegisterProperty("RowSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
+                Grid.ColumnSpanProperty = propertyEngine.RegisterProperty("ColumnSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
+                Grid.RowProperty = propertyEngine.RegisterProperty("Row", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
+                Grid.ColumnProperty = propertyEngine.RegisterProperty("Column", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
+            });
+
+            RegistrationGuard.RegisterFor<Button>(() =>
+            {
+                Button.CommandProperty = propertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
+            });
+        }
+    }
+
     public abstract class Layout : IChild
     {
         public static ExtendedProperty DataContextProperty;
@@ -17,11 +44,6 @@ namespace OmniGui
         protected Layout(IPropertyEngine propertyEngine)
         {
             PropertyEngine = propertyEngine;
-
-            RegistrationGuard.RegisterFor<Layout>(() =>
-            {
-                DataContextProperty = DataContextProperty = PropertyEngine.RegisterProperty("DataContext", typeof(Layout), typeof(object), new PropertyMetadata());
-            });
 
             Children = new OwnedList<Layout>(this);
             Children.OnChildAdded(layout =>

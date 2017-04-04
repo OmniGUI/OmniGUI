@@ -134,6 +134,10 @@
       <Project>{1d971911-3c12-461d-8b96-c4e631ec1b7c}</Project>
       <Name>Zafiro.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
+      <Project>{E9A9DCFF-5B62-4F12-ABC7-148E384FF805}</Project>
+      <Name>Zafiro.PropertySystem</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DynamicData">

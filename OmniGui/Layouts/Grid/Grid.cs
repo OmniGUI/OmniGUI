@@ -22,13 +22,7 @@
 
         public Grid(IPropertyEngine propertyEngine) : base(propertyEngine)
         {
-            RegistrationGuard.RegisterFor<Grid>(() =>
-            {
-                RowSpanProperty = PropertyEngine.RegisterProperty("RowSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
-                ColumnSpanProperty = PropertyEngine.RegisterProperty("ColumnSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
-                RowProperty = PropertyEngine.RegisterProperty("Row", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
-                ColumnProperty = PropertyEngine.RegisterProperty("Column", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
-            });
+          
         }
 
         public ColumnDefinitions ColumnDefinitions { get; set; } = new ColumnDefinitions();

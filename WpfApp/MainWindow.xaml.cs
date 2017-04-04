@@ -30,10 +30,8 @@
             InitializeComponent();
 
             Platform.Current = new WpfPlatform(this);
-
             
-
-            locator = new TypeLocator(() => ControlTemplates);
+            locator = new TypeLocator(() => ControlTemplates, Assemblies.AssembliesInAppFolder);
             var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator);
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml"));

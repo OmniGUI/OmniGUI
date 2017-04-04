@@ -6,7 +6,7 @@
     </Grid.ColumnDefinitions>
 
     <Button Content="{Bind TargetProperty=Title}"></Button>
-    <!--<Button Content="Otro texto"></Button>-->
+    <Button Content="Otro texto" Grid.Column="1"></Button>
 
 </Grid>
 
