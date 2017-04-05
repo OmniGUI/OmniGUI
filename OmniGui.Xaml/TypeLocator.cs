@@ -14,29 +14,19 @@ namespace OmniGui.Xaml
 
     public class TypeLocator : ITypeLocator
     {
-        private readonly IEnumerable<Assembly> assemblies;
         private readonly DependencyInjectionContainer container;
 
-        public TypeLocator(Func<ICollection<ControlTemplate>> getControlTemplates, IEnumerable<Assembly> assemblies)
+        public TypeLocator(Func<ICollection<ControlTemplate>> getControlTemplates, IPropertyEngine propertyEngine)
         {
-            this.assemblies = assemblies;
             var injectionContainer = new DependencyInjectionContainer();
             injectionContainer.Configure(block =>
             {
-                var propertyEngine = new PropertyEngine(GetParent);
-                Registrator.Register(propertyEngine);
-
                 block.ExportInstance(propertyEngine).As<IPropertyEngine>();
                 block.Export<TemplateInflator>().As<ITemplateInflator>().Lifestyle.Singleton();
                 block.ExportInstance(() => getControlTemplates);                
             });
             
             container = injectionContainer;
-        }
-
-        private void RegisterProperties(IPropertyEngine propertyEngine)
-        {
-            RegisterPropertiesIn(assemblies, propertyEngine);
         }
 
         private void RegisterPropertiesIn(IEnumerable<Assembly> assembliesInAppFolder, IPropertyEngine propertyEngine)

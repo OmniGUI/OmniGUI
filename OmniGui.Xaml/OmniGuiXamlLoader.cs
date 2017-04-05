@@ -8,6 +8,7 @@
     using OmniXaml.Services;
     using Rework;
     using Templates;
+    using Zafiro.PropertySystem;
     using IObjectBuilder = OmniXaml.Services.IObjectBuilder;
     using ObjectBuilder = OmniXaml.Services.ObjectBuilder;
 
@@ -15,11 +16,13 @@
     {
         private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
         private readonly ITypeLocator locator;
+        private readonly IPropertyEngine propertyEngine;
 
-        public OmniGuiXamlLoader(IList<Assembly> assemblies, Func<ICollection<ControlTemplate>> getControlTemplates, ITypeLocator locator) : base(assemblies)
+        public OmniGuiXamlLoader(IList<Assembly> assemblies, Func<ICollection<ControlTemplate>> getControlTemplates, ITypeLocator locator, IPropertyEngine propertyEngine) : base(assemblies)
         {
             this.getControlTemplates = getControlTemplates;
             this.locator = locator;
+            this.propertyEngine = propertyEngine;
         }
 
         protected override IObjectBuilder GetObjectBuilder(ISmartInstanceCreator instanceCreator, IStringSourceValueConverter converter, IMemberAssigmentApplier memberAssigmentApplier)
@@ -34,7 +37,7 @@
 
         protected override IMemberAssigmentApplier GetMemberAssignmentApplier(IStringSourceValueConverter converter)
         {
-            return new OmniGuiMemberAssignmentApplier(converter, new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new NoActionValuePipeline())));
+            return new OmniGuiMemberAssignmentApplier(converter, new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new NoActionValuePipeline()), propertyEngine));
         }
     }
 }

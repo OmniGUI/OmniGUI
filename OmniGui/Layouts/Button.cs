@@ -12,6 +12,11 @@
         public Button(IPropertyEngine propertyEngine) : base(propertyEngine)
         {
 
+            RegistrationGuard.RegisterFor<Button>(() =>
+            {
+                CommandProperty = propertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
+            });
+
             Pointer.Down.Subscribe(p =>
             {
                 if (Command?.CanExecute(null) == true)

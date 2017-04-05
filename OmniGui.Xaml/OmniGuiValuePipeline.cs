@@ -7,17 +7,27 @@ using System.Reactive.Linq;
 
 namespace OmniGui.Xaml
 {
+    using System.Reflection;
+    using Zafiro.PropertySystem;
+
     public class OmniGuiValuePipeline : ValuePipeline
     {
+        private readonly IPropertyEngine propertyEngine;
         private readonly IDictionary<BindDefinition, IDisposable> bindings = new Dictionary<BindDefinition, IDisposable>();
 
 
-        public OmniGuiValuePipeline(IValuePipeline inner) : base(inner)
+        public OmniGuiValuePipeline(IValuePipeline inner, IPropertyEngine propertyEngine) : base(inner)
         {
+            this.propertyEngine = propertyEngine;
         }
 
         protected override void HandleCore(object parent, Member member, MutablePipelineUnit mutable)
         {
+            if (member is AttachedProperty)
+            {
+                RegisterAttachedProperty(member);
+            }
+
             var od = mutable.Value as ObserveDefinition;
             var bd = mutable.Value as BindDefinition;
 
@@ -32,6 +42,13 @@ namespace OmniGui.Xaml
                 AddExistingBinding(bd, bindingSubscription);
                 mutable.Handled = true;
             }
+        }
+
+        private void RegisterAttachedProperty(Member member)
+        {
+            var type = member.Owner;
+            var registerMethod = type.GetRuntimeMethod("RegisterAttached", new[] {typeof(IPropertyEngine)});
+            registerMethod?.Invoke(null, new object[] {propertyEngine});
         }
 
         private void ClearExistingBinding(BindDefinition bd)

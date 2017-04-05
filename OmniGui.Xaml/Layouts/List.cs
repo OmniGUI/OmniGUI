@@ -23,12 +23,6 @@
 
         public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates, IPropertyEngine propertyEngine) : base(propertyEngine)
         {
-            RegistrationGuard.RegisterFor<List>(() =>
-            {
-                ItemTemplateProperty = ItemTemplateProperty = PropertyEngine.RegisterProperty("ItemTemplate", typeof(List), typeof(DataTemplate), new PropertyMetadata());
-                SourceProperty = SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(List), typeof(IObservableCollection<object>), new PropertyMetadata());
-            });
-
             this.controlTemplateInflator = controlTemplateInflator;
             this.getControlTemplates = getControlTemplates;
             panel = new StackPanel(propertyEngine);

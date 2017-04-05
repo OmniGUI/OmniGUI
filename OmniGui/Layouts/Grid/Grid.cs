@@ -25,6 +25,17 @@
           
         }
 
+        public static void RegisterAttached(IPropertyEngine propertyEngine)
+        {
+            RegistrationGuard.RegisterFor<Grid>(() =>
+            {
+                Grid.RowSpanProperty = propertyEngine.RegisterProperty("RowSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
+                Grid.ColumnSpanProperty = propertyEngine.RegisterProperty("ColumnSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
+                Grid.RowProperty = propertyEngine.RegisterProperty("Row", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
+                Grid.ColumnProperty = propertyEngine.RegisterProperty("Column", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
+            });
+        }
+
         public ColumnDefinitions ColumnDefinitions { get; set; } = new ColumnDefinitions();
         public RowDefinitions RowDefinitions { get; set; } = new RowDefinitions();
 

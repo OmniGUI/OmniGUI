@@ -17,6 +17,7 @@
     using OmniGui.Xaml.Templates;
     using OmniXaml;
     using OmniXaml.Attributes;
+    using Zafiro.PropertySystem;
     using Point = OmniGui.Geometry.Point;
     using Rect = OmniGui.Geometry.Rect;
     using Size = OmniGui.Geometry.Size;
@@ -31,8 +32,10 @@
 
             Platform.Current = new WpfPlatform(this);
             
-            locator = new TypeLocator(() => ControlTemplates, Assemblies.AssembliesInAppFolder);
-            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator);
+            
+            var propertyEngine = new PropertyEngine(o => ((IChild)o).Parent);
+            locator = new TypeLocator(() => ControlTemplates, propertyEngine);
+            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator, propertyEngine);
 
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml"));
             var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml"));

@@ -50,7 +50,7 @@
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
                 Assembly.Load(new AssemblyName("UwpApp")),
                 Assembly.Load(new AssemblyName("Common"))
-            }, () => ControlTemplates, locator);
+            }, () => ControlTemplates, locator, null);
 
             var container = (Container)xamlLoader.Load(await ReadAllText("Container.xaml"));
             ControlTemplates = container.ControlTemplates;
