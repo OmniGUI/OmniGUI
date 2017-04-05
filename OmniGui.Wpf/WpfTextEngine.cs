@@ -3,7 +3,7 @@ namespace OmniGui.Wpf
     using System;
     using System.Windows.Media;
     using Geometry;
-    using FormattedText = OmniGui.FormattedText;
+    using FormattedText = FormattedText;
 
     public class WpfTextEngine : ITextEngine
     {

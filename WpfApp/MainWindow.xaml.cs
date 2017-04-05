@@ -33,7 +33,7 @@
             Platform.Current = new WpfPlatform(this);
             
             
-            var propertyEngine = new PropertyEngine(o => ((IChild)o).Parent);
+            var propertyEngine = new OmniGuiPropertyEngine();
             locator = new TypeLocator(() => ControlTemplates, propertyEngine);
             var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator, propertyEngine);
 

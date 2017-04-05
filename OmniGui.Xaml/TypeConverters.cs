@@ -1,12 +1,10 @@
-﻿using System;
-using System.Globalization;
-using OmniXaml;
-using OmniXaml.Attributes;
-
-namespace OmniGui.Xaml
+﻿namespace OmniGui.Xaml
 {
+    using global::OmniGui.Layouts.Grid;
     using Geometry;
-    using OmniGui.Layouts.Grid;
+    using System;
+    using System.Globalization;
+    using OmniXaml.Attributes;
 
     public static class TypeConverters
     {

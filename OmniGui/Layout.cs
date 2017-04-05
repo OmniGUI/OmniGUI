@@ -1,6 +1,3 @@
-using System.Windows.Input;
-using OmniGui.Layouts.Grid;
-
 namespace OmniGui
 {
     using System;
@@ -10,17 +7,14 @@ namespace OmniGui
     using Layouts;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem;
-    using Zafiro.PropertySystem.Attached;
     using Zafiro.PropertySystem.Standard;
 
-    public abstract class Layout : IChild
+    public abstract class Layout : ExtendedObject, IChild
     {
         public static ExtendedProperty DataContextProperty;
 
-        protected Layout(IPropertyEngine propertyEngine)
+        protected Layout(IPropertyEngine propertyEngine) : base(propertyEngine)
         {
-            PropertyEngine = propertyEngine;
-
             RegistrationGuard.RegisterFor<Layout>(() =>
             {
                 DataContextProperty = propertyEngine.RegisterProperty("DataContext", typeof(Layout), typeof(object), new PropertyMetadata());
@@ -35,8 +29,6 @@ namespace OmniGui
             Pointer = new PointerEvents(this, Platform.Current.EventSource);
             Keyboard = new KeyboardEvents(this, Platform.Current.EventSource, Platform.Current.FocusedElement);
         }
-
-        protected IPropertyEngine PropertyEngine { get; }
 
         public object DataContext
         {
@@ -100,26 +92,6 @@ namespace OmniGui
         private void InvalidateRender()
         {
             Platform.Current.EventSource.Invalidate();
-        }
-
-        public void SetValue(AttachedProperty property, object value)
-        {
-            PropertyEngine.SetValue(property, this, value);
-        }
-
-        public void SetValue(ExtendedProperty property, object value)
-        {
-            PropertyEngine.SetValue(property, this, value);
-        }
-
-        public object GetValue(AttachedProperty property)
-        {
-            return PropertyEngine.GetValue(property, this);
-        }
-
-        public object GetValue(ExtendedProperty property)
-        {
-            return PropertyEngine.GetValue(property, this);
         }
 
         public void Measure(Size availableSize)
@@ -289,21 +261,6 @@ namespace OmniGui
             {
                 layout.Render(drawingContext);
             }
-        }
-
-        public IObservable<object> GetChangedObservable(ExtendedProperty property)
-        {
-            return PropertyEngine.GetChangedObservable(property, this);
-        }
-
-        public IObserver<object> GetObserver(ExtendedProperty property)
-        {
-            return PropertyEngine.GetObserver(property, this);
-        }
-
-        public ExtendedProperty GetProperty(string propertyName)
-        {
-            return PropertyEngine.GetProperty(propertyName, GetType());
-        }
+        }     
     }
 }

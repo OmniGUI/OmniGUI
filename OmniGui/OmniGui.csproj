@@ -8,6 +8,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj" />
+    <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj" />
   </ItemGroup>

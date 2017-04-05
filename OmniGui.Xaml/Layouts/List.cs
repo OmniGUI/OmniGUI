@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using DynamicData;
     using DynamicData.Binding;
-    using OmniGui.Layouts;
+    using global::OmniGui.Layouts;
     using Templates;
     using Xaml;
     using Zafiro.PropertySystem;

@@ -1,9 +1,9 @@
 ﻿namespace OmniGui
 {
     using System;
+    using Layouts;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem.Standard;
-    using OmniGui.Layouts;
     using Zafiro.PropertySystem;
 
     public class ContentLayout : Layout

@@ -1,15 +1,19 @@
-﻿using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
-
-namespace OmniGui.Wpf
+﻿namespace OmniGui.Wpf
 {
     using System;
+    using System.Globalization;
+    using System.Windows;
     using System.Windows.Input;
-    using Geometry;
-    using FontWeight = System.Windows.FontWeight;
-    using FontWeights = System.Windows.FontWeights;
-    using Rect = Geometry.Rect;
+    using System.Windows.Media;
+    using Brush = global::OmniGui.Brush;
+    using Color = global::OmniGui.Color;
+    using FontWeights = global::OmniGui.FontWeights;
+    using FormattedText = global::OmniGui.FormattedText;
+    using Pen = global::OmniGui.Pen;
+    using Point = global::OmniGui.Geometry.Point;
+    using Rect = global::OmniGui.Geometry.Rect;
+    using Size = global::OmniGui.Geometry.Size;
+    using Vector = global::OmniGui.Geometry.Vector;
 
     public static class MappingExtensions
     {
@@ -66,26 +70,26 @@ namespace OmniGui.Wpf
             return formattedText;
         }
 
-        public static FontWeight ToWpf(this OmniGui.FontWeights fontWeight)
+        public static FontWeight ToWpf(this FontWeights fontWeight)
         {
-            if (fontWeight == OmniGui.FontWeights.Normal)
+            if (fontWeight == FontWeights.Normal)
             {
-                return FontWeights.Normal;
+                return System.Windows.FontWeights.Normal;
             }
-            if (fontWeight == OmniGui.FontWeights.Bold)
+            if (fontWeight == FontWeights.Bold)
             {
-                return FontWeights.Bold;
+                return System.Windows.FontWeights.Bold;
             }
-            if (fontWeight == OmniGui.FontWeights.ExtraBold)
+            if (fontWeight == FontWeights.ExtraBold)
             {
-                return FontWeights.ExtraBold;
+                return System.Windows.FontWeights.ExtraBold;
             }
-            if (fontWeight == OmniGui.FontWeights.Light)
+            if (fontWeight == FontWeights.Light)
             {
-                return FontWeights.Light;
+                return System.Windows.FontWeights.Light;
             }
 
-            return FontWeights.Normal;
+            return System.Windows.FontWeights.Normal;
         }
 
         public static System.Windows.Media.Pen ToWpf(this Pen pen)

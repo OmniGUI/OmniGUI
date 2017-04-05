@@ -15,7 +15,7 @@ namespace OmniGui.Xaml.Tests
         public void BindTest()
         {
             var converter = new TypeConverterSourceValueConverter();
-            var omniGuiInstanceCreator = new Rework.OmniGuiInstanceCreator(converter, new TypeLocator(() => new List<ControlTemplate>()));
+            var omniGuiInstanceCreator = new Rework.OmniGuiInstanceCreator(converter, new TypeLocator(() => new List<ControlTemplate>(), new OmniGuiPropertyEngine()));
             var valuePipeline = new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new NoActionValuePipeline()), null);
             var assignmentApplier = new OmniGuiMemberAssignmentApplier(converter, valuePipeline);
             var sut = new OmniGuiObjectBuilder(omniGuiInstanceCreator, converter, assignmentApplier);
