@@ -9,16 +9,16 @@
     {
         public VisualStateGroup()
         {
-            var s = StateTriggers.Connect();
+            var observableTriggers = StateTriggers.Connect();
 
-            var observer = s.Filter(trigger => trigger.IsActive)
+            var setterToggler = observableTriggers
+                .Filter(trigger => trigger.IsActive)
                 .Any()
                 .DistinctUntilChanged()
-                .Subscribe(_ => ApplySetters());
-
+                .Subscribe(isTriggetActive => ToggleSetters(isTriggetActive));
         }
 
-        private void ApplySetters()
+        private void ToggleSetters(bool shouldActivate)
         {            
         }
 
