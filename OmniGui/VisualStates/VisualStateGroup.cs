@@ -2,27 +2,39 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Reactive;
     using System.Reactive.Linq;
-    using DynamicData;
+    using Zafiro.PropertySystem;
 
     public class VisualStateGroup
     {
-        public VisualStateGroup()
-        {
-            var observableTriggers = StateTriggers.Connect();
+        private readonly IPropertyEngine propertyEngine;
 
-            var setterToggler = observableTriggers
-                .Filter(trigger => trigger.IsActive)
-                .Any()
-                .DistinctUntilChanged()
-                .Subscribe(isTriggetActive => ToggleSetters(isTriggetActive));
+        public VisualStateGroup(IPropertyEngine propertyEngine)
+        {
+            this.propertyEngine = propertyEngine;
+            StateTriggers = new TriggerCollection(propertyEngine);
+            StateTriggers.IsActive.Subscribe(ToggleSetters);
         }
 
         private void ToggleSetters(bool shouldActivate)
-        {            
+        {
+            foreach (var setter in Setters)
+            {
+                setter.Apply();
+            }
         }
 
-        public SourceList<StateTrigger> StateTriggers { get; } = new SourceList<StateTrigger>();
+        public TriggerCollection StateTriggers { get; }
         public SetterCollection Setters { get; set; }
+    }
+
+    public static class ObservableEx
+    {
+        public static IObservable<Unit> ToUnit<T>(this IObservable<T> source)
+        {
+            return source.Select(_ => Unit.Default);
+        }
     }
 }

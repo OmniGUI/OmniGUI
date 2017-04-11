@@ -1,5 +1,6 @@
 ﻿namespace OmniGui.Tests
 {
+    using System;
     using Layouts;
     using OmniXaml;
     using System.Collections.ObjectModel;
@@ -14,29 +15,61 @@
         [Fact]
         public void Test()
         {
-            var visualStateGroup = new VisualStateGroup();
+
             var omniGuiPropertyEngine = new OmniGuiPropertyEngine();
-            var stateTriggers = new List<StateTrigger>()
+
+            var visualStateGroup = new VisualStateGroup(omniGuiPropertyEngine);
+
+            var textBlock = new TextBlock(omniGuiPropertyEngine);
+
+
+            visualStateGroup.Setters = new SetterCollection
+            {
+                new List<Setter>()
+                {
+                    new Setter()
+                    {
+                        Target = new SetterTarget(textBlock, Member.FromStandard<TextBlock>(block => block.Text)),
+                        Value = "Pepito",
+                    }
+                }
+            };
+
+            visualStateGroup.StateTriggers.Add(new StateTrigger(omniGuiPropertyEngine)
+            {
+                IsActive = true,
+            });
+
+            
+            Assert.Equal(textBlock.Text, "Pepito");
+        }
+
+        [Fact]
+        public void TestOriginal()
+        {
+            var omniGuiPropertyEngine = new OmniGuiPropertyEngine();
+
+            var col = new TriggerCollection(omniGuiPropertyEngine);
+            col.IsActive.Subscribe(o => { });
+            var stateTrigger = new StateTrigger(omniGuiPropertyEngine)
+            {
+                IsActive = false,
+            };
+
+            col.Add(stateTrigger);
+
+            stateTrigger.IsActive = false;                      
+        }
+
+        private static List<StateTrigger> GetStateTriggers(OmniGuiPropertyEngine omniGuiPropertyEngine)
+        {
+            return new List<StateTrigger>
             {
                 new StateTrigger(omniGuiPropertyEngine)
                 {
                     IsActive = true,
                 },
             };
-
-            visualStateGroup.StateTriggers.AddRange(stateTriggers);        
-
-            var textBlock = new TextBlock(omniGuiPropertyEngine);
-
-            visualStateGroup.Setters = new SetterCollection()
-            {
-                Target = new SetterTarget(textBlock, Member.FromStandard<TextBlock>(block => block.Text)),
-                Value = "Pepito",
-            };
-
-            visualStateGroup.StateTriggers.Clear();
-
-            Assert.Equal(textBlock.Text, "Pepito");
         }
     }
 }

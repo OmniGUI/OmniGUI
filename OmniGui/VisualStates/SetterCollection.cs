@@ -4,7 +4,6 @@
 
     public class SetterCollection : Collection<Setter>
     {
-        public SetterTarget Target { get; set; }
-        public object Value { get; set; }
+    
     }
 }

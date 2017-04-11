@@ -5,8 +5,18 @@
 
     public class SetterTarget
     {
-        public SetterTarget(IPropertyHost textBlock, Member fromStandard)
-        {            
+        public object Target { get; }
+        public Member Member { get; }
+
+        public SetterTarget(object target, Member member)
+        {
+            Target = target;
+            Member = member;
+        }
+
+        public void Apply(object value)
+        {
+            Member.SetValue(Target, value);
         }
     }
 }
