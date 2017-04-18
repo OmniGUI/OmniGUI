@@ -4,6 +4,7 @@ namespace OmniGui.Xaml
     using System.ComponentModel;
     using System.Reactive.Linq;
     using System.Reflection;
+    using OmniGui;
     using Zafiro.PropertySystem.Standard;
 
     internal class DataContextSubscription : IDisposable
@@ -13,7 +14,7 @@ namespace OmniGui.Xaml
 
         public DataContextSubscription(BindDefinition bd)
         {
-            var targetObj = (Layout)bd.TargetInstance;
+            var targetObj = (IPropertyHost)bd.TargetInstance;
             var obs = targetObj.GetChangedObservable(Layout.DataContextProperty);
 
             dataContextSubs = obs.Where(o => o != null)
@@ -34,7 +35,7 @@ namespace OmniGui.Xaml
                 });
         }
 
-        private static IDisposable SubscribeSourceToTarget(string modelProperty, object model, Layout layout,
+        private static IDisposable SubscribeSourceToTarget(string modelProperty, object model, IPropertyHost layout,
             ExtendedProperty property)
         {
             var obs = layout.GetChangedObservable(property);
@@ -45,7 +46,7 @@ namespace OmniGui.Xaml
             });
         }
 
-        private static IDisposable SubscribeTargetToSource(string sourceMemberName, object sourceObject, Layout target,
+        private static IDisposable SubscribeTargetToSource(string sourceMemberName, object sourceObject, IPropertyHost target,
             ExtendedProperty property)
         {
             var currentValue = sourceObject.GetType().GetRuntimeProperty(sourceMemberName).GetValue(sourceObject);

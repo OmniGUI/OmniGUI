@@ -1,8 +1,6 @@
 ﻿namespace OmniGui.VisualStates
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Reactive;
     using System.Reactive.Linq;
     using Zafiro.PropertySystem;
@@ -16,6 +14,7 @@
             this.propertyEngine = propertyEngine;
             StateTriggers = new TriggerCollection(propertyEngine);
             StateTriggers.IsActive.Subscribe(ToggleSetters);
+            Setters = new SetterCollection();
         }
 
         private void ToggleSetters(bool shouldActivate)

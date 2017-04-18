@@ -1,5 +1,17 @@
 ﻿<Grid xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
 
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualStateGroup.StateTriggers>
+                <StateTrigger IsActive="{Bind TargetProperty=IsActive}"></StateTrigger>
+            </VisualStateGroup.StateTriggers>
+            <VisualStateGroup.Setters>
+                <Setter></Setter>
+            </VisualStateGroup.Setters>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+
+
     <Grid.ColumnDefinitions>
         <ColumnDefinition></ColumnDefinition>
         <ColumnDefinition></ColumnDefinition>

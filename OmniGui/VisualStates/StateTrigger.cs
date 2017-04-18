@@ -16,12 +16,12 @@ namespace OmniGui.VisualStates
             RegistrationGuard.RegisterFor<StateTrigger>(() =>
             {
                 IsActiveProperty = propertyEngine.RegisterProperty("IsActive", typeof(StateTrigger), typeof(bool),
-                    new PropertyMetadata());
+                    new PropertyMetadata() { DefaultValue = false });
             });
         }
         public bool IsActive
         {
-            get => (bool) propertyEngine.GetValue(IsActiveProperty, this);
+            get => (bool)propertyEngine.GetValue(IsActiveProperty, this);
             set => propertyEngine.SetValue(IsActiveProperty, this, value);
         }
     }

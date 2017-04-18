@@ -15,6 +15,7 @@
         private readonly IMessageService messageService;
         private string name;
         private string surname;
+        private bool isActive;
 
         public SampleViewModel(IMessageService messageService)
         {
@@ -47,6 +48,18 @@
 
             People = sourceList;
             Title = "Sample App";
+
+            IsActive = true;
+        }
+
+        public bool IsActive
+        {
+            get { return isActive; }
+            set
+            {
+                isActive = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Title { get; set; }

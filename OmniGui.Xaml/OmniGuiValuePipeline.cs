@@ -8,6 +8,7 @@ using System.Reactive.Linq;
 namespace OmniGui.Xaml
 {
     using System.Reflection;
+    using OmniGui;
     using Zafiro.PropertySystem;
 
     public class OmniGuiValuePipeline : ValuePipeline
@@ -37,9 +38,13 @@ namespace OmniGui.Xaml
             }
             else if (bd != null)
             {
-                ClearExistingBinding(bd);
-                var bindingSubscription = BindToProperty(null, bd);
-                AddExistingBinding(bd, bindingSubscription);
+                if (bd.TargetInstance is IPropertyHost)
+                {
+                    ClearExistingBinding(bd);
+                    var bindingSubscription = BindToProperty(null, bd);
+                    AddExistingBinding(bd, bindingSubscription);
+                }
+
                 mutable.Handled = true;
             }
         }
