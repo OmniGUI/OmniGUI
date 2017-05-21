@@ -1,6 +1,6 @@
 ﻿<Grid xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
 
-    <VisualStateManager.VisualStateGroups>
+    <!--<VisualStateManager.VisualStateGroups>
         <VisualStateGroup>
             <VisualStateGroup.StateTriggers>
                 <StateTrigger IsActive="{Bind TargetProperty=IsActive}"></StateTrigger>
@@ -18,7 +18,7 @@
     </Grid.ColumnDefinitions>
 
     <Button Content="{Bind TargetProperty=Title}"></Button>
-    <Button Content="Otro texto" Grid.Column="1"></Button>
+    <Button Content="Otro texto" Grid.Column="1"></Button>-->
 
 </Grid>
 

@@ -1,4 +1,6 @@
-﻿namespace OmniGui.Xaml
+﻿using OmniXaml;
+
+namespace OmniGui.Xaml
 {
     using System;
     using System.Collections.Generic;
@@ -19,5 +21,7 @@
             this.locator = locator;
             this.propertyEngine = propertyEngine;
         }
+
+        public override IInstanceCreator InstanceCreator => new OmniGuiInstanceCreator();
     }
 }

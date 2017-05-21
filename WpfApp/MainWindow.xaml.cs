@@ -32,8 +32,9 @@
 
             Platform.Current = new WpfPlatform(this);
             
-            
             var propertyEngine = new OmniGuiPropertyEngine();
+            OmniGuiPlatform.PropertyEngine = propertyEngine;
+
             locator = new TypeLocator(() => ControlTemplates, propertyEngine);
             var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator, propertyEngine);
 
@@ -59,7 +60,7 @@
         }
 
         [TypeConverterMember(typeof(Bitmap))]
-        public static Func<string, object> BitmapConverter = context => GetBitmap(context);
+        public static Func<string, ConvertContext, (bool, object)> BitmapConverter = (str, convertContext) => (true, GetBitmap(str));
 
         private ITypeLocator locator;
 

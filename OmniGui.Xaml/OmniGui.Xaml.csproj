@@ -3,6 +3,11 @@
     <TargetFramework>netstandard1.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Rework\**" />
+    <EmbeddedResource Remove="Rework\**" />
+    <None Remove="Rework\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Grace" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
@@ -12,8 +17,5 @@
     <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rework\" />
   </ItemGroup>
 </Project>
