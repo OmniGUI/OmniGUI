@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Reactive.Disposables;
-using OmniXaml;
-using OmniXaml.Rework;
-using System.Reactive.Linq;
-
 namespace OmniGui.Xaml
 {
     using System.Reflection;
     using OmniGui;
     using Zafiro.PropertySystem;
+    using System;
+    using System.Collections.Generic;
+    using System.Reactive.Disposables;
+    using OmniXaml;
+    using System.Reactive.Linq;
+
 
     public class OmniGuiValuePipeline : ValuePipeline
     {
@@ -22,7 +21,7 @@ namespace OmniGui.Xaml
             this.propertyEngine = propertyEngine;
         }
 
-        protected override void HandleCore(object parent, Member member, MutablePipelineUnit mutable)
+        protected override void HandleCore(object parent, Member member, MutablePipelineUnit mutable, INodeToObjectBuilder builder)
         {
             if (member is AttachedProperty)
             {

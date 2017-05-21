@@ -5,9 +5,9 @@ namespace OmniGui.Xaml.Templates
 
     public class ConstructionFragmentLoader : IConstructionFragmentLoader
     {
-        public object Load(ConstructionNode node, IObjectBuilder builder, BuildContext trackingContext)
+        public object Load(ConstructionNode node, INodeToObjectBuilder builder)
         {
-            return new TemplateContent(node, builder, trackingContext);
+            return new TemplateContent(node, builder);
         }
     }
 }

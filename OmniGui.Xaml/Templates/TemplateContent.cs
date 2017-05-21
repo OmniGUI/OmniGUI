@@ -5,27 +5,26 @@
     public class TemplateContent
     {
         private readonly ConstructionNode node;
-        private readonly IObjectBuilder builder;
         private readonly BuildContext trackingContext;
+        private readonly INodeToObjectBuilder builder;
 
-        public TemplateContent(ConstructionNode node, IObjectBuilder builder, BuildContext trackingContext)
+        public TemplateContent(ConstructionNode node, INodeToObjectBuilder builder)
         {
             this.node = node;
             this.builder = builder;
-            this.trackingContext = trackingContext;
         }
 
         public Layout LoadFor(Layout layout)
         {
-            trackingContext.Bag.Add("TemplatedParent", layout);
+            //trackingContext.Bag.Add("TemplatedParent", layout);
             var loaded = Load();
-            trackingContext.Bag.Remove("TemplatedParent");
+           // trackingContext.Bag.Remove("TemplatedParent");
             return loaded;
         }
 
         public Layout Load()
         {
-            return (Layout)builder.Inflate(node, trackingContext);
+            return (Layout)builder.Build(node);
         }
 
         protected bool Equals(TemplateContent other)
