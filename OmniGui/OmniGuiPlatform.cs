@@ -1,6 +1,6 @@
 using Zafiro.PropertySystem;
 
-namespace OmniGui.Xaml
+namespace OmniGui
 {
     public class OmniGuiPlatform
     {

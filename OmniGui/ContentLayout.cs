@@ -8,15 +8,10 @@
 
     public class ContentLayout : Layout
     {
-        public static ExtendedProperty ContentProperty;
+        public static readonly ExtendedProperty ContentProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Content", typeof(ContentLayout), typeof(object), new PropertyMetadata { DefaultValue = null });
 
-        public ContentLayout(IPropertyEngine propertyEngine) : base(propertyEngine)
+        public ContentLayout(IPropertyEngine propertyEngine) : base()
         {
-            RegistrationGuard.RegisterFor<ContentLayout>(() =>
-            {
-                ContentProperty = PropertyEngine.RegisterProperty("Content", typeof(ContentLayout), typeof(object), new PropertyMetadata { DefaultValue = null });
-            });
-
             GetChangedObservable(ContentProperty).Subscribe(SetContent);            
         }
 
@@ -28,7 +23,7 @@
                 return;
             }
 
-            var layout = o as Layout ?? new TextBlock(PropertyEngine) { Text = o.ToString()};
+            var layout = o as Layout ?? new TextBlock() { Text = o.ToString()};
             Children.Add(layout);
         }
 

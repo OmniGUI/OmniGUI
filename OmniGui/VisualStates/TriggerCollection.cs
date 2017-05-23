@@ -17,7 +17,7 @@
         {
             sourceList = new SourceList<StateTrigger>();
             var observable = sourceList.Connect();
-            var activeChanged = observable.MergeMany(trigger => propertyEngine.GetChangedObservable(StateTrigger.IsActiveProperty, trigger))
+            var activeChanged = observable.MergeMany(trigger => OmniGuiPlatform.PropertyEngine.GetChangedObservable(StateTrigger.IsActiveProperty, trigger))
                 .ToUnit()
                 .StartWith(Unit.Default);
 

@@ -20,7 +20,7 @@
 
             var visualStateGroup = new VisualStateGroup(omniGuiPropertyEngine);
 
-            var textBlock = new TextBlock(omniGuiPropertyEngine);
+            var textBlock = new TextBlock();
 
 
             visualStateGroup.Setters = new SetterCollection
@@ -35,7 +35,7 @@
                 }
             };
 
-            visualStateGroup.StateTriggers.Add(new StateTrigger(omniGuiPropertyEngine)
+            visualStateGroup.StateTriggers.Add(new StateTrigger()
             {
                 IsActive = true,
             });
@@ -51,7 +51,7 @@
 
             var col = new TriggerCollection(omniGuiPropertyEngine);
             col.IsActive.Subscribe(o => { });
-            var stateTrigger = new StateTrigger(omniGuiPropertyEngine)
+            var stateTrigger = new StateTrigger()
             {
                 IsActive = false,
             };
@@ -65,7 +65,7 @@
         {
             return new List<StateTrigger>
             {
-                new StateTrigger(omniGuiPropertyEngine)
+                new StateTrigger()
                 {
                     IsActive = true,
                 },

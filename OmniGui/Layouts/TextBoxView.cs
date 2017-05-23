@@ -9,7 +9,9 @@
 
     public class TextBoxView : Layout
     {
-        public static ExtendedProperty TextProperty;
+        public static readonly ExtendedProperty TextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Text",
+            typeof(TextBoxView),
+            typeof(string), new PropertyMetadata {DefaultValue = null});
 
         private IDisposable changedSubscription;
         private int cursorPositionOrdinal;
@@ -18,12 +20,8 @@
         private bool isCursorVisible;
         private bool isFocused;
 
-        public TextBoxView(IPropertyEngine propertyEngine) : base(propertyEngine)
+        public TextBoxView(IPropertyEngine propertyEngine) : base()
         {
-            RegistrationGuard.RegisterFor<TextBoxView>(() => TextProperty = PropertyEngine.RegisterProperty("Text",
-                typeof(TextBoxView),
-                typeof(string), new PropertyMetadata {DefaultValue = null}));
-
             var changedObservable = GetChangedObservable(TextProperty);
 
             Pointer.Down.Subscribe(point =>

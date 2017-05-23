@@ -1,28 +1,20 @@
 namespace OmniGui.VisualStates
 {
-    using Layouts;
     using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class StateTrigger
     {
         private readonly IPropertyEngine propertyEngine;
-        public static ExtendedProperty IsActiveProperty;
 
-        public StateTrigger(IPropertyEngine propertyEngine)
-        {
-            this.propertyEngine = propertyEngine;
+        public static readonly ExtendedProperty IsActiveProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty(
+            "IsActive", typeof(StateTrigger), typeof(bool),
+            new PropertyMetadata() {DefaultValue = false});
 
-            RegistrationGuard.RegisterFor<StateTrigger>(() =>
-            {
-                IsActiveProperty = propertyEngine.RegisterProperty("IsActive", typeof(StateTrigger), typeof(bool),
-                    new PropertyMetadata() { DefaultValue = false });
-            });
-        }
         public bool IsActive
         {
-            get => (bool)propertyEngine.GetValue(IsActiveProperty, this);
-            set => propertyEngine.SetValue(IsActiveProperty, this, value);
+            get => (bool)OmniGuiPlatform.PropertyEngine.GetValue(IsActiveProperty, this);
+            set => OmniGuiPlatform.PropertyEngine.SetValue(IsActiveProperty, this, value);
         }
     }
 }

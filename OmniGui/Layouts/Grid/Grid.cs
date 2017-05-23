@@ -9,33 +9,19 @@
 
     public class Grid : Layout
     {
-        public static AttachedProperty ColumnProperty;
-
-        public static AttachedProperty RowProperty;
-
-        public static AttachedProperty ColumnSpanProperty;
-
-        public static AttachedProperty RowSpanProperty;
+        public static readonly AttachedProperty ColumnProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Column", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
+        public static readonly AttachedProperty RowProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Row", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
+        public static readonly AttachedProperty ColumnSpanProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("ColumnSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
+        public static readonly AttachedProperty RowSpanProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("RowSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
 
         private Segment[,] colMatrix;
         private Segment[,] rowMatrix;
 
-        public Grid(IPropertyEngine propertyEngine) : base(propertyEngine)
+        public Grid(IPropertyEngine propertyEngine) : base()
         {
           
         }
-
-        public static void RegisterAttached(IPropertyEngine propertyEngine)
-        {
-            RegistrationGuard.RegisterFor<Grid>(() =>
-            {
-                Grid.RowSpanProperty = propertyEngine.RegisterProperty("RowSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
-                Grid.ColumnSpanProperty = propertyEngine.RegisterProperty("ColumnSpan", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 1 });
-                Grid.RowProperty = propertyEngine.RegisterProperty("Row", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
-                Grid.ColumnProperty = propertyEngine.RegisterProperty("Column", typeof(Grid), typeof(int), new AttachedPropertyMetadata { DefaultValue = 0 });
-            });
-        }
-
+       
         public ColumnDefinitions ColumnDefinitions { get; set; } = new ColumnDefinitions();
         public RowDefinitions RowDefinitions { get; set; } = new RowDefinitions();
 

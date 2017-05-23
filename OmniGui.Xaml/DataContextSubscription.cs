@@ -1,10 +1,11 @@
+using OmniGui.OmniGui;
+
 namespace OmniGui.Xaml
 {
     using System;
     using System.ComponentModel;
     using System.Reactive.Linq;
     using System.Reflection;
-    using OmniGui;
     using Zafiro.PropertySystem.Standard;
 
     internal class DataContextSubscription : IDisposable

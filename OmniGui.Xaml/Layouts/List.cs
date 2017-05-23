@@ -21,7 +21,7 @@
         private readonly StackPanel panel;
         private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
 
-        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates, IPropertyEngine propertyEngine) : base(propertyEngine)
+        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates, IPropertyEngine propertyEngine) : base()
         {
             this.controlTemplateInflator = controlTemplateInflator;
             this.getControlTemplates = getControlTemplates;
@@ -60,7 +60,7 @@
                 return withDataTemplateApplied;
             }
 
-            return new TextBlock(PropertyEngine)
+            return new TextBlock()
             {
                 Text = item.ToString(),
             };

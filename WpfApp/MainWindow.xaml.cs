@@ -31,7 +31,6 @@
             InitializeComponent();
 
             Platform.Current = new WpfPlatform(this);
-            
             var propertyEngine = new OmniGuiPropertyEngine();
             OmniGuiPlatform.PropertyEngine = propertyEngine;
 

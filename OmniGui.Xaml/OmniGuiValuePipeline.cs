@@ -1,7 +1,8 @@
+using OmniGui.OmniGui;
+
 namespace OmniGui.Xaml
 {
     using System.Reflection;
-    using OmniGui;
     using Zafiro.PropertySystem;
     using System;
     using System.Collections.Generic;

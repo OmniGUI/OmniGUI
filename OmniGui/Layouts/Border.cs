@@ -8,7 +8,7 @@ namespace OmniGui.Layouts
     {
         private Layout child;
 
-        public Border(IPropertyEngine propertyEngine) : base(propertyEngine)
+        public Border(IPropertyEngine propertyEngine) : base()
         {
         }
 

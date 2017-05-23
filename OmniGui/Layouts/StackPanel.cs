@@ -6,7 +6,7 @@ namespace OmniGui.Layouts
 
     public class StackPanel : Layout
     {
-        public StackPanel(IPropertyEngine propertyEngine) : base(propertyEngine)
+        public StackPanel(IPropertyEngine propertyEngine) : base()
         {
         }
 

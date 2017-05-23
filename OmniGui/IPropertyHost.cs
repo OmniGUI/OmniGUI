@@ -1,8 +1,8 @@
-﻿namespace OmniGui
-{
-    using System;
-    using Zafiro.PropertySystem.Standard;
+﻿using System;
+using Zafiro.PropertySystem.Standard;
 
+namespace OmniGui
+{
     namespace OmniGui
 
     {

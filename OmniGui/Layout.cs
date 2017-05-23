@@ -4,22 +4,15 @@ namespace OmniGui
     using System.Linq;
     using System.Reactive.Linq;
     using Geometry;
-    using Layouts;
     using OmniXaml.Attributes;
-    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public abstract class Layout : ExtendedObject, IChild
     {
-        public static ExtendedProperty DataContextProperty;
+        public static ExtendedProperty DataContextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("DataContext", typeof(Layout), typeof(object), new PropertyMetadata());
 
-        protected Layout(IPropertyEngine propertyEngine) : base(propertyEngine)
-        {
-            RegistrationGuard.RegisterFor<Layout>(() =>
-            {
-                DataContextProperty = propertyEngine.RegisterProperty("DataContext", typeof(Layout), typeof(object), new PropertyMetadata());
-            });
-
+        protected Layout()
+        {          
             Children = new OwnedList<Layout>(this);
             Children.OnChildAdded(layout =>
             {

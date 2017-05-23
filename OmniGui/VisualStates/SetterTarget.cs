@@ -1,6 +1,5 @@
 ﻿namespace OmniGui.VisualStates
 {
-    using OmniGui;
     using OmniXaml;
 
     public class SetterTarget

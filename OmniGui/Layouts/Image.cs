@@ -6,19 +6,9 @@
 
     public class Image : Layout
     {
-        public static ExtendedProperty SourceProperty;
-        public static ExtendedProperty StretchProperty;
+        public static ExtendedProperty SourceProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Source", typeof(Image), typeof(Bitmap), new PropertyMetadata() { DefaultValue = null });
+        public static ExtendedProperty StretchProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Stretch", typeof(Image), typeof(Stretch), new PropertyMetadata { DefaultValue = Stretch.Uniform });
 
-
-
-        public Image(IPropertyEngine propertyEngine) : base(propertyEngine)
-        {
-           RegistrationGuard.RegisterFor<Image>(() =>
-           {
-               StretchProperty = PropertyEngine.RegisterProperty("Stretch", typeof(Image), typeof(Stretch), new PropertyMetadata { DefaultValue = Stretch.Uniform });
-               SourceProperty = PropertyEngine.RegisterProperty("Source", typeof(Image), typeof(Bitmap), new PropertyMetadata() { DefaultValue = null });
-           });
-        }
 
         public Bitmap Source
         {
