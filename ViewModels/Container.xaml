@@ -1,5 +1,15 @@
 ﻿<Container xmlns="root">
 
+    <Container.ControlTemplates>
+        <ControlTemplate Target="Button">
+            <Border Padding="4" BorderThickness="1" BorderBrush="Black" Background="LightGray">
+                <ContentPresenter Content="SALUDOS" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+        </ControlTemplate>
+
+    </Container.ControlTemplates>
+
+
     <!--<Container.ControlTemplates>
         <ControlTemplate Target="Button">
             <Border Padding="4" BorderThickness="1" BorderBrush="Black" Background="LightGray">
