@@ -2,25 +2,17 @@ namespace OmniGui.Layouts
 {
     using System.Linq;
     using Geometry;
-    using Zafiro.PropertySystem;
 
     public class Border : Layout
     {
-        private Layout child;
-
-        public Border(IPropertyEngine propertyEngine) : base()
-        {
-        }
-
         protected override Size MeasureOverride(Size availableSize)
         {
-            var child = Child;
             var padding = Padding + new Thickness(BorderThickness);
 
-            if (child != null)
+            if (Child != null)
             {
-                child.Measure(availableSize.Deflate(padding));
-                return child.DesiredSize.Inflate(padding);
+                Child.Measure(availableSize.Deflate(padding));
+                return Child.DesiredSize.Inflate(padding);
             }
             else
             {
@@ -57,7 +49,6 @@ namespace OmniGui.Layouts
 
             return finalSize;
         }
-
 
         public double BorderThickness { get; set; }
 

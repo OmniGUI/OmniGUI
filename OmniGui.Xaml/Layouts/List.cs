@@ -25,7 +25,7 @@
         {
             this.controlTemplateInflator = controlTemplateInflator;
             this.getControlTemplates = getControlTemplates;
-            panel = new StackPanel(propertyEngine);
+            panel = new StackPanel();
             this.AddChild(panel);
 
             subscription = GetChangedObservable(SourceProperty).Subscribe(obj =>

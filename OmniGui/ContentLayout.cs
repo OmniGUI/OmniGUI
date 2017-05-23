@@ -4,13 +4,12 @@
     using Layouts;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem.Standard;
-    using Zafiro.PropertySystem;
 
     public class ContentLayout : Layout
     {
         public static readonly ExtendedProperty ContentProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Content", typeof(ContentLayout), typeof(object), new PropertyMetadata { DefaultValue = null });
 
-        public ContentLayout(IPropertyEngine propertyEngine) : base()
+        public ContentLayout()
         {
             GetChangedObservable(ContentProperty).Subscribe(SetContent);            
         }

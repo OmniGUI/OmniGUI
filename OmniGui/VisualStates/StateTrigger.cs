@@ -1,12 +1,9 @@
 namespace OmniGui.VisualStates
 {
-    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class StateTrigger
     {
-        private readonly IPropertyEngine propertyEngine;
-
         public static readonly ExtendedProperty IsActiveProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty(
             "IsActive", typeof(StateTrigger), typeof(bool),
             new PropertyMetadata() {DefaultValue = false});

@@ -4,17 +4,7 @@ namespace OmniGui.Layouts.Grid
     ///     Holds a row definitions for a <see cref="Grid" />.
     /// </summary>
     public class RowDefinition : DefinitionBase
-    {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="RowDefinition" /> class.
-        /// </summary>
-        public RowDefinition()
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="RowDefinition" /> class.
-        /// </summary>
+    {      
         /// <param name="value">The height of the row.</param>
         /// <param name="type">The height unit of the column.</param>
         public RowDefinition(double value, GridUnitType type)

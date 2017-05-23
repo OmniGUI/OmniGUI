@@ -4,14 +4,13 @@ namespace OmniGui.Layouts
 {
     using System;
     using System.Windows.Input;
-    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class Button : ContentLayout
     {
         public static ExtendedProperty CommandProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
 
-        public Button(IPropertyEngine propertyEngine) : base(propertyEngine)
+        public Button()
         {
             Pointer.Down.Subscribe(p =>
             {

@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Reactive.Linq;
     using Geometry;
-    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class TextBoxView : Layout
@@ -20,7 +19,7 @@
         private bool isCursorVisible;
         private bool isFocused;
 
-        public TextBoxView(IPropertyEngine propertyEngine) : base()
+        public TextBoxView()
         {
             var changedObservable = GetChangedObservable(TextProperty);
 

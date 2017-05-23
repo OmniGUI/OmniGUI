@@ -2,14 +2,9 @@ namespace OmniGui.Layouts
 {
     using System;
     using Geometry;
-    using Zafiro.PropertySystem;
 
     public class StackPanel : Layout
     {
-        public StackPanel(IPropertyEngine propertyEngine) : base()
-        {
-        }
-
         public double Gap { get; set; }
 
         public Orientation Orientation { get; set; }

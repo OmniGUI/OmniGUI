@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Geometry;
-    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Attached;
 
     public class Grid : Layout
@@ -17,11 +16,6 @@
         private Segment[,] colMatrix;
         private Segment[,] rowMatrix;
 
-        public Grid(IPropertyEngine propertyEngine) : base()
-        {
-          
-        }
-       
         public ColumnDefinitions ColumnDefinitions { get; set; } = new ColumnDefinitions();
         public RowDefinitions RowDefinitions { get; set; } = new RowDefinitions();
 

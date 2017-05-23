@@ -7,13 +7,12 @@
     using System.Reactive;
     using System.Reactive.Linq;
     using DynamicData;
-    using Zafiro.PropertySystem;
 
     public class TriggerCollection : ICollection<StateTrigger>
     {
         private readonly SourceList<StateTrigger> sourceList;
 
-        public TriggerCollection(IPropertyEngine propertyEngine)
+        public TriggerCollection()
         {
             sourceList = new SourceList<StateTrigger>();
             var observable = sourceList.Connect();

@@ -4,10 +4,8 @@ using Zafiro.PropertySystem.Standard;
 namespace OmniGui
 {
     namespace OmniGui
-
     {
         public interface IPropertyHost
-
         {
 
             void SetValue(ExtendedProperty property, object value);
@@ -17,6 +15,5 @@ namespace OmniGui
             ExtendedProperty GetProperty(string propertyName);
 
         }
-
     }
 }

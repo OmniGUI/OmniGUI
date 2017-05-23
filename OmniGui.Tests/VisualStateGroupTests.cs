@@ -18,7 +18,7 @@
 
             var omniGuiPropertyEngine = new OmniGuiPropertyEngine();
 
-            var visualStateGroup = new VisualStateGroup(omniGuiPropertyEngine);
+            var visualStateGroup = new VisualStateGroup();
 
             var textBlock = new TextBlock();
 
@@ -49,7 +49,7 @@
         {
             var omniGuiPropertyEngine = new OmniGuiPropertyEngine();
 
-            var col = new TriggerCollection(omniGuiPropertyEngine);
+            var col = new TriggerCollection();
             col.IsActive.Subscribe(o => { });
             var stateTrigger = new StateTrigger()
             {

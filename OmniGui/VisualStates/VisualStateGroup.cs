@@ -1,18 +1,13 @@
 ﻿namespace OmniGui.VisualStates
 {
     using System;
-    using System.Reactive;
-    using System.Reactive.Linq;
-    using Zafiro.PropertySystem;
 
     public class VisualStateGroup
     {
-        private readonly IPropertyEngine propertyEngine;
 
-        public VisualStateGroup(IPropertyEngine propertyEngine)
+        public VisualStateGroup()
         {
-            this.propertyEngine = propertyEngine;
-            StateTriggers = new TriggerCollection(propertyEngine);
+            StateTriggers = new TriggerCollection();
             StateTriggers.IsActive.Subscribe(ToggleSetters);
             Setters = new SetterCollection();
         }
@@ -27,13 +22,5 @@
 
         public TriggerCollection StateTriggers { get; }
         public SetterCollection Setters { get; set; }
-    }
-
-    public static class ObservableEx
-    {
-        public static IObservable<Unit> ToUnit<T>(this IObservable<T> source)
-        {
-            return source.Select(_ => Unit.Default);
-        }
     }
 }
