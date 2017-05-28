@@ -23,6 +23,6 @@ namespace OmniGui.Xaml
         }
 
         public override IInstanceCreator InstanceCreator => new OmniGuiInstanceCreator();
-        protected override IValuePipeline ValuePipeline => new OmniGuiValuePipeline(base.ValuePipeline);
+        protected override IValuePipeline ValuePipeline => new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new TemplatePipeline(new NoActionValuePipeline(), MetadataProvider)));
     }
 }

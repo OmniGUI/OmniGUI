@@ -1,5 +1,9 @@
+using OmniGui.OmniGui;
+
 namespace OmniGui.Xaml
 {
+    using System.Reflection;
+    using Zafiro.PropertySystem;
     using System;
     using System.Collections.Generic;
     using System.Reactive.Disposables;
@@ -18,11 +22,22 @@ namespace OmniGui.Xaml
 
         protected override void HandleCore(object parent, Member member, MutablePipelineUnit mutable, INodeToObjectBuilder builder, BuilderContext context)
         {
+            var od = mutable.Value as ObserveDefinition;
             var bd = mutable.Value as BindDefinition;
 
-            if (bd != null)
+            if (od != null)
             {
-                Bindings.Register(bd);
+                //BindToObservable(od);
+            }
+            else if (bd != null)
+            {
+                if (bd.TargetInstance is IPropertyHost)
+                {
+                    ClearExistingBinding(bd);
+                    var bindingSubscription = BindToProperty(context, bd);
+                    AddExistingBinding(bd, bindingSubscription);
+                }
+
                 mutable.Handled = true;
             }
         }
@@ -41,7 +56,7 @@ namespace OmniGui.Xaml
             bindings.Add(bd, subs);
         }
 
-        private IDisposable BindToProperty(BuilderContext context, BindDefinition bd)
+        private IDisposable BindToProperty(BuilderContext buildContext, BindDefinition bd)
         {
             if (bd.Source == BindingSource.DataContext)
             {
@@ -49,7 +64,7 @@ namespace OmniGui.Xaml
             }
             else
             {
-                return BindToTemplatedParent(context, bd);
+                return BindToTemplatedParent(buildContext, bd);
             }
         }
 

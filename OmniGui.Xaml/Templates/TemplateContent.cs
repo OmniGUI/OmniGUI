@@ -19,7 +19,9 @@ namespace OmniGui.Xaml.Templates
 
         public Layout LoadFor(Layout layout)
         {
-            var loadFor = (Layout)builder.Build(node, context);            
+            context.Store.Add("TemplateParent", layout);
+            var loadFor = (Layout)builder.Build(node, context);
+            context.Store.Remove("TemplateParent");
             return loadFor; 
         }
 
