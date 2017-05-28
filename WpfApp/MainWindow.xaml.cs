@@ -40,6 +40,9 @@
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml"));
             var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml"));
             new TemplateInflator().Inflate(layout, container.ControlTemplates);
+
+            var bindings = Bindings.Definitions;
+
             ControlTemplates = container.ControlTemplates;
             layout.DataContext = new SampleViewModel(new WpfMessageBoxService());
         }

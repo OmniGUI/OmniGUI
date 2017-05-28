@@ -23,7 +23,7 @@ namespace OmniGui.Xaml
 
         [TypeConverterMember(typeof(GridLength))]
         public static Func<string, ConvertContext, (bool, object)> GridLengthConverter = (str, v) => (true, GridLength.Parse(str, CultureInfo.CurrentCulture));
-        
+
         private static  Color ColorConvert(string contextValue)
         {
             return Color.Parse(contextValue);            

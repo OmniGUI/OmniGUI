@@ -1,30 +1,32 @@
-﻿namespace OmniGui.Xaml.Templates
+﻿using System.Linq;
+
+namespace OmniGui.Xaml.Templates
 {
     using OmniXaml;
 
     public class TemplateContent
     {
         private readonly ConstructionNode node;
-        private readonly BuildContext trackingContext;
         private readonly INodeToObjectBuilder builder;
+        private readonly BuilderContext context;
 
-        public TemplateContent(ConstructionNode node, INodeToObjectBuilder builder)
+        public TemplateContent(ConstructionNode node, INodeToObjectBuilder builder, BuilderContext context)
         {
             this.node = node;
             this.builder = builder;
+            this.context = context;
         }
 
         public Layout LoadFor(Layout layout)
         {
-            //trackingContext.Bag.Add("TemplatedParent", layout);
-            var loaded = Load();
-           // trackingContext.Bag.Remove("TemplatedParent");
-            return loaded;
+            var loadFor = (Layout)builder.Build(node, context);            
+            return loadFor; 
         }
 
         public Layout Load()
         {
-            return (Layout)builder.Build(node);
+            var builderContext = new BuilderContext();
+            return (Layout)builder.Build(node, builderContext);
         }
 
         protected bool Equals(TemplateContent other)

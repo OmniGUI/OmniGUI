@@ -1,9 +1,5 @@
-using OmniGui.OmniGui;
-
 namespace OmniGui.Xaml
 {
-    using System.Reflection;
-    using Zafiro.PropertySystem;
     using System;
     using System.Collections.Generic;
     using System.Reactive.Disposables;
@@ -13,47 +9,22 @@ namespace OmniGui.Xaml
 
     public class OmniGuiValuePipeline : ValuePipeline
     {
-        private readonly IPropertyEngine propertyEngine;
         private readonly IDictionary<BindDefinition, IDisposable> bindings = new Dictionary<BindDefinition, IDisposable>();
 
 
-        public OmniGuiValuePipeline(IValuePipeline inner, IPropertyEngine propertyEngine) : base(inner)
+        public OmniGuiValuePipeline(IValuePipeline inner) : base(inner)
         {
-            this.propertyEngine = propertyEngine;
         }
 
-        protected override void HandleCore(object parent, Member member, MutablePipelineUnit mutable, INodeToObjectBuilder builder)
+        protected override void HandleCore(object parent, Member member, MutablePipelineUnit mutable, INodeToObjectBuilder builder, BuilderContext context)
         {
-            if (member is AttachedProperty)
-            {
-                RegisterAttachedProperty(member);
-            }
-
-            var od = mutable.Value as ObserveDefinition;
             var bd = mutable.Value as BindDefinition;
 
-            if (od != null)
+            if (bd != null)
             {
-                //BindToObservable(od);
-            }
-            else if (bd != null)
-            {
-                if (bd.TargetInstance is IPropertyHost)
-                {
-                    ClearExistingBinding(bd);
-                    var bindingSubscription = BindToProperty(null, bd);
-                    AddExistingBinding(bd, bindingSubscription);
-                }
-
+                Bindings.Register(bd);
                 mutable.Handled = true;
             }
-        }
-
-        private void RegisterAttachedProperty(Member member)
-        {
-            var type = member.Owner;
-            var registerMethod = type.GetRuntimeMethod("RegisterAttached", new[] {typeof(IPropertyEngine)});
-            registerMethod?.Invoke(null, new object[] {propertyEngine});
         }
 
         private void ClearExistingBinding(BindDefinition bd)
@@ -70,7 +41,7 @@ namespace OmniGui.Xaml
             bindings.Add(bd, subs);
         }
 
-        private IDisposable BindToProperty(BuildContext buildContext, BindDefinition bd)
+        private IDisposable BindToProperty(BuilderContext context, BindDefinition bd)
         {
             if (bd.Source == BindingSource.DataContext)
             {
@@ -78,7 +49,7 @@ namespace OmniGui.Xaml
             }
             else
             {
-                return BindToTemplatedParent(buildContext, bd);
+                return BindToTemplatedParent(context, bd);
             }
         }
 
@@ -87,9 +58,9 @@ namespace OmniGui.Xaml
             return new DataContextSubscription(bd);
         }
 
-        private static IDisposable BindToTemplatedParent(BuildContext buildContext, BindDefinition bd)
+        private static IDisposable BindToTemplatedParent(BuilderContext buildContext, BindDefinition bd)
         {
-            var source = (Layout)buildContext.Bag["TemplatedParent"];
+            var source = (Layout)buildContext.Store["TemplatedParent"];
             if (bd.TargetFollowsSource)
             {
                 var property = source.GetProperty(bd.SourceProperty);

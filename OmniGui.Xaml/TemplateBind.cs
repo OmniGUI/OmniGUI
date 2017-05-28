@@ -4,6 +4,10 @@
 
     public class TemplateBind : IMarkupExtension
     {
+        public TemplateBind()
+        {           
+        }
+
         public TemplateBind(string targetProperty)
         {
             TargetProperty = targetProperty;
@@ -17,7 +21,7 @@
             };
         }
 
-        public string TargetProperty { get; }
+        public string TargetProperty { get; set; }
         public LinkMode LinkMode { get; set; }
     }
 }
