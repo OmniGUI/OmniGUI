@@ -8,7 +8,8 @@
     <None Remove="Rework\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Grace" Version="6.0.1" />
+    <PackageReference Include="DynamicData" Version="5.3.0.2158" />
+    <PackageReference Include="Grace" Version="6.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />

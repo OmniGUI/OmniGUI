@@ -141,7 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DynamicData">
-      <Version>5.2.1.2134</Version>
+      <Version>5.3.0.2158</Version>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.TypeConverter">
       <Version>4.3.0</Version>

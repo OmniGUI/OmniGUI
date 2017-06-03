@@ -21,7 +21,7 @@ namespace AndroidApp
         {
             base.OnCreate(bundle);
             
-            var xamlLoader = new XamlLoader(new[]
+            var xamlLoader = new ExtendedXamlLoader(new[]
             {
                 Assembly.Load(new AssemblyName("OmniGui")),
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
@@ -35,7 +35,7 @@ namespace AndroidApp
                 xaml = r.ReadToEnd();
             }
             
-            var layout = (Layout) xamlLoader.Load(xaml).Instance;
+            var layout = (Layout) xamlLoader.Load(xaml);
 
             var omniGuiView = new OmniGuiView(ApplicationContext, layout);
 
