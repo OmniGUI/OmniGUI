@@ -16,14 +16,14 @@
 
         private void SetContent(object o)
         {
-            Children.Clear();
-            if (o == null)
-            {
-                return;
-            }
+            //Children.Clear();
+            //if (o == null)
+            //{
+            //    return;
+            //}
 
-            var layout = o as Layout ?? new TextBlock() { Text = o.ToString()};
-            Children.Add(layout);
+            //var layout = o as Layout ?? new TextBlock() { Text = o.ToString()};
+            //Children.Add(layout);
         }
 
         public override void Render(IDrawingContext drawingContext)

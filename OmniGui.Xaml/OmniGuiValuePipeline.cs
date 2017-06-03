@@ -75,7 +75,7 @@ namespace OmniGui.Xaml
 
         private static IDisposable BindToTemplatedParent(BuilderContext buildContext, BindDefinition bd)
         {
-            var source = (Layout)buildContext.Store["TemplatedParent"];
+            var source = (Layout)buildContext.Store["TemplateParent"];
             if (bd.TargetFollowsSource)
             {
                 var property = source.GetProperty(bd.SourceProperty);

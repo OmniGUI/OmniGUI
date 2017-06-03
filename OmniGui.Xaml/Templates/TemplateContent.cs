@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using OmniXaml.Services;
 
 namespace OmniGui.Xaml.Templates
 {
@@ -20,7 +21,7 @@ namespace OmniGui.Xaml.Templates
         public Layout LoadFor(Layout layout)
         {
             context.Store.Add("TemplateParent", layout);
-            var loadFor = (Layout)builder.Build(node, context);
+            var loadFor = (Layout)builder.Build(node.Clone(), context);
             context.Store.Remove("TemplateParent");
             return loadFor; 
         }

@@ -1,4 +1,5 @@
-﻿<Grid xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
+﻿<StackPanel xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
+    
 
     <!--<VisualStateManager.VisualStateGroups>
         <VisualStateGroup>
@@ -20,9 +21,17 @@
     <Button Content="{Bind TargetProperty=Title}"></Button>
     <Button Content="Otro texto" Grid.Column="1"></Button>-->
 
-    <Button Background="Gray">Hola</Button>
 
-</Grid>
+    <!--<Grid.ColumnDefinitions>
+        <ColumnDefinition></ColumnDefinition>
+        <ColumnDefinition></ColumnDefinition>
+    </Grid.ColumnDefinitions>-->
+
+    <Button>Hola</Button>
+    <Button>Tío</Button>
+    <Button>Cachondo</Button>
+
+</StackPanel>
 
 
 <!--<Button xmlns="root"  Content="{Bind TargetProperty=Title}"></Button>-->

@@ -1,14 +1,16 @@
-﻿namespace OmniGui.Layouts
+﻿using System;
+using System.Linq;
+
+namespace OmniGui.Layouts
 {
     public class ContentPresenter : ContentLayout
-    {      
-        public override void Render(IDrawingContext drawingContext)
-        {
-            base.Render(drawingContext);
-        }
-
+    {
         public ContentPresenter()
         {
+            GetChangedObservable(ContentProperty).Subscribe(o =>
+            {
+                Children.Add(new TextBlock() { Text = o.ToString() });
+            });
         }
     }
 }

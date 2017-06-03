@@ -37,8 +37,9 @@
             locator = new TypeLocator(() => ControlTemplates, propertyEngine);
             var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator, propertyEngine);
 
-            layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml"));
             var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml"));
+            layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml"));
+            
             new TemplateInflator().Inflate(layout, container.ControlTemplates);
 
             var bindings = Bindings.Definitions;

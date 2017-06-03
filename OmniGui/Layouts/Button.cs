@@ -26,17 +26,5 @@ namespace OmniGui.Layouts
             get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
-
-        public override void Render(IDrawingContext drawingContext)
-        {
-            drawingContext.DrawRoundedRectangle(this.VisualBounds, new Pen(new Brush(Colors.Gray), 1), new CornerRadius(6));
-            drawingContext.DrawText(new FormattedText()
-            {
-                Text = Content.ToString(),
-                Brush = new Brush(Colors.Black),
-                Constraint = Size.Infinite, FontSize = 15
-            }, this.VisualBounds.Point);
-            base.Render(drawingContext);
-        }
     }
 }
