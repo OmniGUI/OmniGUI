@@ -1,4 +1,4 @@
-﻿<StackPanel xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
+﻿<StackPanel Margin="0,40"  xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
     
 
     <!--<VisualStateManager.VisualStateGroups>

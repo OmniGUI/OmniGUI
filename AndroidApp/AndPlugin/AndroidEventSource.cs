@@ -8,9 +8,9 @@ namespace AndroidApp.AndPlugin
     using System.Reactive.Subjects;
     using OmniGui.Geometry;
 
-    public class AndroidEventProcessor : IEventSource
+    public class AndroidEventSource : IEventSource
     {
-        public AndroidEventProcessor(View view)
+        public AndroidEventSource(View view)
         {
             var eventObs = Observable.FromEventPattern<View.TouchEventArgs>(view, "Touch")
                 .Select(pattern =>
@@ -23,6 +23,15 @@ namespace AndroidApp.AndPlugin
 
 
             Pointer = eventObs;
+            SpecialKeys = GetSpecialKeysObservable(view);
+        }
+
+        private IObservable<SpecialKeysArgs> GetSpecialKeysObservable(View element)
+        {
+            var fromEventPattern = Observable.FromEventPattern<EventHandler<View.KeyEventArgs>, View.KeyEventArgs>(
+                ev => element.KeyPress += ev,
+                ev => element.KeyPress -= ev);
+            return fromEventPattern.Select(ep => new SpecialKeysArgs(ep.EventArgs.KeyCode.ToOmniGui()));
         }
 
         public IObservable<Point> Pointer { get; }
@@ -35,8 +44,7 @@ namespace AndroidApp.AndPlugin
         }
 
         public void ShowVirtualKeyboard()
-        {
-            throw new NotImplementedException();
+        {            
         }
     }
 }

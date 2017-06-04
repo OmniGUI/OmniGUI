@@ -13,7 +13,7 @@ namespace AndroidApp
         public AndroidPlatform(OmniGuiView view)
         {
             TextEngine = new AndroidTextEngine();
-            EventSource = new AndroidEventProcessor(view);            
+            EventSource = new AndroidEventSource(view);            
         }
         public ITextEngine TextEngine { get; }
         public IEventSource EventSource { get; }

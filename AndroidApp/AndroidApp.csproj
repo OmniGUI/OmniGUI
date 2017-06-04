@@ -81,8 +81,9 @@
   <ItemGroup>
     <Compile Include="AndPlugin\Android.cs" />
     <Compile Include="AndPlugin\AndroidDrawingContext.cs" />
-    <Compile Include="AndPlugin\AndroidEventProcessor.cs" />
+    <Compile Include="AndPlugin\AndroidEventSource.cs" />
     <Compile Include="AndPlugin\AndroidPlatform.cs" />
+    <Compile Include="AndPlugin\ConversionExtensions.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="AndPlugin\OmniGuiView.cs" />
@@ -111,11 +112,6 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\layout.xaml">
-      <SubType>Designer</SubType>
-    </AndroidAsset>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
       <Project>{ff6d5507-1f7c-4161-b5cb-36fa484bbee9}</Project>
       <Name>OmniGui.Xaml</Name>
@@ -136,6 +132,26 @@
       <Project>{74503677-d755-47d7-a56c-4fc7c6fa1f7d}</Project>
       <Name>OmniXaml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ViewModels\Common.csproj">
+      <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
+      <Project>{e9a9dcff-5b62-4f12-abc7-148e384ff805}</Project>
+      <Name>Zafiro.PropertySystem</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\ViewModels\Container.xaml">
+      <Link>Assets\Container.xaml</Link>
+      <SubType>Designer</SubType>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\ViewModels\Layout.xaml">
+      <Link>Assets\Layout.xaml</Link>
+      <SubType>Designer</SubType>
+    </AndroidAsset>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

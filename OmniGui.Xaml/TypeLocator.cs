@@ -16,12 +16,11 @@ namespace OmniGui.Xaml
     {
         private readonly DependencyInjectionContainer container;
 
-        public TypeLocator(Func<ICollection<ControlTemplate>> getControlTemplates, IPropertyEngine propertyEngine)
+        public TypeLocator(Func<ICollection<ControlTemplate>> getControlTemplates)
         {
             var injectionContainer = new DependencyInjectionContainer();
             injectionContainer.Configure(block =>
             {
-                block.ExportInstance(propertyEngine).As<IPropertyEngine>();
                 block.Export<TemplateInflator>().As<ITemplateInflator>().Lifestyle.Singleton();
                 block.ExportInstance(() => getControlTemplates);                
             });

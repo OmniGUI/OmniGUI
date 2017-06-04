@@ -34,8 +34,8 @@
             var propertyEngine = new OmniGuiPropertyEngine();
             OmniGuiPlatform.PropertyEngine = propertyEngine;
 
-            locator = new TypeLocator(() => ControlTemplates, propertyEngine);
-            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator, propertyEngine);
+            locator = new TypeLocator(() => ControlTemplates);
+            var xamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, locator);
 
             var container = (Container)xamlLoader.Load(File.ReadAllText("Container.xaml"));
             layout = (Layout) xamlLoader.Load(File.ReadAllText("Layout.xaml"));

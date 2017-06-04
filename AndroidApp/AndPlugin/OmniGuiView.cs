@@ -10,21 +10,19 @@ namespace AndroidApp.AndPlugin
 
     public class OmniGuiView : View
     {
-        private readonly Layout layout;
+        public Layout Layout { get; set; }
 
-        public OmniGuiView(Context context, Layout layout) : base(context)
+        public OmniGuiView(Context context) : base(context)
         {
-            this.layout = layout;
-            this.layout = layout;
         }
 
         public override void Draw(Canvas canvas)
         {
-            var availableSize = new Size(canvas.Width, canvas.Height);
-            layout.Measure(availableSize);
-            layout.Arrange(new Rect(Point.Zero, availableSize));
             var context = new AndroidDrawingContext(canvas);
-            layout.Render(context);
+            var availableSize = new Size(canvas.Width, canvas.Height);
+            Layout.Measure(availableSize);
+            Layout.Arrange(new Rect(Point.Zero, availableSize));
+            Layout.Render(context);
         }
     }
 }
