@@ -35,7 +35,7 @@
     </Grid.RowDefinitions>
 
     <TextBox FontSize="20">Tío</TextBox>
-    <Button Grid.Row="1">Cachondo</Button>
+    <TextBox Grid.Row="1">Cachondo</TextBox>
     <Button Grid.Row="2">¿Cómo vas?</Button>
     <Button Grid.Row="3">Siempre a topeee</Button>
 

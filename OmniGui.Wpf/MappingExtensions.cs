@@ -61,11 +61,10 @@
                 CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight,
                 typeface, ft.FontSize,
-                ft.Brush.ToWpf(), new NumberSubstitution(), 3D)
-            {                
-                MaxTextWidth = double.IsInfinity(ft.Constraint.Width) ? 0 : ft.Constraint.Width,
-                MaxTextHeight = ft.Constraint.Height,
-            };
+                ft.Brush.ToWpf(), new NumberSubstitution(), 3D);
+
+            formattedText.MaxTextWidth = double.IsInfinity(ft.Constraint.Width) ? 0 : ft.Constraint.Width;
+            formattedText.MaxTextHeight = ft.Constraint.Height;
 
             return formattedText;
         }

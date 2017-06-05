@@ -15,7 +15,7 @@ namespace AndroidApp.AndPlugin
 
     public class AndroidEventSource : IEventSource
     {
-        private readonly View view;
+        private readonly OmniGuiView view;
         private readonly Activity activity;
 
         public AndroidEventSource(OmniGuiView view, Activity activity)
@@ -33,18 +33,10 @@ namespace AndroidApp.AndPlugin
 
 
             Pointer = eventObs;
-            //KeyInput = GetKeyInputObservable(view);
+            KeyInput = view.TextInput.Select(sequence => new KeyInputArgs {Text = sequence.ToString()});
             SpecialKeys = GetSpecialKeysObservable(view);
         }
-
-        //private IObservable<KeyInputArgs> GetKeyInputObservable(View v)
-        //{
-        //    var fromEventPattern = Observable.FromEventPattern<EventHandler<View.KeyEventArgs>, View.KeyEventArgs>(
-        //        ev => v.KeyPress += ev,
-        //        ev => v.KeyPress -= ev);
-        //    return fromEventPattern.Select(ep => new KeyInputArgs() { Text = ep.EventArgs.KeyCode.ToOmniGui()});
-        //}
-
+    
         private IObservable<SpecialKeysArgs> GetSpecialKeysObservable(View element)
         {
             var fromEventPattern = Observable.FromEventPattern<EventHandler<View.KeyEventArgs>, View.KeyEventArgs>(
@@ -60,12 +52,12 @@ namespace AndroidApp.AndPlugin
 
         public void Invalidate()
         {
-            view.Invalidate();
+            activity.RunOnUiThread(() => view.Invalidate());            
         }
 
         public void ShowVirtualKeyboard()
         {
-            var imm = (InputMethodManager) activity.GetSystemService(Context.InputMethodService);
+            var imm = (InputMethodManager)activity.GetSystemService(Context.InputMethodService);
             imm.ShowSoftInput(view, ShowFlags.Forced);
         }
     }

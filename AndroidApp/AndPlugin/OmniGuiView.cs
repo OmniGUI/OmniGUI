@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Reactive.Subjects;
 using Android.Content;
 using Android.Graphics;
 using Android.Views;
 using Android.Views.InputMethods;
 using Java.Lang;
-using OmniGui;
-using Color = Android.Graphics.Color;
+using Layout = OmniGui.Layout;
 
 namespace AndroidApp.AndPlugin
 {
@@ -14,9 +14,11 @@ namespace AndroidApp.AndPlugin
     public sealed class OmniGuiView : View
     {
         public Layout Layout { get; set; }
+        public ISubject<ICharSequence> TextInput { get; } = new Subject<ICharSequence>();
 
         public OmniGuiView(Context context) : base(context)
-        {            
+        {
+            FocusableInTouchMode = true;
         }
 
         public override void Draw(Canvas canvas)
@@ -28,21 +30,38 @@ namespace AndroidApp.AndPlugin
             Layout.Render(context);
         }
 
+        public override bool OnTouchEvent(MotionEvent e)
+        {
+            if (e.Action == MotionEventActions.Up)
+            {
+                InputMethodManager imm = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
+                imm.ToggleSoftInput(ShowFlags.Forced, HideSoftInputFlags.ImplicitOnly);
+            }
+
+            return true;
+        }
+
         public override IInputConnection OnCreateInputConnection(EditorInfo outAttrs)
         {
-            return new MyInputConnection(this, true);
-        }
-    }
-
-    public class MyInputConnection : BaseInputConnection
-    {
-        public MyInputConnection(OmniGuiView omniGuiView, bool fullEditor) : base(omniGuiView, fullEditor)
-        {            
+            return new PlatformInputConnection(this, true, TextInput);
         }
 
-        public override bool CommitText(ICharSequence text, int newCursorPosition)
+        private class PlatformInputConnection : BaseInputConnection
         {
-            return base.CommitText(text, newCursorPosition);
+            private readonly IObserver<ICharSequence> textObserver;
+
+            public PlatformInputConnection(View targetView, bool fullEditor, IObserver<ICharSequence> textObserver) : base(targetView, fullEditor)
+            {
+                this.textObserver = textObserver;
+            }
+
+            public override bool CommitText(ICharSequence text, int newCursorPosition)
+            {
+                textObserver.OnNext(text);
+                return true;
+            }
         }
     }
+
+
 }

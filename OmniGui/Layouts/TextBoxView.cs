@@ -46,7 +46,11 @@
 
         private static Func<KeyInputArgs, bool> Filter
         {
-            get { return args => args.Text.ToCharArray().First() != Chars.Backspace; }
+            get { return args =>
+            {
+                var isFiltered = args.Text.ToCharArray().First() != Chars.Backspace;
+                return isFiltered;
+            }; }
         }
 
         private bool IsFocused
@@ -104,7 +108,7 @@
 
         private FormattedText FormattedText { get; } = new FormattedText
         {
-            FontSize = 14,
+            FontSize = 24,
             Brush = new Brush(Colors.Black),
             Constraint = Size.Infinite,
             FontFamily = "Arial",
