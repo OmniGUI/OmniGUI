@@ -5,6 +5,6 @@
     public interface ITextEngine
     {
         Size Measure(FormattedText formattedText);
-        double GetHeight(string fontFamily);
+        double GetHeight(string fontFamily, float fontSize);
     }
 }

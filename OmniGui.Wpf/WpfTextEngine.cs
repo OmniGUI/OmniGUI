@@ -18,7 +18,7 @@ namespace OmniGui.Wpf
             return new Size(ft.WidthIncludingTrailingWhitespace, ft.Height);
         }
 
-        public double GetHeight(string fontFamilyName)
+        public double GetHeight(string fontFamilyName, float fontSize)
         {
             var fontFamily = new FontFamily(fontFamilyName);
             var fontDpiSize = 16;

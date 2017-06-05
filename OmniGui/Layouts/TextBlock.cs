@@ -70,7 +70,7 @@ namespace OmniGui.Layouts
         {
             if (Text == null)
             {
-                var height = Platform.Current.TextEngine.GetHeight(FontFamily);
+                var height = Platform.Current.TextEngine.GetHeight(FontFamily, FontSize);
                 return new Size(0, height);
             }
 

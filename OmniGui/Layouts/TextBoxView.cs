@@ -193,7 +193,7 @@
 
         private double GetCursorY()
         {
-            return Platform.Current.TextEngine.GetHeight(FormattedText.FontFamily);
+            return Platform.Current.TextEngine.GetHeight(FormattedText.FontFamily, FormattedText.FontSize);
         }
 
         private double GetCursorX()
@@ -274,7 +274,7 @@
         {
             var textDesired = FormattedText.Text != null ? FormattedText.DesiredSize : Size.Empty;
 
-            var height = Math.Max(textDesired.Height, Platform.Current.TextEngine.GetHeight(FontFamily));
+            var height = Math.Max(textDesired.Height, Platform.Current.TextEngine.GetHeight(FontFamily, FormattedText.FontSize));
             return new Size(textDesired.Width, height);
         }
     }
