@@ -1,3 +1,5 @@
+using Android.App;
+
 namespace AndroidApp
 {
     using System;
@@ -8,12 +10,14 @@ namespace AndroidApp
 
     public class AndroidPlatform : IPlatform
     {
+        private readonly Activity mainActivity;
         private readonly ISubject<Layout> focusedElementSubject = new Subject<Layout>();
 
-        public AndroidPlatform(OmniGuiView view)
+        public AndroidPlatform(OmniGuiView view, Activity mainActivity)
         {
+            this.mainActivity = mainActivity;
             TextEngine = new AndroidTextEngine();
-            EventSource = new AndroidEventSource(view);            
+            EventSource = new AndroidEventSource(view, mainActivity);            
         }
         public ITextEngine TextEngine { get; }
         public IEventSource EventSource { get; }

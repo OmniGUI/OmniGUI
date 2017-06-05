@@ -1,3 +1,5 @@
+using OmniXaml.Attributes;
+
 namespace OmniGui.Layouts
 {
     using System;
@@ -59,6 +61,7 @@ namespace OmniGui.Layouts
             set { SetValue(ForegroundProperty, value); }
         }
 
+        [Content]
         public string Text
         {
             get { return (string) GetValue(TextProperty); }

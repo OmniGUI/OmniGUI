@@ -1,6 +1,11 @@
 using System;
 using System.Reactive.Linq;
+using Android.App;
+using Android.Content;
+using Android.Hardware.Input;
+using Android.InputMethodServices;
 using Android.Views;
+using Android.Views.InputMethods;
 using OmniGui;
 
 namespace AndroidApp.AndPlugin
@@ -10,8 +15,13 @@ namespace AndroidApp.AndPlugin
 
     public class AndroidEventSource : IEventSource
     {
-        public AndroidEventSource(View view)
+        private readonly View view;
+        private readonly Activity activity;
+
+        public AndroidEventSource(OmniGuiView view, Activity activity)
         {
+            this.view = view;
+            this.activity = activity;
             var eventObs = Observable.FromEventPattern<View.TouchEventArgs>(view, "Touch")
                 .Select(pattern =>
                 {
@@ -23,8 +33,17 @@ namespace AndroidApp.AndPlugin
 
 
             Pointer = eventObs;
+            //KeyInput = GetKeyInputObservable(view);
             SpecialKeys = GetSpecialKeysObservable(view);
         }
+
+        //private IObservable<KeyInputArgs> GetKeyInputObservable(View v)
+        //{
+        //    var fromEventPattern = Observable.FromEventPattern<EventHandler<View.KeyEventArgs>, View.KeyEventArgs>(
+        //        ev => v.KeyPress += ev,
+        //        ev => v.KeyPress -= ev);
+        //    return fromEventPattern.Select(ep => new KeyInputArgs() { Text = ep.EventArgs.KeyCode.ToOmniGui()});
+        //}
 
         private IObservable<SpecialKeysArgs> GetSpecialKeysObservable(View element)
         {
@@ -40,11 +59,14 @@ namespace AndroidApp.AndPlugin
         public IObservable<SpecialKeysArgs> SpecialKeys { get; }
 
         public void Invalidate()
-        {            
+        {
+            view.Invalidate();
         }
 
         public void ShowVirtualKeyboard()
-        {            
+        {
+            var imm = (InputMethodManager) activity.GetSystemService(Context.InputMethodService);
+            imm.ShowSoftInput(view, ShowFlags.Forced);
         }
     }
 }

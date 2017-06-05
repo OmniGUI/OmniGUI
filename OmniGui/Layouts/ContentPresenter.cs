@@ -9,7 +9,8 @@ namespace OmniGui.Layouts
         {
             GetChangedObservable(ContentProperty).Subscribe(o =>
             {
-                Children.Add(new TextBlock() { Text = o.ToString() });
+                var l = o as Layout;
+                Children.Add(l ?? new TextBlock() { Text = o.ToString() });
             });
         }
     }

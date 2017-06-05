@@ -12,9 +12,10 @@ namespace AndroidApp.AndPlugin
         {
             var paint = new Paint();
             var rect = new Rect();
+            paint.TextSize = formattedText.FontSize;          
             paint.GetTextBounds(formattedText.Text, 0, formattedText.Text.Length, rect);
-            
-            
+
+           
             return new Size(rect.Width(), rect.Height());
         }
 

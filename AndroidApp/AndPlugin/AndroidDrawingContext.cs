@@ -75,9 +75,14 @@ namespace AndroidApp.AndPlugin
 
         public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
         {
-            //var paint = new Paint();
-            //paint.Color = brush.Color.ToAndroid();
-            //canvas.DrawRect(rect.ToAndroid(), paint);
+            var paint = new Paint();
+            paint.SetStyle(Paint.Style.Stroke);
+            paint.StrokeWidth = (float)pen.Thickness;
+            paint.Color = pen.Brush.Color.ToAndroid();
+            var rx = cornerRadius.BottomLeft;
+            var ry = cornerRadius.BottomLeft;
+
+            canvas.DrawRoundRect(rect.ToAndroid(), (float)rx, (float)ry, paint);
         }
 
         public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
@@ -92,7 +97,9 @@ namespace AndroidApp.AndPlugin
             var paint = new Paint();
             paint.TextSize = formattedText.FontSize;
             paint.Color = formattedText.Brush.Color.ToAndroid();
-            canvas.DrawText(formattedText.Text, (float)point.X, (float)point.Y, paint);
+            paint.AntiAlias = true;
+            var baseLineOffset = -paint.Descent() + paint.Ascent();
+            canvas.DrawText(formattedText.Text, (float)point.X, (float)point.Y - baseLineOffset, paint);
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
@@ -102,7 +109,8 @@ namespace AndroidApp.AndPlugin
 
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)
         {
-            throw new System.NotImplementedException();
+            canvas.DrawLine((float) startPoint.X, (float) startPoint.Y, (float) endPoint.X, (float) endPoint.Y,
+                new Paint() {Color = pen.Brush.Color.ToAndroid(), StrokeWidth = (float) pen.Thickness});
         }
     }
 }

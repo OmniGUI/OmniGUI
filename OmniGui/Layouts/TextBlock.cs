@@ -1,4 +1,6 @@
-﻿namespace OmniGui.Layouts
+﻿using OmniXaml.Attributes;
+
+namespace OmniGui.Layouts
 {
     using System;
     using Geometry;
@@ -8,7 +10,7 @@
     {
         private Brush foreground;
 
-        public static ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = 14F });
+        public static ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = 20F });
 
         public static ExtendedProperty FontWeightProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
 
@@ -104,6 +106,7 @@
             }
         }
 
+        [Content]
         public string Text
         {
             get { return currentText; }

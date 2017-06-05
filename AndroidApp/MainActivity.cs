@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Input;
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Service.Notification;
 using Android.Views;
@@ -27,18 +28,17 @@ namespace AndroidApp
             base.OnCreate(bundle);
 
             var view = new OmniGuiView(ApplicationContext);
-            Platform.Current = new AndroidPlatform(view);
+            Platform.Current = new AndroidPlatform(view, this);
             OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
 
-            var layout = (Layout) LoadLayout(ReadTextFromAsset("Layout.xaml"));
-            var inflator = new TemplateInflator();
+            var layout = LoadLayout(ReadTextFromAsset("Layout.xaml"));
             
-
             view.Layout = layout;
 
             
             ActionBar.Hide();
-            Window.ClearFlags(WindowManagerFlags.Fullscreen);
+            this.Window.AddFlags(WindowManagerFlags.Fullscreen);
+            
 
             SetContentView(view);
         }

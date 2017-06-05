@@ -7,6 +7,12 @@
             </Border>
         </ControlTemplate>
 
+        <ControlTemplate Target="TextBox">
+            <Border Padding="2" BorderThickness="1" Background="White"  BorderBrush="Black">
+                <TextBoxView />
+            </Border>
+        </ControlTemplate>
+
     </Container.ControlTemplates>
 
 
