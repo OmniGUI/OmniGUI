@@ -26,6 +26,7 @@ namespace iOSApp
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
             OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
+            Platform.Current = new iOSPlatform();
             
             var layout = LoadLayout();
 

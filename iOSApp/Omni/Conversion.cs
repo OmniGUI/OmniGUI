@@ -33,5 +33,10 @@ namespace iOSApp.Omni
             var c = UIColor.FromRGBA(color.Red, color.Green, color.Blue, color.Alpha);
             return c.CGColor;
         }
+
+        public static CGPoint ToiOS(this Point point)
+        {
+            return new CGPoint(point.X, point.Y);
+        }
     }
 }
