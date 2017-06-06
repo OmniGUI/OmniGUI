@@ -93,7 +93,6 @@
     <Compile Include="Omni\iOSPlatform.cs" />
     <Compile Include="Omni\iOSTextEngine.cs" />
     <Compile Include="Omni\OmniGuiView.cs" />
-    <Compile Include="Omni\OmniGuiViewController.cs" />
     <Compile Include="Omni\iOSDrawingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
@@ -102,6 +101,13 @@
   <ItemGroup>
     <Reference Include="DynamicData, Version=5.3.0.2158, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicData.5.3.0.2158\lib\netstandard1.1\DynamicData.dll</HintPath>
+    </Reference>
+    <Reference Include="Grace, Version=6.2.0.0, Culture=neutral, PublicKeyToken=b7d24c6367970497, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grace.6.2.0\lib\netstandard1.0\Grace.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.4.0\lib\netstandard1.3\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Sprache, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sprache.2.1.0\lib\netstandard1.0\Sprache.dll</HintPath>
@@ -121,7 +127,6 @@
     <Reference Include="System.Reactive.PlatformServices, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.PlatformServices.3.1.1\lib\netstandard1.3\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
@@ -130,14 +135,41 @@
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
+      <Project>{FF6D5507-1F7C-4161-B5CB-36FA484BBEE9}</Project>
+      <Name>OmniGui.Xaml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj">
       <Project>{4F0F11A7-EFFC-4384-98EC-51C6E1FC90B2}</Project>
       <Name>OmniGui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj">
+      <Project>{b9a9c91a-8266-4738-8c54-d4b3955e5df8}</Project>
+      <Name>OmniXaml.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModels\Common.csproj">
+      <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
+      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
       <Project>{e9a9dcff-5b62-4f12-abc7-148e384ff805}</Project>
       <Name>Zafiro.PropertySystem</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\ViewModels\Layout.xaml">
+      <Link>Layout.xaml</Link>
+      <SubType>Designer</SubType>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\ViewModels\Container.xaml">
+      <Link>Container.xaml</Link>
+      <SubType>Designer</SubType>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Layout\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

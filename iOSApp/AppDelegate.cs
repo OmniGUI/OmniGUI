@@ -1,5 +1,11 @@
-﻿using Foundation;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Foundation;
+using iOSApp.Omni;
 using OmniGui;
+using OmniGui.Xaml;
+using OmniGui.Xaml.Templates;
 using UIKit;
 
 namespace iOSApp
@@ -20,13 +26,15 @@ namespace iOSApp
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
             OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
+            
+            var layout = LoadLayout();
 
             // create a new window instance based on the screen size
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
 
             // If you have defined a root view controller, set it here:
-            var vc = new OmniGuiViewController();            
-
+            var vc = new UIViewController();
+            vc.View = new OmniGuiView(layout);
             Window.RootViewController = vc;
 
             // make the window visible
@@ -34,6 +42,30 @@ namespace iOSApp
 
             return true;
         }
+
+        private static Layout LoadLayout()
+        {
+            var assemblies = new[]
+            {
+                Assembly.Load(new AssemblyName("OmniGui")),
+                Assembly.Load(new AssemblyName("OmniGui.Xaml")),
+                Assembly.Load(new AssemblyName("iOSApp")),
+            };
+
+            var loader = new OmniGuiXamlLoader(assemblies, () => ControlTemplates, new TypeLocator(() => ControlTemplates));
+
+            var xaml = File.ReadAllText("Layout.xaml");
+            var containerXaml = File.ReadAllText("Container.xaml");
+            var container = (Container)loader.Load(containerXaml);
+            ControlTemplates = container.ControlTemplates;
+            
+            var layout = (Layout)loader.Load(xaml);
+            new TemplateInflator().Inflate(layout, ControlTemplates);
+
+            return layout;
+        }
+
+        public static ICollection<ControlTemplate> ControlTemplates { get; set; } = new List<ControlTemplate>();
 
         public override void OnResignActivation(UIApplication application)
         {
