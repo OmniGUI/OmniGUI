@@ -2,9 +2,12 @@ namespace OmniGui.Layouts
 {
     using System.Linq;
     using Geometry;
+    using Zafiro.PropertySystem.Standard;
 
     public class Border : Layout
     {
+        public static ExtendedProperty BorderBrushProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("BorderBrush", typeof(Border), typeof(Brush), new PropertyMetadata() { DefaultValue = new Brush(Colors.Black) });
+
         protected override Size MeasureOverride(Size availableSize)
         {
             var padding = Padding + new Thickness(BorderThickness);
@@ -62,6 +65,10 @@ namespace OmniGui.Layouts
             base.Render(drawingContext);
         }
 
-        public Brush BorderBrush { get; set; }
+        public Brush BorderBrush
+        {
+            get { return (Brush) GetValue(BorderBrushProperty); }
+            set { SetValue(BorderBrushProperty, value); }
+        }
     }
 }

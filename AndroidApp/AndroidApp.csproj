@@ -79,7 +79,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndPlugin\Android.cs" />
     <Compile Include="AndPlugin\AndroidDrawingContext.cs" />
     <Compile Include="AndPlugin\AndroidEventSource.cs" />
     <Compile Include="AndPlugin\AndroidPlatform.cs" />

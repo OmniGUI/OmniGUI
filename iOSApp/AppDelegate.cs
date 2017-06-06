@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using OmniGui;
 using UIKit;
 
 namespace iOSApp
@@ -18,8 +19,10 @@ namespace iOSApp
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
+            OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
+
             // create a new window instance based on the screen size
-            Window = new OmniGuiWindow(UIScreen.MainScreen.Bounds);
+            Window = new UIWindow(UIScreen.MainScreen.Bounds);
 
             // If you have defined a root view controller, set it here:
             var vc = new OmniGuiViewController();            
