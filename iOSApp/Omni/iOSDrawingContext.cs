@@ -2,6 +2,7 @@
 using CoreGraphics;
 using OmniGui;
 using OmniGui.Geometry;
+using UIKit;
 
 namespace iOSApp.Omni
 {
@@ -31,7 +32,7 @@ namespace iOSApp.Omni
             var cgRect = rect.ToiOS();
 
             context.SetStrokeColor(pen.Brush.Color.ToiOS());
-            context.StrokeRectWithWidth(cgRect, (nfloat) pen.Thickness);
+            context.StrokeRectWithWidth(cgRect, (nfloat)pen.Thickness);
 
             //CGRect rectangle = rect.ToiOS();
             //context.SetFillColor((nfloat)1.0, (nfloat)1.0, 0, (nfloat)0.0);
@@ -50,12 +51,18 @@ namespace iOSApp.Omni
 
         public void DrawText(FormattedText formattedText, Point point)
         {
-            //var paint = new Paint();
-            //paint.TextSize = formattedText.FontSize;
-            //paint.Color = formattedText.Brush.Color.ToAndroid();
-            //paint.AntiAlias = true;
-            //var baseLineOffset = -paint.Descent() + paint.Ascent();
-            //canvas.DrawText(formattedText.Text, (float)point.X, (float)point.Y - baseLineOffset, paint);
+            context.SaveState();
+            context.ScaleCTM(1f, -1f);
+            context.SelectFont("Helvetica", formattedText.FontSize, CGTextEncoding.MacRoman);
+            context.SetFillColor(formattedText.Brush.Color.ToiOS());
+            context.SetTextDrawingMode(CGTextDrawingMode.Fill);
+            context.ShowTextAtPoint((nfloat)point.X, (nfloat)(-point.Y), formattedText.Text);
+            context.RestoreState();
+
+            //context.TextPosition = point.ToiOS();
+            //context.SetFillColor(formattedText.Brush.Color.ToiOS());
+            //context.ShowText(formattedText.Text);
+
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
@@ -69,7 +76,7 @@ namespace iOSApp.Omni
             //context.SetFillColor((nfloat)1.0, (nfloat)1.0, 0, (nfloat)0.0);
             //context.SetStrokeColor((nfloat)0.0, (nfloat)0.0, (nfloat)0.0, (nfloat)0.5);
             //context.FillRect(rectangle);
-            
+
         }
     }
 }
