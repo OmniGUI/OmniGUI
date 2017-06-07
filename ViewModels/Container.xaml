@@ -1,4 +1,4 @@
-﻿<Container xmlns="root">
+<Container xmlns="root">
 
     <Container.ControlTemplates>
         <ControlTemplate Target="Button">

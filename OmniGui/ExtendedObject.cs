@@ -1,5 +1,3 @@
-using OmniGui.OmniGui;
-
 namespace OmniGui
 {
     using System;

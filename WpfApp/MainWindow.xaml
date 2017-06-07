@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
+        xmlns:wpf="clr-namespace:OmniGui.Wpf;assembly=OmniGui.Wpf"
         mc:Ignorable="d"
         Background="Transparent"
         RenderOptions.BitmapScalingMode="HighQuality"
         RenderOptions.EdgeMode="Aliased"
         Title="MainWindow" >
-    <Grid x:Name="LayoutRoot" SnapsToDevicePixels="True">
-        <!--<Button Click="ButtonBase_OnClick" VerticalAlignment="Bottom" HorizontalAlignment="Center">Invalidate</Button>
-        <TextBox VerticalAlignment="Bottom" HorizontalAlignment="Right">Invalidate</TextBox>-->
-    </Grid>
+    
+    <!--<Grid x:Name="LayoutRoot" SnapsToDevicePixels="True">
+    
+    </Grid>-->
+    <wpf:OmniGuiControl Source="Layout.xaml"></wpf:OmniGuiControl>
 </Window>
 

@@ -1,4 +1,4 @@
-﻿<Grid xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
+<Grid xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
     
 
     <!--<VisualStateManager.VisualStateGroups>

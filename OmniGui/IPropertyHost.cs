@@ -3,17 +3,16 @@ using Zafiro.PropertySystem.Standard;
 
 namespace OmniGui
 {
-    namespace OmniGui
+
+    public interface IPropertyHost
     {
-        public interface IPropertyHost
-        {
 
-            void SetValue(ExtendedProperty property, object value);
+        void SetValue(ExtendedProperty property, object value);
 
-            IObservable<object> GetChangedObservable(ExtendedProperty property);
+        IObservable<object> GetChangedObservable(ExtendedProperty property);
 
-            ExtendedProperty GetProperty(string propertyName);
+        ExtendedProperty GetProperty(string propertyName);
 
-        }
     }
+
 }

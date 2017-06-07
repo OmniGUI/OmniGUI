@@ -43,19 +43,35 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assemblies.cs" />
+    <Compile Include="OmniGuiControl.cs" />
     <Compile Include="MappingExtensions.cs" />
     <Compile Include="WpfDrawingContext.cs" />
     <Compile Include="WpfEventSource.cs" />
     <Compile Include="WpfPlatform.cs" />
     <Compile Include="WpfTextEngine.cs" />
+    <Compile Include="XamlLoader.cs" />
+    <Compile Include="XamlMixin.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
+      <Project>{FF6D5507-1F7C-4161-B5CB-36FA484BBEE9}</Project>
+      <Name>OmniGui.Xaml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj">
       <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
       <Name>OmniGui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj">
+      <Project>{B9A9C91A-8266-4738-8C54-D4B3955E5DF8}</Project>
+      <Name>OmniXaml.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
+      <Project>{e9a9dcff-5b62-4f12-abc7-148e384ff805}</Project>
+      <Name>Zafiro.PropertySystem</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

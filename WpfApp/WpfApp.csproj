@@ -51,16 +51,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="WpfMessageBoxService.cs" />
-    <None Include="..\ViewModels\Layout.xaml">
+    <Content Include="..\ViewModels\Layout.xaml">
       <Link>Layout.xaml</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\ViewModels\Container.xaml">
+    </Content>
+    <Content Include="..\ViewModels\Container.xaml">
       <Link>Container.xaml</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
