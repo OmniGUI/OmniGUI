@@ -12,6 +12,10 @@
             typeof(TextBoxView),
             typeof(string), new PropertyMetadata {DefaultValue = null});
 
+        public static readonly ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize",
+            typeof(TextBoxView),
+            typeof(string), new PropertyMetadata { DefaultValue = 16 });
+
         private IDisposable changedSubscription;
         private int cursorPositionOrdinal;
         private IDisposable cursorToggleChanger;
@@ -19,28 +23,36 @@
         private bool isCursorVisible;
         private bool isFocused;
 
-        public TextBoxView()
+        public TextBoxView(FrameworkDependencies deps) : base(deps)
         {
             var changedObservable = GetChangedObservable(TextProperty);
 
             Pointer.Down.Subscribe(point =>
             {
-                Platform.Current.EventSource.ShowVirtualKeyboard();
-                Platform.Current.SetFocusedElement(this);
+                Deps.RenderSurface.ShowVirtualKeyboard();
+                Deps.RenderSurface.SetFocusedElement(this);
             });
 
             Keyboard.KeyInput.Where(Filter).Subscribe(args => AddText(args.Text));
             Keyboard.SpecialKeys.Subscribe(ProcessSpecialKey);
-            NotifyRenderAffectedBy(TextProperty);
-            Platform.Current.FocusedElement.Select(layout => layout == this)
+            NotifyRenderAffectedBy(TextProperty, FontSizeProperty);
+            Deps.RenderSurface.FocusedElement.Select(layout => layout == this)
                 .Subscribe(isFocused => IsFocused = isFocused);
+
+            GetChangedObservable(FontSizeProperty).Subscribe(o =>
+            {
+                if (FormattedText != null && o != null)
+                {
+                    FormattedText.FontSize = (float) o;
+                }
+            });
 
             changedSubscription = changedObservable
                 .Subscribe(o =>
                 {
                     FormattedText.Text = (string) o;
                     EnforceCursorLimits();
-                    Invalidate();
+                    ForceRender();
                 });
         }
 
@@ -80,7 +92,7 @@
             set
             {
                 isCursorVisible = value;
-                Invalidate();
+                ForceRender();
             }
         }
 
@@ -100,7 +112,7 @@
                     return;
                 }
                 cursorPositionOrdinal = value;
-                Invalidate();
+                ForceRender();
             }
         }
 
@@ -108,7 +120,7 @@
 
         private FormattedText FormattedText { get; } = new FormattedText
         {
-            FontSize = 24,
+            FontSize = 16,
             Brush = new Brush(Colors.Black),
             Constraint = Size.Infinite,
             FontFamily = "Arial",
@@ -159,6 +171,12 @@
         private void SwitchCursorVisibility()
         {
             IsCursorVisible = !IsCursorVisible;
+        }
+
+        public double FontSize
+        {
+            get { return (double) GetValue(FontSizeProperty); }
+            set { SetValue(FontSizeProperty, value); }
         }
 
         public override void Render(IDrawingContext drawingContext)
@@ -213,9 +231,9 @@
             return x;
         }
 
-        private static void Invalidate()
+        private void ForceRender()
         {
-            Platform.Current.EventSource.Invalidate();
+            Deps.RenderSurface.ForceRender();
         }
 
         public void AddText(string text)

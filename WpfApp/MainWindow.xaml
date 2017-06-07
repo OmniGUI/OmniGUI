@@ -5,15 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         xmlns:wpf="clr-namespace:OmniGui.Wpf;assembly=OmniGui.Wpf"
+        xmlns:common="clr-namespace:Common;assembly=Common"
         mc:Ignorable="d"
-        Background="Transparent"
         RenderOptions.BitmapScalingMode="HighQuality"
         RenderOptions.EdgeMode="Aliased"
-        Title="MainWindow" >
-    
-    <!--<Grid x:Name="LayoutRoot" SnapsToDevicePixels="True">
-    
-    </Grid>-->
-    <wpf:OmniGuiControl Source="Layout.xaml"></wpf:OmniGuiControl>
+        Title="MainWindow">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox Text="{Binding Name, Mode=TwoWay}"></TextBox>
+        <wpf:OmniGuiControl Grid.Row="1" Grid.Column="0" Source="Layout.xaml" />
+        <wpf:OmniGuiControl Grid.Row="1" Grid.Column="1" Source="Layout.xaml"></wpf:OmniGuiControl>
+    </Grid>
 </Window>
+
+
+
+
+
+
 

@@ -14,11 +14,11 @@ namespace WpfApp
         public WpfPlatform(FrameworkElement element)
         {
             TextEngine = new WpfTextEngine();
-            EventSource = new WpfEventSource(element);
+            //EventSource = new WpfEventSource(element);
         }
 
         public ITextEngine TextEngine { get; }
-        public IEventSource EventSource { get; }
+        //public IEventSource EventSource { get; }
         public IObservable<Layout> FocusedElement => focusedElementSubject.DistinctUntilChanged();
         public void SetFocusedElement(Layout layout)
         {

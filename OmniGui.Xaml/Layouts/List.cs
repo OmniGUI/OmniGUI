@@ -21,22 +21,22 @@
         private readonly StackPanel panel;
         private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
 
-        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates, IPropertyEngine propertyEngine) : base()
+        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates, FrameworkDependencies deps) : base(deps)
         {
             this.controlTemplateInflator = controlTemplateInflator;
             this.getControlTemplates = getControlTemplates;
-            panel = new StackPanel();
+            panel = new StackPanel(deps);
             this.AddChild(panel);
 
             subscription = GetChangedObservable(SourceProperty).Subscribe(obj =>
             {
                 var source = (ISourceList<object>)obj;
 
-                Platform.Current.EventSource.Invalidate();
+                Deps.RenderSurface.ForceRender();
 
                 source.Connect()
                     .OnItemAdded(AddItem)                    
-                    .ForEachChange(_ => Platform.Current.EventSource.Invalidate())
+                    .ForEachChange(_ => Deps.RenderSurface.ForceRender())
                     .Subscribe();
             });
         }
@@ -60,7 +60,7 @@
                 return withDataTemplateApplied;
             }
 
-            return new TextBlock()
+            return new TextBlock(Deps)
             {
                 Text = item.ToString(),
             };

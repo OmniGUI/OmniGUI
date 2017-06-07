@@ -20,7 +20,7 @@ namespace OmniGui.Layouts
 
         private string currentText;
 
-        public TextBlock()
+        public TextBlock(FrameworkDependencies deps) : base(deps)
         {        
             Foreground = new Brush(Colors.Black);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);

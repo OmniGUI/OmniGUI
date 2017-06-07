@@ -53,7 +53,7 @@ namespace iOSApp
                 Assembly.Load(new AssemblyName("iOSApp")),
             };
 
-            var loader = new OmniGuiXamlLoader(assemblies, () => ControlTemplates, new TypeLocator(() => ControlTemplates));
+            var loader = new OmniGuiXamlLoader(assemblies, () => ControlTemplates, new TypeLocator(() => ControlTemplates, null));
 
             var xaml = File.ReadAllText("Layout.xaml");
             var containerXaml = File.ReadAllText("Container.xaml");

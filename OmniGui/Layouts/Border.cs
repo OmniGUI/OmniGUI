@@ -70,5 +70,9 @@ namespace OmniGui.Layouts
             get { return (Brush) GetValue(BorderBrushProperty); }
             set { SetValue(BorderBrushProperty, value); }
         }
+
+        public Border(FrameworkDependencies deps) : base(deps)
+        {
+        }
     }
 }

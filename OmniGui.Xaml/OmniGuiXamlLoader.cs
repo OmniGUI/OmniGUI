@@ -19,7 +19,7 @@ namespace OmniGui.Xaml
             this.locator = locator;
         }
 
-        public override IInstanceCreator InstanceCreator => new OmniGuiInstanceCreator();
+        public override IInstanceCreator InstanceCreator => new OmniGuiInstanceCreator(locator);
         protected override IValuePipeline ValuePipeline => new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new NoActionValuePipeline()));
     }
 }

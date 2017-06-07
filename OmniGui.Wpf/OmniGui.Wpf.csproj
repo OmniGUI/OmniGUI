@@ -49,8 +49,8 @@
     <Compile Include="WpfDrawingContext.cs" />
     <Compile Include="WpfEventSource.cs" />
     <Compile Include="WpfPlatform.cs" />
+    <Compile Include="WpfRenderSurface.cs" />
     <Compile Include="WpfTextEngine.cs" />
-    <Compile Include="XamlLoader.cs" />
     <Compile Include="XamlMixin.cs" />
   </ItemGroup>
   <ItemGroup>

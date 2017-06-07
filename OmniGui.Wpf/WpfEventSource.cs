@@ -20,11 +20,12 @@ namespace OmniGui.Wpf
             SpecialKeys = GetSpecialKeysObservable(inputElement);
         }
 
-        private IObservable<SpecialKeysArgs> GetSpecialKeysObservable(FrameworkElement element)
+        private static IObservable<SpecialKeysArgs> GetSpecialKeysObservable(IInputElement element)
         {
             var fromEventPattern = Observable.FromEventPattern<KeyEventHandler, KeyEventArgs>(
                 ev => element.PreviewKeyDown += ev,
                 ev => element.PreviewKeyDown -= ev);
+
             return fromEventPattern.Select(ep => new SpecialKeysArgs(ep.EventArgs.Key.ToOmniGui()));
         }
 

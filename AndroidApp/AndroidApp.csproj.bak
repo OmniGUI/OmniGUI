@@ -16,7 +16,7 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,13 +30,6 @@
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
-    <BundleAssemblies>False</BundleAssemblies>
-    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-    <Debugger>Xamarin</Debugger>
-    <AotAssemblies>False</AotAssemblies>
-    <EnableLLVM>False</EnableLLVM>
-    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
-    <EnableProguard>False</EnableProguard>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>PdbOnly</DebugType>
@@ -51,14 +44,17 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DynamicData, Version=5.1.4.2124, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.5.1.4.2124\lib\netstandard1.1\DynamicData.dll</HintPath>
+    <Reference Include="DynamicData, Version=5.3.0.2158, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicData.5.3.0.2158\lib\netstandard1.1\DynamicData.dll</HintPath>
+    </Reference>
+    <Reference Include="Grace, Version=6.2.0.0, Culture=neutral, PublicKeyToken=b7d24c6367970497, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grace.6.2.0\lib\netstandard1.0\Grace.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.2.3.0\lib\netstandard1.3\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.2.4.0\lib\netstandard1.3\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Sprache, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sprache.2.1.0\lib\netstandard1.0\Sprache.dll</HintPath>
@@ -83,10 +79,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndPlugin\Android.cs" />
     <Compile Include="AndPlugin\AndroidDrawingContext.cs" />
-    <Compile Include="AndPlugin\AndroidEventProcessor.cs" />
+    <Compile Include="AndPlugin\AndroidEventSource.cs" />
     <Compile Include="AndPlugin\AndroidPlatform.cs" />
+    <Compile Include="AndPlugin\ConversionExtensions.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="AndPlugin\OmniGuiView.cs" />
@@ -115,11 +111,6 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\layout.xaml">
-      <SubType>Designer</SubType>
-    </AndroidAsset>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
       <Project>{ff6d5507-1f7c-4161-b5cb-36fa484bbee9}</Project>
       <Name>OmniGui.Xaml</Name>
@@ -140,6 +131,26 @@
       <Project>{74503677-d755-47d7-a56c-4fc7c6fa1f7d}</Project>
       <Name>OmniXaml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ViewModels\Common.csproj">
+      <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
+      <Project>{e9a9dcff-5b62-4f12-abc7-148e384ff805}</Project>
+      <Name>Zafiro.PropertySystem</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\ViewModels\Container.xaml">
+      <Link>Assets\Container.xaml</Link>
+      <SubType>Designer</SubType>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\ViewModels\Layout.xaml">
+      <Link>Assets\Layout.xaml</Link>
+      <SubType>Designer</SubType>
+    </AndroidAsset>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

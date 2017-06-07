@@ -1,22 +1,22 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 using OmniXaml;
-using Zafiro.Core;
-using Zafiro.PropertySystem;
 
 namespace OmniGui.Xaml
 {
     public class OmniGuiInstanceCreator : IInstanceCreator
     {
+        private readonly ITypeLocator locator;
+
+        public OmniGuiInstanceCreator(ITypeLocator locator)
+        {
+            this.locator = locator;
+        }
+
         public CreationResult Create(Type type, CreationHints creationHints = null)
         {
-            var needsPropertyEngine = type.GetTypeInfo().DeclaredConstructors.Any(info => info.GetParameters()
-                .Any(pi => pi.ParameterType.IsAssignableFrom(typeof(IPropertyEngine))));
-
-            if (needsPropertyEngine)
+            if (locator.TryLocate(type, out var result))
             {
-                return new CreationResult(Activator.CreateInstance(type, OmniGuiPlatform.PropertyEngine), new CreationHints());
+                return new CreationResult(result, new CreationHints());
             }
 
             return new CreationResult(Activator.CreateInstance(type), new CreationHints());

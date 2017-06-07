@@ -61,7 +61,7 @@ namespace AndroidApp
                 Assembly.Load(new AssemblyName("Common")),
             };
 
-            var locator = new TypeLocator(() => ControlTemplates);
+            var locator = new TypeLocator(() => ControlTemplates, null);
             var xamlLoader = new OmniGuiXamlLoader(assemblies, () => ControlTemplates, locator);
 
             var loadXaml = xamlLoader.Load(xaml);

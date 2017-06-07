@@ -783,5 +783,9 @@
 
             public bool HasAutoStar { get; }
         }
+
+        public Grid(FrameworkDependencies deps) : base(deps)
+        {
+        }
     }
 }

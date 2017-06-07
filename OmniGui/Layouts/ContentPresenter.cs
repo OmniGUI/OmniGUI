@@ -5,12 +5,12 @@ namespace OmniGui.Layouts
 {
     public class ContentPresenter : ContentLayout
     {
-        public ContentPresenter()
+        public ContentPresenter(FrameworkDependencies deps) : base(deps)
         {
             GetChangedObservable(ContentProperty).Subscribe(o =>
             {
                 var l = o as Layout;
-                Children.Add(l ?? new TextBlock() { Text = o.ToString() });
+                Children.Add(l ?? new TextBlock(Deps) { Text = o.ToString() });
             });
         }
     }

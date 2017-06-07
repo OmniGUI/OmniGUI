@@ -9,7 +9,7 @@
     {
         public static readonly ExtendedProperty ContentProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Content", typeof(ContentLayout), typeof(object), new PropertyMetadata { DefaultValue = null });
 
-        public ContentLayout()
+        public ContentLayout(FrameworkDependencies deps) : base(deps)
         {
             GetChangedObservable(ContentProperty).Subscribe(SetContent);            
         }

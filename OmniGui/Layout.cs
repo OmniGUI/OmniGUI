@@ -9,18 +9,21 @@ namespace OmniGui
 
     public abstract class Layout : ExtendedObject, IChild
     {
+        public FrameworkDependencies Deps { get; }
         public static ExtendedProperty DataContextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("DataContext", typeof(Layout), typeof(object), new PropertyMetadata());
 
-        protected Layout()
-        {          
+        protected Layout(FrameworkDependencies deps)
+        {
+            Deps = deps;
+
             Children = new OwnedList<Layout>(this);
             Children.OnChildAdded(layout =>
             {
                 layout.DataContext = DataContext;
                 GetChangedObservable(DataContextProperty).Subscribe(o => layout.DataContext = o);
             });
-            Pointer = new PointerEvents(this, Platform.Current.EventSource);
-            Keyboard = new KeyboardEvents(this, Platform.Current.EventSource, Platform.Current.FocusedElement);
+            Pointer = new PointerEvents(this, Deps.EventSource);
+            Keyboard = new KeyboardEvents(this, Deps.EventSource, Deps.RenderSurface.FocusedElement);
         }
 
         public object DataContext
@@ -84,7 +87,7 @@ namespace OmniGui
 
         private void InvalidateRender()
         {
-            Platform.Current.EventSource.Invalidate();
+            Deps.RenderSurface.ForceRender();
         }
 
         public void Measure(Size availableSize)

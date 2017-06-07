@@ -14,7 +14,7 @@ namespace OmniGui.Layouts
         public static readonly ExtendedProperty ForegroundProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Foreground", typeof(TextBox), typeof(Brush), new PropertyMetadata { DefaultValue = new Brush(Colors.Black) });
         public static readonly ExtendedProperty TextWrappingProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("TextWrapping", typeof(TextBox), typeof(TextWrapping), new PropertyMetadata { DefaultValue = TextWrapping.NoWrap });
 
-        public TextBox()
+        public TextBox(FrameworkDependencies deps) : base(deps)
         {
             NotifyRenderAffectedBy(TextProperty);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);

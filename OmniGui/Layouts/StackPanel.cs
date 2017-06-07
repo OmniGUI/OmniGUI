@@ -118,5 +118,9 @@ namespace OmniGui.Layouts
             drawingContext.FillRectangle(VisualBounds, Background);
             base.Render(drawingContext);
         }
+
+        public StackPanel(FrameworkDependencies deps) : base(deps)
+        {
+        }
     }
 }

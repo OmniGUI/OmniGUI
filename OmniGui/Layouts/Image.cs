@@ -48,6 +48,10 @@
             var sourceSize = new Size(Source.Width, Source.Height);
 
             return Stretch.CalculateSize(availableSize, sourceSize);
-        }       
+        }
+
+        public Image(FrameworkDependencies deps) : base(deps)
+        {
+        }
     }
 }
