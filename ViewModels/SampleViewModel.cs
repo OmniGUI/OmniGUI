@@ -16,6 +16,7 @@
         private string name;
         private string surname;
         private bool isActive;
+        private string title;
 
         public SampleViewModel(IMessageService messageService)
         {
@@ -62,7 +63,15 @@
             }
         }
 
-        public string Title { get; set; }
+        public string Title
+        {
+            get { return title; }
+            set
+            {
+                title = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ISubject<object> WrittenText { get; }
 

@@ -21,7 +21,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBox Text="{Binding Name, Mode=TwoWay}"></TextBox>
+        <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <wpf:OmniGuiControl Grid.Row="1" Grid.Column="0" Source="Layout.xaml" />
         <wpf:OmniGuiControl Grid.Row="1" Grid.Column="1" Source="Layout.xaml"></wpf:OmniGuiControl>
     </Grid>

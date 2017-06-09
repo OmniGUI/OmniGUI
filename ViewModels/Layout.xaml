@@ -1,4 +1,4 @@
-<Grid xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
+<StackPanel xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
     
 
     <!--<VisualStateManager.VisualStateGroups>
@@ -27,19 +27,12 @@
         <ColumnDefinition></ColumnDefinition>
     </Grid.ColumnDefinitions>-->
 
-    <Grid.RowDefinitions>
-        <RowDefinition Height="4*"></RowDefinition>
-        <RowDefinition Height="3*"></RowDefinition>
-        <RowDefinition Height="2*"></RowDefinition>
-        <RowDefinition Height="1*"></RowDefinition>
-    </Grid.RowDefinitions>
 
-    <TextBox FontSize="20">Tío</TextBox>
-    <TextBox Grid.Row="1">Cachondo</TextBox>
-    <Button Grid.Row="2">¿Cómo vas?</Button>
-    <Button Grid.Row="3">Siempre a topeee</Button>
 
-</Grid>
+    <TextBox Text="{Bind TargetProperty=Title, LinkMode=FullLink}" />
+    <TextBlock Text="{Bind TargetProperty=Title}" />
+
+</StackPanel>
 
 
 <!--<Button xmlns="root"  Content="{Bind TargetProperty=Title}"></Button>-->
