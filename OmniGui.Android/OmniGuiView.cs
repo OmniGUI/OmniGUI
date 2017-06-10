@@ -5,12 +5,12 @@ using Android.Graphics;
 using Android.Views;
 using Android.Views.InputMethods;
 using Java.Lang;
-using Layout = OmniGui.Layout;
+using OmniGui.Geometry;
+using Point = OmniGui.Geometry.Point;
+using Rect = OmniGui.Geometry.Rect;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
-    using OmniGui.Geometry;
-
     public sealed class OmniGuiView : View
     {
         public Layout Layout { get; set; }

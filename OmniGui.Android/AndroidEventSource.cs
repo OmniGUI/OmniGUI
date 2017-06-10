@@ -1,18 +1,14 @@
 using System;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using Android.App;
 using Android.Content;
-using Android.Hardware.Input;
-using Android.InputMethodServices;
 using Android.Views;
 using Android.Views.InputMethods;
-using OmniGui;
+using OmniGui.Geometry;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
-    using System.Reactive.Subjects;
-    using OmniGui.Geometry;
-
     public class AndroidEventSource : IEventSource
     {
         private readonly OmniGuiViewReloaded view;

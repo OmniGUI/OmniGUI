@@ -1,10 +1,8 @@
 using System;
 using Android.Graphics;
 using Android.Views;
-using OmniGui;
-using Color = OmniGui.Color;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
     public static class ConversionExtensions {
 

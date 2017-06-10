@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Android.Content.Res;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
     public static class ReadMixin
     {

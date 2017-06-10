@@ -1,9 +1,9 @@
 ﻿using Android.Graphics;
-using OmniGui;
+using OmniGui.Geometry;
+using Rect = Android.Graphics.Rect;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
-    using OmniGui.Geometry;
     using Rect = Rect;
 
     public class AndroidTextEngine : ITextEngine

@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Service.Notification;
 using Android.Views;
-using Android.Widget;
-using AndroidApp.AndPlugin;
 using Common;
 using OmniGui;
-using OmniGui.Xaml;
-using OmniGui.Xaml.Templates;
-using OmniXaml;
-using OmniXaml.Services;
-using OmniXaml.Attributes;
-using WpfApp;
+using OmniGui.Android;
 
 namespace AndroidApp
 {

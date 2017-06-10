@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using OmniGui.Xaml;
 using OmniXaml.Services;
-using WpfApp;
 using ControlTemplate = OmniGui.Xaml.Templates.ControlTemplate;
 using Point = OmniGui.Geometry.Point;
 using Rect = OmniGui.Geometry.Rect;

@@ -1,13 +1,10 @@
+using System;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using Android.App;
 
-namespace AndroidApp
+namespace OmniGui.Android
 {
-    using System;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
-    using AndPlugin;
-    using OmniGui;
-
     public class AndroidPlatform
     {
         private readonly Activity mainActivity;

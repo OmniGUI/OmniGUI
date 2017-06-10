@@ -7,16 +7,13 @@ using Android.Content;
 using Android.Graphics;
 using Android.Views;
 using Android.Views.InputMethods;
-using Common;
 using Java.Lang;
-using OmniGui;
 using OmniGui.Geometry;
 using OmniGui.Xaml;
 using OmniGui.Xaml.Templates;
 using OmniXaml.Services;
-using Exception = System.Exception;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
     public class OmniGuiViewReloaded : View
     {
@@ -59,7 +56,7 @@ namespace AndroidApp.AndPlugin
                 Layout = flacidLayout;
                 Layout.DataContext = DataContext;
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 Console.WriteLine(e);
             }

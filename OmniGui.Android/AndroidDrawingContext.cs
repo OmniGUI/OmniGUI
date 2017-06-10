@@ -1,9 +1,9 @@
 ﻿using Android.Graphics;
-using OmniGui;
+using Point = OmniGui.Geometry.Point;
+using Rect = OmniGui.Geometry.Rect;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
-    using OmniGui.Geometry;
     using Bitmap = OmniGui.Bitmap;
 
     public class AndroidDrawingContext : IDrawingContext

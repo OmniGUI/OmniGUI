@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
     public static class Assemblies
     {

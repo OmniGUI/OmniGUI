@@ -1,9 +1,8 @@
 using Android.App;
 using Android.Content;
 using Android.Views.InputMethods;
-using OmniGui;
 
-namespace AndroidApp.AndPlugin
+namespace OmniGui.Android
 {
     internal class AndroidRenderSurface : RenderSurfaceBase
     {
