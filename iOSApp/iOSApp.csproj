@@ -84,15 +84,12 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="iOSMessageService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="app.config" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist" />
-    <Compile Include="Omni\Conversion.cs" />
-    <Compile Include="Omni\iOSTextEngine.cs" />
-    <Compile Include="Omni\OmniGuiView.cs" />
-    <Compile Include="Omni\iOSDrawingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
     <None Include="packages.config" />
@@ -134,6 +131,12 @@
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OmniGui.iOS\OmniGui.iOS.csproj">
+      <Project>{af5a4c80-986f-4f03-ad75-9e8aaf0c5486}</Project>
+      <Name>OmniGui.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
       <Project>{FF6D5507-1F7C-4161-B5CB-36FA484BBEE9}</Project>
       <Name>OmniGui.Xaml</Name>

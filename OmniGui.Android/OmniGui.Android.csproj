@@ -60,13 +60,11 @@
   <ItemGroup>
     <Compile Include="AndroidDrawingContext.cs" />
     <Compile Include="AndroidEventSource.cs" />
-    <Compile Include="AndroidPlatform.cs" />
     <Compile Include="AndroidRenderSurface.cs" />
     <Compile Include="AndroidTextEngine.cs" />
     <Compile Include="Assemblies.cs" />
     <Compile Include="ConversionExtensions.cs" />
     <Compile Include="OmniGuiView.cs" />
-    <Compile Include="OmniGuiViewReloaded.cs" />
     <Compile Include="ReadMixin.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

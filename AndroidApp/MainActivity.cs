@@ -21,7 +21,7 @@ namespace AndroidApp
             ActionBar.Hide();
             Window.AddFlags(WindowManagerFlags.Fullscreen);
 
-            SetContentView(new OmniGuiViewReloaded(this)
+            SetContentView(new OmniGuiView(this)
             {
                 Source = "Layout.xaml",
                 DataContext = new SampleViewModel(new AndroidMessageService())

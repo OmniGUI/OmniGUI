@@ -6,10 +6,10 @@ namespace OmniGui.Android
 {
     internal class AndroidRenderSurface : RenderSurfaceBase
     {
-        private readonly OmniGuiViewReloaded view;
+        private readonly OmniGuiView view;
         private readonly Activity activity;
 
-        public AndroidRenderSurface(OmniGuiViewReloaded view, Activity activity)
+        public AndroidRenderSurface(OmniGuiView view, Activity activity)
         {
             this.view = view;
             this.activity = activity;

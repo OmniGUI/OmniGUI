@@ -11,10 +11,10 @@ namespace OmniGui.Android
 {
     public class AndroidEventSource : IEventSource
     {
-        private readonly OmniGuiViewReloaded view;
+        private readonly OmniGuiView view;
         private readonly Activity activity;
 
-        public AndroidEventSource(OmniGuiViewReloaded view, Activity activity)
+        public AndroidEventSource(OmniGuiView view, Activity activity)
         {
             this.view = view;
             this.activity = activity;

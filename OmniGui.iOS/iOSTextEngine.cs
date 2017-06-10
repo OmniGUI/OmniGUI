@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
 using Foundation;
-using OmniGui;
 using UIKit;
 using Size = OmniGui.Geometry.Size;
 
-namespace iOSApp.Omni
+namespace OmniGui.iOS
 {
     public class iOSTextEngine : ITextEngine
     {

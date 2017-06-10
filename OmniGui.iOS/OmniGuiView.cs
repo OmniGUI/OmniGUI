@@ -1,9 +1,8 @@
 using CoreGraphics;
-using OmniGui;
 using OmniGui.Geometry;
 using UIKit;
 
-namespace iOSApp.Omni
+namespace OmniGui.iOS
 {
     public class OmniGuiView : UIView
     {
