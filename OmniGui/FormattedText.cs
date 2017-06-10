@@ -4,11 +4,14 @@ namespace OmniGui
 
     public class FormattedText
     {
-        public FormattedText()
-        {            
+        public ITextEngine TextEngine { get; }
+
+        public FormattedText(ITextEngine textEngine)
+        {
+            TextEngine = textEngine;
         }
 
-        public FormattedText(FormattedText formattedText)
+        public FormattedText(FormattedText formattedText, ITextEngine textEngine) : this(textEngine)
         {
             Text = formattedText.Text;
             FontFamily = formattedText.FontFamily;
@@ -27,11 +30,11 @@ namespace OmniGui
         public float FontSize { get; set; }
         public FontWeights FontWeight { get; set; }
 
-        public Size DesiredSize => Platform.Current.TextEngine.Measure(this);
+        public Size DesiredSize => TextEngine.Measure(this);
 
         public Size Measure()
         {
-            return Platform.Current.TextEngine.Measure(this);
+            return TextEngine.Measure(this);
         }
     }
 }

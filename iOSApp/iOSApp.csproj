@@ -90,7 +90,6 @@
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist" />
     <Compile Include="Omni\Conversion.cs" />
-    <Compile Include="Omni\iOSPlatform.cs" />
     <Compile Include="Omni\iOSTextEngine.cs" />
     <Compile Include="Omni\OmniGuiView.cs" />
     <Compile Include="Omni\iOSDrawingContext.cs" />

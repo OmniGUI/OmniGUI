@@ -82,7 +82,11 @@
     <Compile Include="AndPlugin\AndroidDrawingContext.cs" />
     <Compile Include="AndPlugin\AndroidEventSource.cs" />
     <Compile Include="AndPlugin\AndroidPlatform.cs" />
+    <Compile Include="AndPlugin\AndroidRenderSurface.cs" />
+    <Compile Include="AndPlugin\Assemblies.cs" />
     <Compile Include="AndPlugin\ConversionExtensions.cs" />
+    <Compile Include="AndPlugin\OmniGuiViewReloaded.cs" />
+    <Compile Include="AndPlugin\ReadMixin.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="AndPlugin\OmniGuiView.cs" />

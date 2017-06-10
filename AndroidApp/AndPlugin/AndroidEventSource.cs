@@ -15,10 +15,10 @@ namespace AndroidApp.AndPlugin
 
     public class AndroidEventSource : IEventSource
     {
-        private readonly OmniGuiView view;
+        private readonly OmniGuiViewReloaded view;
         private readonly Activity activity;
 
-        public AndroidEventSource(OmniGuiView view, Activity activity)
+        public AndroidEventSource(OmniGuiViewReloaded view, Activity activity)
         {
             this.view = view;
             this.activity = activity;

@@ -8,7 +8,7 @@ namespace AndroidApp
     using AndPlugin;
     using OmniGui;
 
-    public class AndroidPlatform : IPlatform
+    public class AndroidPlatform
     {
         private readonly Activity mainActivity;
         private readonly ISubject<Layout> focusedElementSubject = new Subject<Layout>();
@@ -17,7 +17,7 @@ namespace AndroidApp
         {
             this.mainActivity = mainActivity;
             TextEngine = new AndroidTextEngine();
-            EventSource = new AndroidEventSource(view, mainActivity);            
+            //EventSource = new AndroidEventSource(view, mainActivity);            
         }
         public ITextEngine TextEngine { get; }
         public IEventSource EventSource { get; }

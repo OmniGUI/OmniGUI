@@ -10,7 +10,7 @@
     {
         public static readonly ExtendedProperty TextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Text",
             typeof(TextBoxView),
-            typeof(string), new PropertyMetadata {DefaultValue = null});
+            typeof(string), new PropertyMetadata { DefaultValue = null });
 
         public static readonly ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize",
             typeof(TextBoxView),
@@ -26,6 +26,15 @@
         public TextBoxView(FrameworkDependencies deps) : base(deps)
         {
             var changedObservable = GetChangedObservable(TextProperty);
+
+            FormattedText = new FormattedText(Deps.TextEngine)
+            {
+                FontSize = 16,
+                Brush = new Brush(Colors.Black),
+                Constraint = Size.Infinite,
+                FontFamily = "Arial",
+                FontWeight = FontWeights.Normal
+            };
 
             Pointer.Down.Subscribe(point =>
             {
@@ -43,14 +52,14 @@
             {
                 if (FormattedText != null && o != null)
                 {
-                    FormattedText.FontSize = (float) o;
+                    FormattedText.FontSize = (float)o;
                 }
             });
 
             changedSubscription = changedObservable
                 .Subscribe(o =>
                 {
-                    FormattedText.Text = (string) o;
+                    FormattedText.Text = (string)o;
                     EnforceCursorLimits();
                     ForceRender();
                 });
@@ -58,11 +67,14 @@
 
         private static Func<KeyInputArgs, bool> Filter
         {
-            get { return args =>
+            get
             {
-                var isFiltered = args.Text.ToCharArray().First() != Chars.Backspace;
-                return isFiltered;
-            }; }
+                return args =>
+          {
+              var isFiltered = args.Text.ToCharArray().First() != Chars.Backspace;
+              return isFiltered;
+          };
+            }
         }
 
         private bool IsFocused
@@ -98,7 +110,7 @@
 
         public string Text
         {
-            get => (string) GetValue(TextProperty);
+            get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 
@@ -118,14 +130,7 @@
 
         public string FontFamily => FormattedText.FontFamily;
 
-        private FormattedText FormattedText { get; } = new FormattedText
-        {
-            FontSize = 16,
-            Brush = new Brush(Colors.Black),
-            Constraint = Size.Infinite,
-            FontFamily = "Arial",
-            FontWeight = FontWeights.Normal
-        };
+        private FormattedText FormattedText { get; }
 
         private void DisableCaretBlink()
         {
@@ -175,7 +180,7 @@
 
         public double FontSize
         {
-            get { return (double) GetValue(FontSizeProperty); }
+            get { return (double)GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
@@ -211,7 +216,7 @@
 
         private double GetCursorY()
         {
-            return Platform.Current.TextEngine.GetHeight(FormattedText.FontFamily, FormattedText.FontSize);
+            return Deps.TextEngine.GetHeight(FormattedText.FontFamily, FormattedText.FontSize);
         }
 
         private double GetCursorX()
@@ -222,7 +227,7 @@
             }
 
             var textBeforeCursor = Text.Substring(0, CursorPositionOrdinal);
-            var formattedTextCopy = new FormattedText(FormattedText)
+            var formattedTextCopy = new FormattedText(FormattedText, Deps.TextEngine)
             {
                 Text = textBeforeCursor
             };
@@ -292,7 +297,7 @@
         {
             var textDesired = FormattedText.Text != null ? FormattedText.DesiredSize : Size.Empty;
 
-            var height = Math.Max(textDesired.Height, Platform.Current.TextEngine.GetHeight(FontFamily, FormattedText.FontSize));
+            var height = Math.Max(textDesired.Height, Deps.TextEngine.GetHeight(FontFamily, FormattedText.FontSize));
             return new Size(textDesired.Width, height);
         }
     }

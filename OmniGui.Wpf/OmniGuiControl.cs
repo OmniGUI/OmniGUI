@@ -46,9 +46,7 @@ namespace OmniGui.Wpf
                     ev => DataContextChanged -= ev)
                 .Subscribe(dc => TrySetDataContext(dc));
 
-            OmniGui.Platform.Current = new WpfPlatform(this);
-            Platform = OmniGui.Platform.Current;
-            var deps = new FrameworkDependencies(new WpfEventSource(this), new WpfRenderSurface(this));
+            var deps = new FrameworkDependencies(new WpfEventSource(this), new WpfRenderSurface(this), new WpfTextEngine());
             var typeLocator = new TypeLocator(() => ControlTemplates, deps);
             XamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates,
                 typeLocator);
@@ -68,7 +66,6 @@ namespace OmniGui.Wpf
                                       (container =
                                           CreateContainer(new Uri("Container.xaml", UriKind.RelativeOrAbsolute)));
 
-        public IPlatform Platform { get; }
 
         public Layout Layout { get; set; }
 
@@ -79,7 +76,7 @@ namespace OmniGui.Wpf
         }
 
 
-        public IXamlLoader XamlLoader { get; set; }
+        public IXamlLoader XamlLoader { get; }
 
         private Container CreateContainer(Uri uri)
         {
