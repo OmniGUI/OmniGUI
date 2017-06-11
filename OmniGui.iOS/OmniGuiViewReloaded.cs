@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
 using CoreGraphics;
-using OmniGui.Geometry;
 using OmniGui.Xaml;
 using OmniGui.Xaml.Templates;
 using OmniXaml.Services;
@@ -18,10 +15,17 @@ namespace OmniGui.iOS
         private string source;
         private Container container;
 
+        public OmniGuiViewReloaded()
+        {
+            XamlLoader = CreateXamlLoader(this);                       
+        }
+
         public override void Draw(CGRect rect)
         {
-            Layout.Measure(new Size(30, 30));
-            Layout.Arrange(rect.ToOmniGui());
+            var bounds = rect.ToOmniGui();
+            
+            Layout.Measure(bounds.Size);
+            Layout.Arrange(bounds);
             using (var ctx = UIGraphics.GetCurrentContext())
             {
                 Layout.Render(new iOSDrawingContext(ctx));
@@ -30,7 +34,7 @@ namespace OmniGui.iOS
 
         public Layout Layout { get; set; }
 
-        private IXamlLoader CreateXamlLoader(OmniGuiView view)
+        private IXamlLoader CreateXamlLoader(UIView view)
         {
             var androidEventSource = new iOSEventSource(view);
             var deps = new FrameworkDependencies(androidEventSource, new iOSRenderSurface(this), new iOSTextEngine());
@@ -55,9 +59,9 @@ namespace OmniGui.iOS
                 var flacidLayout = (Layout)XamlLoader.Load(ReadMixin.ReadText(value));
                 new TemplateInflator().Inflate(flacidLayout, ControlTemplates);
                 Layout = flacidLayout;
-                DataContext = DataContext;
+                Layout.DataContext = DataContext;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e);
             }
@@ -72,7 +76,7 @@ namespace OmniGui.iOS
             return (Container)XamlLoader.Load(ReadMixin.ReadText(containerAsset));
         }
 
-        public IXamlLoader XamlLoader { get; set; }
+        public IXamlLoader XamlLoader { get; }
 
         public object DataContext
         {
@@ -80,7 +84,10 @@ namespace OmniGui.iOS
             set
             {
                 dataContext = value;
-                Layout.DataContext = value;
+                if (Layout != null)
+                {
+                    Layout.DataContext = value;
+                }
             }
         }
     }

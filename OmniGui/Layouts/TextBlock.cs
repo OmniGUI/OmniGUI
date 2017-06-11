@@ -1,10 +1,9 @@
-﻿using OmniXaml.Attributes;
-
-namespace OmniGui.Layouts
+﻿namespace OmniGui.Layouts
 {
     using System;
     using Geometry;
     using Zafiro.PropertySystem.Standard;
+    using OmniXaml.Attributes;
 
     public class TextBlock : Layout
     {
@@ -14,7 +13,7 @@ namespace OmniGui.Layouts
 
         public static ExtendedProperty FontWeightProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
 
-        public static ExtendedProperty FontFamilyProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontFamily", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
+        public static ExtendedProperty FontNameProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontName", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
 
         public static ExtendedProperty TextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Text", typeof(TextBlock), typeof(string), new PropertyMetadata { DefaultValue = null });
 
@@ -31,18 +30,18 @@ namespace OmniGui.Layouts
         private void UpdateFormattedText()
         {
             FormattedText.Text = Text;
-            FormattedText.FontFamily = FontFamily;
             FormattedText.Brush = Foreground;
             FormattedText.FontSize = FontSize;
             FormattedText.FontWeight = FontWeight;
+            FormattedText.FontName = FontName;
         }
 
-        public string FontFamily
+        public string FontName
         {
-            get { return (string)GetValue(FontFamilyProperty); }
+            get { return (string)GetValue(FontNameProperty); }
             set
             {
-                SetValue(FontFamilyProperty, value);
+                SetValue(FontNameProperty, value);
                 UpdateFormattedText();
             }
         }
@@ -71,7 +70,7 @@ namespace OmniGui.Layouts
         {
             if (Text == null)
             {
-                var height = Deps.TextEngine.GetHeight(FontFamily, FontSize);
+                var height = Deps.TextEngine.GetHeight(FontName, FontSize);
                 return new Size(0, height);
             }
 

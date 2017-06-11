@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using CoreText;
 using Foundation;
 using UIKit;
 using Size = OmniGui.Geometry.Size;
@@ -9,7 +10,6 @@ namespace OmniGui.iOS
     {
         public Size Measure(FormattedText formattedText)
         {
-            var font = UIFont.SystemFontOfSize(formattedText.FontSize);
             var width = formattedText.Constraint.Width;
             var options = NSStringDrawingOptions.UsesFontLeading |
                           NSStringDrawingOptions.UsesLineFragmentOrigin;
@@ -18,16 +18,16 @@ namespace OmniGui.iOS
             var nsText = new NSString(formattedText.Text);
             var attributes = new UIStringAttributes
             {
-                Font = font,
+                Font = UIFont.FromName(formattedText.FontName, formattedText.FontSize),
             };
             var sizeF = nsText.GetBoundingRect(boundSize, options, attributes, null).Size;
 
             return sizeF.ToOmniGui();
         }
 
-        public double GetHeight(string fontFamily, float fontSize)
+        public double GetHeight(string fontName, float fontSize)
         {
-            return 10D;
+            return new CTFont(fontName, fontSize).CapHeightMetric; 
         }
     }
 }

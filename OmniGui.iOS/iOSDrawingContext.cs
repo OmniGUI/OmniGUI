@@ -1,6 +1,9 @@
 ﻿using System;
 using CoreGraphics;
+using CoreText;
+using Foundation;
 using OmniGui.Geometry;
+using UIKit;
 
 namespace OmniGui.iOS
 {
@@ -15,31 +18,11 @@ namespace OmniGui.iOS
 
         public void DrawRectangle(Rect rect, Pen pen)
         {
-            throw new System.NotImplementedException();
+            context.SetFillColor(pen.Brush.Color.ToiOS());
+            context.StrokeRectWithWidth(rect.ToiOS(), (nfloat) pen.Thickness);
         }
 
         public void FillRectangle(Rect rect, Brush brush)
-        {
-            //var paint = new Paint();
-            //paint.Color = brush.Color.ToAndroid();
-            //canvas.DrawRect(rect.ToAndroid(), paint);
-        }
-
-        public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
-        {
-            var cgRect = rect.ToiOS();
-
-            context.SetStrokeColor(pen.Brush.Color.ToiOS());
-            context.StrokeRectWithWidth(cgRect, (nfloat)pen.Thickness);
-
-            //CGRect rectangle = rect.ToiOS();
-            //context.SetFillColor((nfloat)1.0, (nfloat)1.0, 0, (nfloat)0.0);
-            //context.SetStrokeColor((nfloat)0.0, (nfloat)0.0, (nfloat)0.0, (nfloat)0.5);
-            //context.FillRect(rectangle);
-            //context.StrokeRect(rectangle);
-        }
-
-        public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
         {
             var cgRect = rect.ToiOS();
 
@@ -47,24 +30,51 @@ namespace OmniGui.iOS
             context.FillRect(cgRect);
         }
 
+        public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
+        {
+            var rectanglePath = UIBezierPath.FromRoundedRect(rect.ToiOS(), (nfloat)cornerRadius.BottomLeft);
+            context.SetStrokeColor(pen.Brush.Color.ToiOS());
+
+            rectanglePath.LineWidth = (nfloat) pen.Thickness;
+            rectanglePath.Stroke();
+        }
+
+        public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
+        {
+            var rectanglePath = UIBezierPath.FromRoundedRect(rect.ToiOS(), (nfloat) cornerRadius.BottomLeft);
+            context.SetFillColor(brush.Color.ToiOS());
+            rectanglePath.Fill();
+        }
+
         public void DrawText(FormattedText formattedText, Point point)
         {
             context.SaveState();
-            context.ScaleCTM(1f, -1f);
-            context.SelectFont("Helvetica", formattedText.FontSize, CGTextEncoding.MacRoman);
+            context.ScaleCTM(1, -1); // you flipped the context, now you must use negative Y values to draw "into" the view
             context.SetFillColor(formattedText.Brush.Color.ToiOS());
-            context.SetTextDrawingMode(CGTextDrawingMode.Fill);
-            context.ShowTextAtPoint((nfloat)point.X, (nfloat)(-point.Y), formattedText.Text);
+   
+            var sizeOfText = formattedText.DesiredSize;
+
+            var ctFont = new CTFont(formattedText.FontName, formattedText.FontSize);
+            var attributedString = new NSAttributedString(formattedText.Text,
+                new CTStringAttributes
+                {
+                    ForegroundColor = formattedText.Brush.Color.ToiOS(),
+                    Font = ctFont
+                });
+
+            context.TextPosition = new CGPoint(point.X, -(point.Y + sizeOfText.Height - ctFont.DescentMetric));
+
+            using (var textLine = new CTLine(attributedString))
+            {               
+                textLine.Draw(context);
+            }
+            
             context.RestoreState();
-
-            //context.TextPosition = point.ToiOS();
-            //context.SetFillColor(formattedText.Brush.Color.ToiOS());
-            //context.ShowText(formattedText.Text);
-
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {
+            //context.DrawImage(rect);
             throw new System.NotImplementedException();
         }
 

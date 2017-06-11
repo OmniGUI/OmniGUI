@@ -28,9 +28,11 @@
     </Grid.ColumnDefinitions>-->
 
 
-
-    <TextBox Text="{Bind TargetProperty=Title, LinkMode=FullLink}" />
-    <TextBlock Text="{Bind TargetProperty=Title}" />
+    <TextBox></TextBox>
+    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+    <Button>Hola</Button>
 
 </StackPanel>
 

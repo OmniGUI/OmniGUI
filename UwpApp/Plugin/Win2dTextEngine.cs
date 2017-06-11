@@ -27,7 +27,7 @@ namespace UwpApp.Plugin
 
             var canvasTextFormat = new CanvasTextFormat
             {
-                FontFamily = formattedText.FontFamily,
+                FontFamily = formattedText.FontName,
                 FontSize = formattedText.FontSize,
                 FontWeight = formattedText.FontWeight.ToWin2D(),
             };

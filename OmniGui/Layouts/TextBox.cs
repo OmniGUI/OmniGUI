@@ -9,7 +9,7 @@ namespace OmniGui.Layouts
     {
         public static readonly ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = 16F });
         public static readonly ExtendedProperty FontWeightProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontWeight", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
-        public static readonly ExtendedProperty FontFamilyProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontFamily", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
+        public static readonly ExtendedProperty FontFamilyProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontName", typeof(TextBox), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
         public static readonly ExtendedProperty TextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Text", typeof(TextBox), typeof(string), new PropertyMetadata { DefaultValue = null });
         public static readonly ExtendedProperty ForegroundProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Foreground", typeof(TextBox), typeof(Brush), new PropertyMetadata { DefaultValue = new Brush(Colors.Black) });
         public static readonly ExtendedProperty TextWrappingProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("TextWrapping", typeof(TextBox), typeof(TextWrapping), new PropertyMetadata { DefaultValue = TextWrapping.NoWrap });

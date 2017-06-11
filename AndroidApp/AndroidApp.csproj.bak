@@ -16,7 +16,7 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -79,14 +79,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndPlugin\AndroidDrawingContext.cs" />
-    <Compile Include="AndPlugin\AndroidEventSource.cs" />
-    <Compile Include="AndPlugin\AndroidPlatform.cs" />
-    <Compile Include="AndPlugin\ConversionExtensions.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="AndPlugin\OmniGuiView.cs" />
-    <Compile Include="AndPlugin\AndroidTextEngine.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -111,6 +105,10 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OmniGui.Android\OmniGui.Android.csproj">
+      <Project>{a5f23bc9-b134-4f85-b08c-264dc2f56c04}</Project>
+      <Name>OmniGui.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
       <Project>{ff6d5507-1f7c-4161-b5cb-36fa484bbee9}</Project>
       <Name>OmniGui.Xaml</Name>

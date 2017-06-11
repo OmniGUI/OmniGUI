@@ -14,7 +14,6 @@ namespace OmniGui
         public FormattedText(FormattedText formattedText, ITextEngine textEngine) : this(textEngine)
         {
             Text = formattedText.Text;
-            FontFamily = formattedText.FontFamily;
             FontWeight = formattedText.FontWeight;
             FontSize = formattedText.FontSize;
             Constraint = formattedText.Constraint;
@@ -23,7 +22,6 @@ namespace OmniGui
         }
 
         public string Text { get; set; }
-        public string FontFamily { get; set; }
         public string FontName { get; set; }
         public Brush Brush { get; set; }
         public Size Constraint { get; set; }

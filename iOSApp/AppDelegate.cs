@@ -28,8 +28,14 @@ namespace iOSApp
 
             // If you have defined a root view controller, set it here:
             var vc = new UIViewController();
-            vc.View = new OmniGuiViewReloaded { Source = "Layout.xaml", DataContext = new SampleViewModel(new iOSMessageService())};
+            var sampleViewModel = new SampleViewModel(new iOSMessageService());
+            var omniGuiViewReloaded = new OmniGuiViewReloaded { Source = "Layout.xaml" };
+            omniGuiViewReloaded.DataContext = sampleViewModel;
+            vc.View = omniGuiViewReloaded;
+            
             Window.RootViewController = vc;
+
+            UIApplication.SharedApplication.StatusBarHidden = true;
 
             // make the window visible
             Window.MakeKeyAndVisible();

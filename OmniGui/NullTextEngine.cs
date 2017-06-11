@@ -9,7 +9,7 @@
             return new Size();
         }
 
-        public double GetHeight(string fontFamily, float fontSize)
+        public double GetHeight(string fontName, float fontSize)
         {
             return 0D;
         }

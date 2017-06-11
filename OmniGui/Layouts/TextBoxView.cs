@@ -32,7 +32,7 @@
                 FontSize = 16,
                 Brush = new Brush(Colors.Black),
                 Constraint = Size.Infinite,
-                FontFamily = "Arial",
+                FontName = "Arial",
                 FontWeight = FontWeights.Normal
             };
 
@@ -128,7 +128,7 @@
             }
         }
 
-        public string FontFamily => FormattedText.FontFamily;
+        public string FontFamily => FormattedText.FontName;
 
         private FormattedText FormattedText { get; }
 
@@ -216,7 +216,7 @@
 
         private double GetCursorY()
         {
-            return Deps.TextEngine.GetHeight(FormattedText.FontFamily, FormattedText.FontSize);
+            return Deps.TextEngine.GetHeight(FormattedText.FontName, FormattedText.FontSize);
         }
 
         private double GetCursorX()
