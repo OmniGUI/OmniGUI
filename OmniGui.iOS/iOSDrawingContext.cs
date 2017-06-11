@@ -49,7 +49,7 @@ namespace OmniGui.iOS
         public void DrawText(FormattedText formattedText, Point point)
         {
             context.SaveState();
-            context.ScaleCTM(1, -1); // you flipped the context, now you must use negative Y values to draw "into" the view
+            context.ScaleCTM(1, -1); 
             context.SetFillColor(formattedText.Brush.Color.ToiOS());
    
             var sizeOfText = formattedText.DesiredSize;
