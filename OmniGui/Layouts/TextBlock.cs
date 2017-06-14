@@ -1,44 +1,39 @@
-﻿namespace OmniGui.Layouts
-{
-    using System;
-    using Geometry;
-    using Zafiro.PropertySystem.Standard;
-    using OmniXaml.Attributes;
+﻿using System;
+using OmniGui.Geometry;
+using Zafiro.PropertySystem.Standard;
+using OmniXaml.Attributes;
 
+namespace OmniGui.Layouts
+{
     public class TextBlock : Layout
     {
-        private Brush foreground;
+        public static ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize",
+            typeof(TextBlock), typeof(float), new PropertyMetadata {DefaultValue = 16F});
 
-        public static ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = 20F });
+        public static ExtendedProperty FontWeightProperty =
+            OmniGuiPlatform.PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock), typeof(float),
+                new PropertyMetadata {DefaultValue = FontWeights.Normal});
 
-        public static ExtendedProperty FontWeightProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontWeight", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = FontWeights.Normal });
+        public static ExtendedProperty FontNameProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontName",
+            typeof(TextBlock), typeof(float), new PropertyMetadata {DefaultValue = "Arial"});
 
-        public static ExtendedProperty FontNameProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontName", typeof(TextBlock), typeof(float), new PropertyMetadata { DefaultValue = "Arial" });
-
-        public static ExtendedProperty TextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Text", typeof(TextBlock), typeof(string), new PropertyMetadata { DefaultValue = null });
+        public static ExtendedProperty TextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Text",
+            typeof(TextBlock), typeof(string), new PropertyMetadata {DefaultValue = null});
 
         private string currentText;
+        private Brush foreground;
 
         public TextBlock(FrameworkDependencies deps) : base(deps)
         {
-            FormattedText = new FormattedText(Deps.TextEngine) { FontSize = 16 };
+            FormattedText = new FormattedText(Deps.TextEngine) {FontSize = 16};
             Foreground = new Brush(Colors.Black);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
-            NotifyRenderAffectedBy(TextProperty);            
-        }
-
-        private void UpdateFormattedText()
-        {
-            FormattedText.Text = Text;
-            FormattedText.Brush = Foreground;
-            FormattedText.FontSize = FontSize;
-            FormattedText.FontWeight = FontWeight;
-            FormattedText.FontName = FontName;
+            NotifyRenderAffectedBy(TextProperty);
         }
 
         public string FontName
         {
-            get { return (string)GetValue(FontNameProperty); }
+            get => (string) GetValue(FontNameProperty);
             set
             {
                 SetValue(FontNameProperty, value);
@@ -48,7 +43,7 @@
 
         public FontWeights FontWeight
         {
-            get { return (FontWeights)GetValue(FontWeightProperty); }
+            get => (FontWeights) GetValue(FontWeightProperty);
             set
             {
                 SetValue(FontWeightProperty, value);
@@ -58,12 +53,48 @@
 
         public float FontSize
         {
-            get { return (float)GetValue(FontSizeProperty); }
+            get => (float) GetValue(FontSizeProperty);
             set
             {
                 SetValue(FontSizeProperty, value);
                 UpdateFormattedText();
             }
+        }
+
+        public Brush Foreground
+        {
+            get => foreground;
+            set
+            {
+                foreground = value;
+                UpdateFormattedText();
+            }
+        }
+
+        [Content]
+        public string Text
+        {
+            get => currentText;
+            set
+            {
+                currentText = value;
+                UpdateFormattedText();
+                var subject = GetObserver(TextProperty);
+                subject.OnNext(value);
+            }
+        }
+
+        private FormattedText FormattedText { get; }
+
+        public TextWrapping TextWrapping { get; set; }
+
+        private void UpdateFormattedText()
+        {
+            FormattedText.Text = Text;
+            FormattedText.Brush = Foreground;
+            FormattedText.FontSize = FontSize;
+            FormattedText.FontWeight = FontWeight;
+            FormattedText.FontName = FontName;
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -95,32 +126,5 @@
 
             drawingContext.DrawText(FormattedText, VisualBounds.Point);
         }
-
-        public Brush Foreground
-        {
-            get { return foreground; }
-            set
-            {
-                foreground = value;
-                UpdateFormattedText();
-            }
-        }
-
-        [Content]
-        public string Text
-        {
-            get { return currentText; }
-            set
-            {
-                currentText = value;
-                UpdateFormattedText();
-                var subject = GetObserver(TextProperty);
-                subject.OnNext(value);                
-            }
-        }
-
-        private FormattedText FormattedText { get; set; }
-
-        public TextWrapping TextWrapping { get; set; }
     }
 }

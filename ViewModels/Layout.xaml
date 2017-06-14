@@ -32,7 +32,7 @@
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-    <Button >Hola</Button>
+    <Button Command="{Bind TargetProperty=ShowMessageCommand}">Hola</Button>
 
 </StackPanel>
 

@@ -22,7 +22,7 @@ namespace AndroidApp
             SetContentView(new OmniGuiView(this)
             {
                 Source = "Layout.xaml",
-                DataContext = new SampleViewModel(new AndroidMessageService())
+                DataContext = new SampleViewModel(new AndroidMessageService(this))
             });            
         }        
     }

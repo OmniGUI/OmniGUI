@@ -99,8 +99,8 @@ namespace OmniGui.Android
             paint.Color = formattedText.Brush.Color.ToAndroid();
             paint.AntiAlias = true;
             //var baseLineOffset = paint.Ascent() - paint.Descent();
-            var baseLineOffset = -paint.Ascent();
-            canvas.DrawText(formattedText.Text, (float)point.X, (float)point.Y + baseLineOffset, paint);
+            var offset = -paint.Ascent();
+            canvas.DrawText(formattedText.Text, (float)point.X, (float) (point.Y + offset), paint);
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
