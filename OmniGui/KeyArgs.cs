@@ -1,8 +1,8 @@
 ﻿namespace OmniGui
 {
-    public class SpecialKeysArgs
+    public class KeyArgs
     {
-        public SpecialKeysArgs(MyKey key)
+        public KeyArgs(MyKey key)
         {
             Key = key;
         }

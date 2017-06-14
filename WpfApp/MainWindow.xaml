@@ -10,9 +10,10 @@
         RenderOptions.BitmapScalingMode="HighQuality"
         RenderOptions.EdgeMode="Aliased"
         Title="MainWindow">
+    
+    <wpf:OmniGuiControl Grid.Row="1" Grid.Column="0" Source="Layout.xaml" />
 
-
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -24,7 +25,7 @@
         <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <wpf:OmniGuiControl Grid.Row="1" Grid.Column="0" Source="Layout.xaml" />
         <wpf:OmniGuiControl Grid.Row="1" Grid.Column="1" Source="Layout.xaml"></wpf:OmniGuiControl>
-    </Grid>
+    </Grid>-->
 </Window>
 
 

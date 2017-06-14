@@ -176,17 +176,17 @@ namespace OmniGui.Android
                 case Keycode.D:
                     break;
                 case Keycode.Del:
-                    break;
+                    return MyKey.Backspace;
                 case Keycode.DpadCenter:
                     break;
                 case Keycode.DpadDown:
-                    break;
+                    return MyKey.DownArrow;
                 case Keycode.DpadLeft:
-                    break;
+                    return MyKey.LeftArrow;
                 case Keycode.DpadRight:
-                    break;
+                    return MyKey.RightArrow;
                 case Keycode.DpadUp:
-                    break;
+                    return MyKey.UpArrow;
                 case Keycode.Dvr:
                     break;
                 case Keycode.E:
@@ -196,7 +196,7 @@ namespace OmniGui.Android
                 case Keycode.Endcall:
                     break;
                 case Keycode.Enter:
-                    break;
+                    return MyKey.Enter;
                 case Keycode.Envelope:
                     break;
                 case Keycode.Equals:

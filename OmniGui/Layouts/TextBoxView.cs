@@ -65,7 +65,7 @@
                 });
         }
 
-        private static Func<KeyInputArgs, bool> Filter
+        private static Func<TextInputArgs, bool> Filter
         {
             get
             {
@@ -153,7 +153,7 @@
             }
         }
 
-        private void ProcessSpecialKey(SpecialKeysArgs args)
+        private void ProcessSpecialKey(KeyArgs args)
         {
             if (args.Key == MyKey.RightArrow)
             {

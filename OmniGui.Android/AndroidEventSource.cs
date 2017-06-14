@@ -1,23 +1,16 @@
 using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using Android.App;
-using Android.Content;
 using Android.Views;
-using Android.Views.InputMethods;
 using OmniGui.Geometry;
 
 namespace OmniGui.Android
 {
     public class AndroidEventSource : IEventSource
     {
-        private readonly OmniGuiView view;
-        private readonly Activity activity;
 
-        public AndroidEventSource(OmniGuiView view, Activity activity)
+        public AndroidEventSource(OmniGuiView view)
         {
-            this.view = view;
-            this.activity = activity;
             var eventObs = Observable.FromEventPattern<View.TouchEventArgs>(view, "Touch")
                 .Select(pattern =>
                 {
@@ -26,35 +19,26 @@ namespace OmniGui.Android
                 });
 
             view.Touchables.Add(view);
-
-
+            
             Pointer = eventObs;
-            KeyInput = view.TextInput.Select(sequence => new KeyInputArgs {Text = sequence.ToString()});
-            SpecialKeys = GetSpecialKeysObservable(view);
+            TextInput = view.TextInput.Select(sequence => new TextInputArgs {Text = sequence.ToString()});
+            KeyInput = KeyInputObservable(view);
         }
     
-        private IObservable<SpecialKeysArgs> GetSpecialKeysObservable(View element)
+        private IObservable<KeyArgs> KeyInputObservable(View element)
         {
-            var fromEventPattern = Observable.FromEventPattern<EventHandler<View.KeyEventArgs>, View.KeyEventArgs>(
-                ev => element.KeyPress += ev,
-                ev => element.KeyPress -= ev);
-            return fromEventPattern.Select(ep => new SpecialKeysArgs(ep.EventArgs.KeyCode.ToOmniGui()));
+            var fromKeyPress = Observable.FromEventPattern<EventHandler<View.KeyEventArgs>, View.KeyEventArgs>(
+                    ev => element.KeyPress += ev,
+                    ev => element.KeyPress -= ev)
+                .Where(pattern => pattern.EventArgs.Event.Action == KeyEventActions.Down)
+                .Select(ep => new KeyArgs(ep.EventArgs.KeyCode.ToOmniGui()));
+
+ 
+            return fromKeyPress;
         }
 
         public IObservable<Point> Pointer { get; }
         public IObservable<TextInputArgs> TextInput { get; } = new Subject<TextInputArgs>();
-        public IObservable<KeyInputArgs> KeyInput { get; } = new Subject<KeyInputArgs>();
-        public IObservable<SpecialKeysArgs> SpecialKeys { get; }
-
-        public void Invalidate()
-        {
-            activity.RunOnUiThread(() => view.Invalidate());            
-        }
-
-        public void ShowVirtualKeyboard()
-        {
-            var imm = (InputMethodManager)activity.GetSystemService(Context.InputMethodService);
-            imm.ShowSoftInput(view, ShowFlags.Forced);
-        }
+        public IObservable<KeyArgs> KeyInput { get; }
     }
 }

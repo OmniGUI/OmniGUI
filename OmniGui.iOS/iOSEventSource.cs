@@ -15,7 +15,7 @@ namespace OmniGui.iOS
         }
 
         public IObservable<Point> Pointer { get; } = Observable.Never<Point>();
-        public IObservable<KeyInputArgs> KeyInput { get; } = Observable.Never<KeyInputArgs>();
-        public IObservable<SpecialKeysArgs> SpecialKeys { get; } = Observable.Never<SpecialKeysArgs>();
+        public IObservable<TextInputArgs> TextInput { get; } = Observable.Never<TextInputArgs>();
+        public IObservable<KeyArgs> KeyInput { get; } = Observable.Never<KeyArgs>();
     }
 }

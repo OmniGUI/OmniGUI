@@ -6,7 +6,7 @@
     public interface IEventSource
     {
         IObservable<Point> Pointer { get; }
-        IObservable<KeyInputArgs> KeyInput { get; }
-        IObservable<SpecialKeysArgs> SpecialKeys { get; }
+        IObservable<TextInputArgs> TextInput { get; }
+        IObservable<KeyArgs> KeyInput { get; }
     }
 }

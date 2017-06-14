@@ -16,23 +16,23 @@ namespace OmniGui.Wpf
         {
             this.inputElement = inputElement;
             Pointer = GetPointerObservable(inputElement);
-            KeyInput = GetKeyInputObservable(inputElement);
-            SpecialKeys = GetSpecialKeysObservable(inputElement);
+            TextInput = GetKeyInputObservable(inputElement);
+            KeyInput = GetSpecialKeysObservable(inputElement);
         }
 
-        private static IObservable<SpecialKeysArgs> GetSpecialKeysObservable(IInputElement element)
+        private static IObservable<KeyArgs> GetSpecialKeysObservable(IInputElement element)
         {
             var fromEventPattern = Observable.FromEventPattern<KeyEventHandler, KeyEventArgs>(
                 ev => element.PreviewKeyDown += ev,
                 ev => element.PreviewKeyDown -= ev);
 
-            return fromEventPattern.Select(ep => new SpecialKeysArgs(ep.EventArgs.Key.ToOmniGui()));
+            return fromEventPattern.Select(ep => new KeyArgs(ep.EventArgs.Key.ToOmniGui()));
         }
 
         public IObservable<Point> Pointer { get; }
 
-        public IObservable<KeyInputArgs> KeyInput { get; }
-        public IObservable<SpecialKeysArgs> SpecialKeys { get; }
+        public IObservable<TextInputArgs> TextInput { get; }
+        public IObservable<KeyArgs> KeyInput { get; }
 
         public void Invalidate()
         {
@@ -46,14 +46,14 @@ namespace OmniGui.Wpf
         {            
         }
 
-        private static IObservable<KeyInputArgs> GetKeyInputObservable(IInputElement element)
+        private static IObservable<TextInputArgs> GetKeyInputObservable(IInputElement element)
         {
             var fromEventPattern = Observable.FromEventPattern<TextCompositionEventHandler, TextCompositionEventArgs>(
                 ev => element.PreviewTextInput += ev,
                 ev => element.PreviewTextInput -= ev);
             return fromEventPattern
                 .Where(ep => ep.EventArgs.Text.ToCharArray().First() != Chars.Backspace)
-                .Select(ep => new KeyInputArgs {Text = ep.EventArgs.Text});
+                .Select(ep => new TextInputArgs {Text = ep.EventArgs.Text});
         }
 
         private static IObservable<Point> GetPointerObservable(IInputElement element)

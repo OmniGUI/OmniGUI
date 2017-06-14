@@ -21,17 +21,18 @@ namespace OmniGui.Android
         private Container container;
         private object dataContext;
         public ISubject<ICharSequence> TextInput { get; } = new Subject<ICharSequence>();
-
-
+        
         public OmniGuiView(Context context) : base(context)
         {
             FocusableInTouchMode = true;
             XamlLoader = CreateXamlLoader(this, (Activity) Context);
+            Focusable = true;
+            RequestFocus();
         }
 
         private IXamlLoader CreateXamlLoader(OmniGuiView view, Activity activity)
         {
-            var androidEventSource = new AndroidEventSource(view, activity);
+            var androidEventSource = new AndroidEventSource(view);
             var deps = new FrameworkDependencies(androidEventSource, new AndroidRenderSurface(this, activity), new AndroidTextEngine());
             var typeLocator = new TypeLocator(() => ControlTemplates, deps);
             return new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, typeLocator);
@@ -90,7 +91,7 @@ namespace OmniGui.Android
             var context = new AndroidDrawingContext(canvas);
             var availableSize = new Size(canvas.Width, canvas.Height);
             Layout.Measure(availableSize);
-            Layout.Arrange(new OmniGui.Geometry.Rect(OmniGui.Geometry.Point.Zero, availableSize));
+            Layout.Arrange(new Geometry.Rect(Geometry.Point.Zero, availableSize));
             Layout.Render(context);
         }
 
@@ -108,22 +109,6 @@ namespace OmniGui.Android
         public override IInputConnection OnCreateInputConnection(EditorInfo outAttrs)
         {
             return new PlatformInputConnection(this, true, TextInput);
-        }
-
-        private class PlatformInputConnection : BaseInputConnection
-        {
-            private readonly IObserver<ICharSequence> textObserver;
-
-            public PlatformInputConnection(View targetView, bool fullEditor, IObserver<ICharSequence> textObserver) : base(targetView, fullEditor)
-            {
-                this.textObserver = textObserver;
-            }
-
-            public override bool CommitText(ICharSequence text, int newCursorPosition)
-            {
-                textObserver.OnNext(text);
-                return true;
-            }
         }
     }
 }

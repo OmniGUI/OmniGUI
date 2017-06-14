@@ -8,17 +8,17 @@ namespace OmniGui
         public KeyboardEvents(Layout layout, IEventSource eventDriver, IObservable<Layout> focusedElement)
         {
             FocusedElement = focusedElement;
-            var keys = eventDriver.KeyInput;
+            var keys = eventDriver.TextInput;
             KeyInput = keys.WithLatestFrom(focusedElement, (key, lay) => new {key, lay})
                     .Where(arg => arg.lay == layout).Select(arg => arg.key);
-            SpecialKeys = eventDriver.SpecialKeys.WithLatestFrom(focusedElement, (key, lay) => new { key, lay })
+            SpecialKeys = eventDriver.KeyInput.WithLatestFrom(focusedElement, (key, lay) => new { key, lay })
                 .Where(arg => arg.lay == layout).Select(arg => arg.key);
         }
 
-        public IObservable<SpecialKeysArgs> SpecialKeys { get; }
+        public IObservable<KeyArgs> SpecialKeys { get; }
 
         public IObservable<Layout> FocusedElement { get; }
 
-        public IObservable<KeyInputArgs> KeyInput { get; }
+        public IObservable<TextInputArgs> KeyInput { get; }
     }
 }
