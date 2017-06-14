@@ -15,7 +15,8 @@ namespace OmniGui.Android
             paint.TextSize = formattedText.FontSize;          
             paint.GetTextBounds(formattedText.Text, 0, formattedText.Text.Length, rect);
 
-           
+            var add = -paint.Ascent() + paint.Descent();
+            
             return new Size(rect.Width(), rect.Height());
         }
 
