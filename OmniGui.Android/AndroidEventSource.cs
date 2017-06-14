@@ -22,10 +22,10 @@ namespace OmniGui.Android
             
             Pointer = eventObs;
             TextInput = view.TextInput.Select(sequence => new TextInputArgs {Text = sequence.ToString()});
-            KeyInput = KeyInputObservable(view);
+            KeyInput = CreateKeyInputObservable(view);
         }
     
-        private IObservable<KeyArgs> KeyInputObservable(View element)
+        private static IObservable<KeyArgs> CreateKeyInputObservable(View element)
         {
             var fromKeyPress = Observable.FromEventPattern<EventHandler<View.KeyEventArgs>, View.KeyEventArgs>(
                     ev => element.KeyPress += ev,
