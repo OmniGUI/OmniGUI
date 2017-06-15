@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assemblies.cs" />
+    <Compile Include="Conversion.cs" />
     <Compile Include="OmniGuiControl.cs" />
     <Compile Include="MappingExtensions.cs" />
     <Compile Include="WpfDrawingContext.cs" />
@@ -64,9 +65,17 @@
       <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
       <Name>OmniGui</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj">
+      <Project>{987B8746-B2A9-4A84-BBA5-482FFCC6399E}</Project>
+      <Name>OmniXaml.Attributes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj">
       <Project>{B9A9C91A-8266-4738-8C54-D4B3955E5DF8}</Project>
       <Name>OmniXaml.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj">
+      <Project>{74503677-D755-47D7-A56C-4FC7C6FA1F7D}</Project>
+      <Name>OmniXaml</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
       <Project>{e9a9dcff-5b62-4f12-abc7-148e384ff805}</Project>
