@@ -6,6 +6,7 @@ using Android.Graphics;
 using OmniGui.Xaml;
 using OmniXaml;
 using OmniXaml.Attributes;
+using Zafiro.Core;
 using AndroidBitmap = Android.Graphics.Bitmap;
 
 namespace OmniGui.Android
@@ -33,7 +34,7 @@ namespace OmniGui.Android
             {
                 Width = bmp.Width,
                 Height = bmp.Height,
-                Bytes = pixels.Select(i => (byte)i).ToArray(),
+                Bytes = pixels.ToByteArray(),
             };
         }
     }

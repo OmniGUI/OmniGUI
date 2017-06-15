@@ -14,8 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,6 +64,7 @@
     <Compile Include="AndroidRenderSurface.cs" />
     <Compile Include="AndroidTextEngine.cs" />
     <Compile Include="Assemblies.cs" />
+    <Compile Include="ArrayConversionExtensions.cs" />
     <Compile Include="Conversion.cs" />
     <Compile Include="ConversionExtensions.cs" />
     <Compile Include="OmniGuiView.cs" />
@@ -100,6 +101,10 @@
     <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj">
       <Project>{74503677-D755-47D7-A56C-4FC7C6FA1F7D}</Project>
       <Name>OmniXaml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj">
+      <Project>{1d971911-3c12-461d-8b96-c4e631ec1b7c}</Project>
+      <Name>Zafiro.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
