@@ -12,5 +12,10 @@ namespace OmniGui.Android
                 return reader.ReadToEnd();
             }
         }
+
+        public static Stream ReadStreamFromAsset(string assetName, AssetManager assetManager)
+        {
+            return assetManager.Open(assetName);
+        }
     }
 }

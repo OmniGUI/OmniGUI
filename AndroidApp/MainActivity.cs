@@ -15,6 +15,7 @@ namespace AndroidApp
             base.OnCreate(bundle);
 
             OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
+            AndroidPlatform.Current.Assets = Assets;
 
             ActionBar.Hide();
             Window.AddFlags(WindowManagerFlags.Fullscreen);

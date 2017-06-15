@@ -1,11 +1,13 @@
-﻿using Android.Graphics;
+﻿using System.Linq;
+using Android.Graphics;
+using Android.Util;
+using OmniGui.Geometry;
 using Point = OmniGui.Geometry.Point;
 using Rect = OmniGui.Geometry.Rect;
+using AndroidBitmap = Android.Graphics.Bitmap;
 
 namespace OmniGui.Android
 {
-    using Bitmap = OmniGui.Bitmap;
-
     public class AndroidDrawingContext : IDrawingContext
     {
         private readonly Canvas canvas;
@@ -70,7 +72,7 @@ namespace OmniGui.Android
         {
             var paint = new Paint();
             paint.Color = brush.Color.ToAndroid();
-            canvas.DrawRect(rect.ToAndroid(), paint);
+            canvas.DrawRect(rect.ToRectF(), paint);
         }
 
         public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
@@ -82,14 +84,14 @@ namespace OmniGui.Android
             var rx = cornerRadius.BottomLeft;
             var ry = cornerRadius.BottomLeft;
 
-            canvas.DrawRoundRect(rect.ToAndroid(), (float)rx, (float)ry, paint);
+            canvas.DrawRoundRect(rect.ToRectF(), (float)rx, (float)ry, paint);
         }
 
         public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
         {
             var paint = new Paint();
             paint.Color = brush.Color.ToAndroid();
-            canvas.DrawRoundRect(rect.ToAndroid(), (float)cornerRadius.BottomLeft, (float)cornerRadius.TopLeft, paint);
+            canvas.DrawRoundRect(rect.ToRectF(), (float)cornerRadius.BottomLeft, (float)cornerRadius.TopLeft, paint);
         }
 
         public void DrawText(FormattedText formattedText, Point point)
@@ -105,7 +107,15 @@ namespace OmniGui.Android
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {
-            throw new System.NotImplementedException();
+            var bitmap = AndroidBitmap.CreateBitmap(bmp.Width, bmp.Height, AndroidBitmap.Config.Argb8888);
+            //var pixels = bmp.Bytes.Select(b => (int)b).ToArray();
+            var pixels = bmp.Bytes.Select(b => 1).ToArray();
+            bitmap.SetPixels(pixels, 0, bmp.Width, 0, 0, bmp.Width, bmp.Height);
+            using (var b = BitmapFactory.DecodeStream(AndroidPlatform.Current.Assets.Open("mario.png")))
+            {
+                var r = new global::Android.Graphics.Rect(0,0, b.Width, b.Height);
+                canvas.DrawBitmap(b, r, r, null);
+            }            
         }
 
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)

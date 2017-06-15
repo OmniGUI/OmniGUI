@@ -16,9 +16,14 @@ namespace OmniGui.Android
             return new global::Android.Graphics.Color(color.Red, color.Green, color.Blue, color.Alpha);
         }
 
-        public static RectF ToAndroid(this OmniGui.Geometry.Rect rect)
+        public static RectF ToRectF(this OmniGui.Geometry.Rect rect)
         {
             return new RectF((float)rect.X, (float)rect.Y, (float)(rect.X + rect.Width), (float)(rect.Y + rect.Height));
+        }
+
+        public static Rect ToRect(this OmniGui.Geometry.Rect rect)
+        {
+            return new Rect((int)rect.X, (int) rect.Y, (int) (rect.X + rect.Width), (int) (rect.Y + rect.Height));
         }
 
         public static MyKey ToOmniGui(this Keycode key)
