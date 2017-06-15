@@ -1,5 +1,11 @@
-﻿using Android.App;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using Android.App;
 using Android.OS;
+using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Common;
 using OmniGui;
@@ -14,17 +20,40 @@ namespace AndroidApp
         {
             base.OnCreate(bundle);
 
+            AttachUnhandleExceptions();
+
             OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
             AndroidPlatform.Current.Assets = Assets;
 
             ActionBar.Hide();
             Window.AddFlags(WindowManagerFlags.Fullscreen);
-            
-            SetContentView(new OmniGuiView(this)
+
+            var assemblies = typeof(MainActivity).Assembly
+                .GetReferencedAssemblies()
+                .Concat(new[] { new AssemblyName("OmniGui.Xaml") })
+                .Select(Assembly.Load)
+                .ToList();
+
+            SetContentView(new OmniGuiView(this, assemblies)
             {
-                Source = "Layout.xaml",
+                Source = "layout.xaml",
                 DataContext = new SampleViewModel(new AndroidMessageService(this))
-            });            
-        }        
+            });
+        }
+
+        private static void AttachUnhandleExceptions()
+        {
+            AndroidEnvironment.UnhandledExceptionRaiser += (sender, args) =>
+            {
+                Log.Error("UnhandledExceptionRaiser", args.Exception.ToString());
+                args.Handled = true;
+            };
+
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+                Log.Error("UnhandledException", args.ExceptionObject.ToString());
+
+            TaskScheduler.UnobservedTaskException += (sender, args) =>
+                Log.Error("UnobservedTaskException", args.Exception.ToString());
+        }
     }
 }

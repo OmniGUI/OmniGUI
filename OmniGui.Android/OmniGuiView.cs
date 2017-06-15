@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
+using System.Reflection;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -22,20 +23,21 @@ namespace OmniGui.Android
         private object dataContext;
         public ISubject<ICharSequence> TextInput { get; } = new Subject<ICharSequence>();
         
-        public OmniGuiView(Context context) : base(context)
+        public OmniGuiView(Context context, IList<Assembly> assemblies) : base(context)
         {
             FocusableInTouchMode = true;
-            XamlLoader = CreateXamlLoader(this, (Activity) Context);
+            XamlLoader = CreateXamlLoader(this, (Activity) Context, assemblies);
             Focusable = true;
             RequestFocus();
         }
 
-        private IXamlLoader CreateXamlLoader(OmniGuiView view, Activity activity)
+        private IXamlLoader CreateXamlLoader(OmniGuiView view, Activity activity, IList<Assembly> assemblies)
         {
             var androidEventSource = new AndroidEventSource(view);
             var deps = new FrameworkDependencies(androidEventSource, new AndroidRenderSurface(this, activity), new AndroidTextEngine());
             var typeLocator = new TypeLocator(() => ControlTemplates, deps);
-            return new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, typeLocator);
+
+            return new OmniGuiXamlLoader(assemblies, () => ControlTemplates, typeLocator);
         }
 
         public string Source
@@ -65,7 +67,7 @@ namespace OmniGui.Android
 
         public ICollection<ControlTemplate> ControlTemplates => Container.ControlTemplates;
 
-        public Container Container => container ?? (container = CreateContainer("Container.xaml"));
+        public Container Container => container ?? (container = CreateContainer("container.xaml"));
 
         private Container CreateContainer(string containerAsset)
         {

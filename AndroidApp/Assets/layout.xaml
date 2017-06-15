@@ -1,0 +1,117 @@
+<StackPanel xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
+    
+
+    <!--<VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualStateGroup.StateTriggers>
+                <StateTrigger IsActive="{Bind TargetProperty=IsActive}"></StateTrigger>
+            </VisualStateGroup.StateTriggers>
+            <VisualStateGroup.Setters>
+                <Setter></Setter>
+            </VisualStateGroup.Setters>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+
+
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition></ColumnDefinition>
+        <ColumnDefinition></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+
+    <Button Content="{Bind TargetProperty=Title}"></Button>
+    <Button Content="Otro texto" Grid.Column="1"></Button>-->
+
+
+    <!--<Grid.ColumnDefinitions>
+        <ColumnDefinition></ColumnDefinition>
+        <ColumnDefinition></ColumnDefinition>
+    </Grid.ColumnDefinitions>-->
+
+
+    <TextBox></TextBox>
+    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+    <Button Command="{Bind TargetProperty=ShowMessageCommand}">Hola</Button>
+    <Image Source="mario.png" />
+
+</StackPanel>
+
+
+<!--<Button xmlns="root"  Content="{Bind TargetProperty=Title}"></Button>-->
+
+
+
+
+<!--
+    <Grid xmlns="root" Background="GhostWhite" xmlns:local="using:Common;assembly=Common">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualStateGroup.StateTriggers>
+                <StateTrigger IsActive="true"></StateTrigger>
+            </VisualStateGroup.StateTriggers>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+
+    <List Source="{Bind People}" Margin="15">
+        <List.ItemTemplate>
+            <DataTemplate>
+                <Border BorderThickness="1" BorderBrush="Aquamarine">
+                    <Grid Margin="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="mario.png" />
+                        <TextBlock Margin="15" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center"
+                                   Text="{Bind Name}" />
+                        <TextBlock FontWeight="Bold" Margin="15" VerticalAlignment="Center" Grid.Column="2"
+                                   Text="{Bind Surname}" />
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </List.ItemTemplate>
+    </List>
+
+    <StackPanel Grid.Column="1" Margin="15">
+        <Grid Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Name:" />
+            <TextBox Grid.Column="1" Text="{Bind Name, LinkMode=FullLink}" />
+        </Grid>
+        <Grid Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Surname:" />
+            <TextBox Grid.Column="1" Text="{Bind Surname, LinkMode=FullLink}" />
+        </Grid>
+        <Grid Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Identifier:" />
+            <TextBlock Grid.Column="1" Text="12345678" HorizontalAlignment="Center" />
+        </Grid>
+        <Grid Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight="Bold" Text="Image:" />
+        </Grid>
+        <Button Content="Añadir" VerticalAlignment="Top" Command="{Bind AddItemCommand}" />
+    </StackPanel>
+</Grid>
+-->

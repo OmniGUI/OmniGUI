@@ -140,20 +140,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="..\ViewModels\Container.xaml">
-      <Link>Assets\Container.xaml</Link>
-      <SubType>Designer</SubType>
-    </AndroidAsset>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="..\ViewModels\Layout.xaml">
-      <Link>Assets\Layout.xaml</Link>
-      <SubType>Designer</SubType>
-    </AndroidAsset>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="..\ViewModels\mario.png">
       <Link>Assets\mario.png</Link>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\container.xaml">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\layout.xaml">
+      <SubType>Designer</SubType>
     </AndroidAsset>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

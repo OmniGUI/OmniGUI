@@ -11,7 +11,8 @@ namespace OmniGui.Android
 
         public AndroidEventSource(OmniGuiView view)
         {
-            var eventObs = Observable.FromEventPattern<View.TouchEventArgs>(view, "Touch")
+            var eventObs = Observable
+                .FromEventPattern<EventHandler<View.TouchEventArgs>, View.TouchEventArgs>(ev => view.Touch += ev, ev => view.Touch -= ev) 
                 .Select(pattern =>
                 {
                     var eventArgsEvent = pattern.EventArgs.Event;

@@ -1,0 +1,34 @@
+<Container xmlns="root">
+
+    <Container.ControlTemplates>
+        <ControlTemplate Target="Button">
+            <Border Padding="4" BorderThickness="1" BorderBrush="Black" Background="LightGray">
+                <ContentPresenter Content="{TemplateBind TargetProperty=Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate Target="TextBox">
+            <Border Padding="2" BorderThickness="1" Background="White"  BorderBrush="Black">
+                <TextBoxView FontSize="{TemplateBind TargetProperty=FontSize}" />
+            </Border>
+        </ControlTemplate>
+
+    </Container.ControlTemplates>
+
+
+    <!--<Container.ControlTemplates>
+        <ControlTemplate Target="Button">
+            <Border Padding="4" BorderThickness="1" BorderBrush="Black" Background="LightGray">
+                <ContentPresenter Content="{TemplateBind Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate Target="TextBox">
+            <Border Padding="2" BorderThickness="1" Background="White"  BorderBrush="Black">
+                <TextBoxView />
+            </Border>
+        </ControlTemplate>
+
+    </Container.ControlTemplates>-->
+
+</Container>
