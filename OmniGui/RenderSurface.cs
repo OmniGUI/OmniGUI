@@ -4,7 +4,7 @@ using System.Reactive.Subjects;
 
 namespace OmniGui
 {
-    public abstract class RenderSurfaceBase : IRenderSurface
+    public abstract class RenderSurface : IRenderSurface
     {
         private readonly ISubject<Layout> focusedElementSubject = new Subject<Layout>();
         public IObservable<Layout> FocusedElement => focusedElementSubject.DistinctUntilChanged();

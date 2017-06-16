@@ -4,19 +4,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{65AE9593-E908-4C66-85B5-277E31DACCE0}</ProjectGuid>
+    <ProjectGuid>{6003E550-1CA5-4380-9DE4-FF6FFA583F26}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UwpApp</RootNamespace>
-    <AssemblyName>UwpApp</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <RootNamespace>WindowsApp</RootNamespace>
+    <AssemblyName>WindowsApp</AssemblyName>
+    <DefaultLanguage>es-ES</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>UwpApp_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <PackageCertificateKeyFile>WindowApp_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -87,35 +88,29 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\ConvertExtensions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Plugin\Win2dDrawingContext.cs" />
-    <Compile Include="Plugin\Win2dTextEngine.cs" />
-    <Compile Include="Plugin\UwpEventSource.cs" />
-    <Compile Include="UwpMessageService.cs" />
-    <Compile Include="UwpPlatform.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="UwpApp_TemporaryKey.pfx" />
+    <None Include="WindowApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\ViewModels\mario.png">
+    <None Include="..\ViewModels\mario.png">
       <Link>mario.png</Link>
-    </Content>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -133,6 +128,7 @@
     <Content Include="..\ViewModels\Layout.xaml">
       <Link>Layout.xaml</Link>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\ViewModels\Container.xaml">
       <Link>Container.xaml</Link>
@@ -145,6 +141,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.2.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OmniGui.Uwp\OmniGui.Uwp.csproj">
+      <Project>{3af0c2d5-a8a5-4575-b6a8-d1253fd8787f}</Project>
+      <Name>OmniGui.Uwp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
       <Project>{ff6d5507-1f7c-4161-b5cb-36fa484bbee9}</Project>
       <Name>OmniGui.Xaml</Name>
@@ -153,28 +158,20 @@
       <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
       <Name>OmniGui</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj">
-      <Project>{987B8746-B2A9-4A84-BBA5-482FFCC6399E}</Project>
-      <Name>OmniXaml.Attributes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj">
-      <Project>{B9A9C91A-8266-4738-8C54-D4B3955E5DF8}</Project>
+      <Project>{b9a9c91a-8266-4738-8c54-d4b3955e5df8}</Project>
       <Name>OmniXaml.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj">
-      <Project>{74503677-D755-47D7-A56C-4FC7C6FA1F7D}</Project>
+      <Project>{74503677-d755-47d7-a56c-4fc7c6fa1f7d}</Project>
       <Name>OmniXaml</Name>
     </ProjectReference>
     <ProjectReference Include="..\ViewModels\Common.csproj">
       <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj">
-      <Project>{1d971911-3c12-461d-8b96-c4e631ec1b7c}</Project>
-      <Name>Zafiro.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
-      <Project>{E9A9DCFF-5B62-4F12-ABC7-148E384FF805}</Project>
+      <Project>{e9a9dcff-5b62-4f12-abc7-148e384ff805}</Project>
       <Name>Zafiro.PropertySystem</Name>
     </ProjectReference>
   </ItemGroup>

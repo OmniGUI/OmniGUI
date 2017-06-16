@@ -1,0 +1,31 @@
+<!--
+    Este archivo contiene directivas de tiempo de ejecución que utiliza .NET Native. Los valores predeterminados
+    son válidos para la mayoría de los desarrolladores. Sin embargo, puede modificar estos parámetros
+    para cambiar el comportamiento del optimizador de .NET Native.
+
+    Las directivas de tiempo de ejecución están documentadas en https://go.microsoft.com/fwlink/?LinkID=391919.
+
+    Para habilitar totalmente la reflexión para App1.MyClass y todos sus miembros públicos o privados:
+    <Type Name="App1.MyClass" Dynamic="Required All"/>
+
+    Para habilitar la creación dinámica de instancias específicas de AppClass<T> sobre System.Int32:
+    <TypeInstantiation Name="App1.AppClass" Arguments="System.Int32" Activate="Required Public" />
+
+    Uso de la directiva Namespace para aplicar una directiva de reflexión a todos los tipos de un espacio de nombres en particular:
+    <Namespace Name="DataClasses.ViewModels" Seralize="All" />
+-->
+
+<Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
+  <Application>
+    <!--
+      Un elemento Assembly con Name="*Application*" se aplica a todos los ensamblados del
+      paquete de aplicación. Los asteriscos no son caracteres comodín.
+    -->
+    <Assembly Name="*Application*" Dynamic="Required All" />
+    
+    
+    <!-- Agregue aquí las directivas de tiempo de ejecución específicas para su aplicación. -->
+
+
+  </Application>
+</Directives>

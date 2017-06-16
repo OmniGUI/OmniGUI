@@ -1,8 +1,8 @@
-﻿namespace OmniGui
-{
-    using Geometry;
+﻿using OmniGui.Geometry;
 
-    public class NullTextEngine : ITextEngine
+namespace OmniGui.Default
+{
+    public class DefaultTextEngine : ITextEngine
     {
         public Size Measure(FormattedText formattedText)
         {

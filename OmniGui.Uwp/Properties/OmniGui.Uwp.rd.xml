@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Este archivo contiene directivas de tiempo de ejecución, especificaciones sobre los tipos a los que accede la aplicación
+    mediante reflexión y otros modelos de código dinámicos. Las directivas de tiempo de ejecución se usan para controlar
+    el optimizador de .NET Native y asegurarse de que no quita código al que accede su biblioteca. Si la
+    biblioteca no hace ninguna reflexión, no suele ser necesario editar este archivo. Sin embargo,
+    si la biblioteca refleja tipos, especialmente tipos que se le pasan a ella o derivados de sus tipos,
+    debe escribir directivas de tiempo de ejecución.
+
+    El uso más habitual de la reflexión en bibliotecas es para detectar información sobre los tipos pasados
+    a la biblioteca. Las directivas de tiempo de ejecución tienen tres formas de expresar los requisitos de los tipos que
+    se pasan a la biblioteca.
+
+    1.  Parameter, GenericParameter, TypeParameter, TypeEnumerableParameter
+        Use estas directivas para reflejar los tipos pasados como parámetro.
+
+    2.  SubTypes
+        Use una directiva SubTypes para reflejar los tipos derivados de otro tipo.
+
+    3.  AttributeImplies
+        Use una directiva AttributeImplies para indicar que la biblioteca debe reflejar
+        los tipos o métodos que contengan un atributo.
+
+    Para obtener más información sobre cómo escribir directivas de tiempo de ejecución para bibliotecas, visite
+    https://go.microsoft.com/fwlink/?LinkID=391919
+-->
+<Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
+  <Library Name="OmniGui.Uwp">
+
+  	<!-- agregue aquí directivas para la biblioteca -->
+
+  </Library>
+</Directives>

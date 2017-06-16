@@ -3,7 +3,7 @@ using UIKit;
 
 namespace OmniGui.iOS
 {
-    internal class iOSRenderSurface : RenderSurfaceBase
+    internal class iOSRenderSurface : RenderSurface
     {
         private readonly UIView view;
 

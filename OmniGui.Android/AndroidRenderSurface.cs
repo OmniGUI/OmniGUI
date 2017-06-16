@@ -4,7 +4,7 @@ using Android.Views.InputMethods;
 
 namespace OmniGui.Android
 {
-    internal class AndroidRenderSurface : RenderSurfaceBase
+    internal class AndroidRenderSurface : RenderSurface
     {
         private readonly OmniGuiView view;
         private readonly Activity activity;

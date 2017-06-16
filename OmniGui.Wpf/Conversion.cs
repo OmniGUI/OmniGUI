@@ -10,7 +10,7 @@ namespace OmniGui.Wpf
     public class Conversion
     {
         [TypeConverterMember(typeof(Bitmap))]
-        public static Func<string, ConvertContext, (bool, object)> ThicknessConverter = (str, v) => (false, GetBitmap(str));
+        public static Func<string, ConvertContext, (bool, object)> ThicknessConverter = (str, v) => (true, GetBitmap(str));
 
         private ITypeLocator locator;
 

@@ -3,7 +3,7 @@ using System.Windows.Threading;
 
 namespace OmniGui.Wpf
 {
-    public class WpfRenderSurface : RenderSurfaceBase
+    public class WpfRenderSurface : RenderSurface
     {
         public UIElement UiElement { get; }
 
