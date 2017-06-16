@@ -6,9 +6,14 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using OmniGui.Xaml;
 using OmniXaml.Services;
 using ControlTemplate = OmniGui.Xaml.Templates.ControlTemplate;
+using Point = OmniGui.Geometry.Point;
+using Rect = OmniGui.Geometry.Rect;
+using Size = OmniGui.Geometry.Size;
 
 namespace OmniGui.Uwp
 {
@@ -17,8 +22,8 @@ namespace OmniGui.Uwp
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
             "Source", typeof(Uri), typeof(OmniGuiControl), new PropertyMetadata(default(Uri), OnSourceChanged));
 
-        private static Layout layout;
         private static Exception setSourceException;
+        private CanvasControl canvasControl = new CanvasControl();
         private Container container;
 
         static OmniGuiControl()
@@ -26,8 +31,19 @@ namespace OmniGui.Uwp
             OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
         }
 
+        protected override void OnApplyTemplate()
+        {
+            canvasControl = GetTemplateChild("CanvasControl") as CanvasControl;
+        }
+
         public OmniGuiControl()
         {
+            DefaultStyleKey = typeof(OmniGuiControl);
+
+            Observable.FromEventPattern<TypedEventHandler<CanvasControl, CanvasDrawEventArgs>, CanvasDrawEventArgs>(
+                    ev => canvasControl.Draw += ev, ev => canvasControl.Draw -= ev)
+                .Subscribe(pattern => OnDraw(pattern.EventArgs.DrawingSession));
+
             Observable
                 .FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(
                     ev => Tapped += ev,
@@ -41,11 +57,9 @@ namespace OmniGui.Uwp
                     ev => DataContextChanged -= ev)
                 .Subscribe(dc => TrySetDataContext(dc.EventArgs.NewValue));
 
-            var deps = new FrameworkDependencies(new UwpEventSource(this), new UwpRenderSurface(this),
-                new UwpTextEngine());
+            var deps = new FrameworkDependencies(new UwpEventSource(this), new UwpRenderSurface(this), new UwpTextEngine());
             var typeLocator = new TypeLocator(() => ControlTemplates, deps);
-            XamlLoader = new OmniGuiXamlLoader(Assemblies, () => ControlTemplates,
-                typeLocator);
+            XamlLoader = new OmniGuiXamlLoader(Assemblies, () => ControlTemplates, typeLocator);
         }
 
         public IList<Assembly> Assemblies { get; } =
@@ -82,6 +96,31 @@ namespace OmniGui.Uwp
             set => setSourceException = value;
         }
 
+        private void OnDraw(CanvasDrawingSession drawingSession)
+        {
+            if (Exception != null)
+            {
+                RenderException(Exception);
+            }
+
+            if (Layout == null)
+            {
+                return;
+            }
+
+            var width = ActualWidth;
+            var height = ActualHeight;
+
+            var availableSize = new Size(width, height);
+            Layout.Measure(availableSize);
+            Layout.Arrange(new Rect(Point.Zero, availableSize));
+            Layout.Render(new UwpDrawingContext(drawingSession));
+        }
+
+        private void RenderException(Exception exception)
+        {
+        }
+
         private void TrySetDataContext(object dc)
         {
             if (Layout != null)
@@ -111,29 +150,29 @@ namespace OmniGui.Uwp
                 target.Exception = e;
             }
         }
-        //    Layout.Render(new WpfDrawingContext(drawingContext));
-        //    Layout.Arrange(new Rect(Point.Zero, availableSize));
-        //    Layout.Measure(availableSize);
-
-        //    var availableSize = new Size(width, height);
-        //    var height = ActualHeight;
-
-        //    var width = ActualWidth;
-        //    }
-        //        return;
-        //    {
-
-        //    if (Layout == null)
-        //    }
-        //        RenderException(Exception, drawingContext);
-        //    {
-        //    if (Exception != null)
-        //{
-
-        //protected override void OnRender(DrawingContext drawingContext)
-        //}
 
         //private void RenderException(Exception exception, DrawingContext drawingContext)
+        //}
+
+        //protected override void OnRender(DrawingContext drawingContext)
+        //{
+        //    if (Exception != null)
+        //    {
+        //        RenderException(Exception, drawingContext);
+        //    }
+
+        //    if (Layout == null)
+        //    {
+        //        return;
+        //    }
+
+        //    var width = ActualWidth;
+        //    var height = ActualHeight;
+
+        //    var availableSize = new Size(width, height);
+        //    Layout.Measure(availableSize);
+        //    Layout.Arrange(new Rect(Point.Zero, availableSize));
+        //    Layout.Render(new WpfDrawingContext(drawingContext));
         //{
         //    var textToFormat = $"XAML load error in {Source}: {exception}";
         //    var formattedText = new System.Windows.Media.FormattedText(textToFormat, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(SystemFonts.MenuFontFamily.Source), FontSize, Brushes.Red, new NumberSubstitution(), TextFormattingMode.Display, 96);
