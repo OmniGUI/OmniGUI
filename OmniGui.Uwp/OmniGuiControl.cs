@@ -28,6 +28,7 @@ namespace OmniGui.Uwp
         private static Exception setSourceException;
         private CanvasControl canvasControl = new CanvasControl();
         private Container container;
+        private UwpTextEngine uwpTextEngine;
 
         static OmniGuiControl()
         {
@@ -60,7 +61,8 @@ namespace OmniGui.Uwp
                     ev => DataContextChanged -= ev)
                 .Subscribe(dc => TrySetDataContext(dc.EventArgs.NewValue));
 
-            var deps = new FrameworkDependencies(new UwpEventSource(this), new UwpRenderSurface(this), new UwpTextEngine());
+            uwpTextEngine = new UwpTextEngine();
+            var deps = new FrameworkDependencies(new UwpEventSource(this), new UwpRenderSurface(this), uwpTextEngine);
             var typeLocator = new TypeLocator(() => ControlTemplates, deps);
             XamlLoader = new OmniGuiXamlLoader(Assemblies, () => ControlTemplates, typeLocator);
         }
@@ -112,12 +114,15 @@ namespace OmniGui.Uwp
                 return;
             }
 
+            uwpTextEngine.DrawingSession = drawingSession;
+
             var width = ActualWidth;
             var height = ActualHeight;
 
             var availableSize = new Size(width, height);
             Layout.Measure(availableSize);
             Layout.Arrange(new Rect(Point.Zero, availableSize));
+            
             Layout.Render(new UwpDrawingContext(drawingSession));
         }
 
