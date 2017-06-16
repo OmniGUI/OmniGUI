@@ -107,10 +107,10 @@
     <None Include="WindowApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ViewModels\mario.png">
+    <Content Include="..\ViewModels\mario.png">
       <Link>mario.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

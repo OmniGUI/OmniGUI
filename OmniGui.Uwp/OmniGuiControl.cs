@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Reactive.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using OmniGui.Xaml;
 using OmniXaml.Services;
@@ -34,16 +37,16 @@ namespace OmniGui.Uwp
         protected override void OnApplyTemplate()
         {
             canvasControl = GetTemplateChild("CanvasControl") as CanvasControl;
+            Observable.FromEventPattern<TypedEventHandler<CanvasControl, CanvasDrawEventArgs>, CanvasDrawEventArgs>(
+                    ev => canvasControl.Draw += ev, ev => canvasControl.Draw -= ev)
+                .Subscribe(pattern => OnDraw(pattern.EventArgs.DrawingSession));
         }
 
         public OmniGuiControl()
         {
             DefaultStyleKey = typeof(OmniGuiControl);
 
-            Observable.FromEventPattern<TypedEventHandler<CanvasControl, CanvasDrawEventArgs>, CanvasDrawEventArgs>(
-                    ev => canvasControl.Draw += ev, ev => canvasControl.Draw -= ev)
-                .Subscribe(pattern => OnDraw(pattern.EventArgs.DrawingSession));
-
+         
             Observable
                 .FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(
                     ev => Tapped += ev,
@@ -66,6 +69,7 @@ namespace OmniGui.Uwp
             new[]
             {
                 Assembly.Load(new AssemblyName("OmniGui")),
+                Assembly.Load(new AssemblyName("OmniGui.Uwp")),
                 Assembly.Load(new AssemblyName("OmniGui.Xaml")),
                 Assembly.Load(new AssemblyName("WindowsApp")),
                 Assembly.Load(new AssemblyName("Common"))
@@ -100,7 +104,7 @@ namespace OmniGui.Uwp
         {
             if (Exception != null)
             {
-                RenderException(Exception);
+                RenderException(drawingSession, Exception);
             }
 
             if (Layout == null)
@@ -117,8 +121,10 @@ namespace OmniGui.Uwp
             Layout.Render(new UwpDrawingContext(drawingSession));
         }
 
-        private void RenderException(Exception exception)
+        private void RenderException(CanvasDrawingSession drawingSession, Exception exception)
         {
+            var text = $"XAML load error in {Source}: {exception}";
+            drawingSession.DrawText(text, new Vector2(0,0), Windows.UI.Color.FromArgb(255, 255, 0, 0));
         }
 
         private void TrySetDataContext(object dc)
@@ -131,7 +137,9 @@ namespace OmniGui.Uwp
 
         private Container CreateContainer(Uri uri)
         {
-            return (Container) XamlLoader.Load(uri.ReadFromContent().Result);
+            var readFromContent = Task.Run(async () => await uri.ReadFromContent()).Result;
+            var load = XamlLoader.Load(readFromContent);
+            return (Container) load;
         }
 
         private static void OnSourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)

@@ -7,5 +7,5 @@
     xmlns:uwp="using:OmniGui.Uwp"
     mc:Ignorable="d">
 
-    <uwp:OmniGuiControl Source="Layout.xaml" />
+    <uwp:OmniGuiControl Source="ms-appx:///Layout.xaml" />
 </Page>

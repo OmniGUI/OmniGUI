@@ -107,6 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Convert.cs" />
+    <Compile Include="Converters.cs" />
     <Compile Include="OmniGuiControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UwpDrawingContext.cs" />
@@ -135,6 +136,10 @@
     <ProjectReference Include="..\OmniGui\OmniGui.csproj">
       <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
       <Name>OmniGui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj">
+      <Project>{987B8746-B2A9-4A84-BBA5-482FFCC6399E}</Project>
+      <Name>OmniXaml.Attributes</Name>
     </ProjectReference>
     <ProjectReference Include="..\OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj">
       <Project>{b9a9c91a-8266-4738-8c54-d4b3955e5df8}</Project>

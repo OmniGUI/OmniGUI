@@ -9,7 +9,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:OmniGuiControl">
                     <Border 
-                        Background="Red"
+                        Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <xaml:CanvasControl x:Name="CanvasControl" />
