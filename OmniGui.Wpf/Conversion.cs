@@ -10,7 +10,7 @@ namespace OmniGui.Wpf
     public class Conversion
     {
         [TypeConverterMember(typeof(Bitmap))]
-        public static Func<string, ConvertContext, (bool, object)> ThicknessConverter = (str, v) => (true, GetBitmap(str));
+        public static Func<string, ConvertContext, (bool, object)> ThicknessConverter = (str, v) => (false, GetBitmap(str));
 
         private ITypeLocator locator;
 
@@ -30,12 +30,7 @@ namespace OmniGui.Wpf
             var buffer = new byte[frame.PixelWidth * frame.PixelHeight * 4];
             frame.CopyPixels(buffer, frame.PixelWidth * 4, 0);
 
-            return new Bitmap
-            {
-                Height = frame.PixelHeight,
-                Width = frame.PixelWidth,
-                Bytes = buffer,
-            };
+            return new Bitmap(frame.PixelWidth, frame.PixelHeight, buffer);
         }
     }
 }

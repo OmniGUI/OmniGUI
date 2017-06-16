@@ -17,9 +17,10 @@ namespace OmniGui.Xaml
         {
             this.getControlTemplates = getControlTemplates;
             this.locator = locator;
+            InstanceCreator = new OmniGuiInstanceCreator(locator);
         }
 
-        public override IInstanceCreator InstanceCreator => new OmniGuiInstanceCreator(locator);
-        protected override IValuePipeline ValuePipeline => new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new NoActionValuePipeline()));
+        public override IInstanceCreator InstanceCreator { get; } 
+        protected override IValuePipeline ValuePipeline { get; } = new OmniGuiValuePipeline(new MarkupExtensionValuePipeline(new NoActionValuePipeline()));
     }
 }

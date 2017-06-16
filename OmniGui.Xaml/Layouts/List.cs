@@ -14,9 +14,9 @@
     {
         private readonly TemplateInflator controlTemplateInflator;
 
-        public static ExtendedProperty SourceProperty;
-        public static ExtendedProperty ItemTemplateProperty;
-        
+        public static readonly ExtendedProperty SourceProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Source", typeof(List), typeof(IObservableCollection<object>), new PropertyMetadata());
+        public static readonly ExtendedProperty ItemTemplateProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("ItemTemplate", typeof(List), typeof(DataTemplate), new PropertyMetadata());
+
         private IDisposable subscription;
         private readonly StackPanel panel;
         private readonly Func<ICollection<ControlTemplate>> getControlTemplates;

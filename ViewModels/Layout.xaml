@@ -32,7 +32,8 @@
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-    <Button Command="{Bind TargetProperty=ShowMessageCommand}">Hola</Button>
+    <Button Command="{Bind}">Hola</Button>
+    <List></List>
     <Image Source="mario.png" />
 
 </StackPanel>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -22,6 +23,7 @@ namespace OmniGui.Wpf
             "Source", typeof(Uri), typeof(OmniGuiControl), new PropertyMetadata(default(Uri), OnSourceChanged));
 
         private static Layout layout;
+        private static Exception setSourceException;
         private Container container;
 
         static OmniGuiControl()
@@ -84,23 +86,38 @@ namespace OmniGui.Wpf
 
         private static void OnSourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            try
-            {
-                var target = (OmniGuiControl) dependencyObject;
-                var xaml = (Uri) args.NewValue;
+            var target = (OmniGuiControl)dependencyObject;
+            var xaml = (Uri)args.NewValue;
 
+            try
+            {               
                 var flacidLayout = (Layout) target.XamlLoader.Load(xaml.ReadFromContent());
                 new TemplateInflator().Inflate(flacidLayout, target.ControlTemplates);
                 target.Layout = flacidLayout;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                target.Exception = e;
+            }
+        }
+
+        private Exception Exception
+        {
+            get { return setSourceException; }
+            set
+            {
+                setSourceException = value;
+                InvalidateVisual();
             }
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
+            if (Exception != null)
+            {
+                RenderException(Exception, drawingContext);
+            }
+
             if (Layout == null)
             {
                 return;
@@ -113,6 +130,15 @@ namespace OmniGui.Wpf
             Layout.Measure(availableSize);
             Layout.Arrange(new Rect(Point.Zero, availableSize));
             Layout.Render(new WpfDrawingContext(drawingContext));
+        }
+
+        private void RenderException(Exception exception, DrawingContext drawingContext)
+        {
+            var textToFormat = $"XAML load error in {Source}: {exception}";
+            var formattedText = new System.Windows.Media.FormattedText(textToFormat, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(SystemFonts.MenuFontFamily.Source), FontSize, Brushes.Red, new NumberSubstitution(), TextFormattingMode.Display, 96);
+            formattedText.MaxTextWidth = ActualWidth;
+
+            drawingContext.DrawText(formattedText, new System.Windows.Point( (ActualWidth - formattedText.Width) / 2, (ActualHeight - formattedText.Height) / 2));
         }
     }
 }

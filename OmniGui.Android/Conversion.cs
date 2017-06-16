@@ -23,19 +23,13 @@ namespace OmniGui.Android
             AndroidBitmap bmp;
             using (var stream = AndroidPlatform.Current.Assets.Open(str))
             {
-                
                 bmp = BitmapFactory.DecodeStream(stream);                               
             }
 
             var pixels = new int[bmp.Width * bmp.Height];
             bmp.GetPixels(pixels, 0, bmp.Width, 0, 0, bmp.Width, bmp.Height);
             
-            return new Bitmap
-            {
-                Width = bmp.Width,
-                Height = bmp.Height,
-                Bytes = pixels.ToByteArray(),
-            };
+            return new Bitmap(bmp.Width, bmp.Height, pixels.ToByteArray());
         }
     }
 }

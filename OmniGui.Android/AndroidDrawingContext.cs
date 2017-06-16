@@ -72,7 +72,7 @@ namespace OmniGui.Android
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)
         {
             canvas.DrawLine((float)startPoint.X, (float)startPoint.Y, (float)endPoint.X, (float)endPoint.Y,
-                new Paint() { Color = pen.Brush.Color.ToAndroid(), StrokeWidth = (float)pen.Thickness });
+                new Paint { Color = pen.Brush.Color.ToAndroid(), StrokeWidth = (float)pen.Thickness });
         }
     }
 }
