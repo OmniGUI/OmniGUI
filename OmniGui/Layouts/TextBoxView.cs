@@ -119,7 +119,7 @@
             get => cursorPositionOrdinal;
             set
             {
-                if (value > Text.Length || value < 0)
+                if (Text == null || value > Text.Length || value < 0)
                 {
                     return;
                 }
@@ -231,7 +231,7 @@
             {
                 Text = textBeforeCursor
             };
-
+            
             var x = formattedTextCopy.DesiredSize.Width;
             return x;
         }

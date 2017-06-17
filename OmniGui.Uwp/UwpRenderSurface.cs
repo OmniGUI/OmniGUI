@@ -1,15 +1,26 @@
-﻿using System;
-using Windows.UI.Xaml.Controls;
+﻿using Microsoft.Toolkit.Uwp;
+using Windows.UI.ViewManagement;
 
 namespace OmniGui.Uwp
 {
-    public class UwpRenderSurface : DefaultRenderSurface
+    public class UwpRenderSurface : RenderSurface
     {
-        private readonly Control control;
+        private readonly OmniGuiControl control;
 
-        public UwpRenderSurface(Control control)
+        public UwpRenderSurface(OmniGuiControl control)
         {
             this.control = control;
+        }
+
+        public override void ForceRender()
+        {
+            DispatcherHelper.ExecuteOnUIThreadAsync(() => control.CanvasControl.Invalidate());            
+        }
+
+        public override void ShowVirtualKeyboard()
+        {
+            var pane = InputPane.GetForCurrentView();
+            pane.TryShow();
         }
     }
 }

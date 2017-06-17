@@ -9,7 +9,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using OmniGui.Xaml;
 using OmniXaml.Services;
@@ -26,9 +25,9 @@ namespace OmniGui.Uwp
             "Source", typeof(Uri), typeof(OmniGuiControl), new PropertyMetadata(default(Uri), OnSourceChanged));
 
         private static Exception setSourceException;
-        private CanvasControl canvasControl = new CanvasControl();
+        public CanvasControl CanvasControl { get; private set; } = new CanvasControl();
         private Container container;
-        private UwpTextEngine uwpTextEngine;
+        private readonly UwpTextEngine uwpTextEngine;
 
         static OmniGuiControl()
         {
@@ -37,9 +36,9 @@ namespace OmniGui.Uwp
 
         protected override void OnApplyTemplate()
         {
-            canvasControl = GetTemplateChild("CanvasControl") as CanvasControl;
+            CanvasControl = GetTemplateChild("CanvasControl") as CanvasControl;
             Observable.FromEventPattern<TypedEventHandler<CanvasControl, CanvasDrawEventArgs>, CanvasDrawEventArgs>(
-                    ev => canvasControl.Draw += ev, ev => canvasControl.Draw -= ev)
+                    ev => CanvasControl.Draw += ev, ev => CanvasControl.Draw -= ev)
                 .Subscribe(pattern => OnDraw(pattern.EventArgs.DrawingSession));
         }
 
@@ -67,7 +66,7 @@ namespace OmniGui.Uwp
             XamlLoader = new OmniGuiXamlLoader(Assemblies, () => ControlTemplates, typeLocator);
         }
 
-        public IList<Assembly> Assemblies { get; } =
+        private IList<Assembly> Assemblies { get; } =
             new[]
             {
                 Assembly.Load(new AssemblyName("OmniGui")),

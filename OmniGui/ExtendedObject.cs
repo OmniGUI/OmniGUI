@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace OmniGui
 {
     using System;
@@ -39,7 +41,24 @@ namespace OmniGui
 
         public ExtendedProperty GetProperty(string propertyName)
         {
-            return OmniGuiPlatform.PropertyEngine.GetProperty(propertyName, GetType());
+            var runtimeField = GetFieldRecursive(this.GetType(), propertyName + "Property");
+            return (ExtendedProperty) runtimeField.GetValue(null);
+        }
+
+        private FieldInfo GetFieldRecursive(Type type, string name)
+        {
+            if (type == null)
+            {
+                throw new InvalidOperationException("Attempt to get a property from a null type");
+            }
+
+            var field = type.GetRuntimeField(name);
+            if (field == null)
+            {
+                return GetFieldRecursive(type.GetTypeInfo().BaseType, name);
+            }
+
+            return field;
         }
     }
 }
