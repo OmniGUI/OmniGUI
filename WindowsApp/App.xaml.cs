@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -14,6 +15,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
+using Serilog.Sinks.Email;
 
 namespace WindowApp
 {
@@ -30,6 +35,15 @@ namespace WindowApp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            ConfigureLog();
+        }
+
+        private void ConfigureLog()
+        {
+            Log.Logger = new LoggerConfiguration()
+
+                    .WriteTo.Seq("http://192.168.1.63:5341")
+                    .CreateLogger();
         }
 
         /// <summary>
@@ -39,6 +53,7 @@ namespace WindowApp
         /// <param name="e">Información detallada acerca de la solicitud y el proceso de inicio.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            Log.Information("Created");
             Frame rootFrame = Window.Current.Content as Frame;
 
             // No repetir la inicialización de la aplicación si la ventana tiene contenido todavía,

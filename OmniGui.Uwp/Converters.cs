@@ -6,6 +6,7 @@ using Windows.Storage.Streams;
 using OmniGui.Xaml;
 using OmniXaml;
 using OmniXaml.Attributes;
+using Serilog;
 
 namespace OmniGui.Uwp
 {
@@ -16,28 +17,24 @@ namespace OmniGui.Uwp
 
         private static Bitmap GetValue(string str)
         {
-            var bitmap = GetBitmap(str).Result;
+            Log.Information("Creating bitmap {Bitmap}...", str);
+            var uri = new Uri($"ms-appx:///{str}");
+            var bitmap = Task.Run(() => GetBitmapFromUri(uri)).Result;
+            Log.Information("Created bitmap {Bitmap}", str);
             return bitmap;
         }
 
-        private static async Task<Bitmap> GetBitmap(string imageName)
+        private static async Task<Bitmap> GetBitmapFromUri(Uri imageName)
         {
-            var stream = await GetStream(imageName).ConfigureAwait(false);
+            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(imageName);
+            var stream = await storageFile.OpenAsync(FileAccessMode.Read);
             using (stream)
             {
-                var bitmap = await CreateFromStream(stream);
-                return bitmap;
+                return await GetBitmapFromStream(stream);
             }
         }
 
-        private static async Task<IRandomAccessStream> GetStream(string fileName)
-        {
-            var uri = new Uri($"ms-appx:///{fileName}");
-            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().ConfigureAwait(false);
-            return await storageFile.OpenAsync(FileAccessMode.Read).AsTask().ConfigureAwait(false);
-        }
-
-        private static async Task<Bitmap> CreateFromStream(IRandomAccessStream stream)
+        private static async Task<Bitmap> GetBitmapFromStream(IRandomAccessStream stream)
         {
             var decoder = await BitmapDecoder.CreateAsync(BitmapDecoder.PngDecoderId, stream);
             var frame = await decoder.GetFrameAsync(0);

@@ -8,4 +8,7 @@
     <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="1.6.1" />
+  </ItemGroup>
 </Project>

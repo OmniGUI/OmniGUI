@@ -9,7 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DynamicData" Version="5.3.0.2158" />
-    <PackageReference Include="Grace" Version="6.2.0" />
+    <PackageReference Include="Grace" Version="6.2.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OmniGui\OmniGui.csproj" />
@@ -18,5 +18,8 @@
     <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj" />
     <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="1.6.1" />
   </ItemGroup>
 </Project>

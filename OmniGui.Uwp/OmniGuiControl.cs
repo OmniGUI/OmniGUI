@@ -12,6 +12,7 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using OmniGui.Xaml;
 using OmniXaml.Services;
+using Serilog;
 using ControlTemplate = OmniGui.Xaml.Templates.ControlTemplate;
 using Point = OmniGui.Geometry.Point;
 using Rect = OmniGui.Geometry.Rect;
@@ -45,7 +46,7 @@ namespace OmniGui.Uwp
         public OmniGuiControl()
         {
             DefaultStyleKey = typeof(OmniGuiControl);
-
+            Log.Information("Creado control");
          
             Observable
                 .FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(
@@ -141,20 +142,28 @@ namespace OmniGui.Uwp
 
         private Container CreateContainer(Uri uri)
         {
-            var readFromContent = Task.Run(async () => await uri.ReadFromContent()).Result;
+            Log.Information("Loading Container");
+            var readFromContent = Task.Run(uri.ReadFromContent).Result;
             var load = XamlLoader.Load(readFromContent);
+            Log.Information("Container loaded");
             return (Container) load;
         }
 
         private static void OnSourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var target = (OmniGuiControl) dependencyObject;
-            var xaml = (Uri) args.NewValue;
+            var uri = (Uri) args.NewValue;
 
             try
             {
-                var flacidLayout = (Layout) target.XamlLoader.Load(xaml.ReadFromContent().Result);
+                Log.Information("Cargando archivo XAML desde {Uri}", uri);
+                var xaml = Task.Run(uri.ReadFromContent).Result;
+                var flacidLayout = (Layout) target.XamlLoader.Load(xaml);
+                Log.Information("Archivo cargado", uri);
+
+                Log.Information("Inflando...");
                 new TemplateInflator().Inflate(flacidLayout, target.ControlTemplates);
+                Log.Information("Inflado: fin de carga");
                 target.Layout = flacidLayout;
             }
             catch (Exception e)

@@ -28,7 +28,7 @@
     </Grid.ColumnDefinitions>-->
 
 
-    <TextBox></TextBox>
+    <TextBox FontSize="30"  />
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
     <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />

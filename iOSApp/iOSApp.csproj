@@ -100,8 +100,8 @@
     <Reference Include="DynamicData, Version=5.3.0.2158, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicData.5.3.0.2158\lib\netstandard1.1\DynamicData.dll</HintPath>
     </Reference>
-    <Reference Include="Grace, Version=6.2.0.0, Culture=neutral, PublicKeyToken=b7d24c6367970497, processorArchitecture=MSIL">
-      <HintPath>..\packages\Grace.6.2.0\lib\netstandard1.0\Grace.dll</HintPath>
+    <Reference Include="Grace, Version=6.2.1.0, Culture=neutral, PublicKeyToken=b7d24c6367970497, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grace.6.2.1\lib\netstandard1.0\Grace.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
