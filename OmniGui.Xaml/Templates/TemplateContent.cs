@@ -29,7 +29,7 @@ namespace OmniGui.Xaml.Templates
         public Layout Load()
         {
             var builderContext = new BuilderContext();
-            return (Layout)builder.Build(node, builderContext);
+            return (Layout)builder.Build(node.Clone(), builderContext);
         }
 
         protected bool Equals(TemplateContent other)

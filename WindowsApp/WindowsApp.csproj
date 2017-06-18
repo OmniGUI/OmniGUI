@@ -110,7 +110,9 @@
   <ItemGroup>
     <Content Include="..\ViewModels\mario.png">
       <Link>mario.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ViewModels\smiley.png">
+      <Link>smiley.png</Link>
     </Content>
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />

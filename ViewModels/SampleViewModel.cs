@@ -2,13 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Reactive.Subjects;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
     using DynamicData;
-    using DynamicData.Binding;
 
     public class SampleViewModel : INotifyPropertyChanged
     {
