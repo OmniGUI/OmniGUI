@@ -36,15 +36,17 @@ namespace OmniGui.Uwp
         public void DrawText(FormattedText formattedText, Point point)
         {
             var text = formattedText.Text;
-            var vector2 = new System.Numerics.Vector2((float)point.X, (float)point.Y);
-            var canvasSolidColorBrush = formattedText.Brush.ToWin2D(drawingSession);
+            
+            var vector = new System.Numerics.Vector2((float)point.X, (float)point.Y);
+            var brush = formattedText.Brush.ToWin2D(drawingSession);
             var canvasTextFormat = new CanvasTextFormat
             {
                 FontSize = formattedText.FontSize,
                 FontWeight = formattedText.FontWeight.ToWin2D(),
+                FontFamily = formattedText.FontName,
             };
 
-            drawingSession.DrawText(text, vector2, canvasSolidColorBrush, canvasTextFormat);
+            drawingSession.DrawText(text, vector, brush, canvasTextFormat);
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
@@ -54,7 +56,7 @@ namespace OmniGui.Uwp
 
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)
         {
-            ICanvasBrush canvasSolidColorBrush = new CanvasSolidColorBrush(drawingSession, pen.Brush.Color.ToWin2D());
+            var canvasSolidColorBrush = new CanvasSolidColorBrush(drawingSession, pen.Brush.Color.ToWin2D());
             var start = ((Vector)startPoint).ToWin2D();
             var end = ((Vector)endPoint).ToWin2D();
             var penThickness = (float)pen.Thickness;
