@@ -4,44 +4,14 @@
         <RowDefinition />
     </Grid.RowDefinitions>
 
-    <StackPanel Gap="8" Margin="8">
 
-        <!--<VisualStateManager.VisualStateGroups>
-        <VisualStateGroup>
-            <VisualStateGroup.StateTriggers>
-                <StateTrigger IsActive="{Bind TargetProperty=IsActive}"></StateTrigger>
-            </VisualStateGroup.StateTriggers>
-            <VisualStateGroup.Setters>
-                <Setter></Setter>
-            </VisualStateGroup.Setters>
-        </VisualStateGroup>
-    </VisualStateManager.VisualStateGroups>
-
-
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition></ColumnDefinition>
-        <ColumnDefinition></ColumnDefinition>
-    </Grid.ColumnDefinitions>
-
-    <Button Content="{Bind TargetProperty=Title}"></Button>
-    <Button Content="Otro texto" Grid.Column="1"></Button>-->
-
-
-        <!--<Grid.ColumnDefinitions>
-        <ColumnDefinition></ColumnDefinition>
-        <ColumnDefinition></ColumnDefinition>
-    </Grid.ColumnDefinitions>-->
-
-
-        <TextBox FontSize="30" />
-        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-        <Button Command="{Bind TargetProperty=ShowMessageCommand}">Hola</Button>
-
-    </StackPanel>
-
-    <Image Grid.Row="1" Margin="20" VerticalAlignment="Center" RequestedSize="240,-" Source="mario.png" />
+    <List Source="{Bind TargetProperty=People}">
+        <List.ItemTemplate>
+            <DataTemplate>
+                <Button Content="{Bind TargetProperty=Name}"></Button>
+            </DataTemplate>
+        </List.ItemTemplate>
+    </List>
 
 </Grid>
 

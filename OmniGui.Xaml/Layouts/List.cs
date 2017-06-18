@@ -20,7 +20,6 @@
         private IDisposable subscription;
         private readonly StackPanel panel;
         private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
-
         public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates, FrameworkDependencies deps) : base(deps)
         {
             this.controlTemplateInflator = controlTemplateInflator;
