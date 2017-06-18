@@ -30,7 +30,7 @@ namespace OmniGui.Uwp
             var radius = (float)cornerRadius.BottomLeft;
             var color = pen.Brush.Color.ToWin2D();
 
-            drawingSession.DrawRoundedRectangle(winRect, radius, radius, color);
+            drawingSession.DrawRoundedRectangle(winRect, radius, radius, color, (float)pen.Thickness);
         }
 
         public void DrawText(FormattedText formattedText, Point point)

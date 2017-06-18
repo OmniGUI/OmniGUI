@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,6 +30,24 @@ namespace WindowApp
         {
             this.InitializeComponent();
             this.DataContext = new SampleViewModel(new UwpMessageService());
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (IsMobile)
+            {
+                var view = ApplicationView.GetForCurrentView();
+                view.TryEnterFullScreenMode();
+            }
+        }
+
+        public static bool IsMobile
+        {
+            get
+            {
+                var qualifiers = Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().QualifierValues;
+                return qualifiers.ContainsKey("DeviceFamily") && qualifiers["DeviceFamily"] == "Mobile";
+            }
         }
     }
 }

@@ -1,7 +1,12 @@
-<StackPanel xmlns="root" Background="LightGreen" xmlns:local="using:Common;assembly=Common">
-    
+<Grid xmlns="root" Background="Azure" xmlns:local="using:Common;assembly=Common" >
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition />
+    </Grid.RowDefinitions>
 
-    <!--<VisualStateManager.VisualStateGroups>
+    <StackPanel Gap="8" Margin="8">
+
+        <!--<VisualStateManager.VisualStateGroups>
         <VisualStateGroup>
             <VisualStateGroup.StateTriggers>
                 <StateTrigger IsActive="{Bind TargetProperty=IsActive}"></StateTrigger>
@@ -22,21 +27,23 @@
     <Button Content="Otro texto" Grid.Column="1"></Button>-->
 
 
-    <!--<Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
         <ColumnDefinition></ColumnDefinition>
         <ColumnDefinition></ColumnDefinition>
     </Grid.ColumnDefinitions>-->
 
 
-    <TextBox></TextBox>
-    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-    <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-    <Button Command="{Bind TargetProperty=ShowMessageCommand}">Hola</Button>
-    <Image Source="mario.png" />
+        <TextBox FontSize="30" />
+        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
+        <Button Command="{Bind TargetProperty=ShowMessageCommand}">Hola</Button>
 
-</StackPanel>
+    </StackPanel>
 
+    <Image Grid.Row="1" Margin="20" VerticalAlignment="Center" RequestedSize="240,-" Source="mario.png" />
+
+</Grid>
 
 <!--<Button xmlns="root"  Content="{Bind TargetProperty=Title}"></Button>-->
 

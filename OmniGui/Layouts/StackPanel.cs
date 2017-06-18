@@ -68,6 +68,7 @@ namespace OmniGui.Layouts
             var orientation = Orientation;
             var arrangedWidth = finalSize.Width;
             var arrangedHeight = finalSize.Height;
+            double gap = Gap;
 
             if (Orientation == Orientation.Vertical)
             {
@@ -89,25 +90,28 @@ namespace OmniGui.Layouts
                     var childFinal = new Rect(new Point(0, arrangedHeight), new Size(width, childHeight));
                     child.Arrange(childFinal);
                     arrangedWidth = Math.Max(arrangedWidth, childWidth);
-                    arrangedHeight += childHeight;
+                    arrangedHeight += childHeight + gap;
                 }
                 else
                 {
                     var height = Math.Max(childHeight, arrangedHeight);
                     var childFinal = new Rect(new Point(arrangedWidth, 0), new Size(childWidth, height));
                     child.Arrange(childFinal);
-                    arrangedWidth += childWidth;
+                    arrangedWidth += childWidth + gap;
                     arrangedHeight = Math.Max(arrangedHeight, childHeight);
                 }
             }
 
             if (orientation == Orientation.Vertical)
+
             {
-                arrangedHeight = Math.Max(arrangedHeight, finalSize.Height);
+
+                arrangedHeight = Math.Max(arrangedHeight - gap, finalSize.Height);
             }
             else
             {
-                arrangedWidth = Math.Max(arrangedWidth, finalSize.Width);
+
+                arrangedWidth = Math.Max(arrangedWidth - gap, finalSize.Width);
             }
 
             return new Size(arrangedWidth, arrangedHeight);

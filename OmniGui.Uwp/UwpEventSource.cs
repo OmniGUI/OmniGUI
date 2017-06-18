@@ -54,8 +54,7 @@ namespace OmniGui.Uwp
             var element = Window.Current.CoreWindow;
 
             var fromEventPattern = Observable
-                .FromEventPattern<TypedEventHandler<CoreWindow, CharacterReceivedEventArgs>, CharacterReceivedEventArgs
-                >(
+                .FromEventPattern<TypedEventHandler<CoreWindow, CharacterReceivedEventArgs>, CharacterReceivedEventArgs>(
                     ev => element.CharacterReceived += ev,
                     ev => element.CharacterReceived -= ev);
             return fromEventPattern.Select(
