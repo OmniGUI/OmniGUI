@@ -62,7 +62,7 @@ namespace OmniGui.Wpf
             context.DrawGeometry(brush.ToWpf(), pen.ToWpf(), geometry);
         }
 
-        public void DrawText(FormattedText formattedText, Point point)
+        public void DrawText(FormattedText formattedText, Point point, Rect? clipRegion = null)
         {
             context.DrawText(formattedText.ToWpf(), point.ToWpf());
         }

@@ -51,7 +51,7 @@ namespace OmniGui.Android
             canvas.DrawRoundRect(rect.ToRectF(), (float)cornerRadius.BottomLeft, (float)cornerRadius.TopLeft, paint);
         }
 
-        public void DrawText(FormattedText formattedText, Point point)
+        public void DrawText(FormattedText formattedText, Point point, Rect? clipRect)
         {
             var paint = new Paint();
             paint.TextSize = formattedText.FontSize;

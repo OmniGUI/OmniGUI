@@ -51,7 +51,7 @@
             throw new System.NotImplementedException();
         }
 
-        public void DrawText(FormattedText formattedText, Point point)
+        public void DrawText(FormattedText formattedText, Point point, Rect? clipRect)
         {
             throw new System.NotImplementedException();
         }

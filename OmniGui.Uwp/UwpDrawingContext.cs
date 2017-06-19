@@ -33,7 +33,7 @@ namespace OmniGui.Uwp
             drawingSession.DrawRoundedRectangle(winRect, radius, radius, color, (float)pen.Thickness);
         }
 
-        public void DrawText(FormattedText formattedText, Point point)
+        public void DrawText(FormattedText formattedText, Point point, Rect? clipRect)
         {
             var text = formattedText.Text;
             
@@ -46,7 +46,16 @@ namespace OmniGui.Uwp
                 FontFamily = formattedText.FontName,
             };
 
+            CanvasActiveLayer layer = null;
+            
+            if (clipRect != null)
+            {
+                layer = drawingSession.CreateLayer(new CanvasSolidColorBrush(drawingSession, Colors.Black.ToWin2D()), clipRect.Value.ToWin2D());
+            }
+
             drawingSession.DrawText(text, vector, brush, canvasTextFormat);
+
+            layer?.Dispose();
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)

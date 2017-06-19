@@ -16,6 +16,10 @@
             typeof(TextBoxView),
             typeof(string), new PropertyMetadata { DefaultValue = 16F });
 
+        public static readonly ExtendedProperty AcceptsReturnProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("AcceptsReturn",
+            typeof(TextBoxView),
+            typeof(bool), new PropertyMetadata { DefaultValue = false });
+
         private IDisposable changedSubscription;
         private int cursorPositionOrdinal;
         private IDisposable cursorToggleChanger;
@@ -188,7 +192,7 @@
         {
             if (!string.IsNullOrEmpty(Text))
             {
-                drawingContext.DrawText(FormattedText, VisualBounds.Point);
+                drawingContext.DrawText(FormattedText, VisualBounds.Point, VisualBounds);
             }
 
             DrawCursor(drawingContext);
@@ -243,6 +247,14 @@
 
         public void AddText(string text)
         {
+            if (!AcceptsReturn)
+            {
+                if (text == "\r" || text == Environment.NewLine)
+                {
+                    return;
+                }
+            }
+
             if (Text == null)
             {
                 Text = text;
@@ -256,6 +268,12 @@
             }
 
             CursorPositionOrdinal++;
+        }
+
+        public bool AcceptsReturn
+        {
+            get => (bool) GetValue(AcceptsReturnProperty);
+            set => SetValue(AcceptsReturnProperty, value);
         }
 
         public void RemoveBefore()

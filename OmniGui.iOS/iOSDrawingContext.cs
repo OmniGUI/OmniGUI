@@ -46,7 +46,7 @@ namespace OmniGui.iOS
             rectanglePath.Fill();
         }
 
-        public void DrawText(FormattedText formattedText, Point point)
+        public void DrawText(FormattedText formattedText, Point point, Rect? clipRect)
         {
             context.SaveState();
             context.ScaleCTM(1, -1); 
