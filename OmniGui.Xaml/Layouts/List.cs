@@ -1,4 +1,6 @@
-﻿namespace OmniGui.Xaml.Layouts
+﻿using System.Reactive.Linq;
+
+namespace OmniGui.Xaml.Layouts
 {
     using System;
     using System.Collections.Generic;
@@ -27,7 +29,9 @@
             panel = new StackPanel(deps);
             this.AddChild(panel);
 
-            subscription = GetChangedObservable(SourceProperty).Subscribe(obj =>
+            subscription = GetChangedObservable(SourceProperty)
+                .Where(o => o != null)
+                .Subscribe(obj =>
             {
                 var source = (ISourceList<object>)obj;
 

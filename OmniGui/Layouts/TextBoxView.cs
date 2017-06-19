@@ -14,7 +14,7 @@
 
         public static readonly ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize",
             typeof(TextBoxView),
-            typeof(string), new PropertyMetadata { DefaultValue = 16 });
+            typeof(string), new PropertyMetadata { DefaultValue = 16F });
 
         private IDisposable changedSubscription;
         private int cursorPositionOrdinal;
