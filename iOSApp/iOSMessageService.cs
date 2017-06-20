@@ -9,7 +9,7 @@ namespace iOSApp
         public Task<int> ShowMessage(string message)
         {
             IUIAlertViewDelegate uiAlertViewDelegate = new UIAlertViewDelegate();
-            UIAlertView error = new UIAlertView("My Title Text", "Error", uiAlertViewDelegate, "OK");
+            UIAlertView error = new UIAlertView(message, "", uiAlertViewDelegate, "OK");
             error.Show();
             return Task.FromResult(1);
         }

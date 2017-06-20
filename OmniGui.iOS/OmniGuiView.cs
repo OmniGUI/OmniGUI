@@ -19,9 +19,9 @@ namespace OmniGui.iOS
 
         public OmniGuiView()
         {
-            XamlLoader = CreateXamlLoader(this);                       
+            XamlLoader = CreateXamlLoader(this);                  
         }
-
+        
         public override void Draw(CGRect rect)
         {
             if (Exception != null)
@@ -117,5 +117,6 @@ namespace OmniGui.iOS
                 }
             }
         }
+               
     }
 }
