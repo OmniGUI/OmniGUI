@@ -36,5 +36,13 @@ namespace OmniGui.iOS
         {
             return new CGPoint(point.X, point.Y);
         }
+
+        public static CGImage ToiOS(this Bitmap bmp)
+        {
+            var bpr = bmp.Width * 4;
+            var bmpContext = new CGBitmapContext(bmp.Bytes, bmp.Width, bmp.Height, 8, bpr, CGColorSpace.CreateGenericRgb(),
+                CGBitmapFlags.First);
+            return bmpContext.ToImage();
+        }
     }
 }

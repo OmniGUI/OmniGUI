@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using CoreGraphics;
 using CoreText;
 using Foundation;
@@ -74,8 +75,7 @@ namespace OmniGui.iOS
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {
-            //context.DrawImage(rect);
-            throw new System.NotImplementedException();
+            context.DrawImage(sourceRect.ToiOS(), bmp.ToiOS());
         }
 
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)

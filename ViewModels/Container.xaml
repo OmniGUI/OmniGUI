@@ -18,6 +18,34 @@
             </Border>
         </ControlTemplate>
 
+        <ControlTemplate Target="VerticalScrollBar">
+            <Border Background="#82CAFF">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Button Content="^"></Button>
+                    <Button Grid.Row="2" Content="-"></Button>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate Target="HorizontalScrollBar">
+            <Border Background="#82CAFF">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="^"></Button>
+                    <Button Grid.Column="2" Content="-"></Button>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+
     </Container.ControlTemplates>
 
 
