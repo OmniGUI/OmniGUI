@@ -81,8 +81,8 @@ namespace OmniGui
             var observables = properties
                 .Select(GetChangedObservable);
 
-            var ticks = observables.Merge();
-            ticks.Subscribe(_ => InvalidateRender());
+            var merge = observables.Merge();
+            merge.Subscribe(_ => InvalidateRender());
         }
 
         private void InvalidateRender()

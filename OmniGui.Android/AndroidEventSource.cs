@@ -41,5 +41,6 @@ namespace OmniGui.Android
         public IObservable<Point> Pointer { get; }
         public IObservable<TextInputArgs> TextInput { get; } = new Subject<TextInputArgs>();
         public IObservable<KeyArgs> KeyInput { get; }
+        public IObservable<ScrollWheelArgs> ScrollWheel { get; } = Observable.Never<ScrollWheelArgs>();
     }
 }

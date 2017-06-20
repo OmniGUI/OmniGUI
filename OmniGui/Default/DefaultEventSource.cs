@@ -9,5 +9,6 @@ namespace OmniGui.Default
         public IObservable<Point> Pointer { get; } = Observable.Never<Point>();
         public IObservable<TextInputArgs> TextInput { get; } = Observable.Never<TextInputArgs>();
         public IObservable<KeyArgs> KeyInput { get; } = Observable.Never<KeyArgs>();
+        public IObservable<ScrollWheelArgs> ScrollWheel { get; } = Observable.Never<ScrollWheelArgs>();
     }
 }

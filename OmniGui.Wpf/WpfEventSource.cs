@@ -18,6 +18,16 @@ namespace OmniGui.Wpf
             Pointer = GetPointerObservable(inputElement);
             TextInput = GetKeyInputObservable(inputElement);
             KeyInput = GetSpecialKeysObservable(inputElement);
+            ScrollWheel = GetPointerScrollWheelObservable(inputElement);
+        }
+
+        private IObservable<ScrollWheelArgs> GetPointerScrollWheelObservable(IInputElement element)
+        {
+            var fromEventPattern = Observable.FromEventPattern<MouseWheelEventHandler, MouseWheelEventArgs>(
+                ev => element.PreviewMouseWheel += ev,
+                ev => element.PreviewMouseWheel -= ev);
+
+            return fromEventPattern.Select(ep => new ScrollWheelArgs { Delta = ep.EventArgs.Delta });
         }
 
         private static IObservable<KeyArgs> GetSpecialKeysObservable(IInputElement element)
@@ -33,6 +43,7 @@ namespace OmniGui.Wpf
 
         public IObservable<TextInputArgs> TextInput { get; }
         public IObservable<KeyArgs> KeyInput { get; }
+        public IObservable<ScrollWheelArgs> ScrollWheel { get; }
 
         public void Invalidate()
         {

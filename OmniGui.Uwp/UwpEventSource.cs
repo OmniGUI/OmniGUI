@@ -24,6 +24,7 @@ namespace OmniGui.Uwp
         public IObservable<Point> Pointer { get; }
         public IObservable<TextInputArgs> TextInput { get; }
         public IObservable<KeyArgs> KeyInput { get; }
+        public IObservable<ScrollWheelArgs> ScrollWheel { get; } = Observable.Never<ScrollWheelArgs>();
 
         private IObservable<Point> GetPointerObservable()
         {

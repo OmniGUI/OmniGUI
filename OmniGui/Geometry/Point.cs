@@ -33,6 +33,11 @@ namespace OmniGui.Geometry
             return new Point(point.X - vector.X, point.Y - vector.Y);
         }
 
+        public static Point operator -(Point point)
+        {
+            return new Point(-point.X, -point.Y);
+        }
+
         public static explicit operator Vector(Point a)
         {
             return new Vector(a.X, a.Y);
