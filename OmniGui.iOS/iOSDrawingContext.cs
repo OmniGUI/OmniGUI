@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Contexts;
 using CoreGraphics;
 using CoreText;
 using Foundation;
@@ -75,7 +76,11 @@ namespace OmniGui.iOS
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {
-            context.DrawImage(sourceRect.ToiOS(), bmp.ToiOS());
+            context.SaveState();
+            var invertedRect = new Rect(rect.X, - (rect.Y + rect.Height), rect.Width, rect.Height);
+            context.ScaleCTM(1, -1);
+            context.DrawImage(invertedRect.ToiOS(), bmp.ToiOS());
+            context.RestoreState();
         }
 
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)

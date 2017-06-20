@@ -130,6 +130,12 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="..\ViewModels\mario.png">
+      <Link>mario.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ViewModels\smiley.png">
+      <Link>smiley.png</Link>
+    </BundleResource>
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>

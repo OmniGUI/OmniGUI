@@ -39,9 +39,19 @@ namespace OmniGui.iOS
 
         public static CGImage ToiOS(this Bitmap bmp)
         {
-            var bpr = bmp.Width * 4;
-            var bmpContext = new CGBitmapContext(bmp.Bytes, bmp.Width, bmp.Height, 8, bpr, CGColorSpace.CreateGenericRgb(),
-                CGBitmapFlags.First);
+            int bytesPerPixel = 4;
+            var width = bmp.Width;
+            int bytesPerRow = bytesPerPixel * width;
+            int bitsPerComponent = 8;
+
+            var rawData = bmp.Bytes;
+            var height = bmp.Height;
+            var colorSpace = CGColorSpace.CreateDeviceRGB();
+            
+            var bmpContext = new CGBitmapContext(rawData, width, height,
+                bitsPerComponent, bytesPerRow, colorSpace,
+                CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big); 
+            
             return bmpContext.ToImage();
         }
     }

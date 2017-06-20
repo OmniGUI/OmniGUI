@@ -29,7 +29,7 @@ namespace iOSApp
             // If you have defined a root view controller, set it here:
             var vc = new UIViewController();
             var sampleViewModel = new SampleViewModel(new iOSMessageService());
-            var omniGuiViewReloaded = new OmniGuiViewReloaded { Source = "Layout.xaml" };
+            var omniGuiViewReloaded = new OmniGuiView { Source = "Layout.xaml" };
             omniGuiViewReloaded.DataContext = sampleViewModel;
             vc.View = omniGuiViewReloaded;
             
