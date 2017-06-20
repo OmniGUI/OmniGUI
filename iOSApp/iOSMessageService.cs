@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Common;
+using UIKit;
 
 namespace iOSApp
 {
@@ -7,7 +8,10 @@ namespace iOSApp
     {
         public Task<int> ShowMessage(string message)
         {
-            throw new System.NotImplementedException();
+            IUIAlertViewDelegate uiAlertViewDelegate = new UIAlertViewDelegate();
+            UIAlertView error = new UIAlertView("My Title Text", "Error", uiAlertViewDelegate, "OK");
+            error.Show();
+            return Task.FromResult(1);
         }
     }
 }

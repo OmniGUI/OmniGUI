@@ -50,7 +50,7 @@ namespace OmniGui.iOS
             
             var bmpContext = new CGBitmapContext(rawData, width, height,
                 bitsPerComponent, bytesPerRow, colorSpace,
-                CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big); 
+                CGBitmapFlags.PremultipliedFirst | CGBitmapFlags.ByteOrder32Big); 
             
             return bmpContext.ToImage();
         }

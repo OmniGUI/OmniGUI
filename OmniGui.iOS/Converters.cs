@@ -30,7 +30,7 @@ namespace OmniGui.iOS
                 int bitsPerComponent = 8;
                 CGContext context = new CGBitmapContext(rawData, width, height,
                     bitsPerComponent, bytesPerRow, colorSpace,
-                    CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big);
+                    CGBitmapFlags.PremultipliedFirst | CGBitmapFlags.ByteOrder32Big);
 
                 context.DrawImage(new CGRect(0, 0, width, height), image);
 

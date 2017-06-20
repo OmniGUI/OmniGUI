@@ -14,6 +14,8 @@ namespace OmniGui.iOS
         private object dataContext;
         private string source;
         private Container container;
+        private Exception exception;
+        private UIView exceptionView;
 
         public OmniGuiView()
         {
@@ -22,6 +24,11 @@ namespace OmniGui.iOS
 
         public override void Draw(CGRect rect)
         {
+            if (Exception != null)
+            {
+                return;
+            }
+            
             var bounds = rect.ToOmniGui();
             
             Layout.Measure(bounds.Size);
@@ -63,7 +70,27 @@ namespace OmniGui.iOS
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Exception = e;
+                this.SetNeedsDisplay();
+            }
+        }
+
+        public Exception Exception
+        {
+            get { return exception; }
+            set
+            {
+                exception = value;
+                if (exception != null)
+                {
+                    exceptionView = new UITextView(Bounds) {Text = Exception.ToString()};
+                    AddSubview(exceptionView);
+                    SetNeedsDisplay();
+                }
+                else
+                {
+                    exceptionView.RemoveFromSuperview();
+                }
             }
         }
 
