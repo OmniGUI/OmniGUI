@@ -4,7 +4,7 @@
 
 A cross-platform GUI framework from scratch just to learn.... that is already AWESOME!
 
-# Xamarin Forms is OK, but has too many limitations.
+# Xamarin Forms is OK, but has too many limitations
 
 What about having a Presentation Framework that:
 - Loads the UI from the same XAML for every platform?
@@ -35,3 +35,7 @@ OmniGUI is **the answer**
 
 # Running on Windows Desktop
 ![image](https://user-images.githubusercontent.com/3109851/27381035-93eba22c-5681-11e7-9075-3f040e30f5f1.png)
+
+How it works? https://github.com/OmniGUI/OmniGUI/wiki/How-it-works
+
+If you want to know more, just ping me in Twitter at @SuperJMN.
