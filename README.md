@@ -34,4 +34,4 @@ Some basics:
 ![image](https://user-images.githubusercontent.com/3109851/27380899-303c6784-5681-11e7-9cad-157049f62cdd.png)
 
 # Running on Windows Desktop
-![image](https://user-images.githubusercontent.com/3109851/27381008-7c7cd548-5681-11e7-8449-5ec994e8d5b9.png)
+![image](https://user-images.githubusercontent.com/3109851/27381035-93eba22c-5681-11e7-9075-3f040e30f5f1.png)
