@@ -11,11 +11,11 @@ What about having a Presentation Framework that:
 - Loads the UI from the same XAML for every platform?
 - It looks exactly the same in every platform?
 
-OmniGUI is the *answer*
+OmniGUI is **the answer**
 
 Some basics:
 - OmniGUI's XAML looks similar to WPF/UWP/SilverLight 
-- Uses Reactive Programming. *Be Reactive*, my friend.
+- Uses Reactive Programming. *Be Reactive, my friend.*
 - Runs on 
    - Windows Desktop
    - Android
