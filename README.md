@@ -14,7 +14,8 @@ What about having a Presentation Framework that:
 OmniGUI is **the answer**
 
 Some basics:
-- OmniGUI's XAML looks similar to WPF/UWP/SilverLight 
+- You can use it inside you Xamarin Forms/Native project because OmniGUI renders **inside a view**, like any other control :)
+- OmniGUI's XAML looks similar to WPF/UWP/Silverlight 
 - Uses Reactive Programming. *Be Reactive, my friend.*
 - MVVM-ready.
 - Runs on 
