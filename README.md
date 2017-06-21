@@ -24,5 +24,8 @@ Some basics:
    - Universal Windows Platform
    - more platforms with a few touches :)
 
-# Running in UWP:
+# Running on UWP:
 ![image](https://user-images.githubusercontent.com/3109851/27380411-3dacbdd0-567f-11e7-8c5c-a5355cedd40e.png)
+
+# Running on iOS:
+![image](https://user-images.githubusercontent.com/3109851/27380697-785c316c-5680-11e7-9012-9361137be4e0.png)
