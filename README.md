@@ -29,3 +29,9 @@ Some basics:
 
 # Running on iOS:
 ![image](https://user-images.githubusercontent.com/3109851/27380697-785c316c-5680-11e7-9012-9361137be4e0.png)
+
+# Running on Android
+![image](https://user-images.githubusercontent.com/3109851/27380899-303c6784-5681-11e7-9cad-157049f62cdd.png)
+
+# Running on Windows Desktop
+![image](https://user-images.githubusercontent.com/3109851/27381008-7c7cd548-5681-11e7-8449-5ec994e8d5b9.png)
