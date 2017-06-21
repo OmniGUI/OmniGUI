@@ -2,8 +2,7 @@
    <img src="https://user-images.githubusercontent.com/3109851/27378287-b36fe52c-5677-11e7-8c1f-ccf3e202a68c.png" width="400">
 </p>
 
-A cross-platform GUI framework from scratch just to learn...
-.. that is already AWESOME!
+A cross-platform GUI framework from scratch just to learn.... that is already AWESOME!
 
 # Xamarin Forms is OK, but has too many limitations.
 
