@@ -32,13 +32,13 @@
                 },
                 new Person()
                 {
-                    Name = "Ana Isabel",
-                    Surname = "Meana",
+                    Name = "Johnny",
+                    Surname = "Bravo",
                 },
                 new Person()
                 {
-                    Name = "Bichito",
-                    Surname = "LG",
+                    Name = "Xamarin",
+                    Surname = "Fan",
                 }
             };
 
@@ -46,7 +46,7 @@
             sourceList.AddRange(people);
 
             People = sourceList;
-            Title = "Sample App";
+            Title = "This is a sample Sample App made with OmniGUI";
 
             IsActive = true;
         }

@@ -8,11 +8,9 @@
 
     <StackPanel Gap="8" Margin="8">
 
+        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
         <TextBox FontSize="30" />
-        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-        <Button Command="{Bind TargetProperty=ShowMessageCommand}">Hola</Button>
+        <Button Command="{Bind TargetProperty=ShowMessageCommand}">Click me!</Button>
 
     </StackPanel>
 

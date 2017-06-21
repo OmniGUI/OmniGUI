@@ -261,5 +261,4 @@ __pycache__/
 *.pyc
 
 # Android Designer Files
-Resources.Designer
-OmniGui.Android/Resources/Resource.Designer.cs
+*.Resources.Designer
