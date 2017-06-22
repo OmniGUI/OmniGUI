@@ -1,10 +1,13 @@
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using Gdk;
 using OmniGui.Geometry;
 using Font = System.Drawing.Font;
 using Point = OmniGui.Geometry.Point;
 using Graphics = Gtk.DotNet.Graphics;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace OmniGui.Gtk
 {
@@ -60,6 +63,19 @@ namespace OmniGui.Gtk
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {
+            var toDraw = GetBitmap(bmp);
+
+            using (var g = Graphics.FromDrawable(evnt.Window))
+            {
+                g.DrawImage(toDraw, rect.ToGtk() , sourceRect.ToGtk(), GraphicsUnit.Pixel);
+            }
+        }
+
+        private static System.Drawing.Bitmap GetBitmap(Bitmap bmp)
+        {
+            var arrayHandle = GCHandle.Alloc(bmp.Bytes, GCHandleType.Pinned);
+            var destBmp = new System.Drawing.Bitmap(bmp.Width, bmp.Height, bmp.Width * sizeof(int), PixelFormat.Format32bppArgb, arrayHandle.AddrOfPinnedObject());
+            return destBmp;
         }
 
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)
