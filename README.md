@@ -22,6 +22,7 @@ OmniGUI is **the answer**
    - Android
    - iOS
    - Universal Windows Platform
+   - Linux
    - more platforms with a few touches :)
 
 # Running on UWP
@@ -35,6 +36,9 @@ OmniGUI is **the answer**
 
 # Running on Windows Desktop
 ![image](https://user-images.githubusercontent.com/3109851/27381035-93eba22c-5681-11e7-9075-3f040e30f5f1.png)
+
+# Running on Linux (Ubuntu)
+![image](https://user-images.githubusercontent.com/3109851/27460766-5463e4b2-57b6-11e7-9fbe-4c3de927e818.jpg)
 
 How it works? https://github.com/OmniGUI/OmniGUI/wiki/How-it-works
 
