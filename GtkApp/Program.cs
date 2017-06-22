@@ -1,35 +1,52 @@
-﻿using System;
+﻿using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using Common;
 using Gtk;
-using Window = Gtk.Window;
+using OmniGui;
+using OmniGui.Gtk;
 
-namespace OmniGui.Gtk
+namespace GtkApp
 {
-	class MainClass
-	{
-		public static void Main(string[] args)
-		{
-			//var loader = new OmniXaml.Services.BasicXamlLoader(new[] { typeof(MainClass).Assembly, typeof(MyClass).Assembly });
-			//var instance = loader.Load(@"<MyClass xmlns=""root"" />");
+    class MainClass
+    {
+        public static void Main(string[] args)
+        {
+            OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
 
-			Application.Init();
-			//var win = new Window("System.Drawing and Gtk#");
+            var assemblies = typeof(MainClass).Assembly
+                .GetReferencedAssemblies()
+                .Concat(new[] { new AssemblyName("OmniGui.Xaml"), new AssemblyName("OmniGui"),  })
+                .Select(Assembly.Load)
+                .ToList();
 
-			//var dw = new DrawingArea();
-			//dw.ConfigureEvent += Dw_ConfigureEvent;
-			//win.Add(dw);
+            Application.Init();
+            //var win = new Window("System.Drawing and Gtk#");
 
-			//dw.ExposeEvent += (o, a) => Dw_ExposeEvent(a);
+            //var dw = new DrawingArea();
+            //dw.ConfigureEvent += Dw_ConfigureEvent;
+            //win.Add(dw);
 
-			//dw.SetSizeRequest(300, 300);
-			//win.Show();
-			//dw.Show();
+            //dw.ExposeEvent += (o, a) => Dw_ExposeEvent(a);
+
+            //dw.SetSizeRequest(300, 300);
+            //win.Show();
+            //dw.Show();
             var window = new MainWindow();
-		    var something = new OmniGuiWidget();
-            
-		    window.Add(something);
+            var something = new OmniGuiWidget(assemblies) { Source = "layout.xaml", DataContext = new SampleViewModel(new GtkMessageService())};
+
+            window.Add(something);
             window.Show();
-		    something.Show();
+            something.Show();
             Application.Run();
-		}	
-	}
+        }
+    }
+
+    internal class GtkMessageService : IMessageService
+    {
+        public async Task<int> ShowMessage(string message)
+        {
+            return 1;
+        }
+    }
 }
