@@ -30,7 +30,7 @@ namespace OmniGui.Gtk
 
         private IXamlLoader CreateXamlLoader()
         {
-            var deps = new FrameworkDependencies(new DefaultEventSource(), new DefaultRenderSurface(), gtkTextEngine);
+            var deps = new FrameworkDependencies(new GtkEventSource(this), new GtkRenderSurface(this), gtkTextEngine);
             var typeLocator = new TypeLocator(() => ControlTemplates, deps);
             return new OmniGuiXamlLoader(assemblies, () => ControlTemplates, typeLocator);
         }

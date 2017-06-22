@@ -7,7 +7,6 @@ using OmniGui.Geometry;
 using Font = System.Drawing.Font;
 using Point = OmniGui.Geometry.Point;
 using Graphics = Gtk.DotNet.Graphics;
-using Rectangle = System.Drawing.Rectangle;
 
 namespace OmniGui.Gtk
 {
@@ -82,7 +81,7 @@ namespace OmniGui.Gtk
         {
             using (var g = Graphics.FromDrawable(evnt.Window))
             {
-                g.DrawLine(pen.ToGtk(), startPoint.ToDrawing(), startPoint.ToDrawing());
+                g.DrawLine(pen.ToGtk(), startPoint.ToDrawing(), endPoint.ToDrawing());
             }
         }
     }
