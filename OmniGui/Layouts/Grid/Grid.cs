@@ -697,7 +697,7 @@
 
         public override void Render(IDrawingContext drawingContext)
         {
-            drawingContext.FillRectangle(VisualBounds, Background);
+            drawingContext.FillRectangle(Background, VisualBounds);
 
             base.Render(drawingContext);            
         }

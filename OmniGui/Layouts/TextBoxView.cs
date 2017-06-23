@@ -203,7 +203,7 @@
             if (IsCursorVisible && IsFocused)
             {
                 var line = GetCursorSegment();
-                drawingContext.DrawLine(line.P1, line.P2, new Pen(new Brush(Colors.Black), 1));
+                drawingContext.DrawLine(new Pen(new Brush(Colors.Black), 1), line.P1, line.P2);
             }
         }
 

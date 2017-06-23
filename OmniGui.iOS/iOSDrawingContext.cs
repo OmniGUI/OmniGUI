@@ -19,13 +19,13 @@ namespace OmniGui.iOS
             this.context = context;
         }
 
-        public void DrawRectangle(Rect rect, Pen pen)
+        public void DrawRectangle(Pen pen, Rect rect)
         {
             context.SetFillColor(pen.Brush.Color.ToiOS());
             context.StrokeRectWithWidth(rect.ToiOS(), (nfloat) pen.Thickness);
         }
 
-        public void FillRectangle(Rect rect, Brush brush)
+        public void FillRectangle(Brush brush, Rect rect)
         {
             var cgRect = rect.ToiOS();
 
@@ -33,7 +33,7 @@ namespace OmniGui.iOS
             context.FillRect(cgRect);
         }
 
-        public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
+        public void DrawRoundedRectangle(Pen pen, Rect rect, CornerRadius cornerRadius)
         {
             var rectanglePath = UIBezierPath.FromRoundedRect(rect.ToiOS(), (nfloat)cornerRadius.BottomLeft);
             context.SetStrokeColor(pen.Brush.Color.ToiOS());
@@ -42,7 +42,7 @@ namespace OmniGui.iOS
             rectanglePath.Stroke();
         }
 
-        public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
+        public void FillRoundedRectangle(Brush brush, Rect rect, CornerRadius cornerRadius)
         {
             var rectanglePath = UIBezierPath.FromRoundedRect(rect.ToiOS(), (nfloat) cornerRadius.BottomLeft);
             context.SetFillColor(brush.Color.ToiOS());
@@ -84,7 +84,7 @@ namespace OmniGui.iOS
             context.RestoreState();
         }
 
-        public void DrawLine(Point startPoint, Point endPoint, Pen pen)
+        public void DrawLine(Pen pen, Point startPoint, Point endPoint)
         {
             context.SetLineWidth((nfloat) pen.Thickness);
             context.SetStrokeColor(pen.Brush.Color.ToiOS());

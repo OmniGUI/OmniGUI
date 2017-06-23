@@ -4,12 +4,12 @@ namespace OmniGui
 
     public interface IDrawingContext
     {
-        void DrawRectangle(Rect rect, Pen pen);
-        void FillRectangle(Rect rect, Brush brush);
-        void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius);
-        void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius);
+        void DrawRectangle(Pen pen, Rect rect);
+        void FillRectangle(Brush brush, Rect rect);
+        void DrawRoundedRectangle(Pen pen, Rect rect, CornerRadius cornerRadius);
+        void FillRoundedRectangle(Brush brush, Rect rect, CornerRadius cornerRadius);
         void DrawText(FormattedText formattedText, Point point, Rect? clipRegion = null);
         void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect);
-        void DrawLine(Point startPoint, Point endPoint, Pen pen);
+        void DrawLine(Pen pen, Point startPoint, Point endPoint);
     }
 }

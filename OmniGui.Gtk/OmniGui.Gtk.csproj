@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Conversion.cs" />
     <Compile Include="Converters.cs" />
+    <Compile Include="GraphicsMixin.cs" />
     <Compile Include="GtkDrawingContext.cs" />
     <Compile Include="GtkEventSource.cs" />
     <Compile Include="GtkRenderSurface.cs" />

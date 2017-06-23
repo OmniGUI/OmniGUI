@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Common;
-using Gtk;
 using OmniGui;
 using OmniGui.Gtk;
+using Application = Gtk.Application;
 
 namespace GtkApp
 {
@@ -39,14 +38,6 @@ namespace GtkApp
             window.Show();
             something.Show();
             Application.Run();
-        }
-    }
-
-    internal class GtkMessageService : IMessageService
-    {
-        public async Task<int> ShowMessage(string message)
-        {
-            return 1;
         }
     }
 }

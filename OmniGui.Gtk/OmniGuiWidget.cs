@@ -82,12 +82,17 @@ namespace OmniGui.Gtk
 
             gtkTextEngine.Graphics = Graphics.FromDrawable(evnt.Window);
 
-            var context = new GtkDrawingContext(evnt);
+            
             var availableSize = size.ToOmniGui();
             Layout.Measure(availableSize);
             Layout.Arrange(new Geometry.Rect(Geometry.Point.Zero, availableSize));
-            Layout.Render(context);
 
+            using (var drawingContext = Graphics.FromDrawable(evnt.Window))
+            {
+                var context = new GtkDrawingContext(drawingContext);
+                Layout.Render(context);
+            }
+            
             return base.OnExposeEvent(evnt);
         }
     }

@@ -1,4 +1,3 @@
-using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
@@ -6,12 +5,12 @@ using Gdk;
 using OmniGui.Geometry;
 using Font = System.Drawing.Font;
 using Point = OmniGui.Geometry.Point;
-using Graphics = Gtk.DotNet.Graphics;
 
 namespace OmniGui.Gtk
 {
     public class GtkDrawingContext : IDrawingContext
     {
+        private readonly Graphics g;
         private readonly EventExpose evnt;
 
         public GtkDrawingContext(EventExpose evnt)
@@ -19,70 +18,46 @@ namespace OmniGui.Gtk
             this.evnt = evnt;
         }
 
-        public void DrawRectangle(Rect rect, Pen pen)
+        public GtkDrawingContext(Graphics g)
         {
-            using (var g = Graphics.FromDrawable(evnt.Window))
-            {
-                g.DrawRectangle(pen.ToGtk(), rect.ToGtk());
-            }
+            this.g = g;
         }
 
-        public void FillRectangle(Rect rect, Brush brush)
+        public void DrawRectangle(Pen pen, Rect rect)
         {
-            using (var g = Graphics.FromDrawable(evnt.Window))
-            {
-                g.FillRectangle(brush.ToGtk(), rect.ToGtk());
-            }
+            g.DrawRectangle(pen.ToPlatform(), rect.ToPlatform());
         }
 
-        public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
+        public void FillRectangle(Brush brush, Rect rect)
         {
-            using (var g = Graphics.FromDrawable(evnt.Window))
-            {
-                g.DrawRectangle(pen.ToGtk(), rect.ToGtk());                
-            }
+            g.FillRectangle(brush.ToPlatform(), rect.ToPlatform());
         }
 
-        public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
+        public void DrawRoundedRectangle(Pen pen, Rect rect, CornerRadius cornerRadius)
         {
-            using (var g = Graphics.FromDrawable(evnt.Window))
-            {
-                g.FillRectangle(brush.ToGtk(), rect.ToGtk());
-            }
+            g.DrawRoundedRectangle(rect.ToPlatform(), (int)cornerRadius.BottomLeft, pen.ToPlatform());
+        }
+
+        public void FillRoundedRectangle(Brush brush, Rect rect, CornerRadius cornerRadius)
+        {
+            g.FillRoundedRectangle(rect.ToPlatform(), (int) cornerRadius.BottomLeft, brush.ToPlatform());
         }
 
         public void DrawText(FormattedText formattedText, Point point, Rect? clipRegion = null)
         {
-            using (var g = Graphics.FromDrawable(evnt.Window))
-            {
-                var font = new Font(new FontFamily(formattedText.FontName), formattedText.FontSize);
-                g.DrawString(formattedText.Text, font, formattedText.Brush.ToGtk(), point.ToDrawing());
-            }
+            var font = new Font(new FontFamily(formattedText.FontName), formattedText.FontSize);
+            g.DrawString(formattedText.Text, font, formattedText.Brush.ToPlatform(), point.ToDrawing());
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
         {
-            var toDraw = GetBitmap(bmp);
-
-            using (var g = Graphics.FromDrawable(evnt.Window))
-            {
-                g.DrawImage(toDraw, rect.ToGtk() , sourceRect.ToGtk(), GraphicsUnit.Pixel);
-            }
+            var toDraw = bmp.ToPlatform();
+            g.DrawImage(toDraw, rect.ToPlatform(), sourceRect.ToPlatform(), GraphicsUnit.Pixel);
         }
 
-        private static System.Drawing.Bitmap GetBitmap(Bitmap bmp)
+        public void DrawLine(Pen pen, Point startPoint, Point endPoint)
         {
-            var arrayHandle = GCHandle.Alloc(bmp.Bytes, GCHandleType.Pinned);
-            var destBmp = new System.Drawing.Bitmap(bmp.Width, bmp.Height, bmp.Width * sizeof(int), PixelFormat.Format32bppArgb, arrayHandle.AddrOfPinnedObject());
-            return destBmp;
-        }
-
-        public void DrawLine(Point startPoint, Point endPoint, Pen pen)
-        {
-            using (var g = Graphics.FromDrawable(evnt.Window))
-            {
-                g.DrawLine(pen.ToGtk(), startPoint.ToDrawing(), endPoint.ToDrawing());
-            }
+            g.DrawLine(pen.ToPlatform(), startPoint.ToDrawing(), endPoint.ToDrawing());
         }
     }
 }

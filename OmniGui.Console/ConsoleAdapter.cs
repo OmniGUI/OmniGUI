@@ -41,7 +41,7 @@
             throw new System.NotImplementedException();
         }
 
-        public void DrawRectangle(Rect rect, Pen pen)
+        public void DrawRectangle(Pen pen, Rect rect)
         {
             throw new System.NotImplementedException();
         }
@@ -61,21 +61,21 @@
             throw new System.NotImplementedException();
         }
 
-        public void DrawLine(Point startPoint, Point endPoint, Pen pen)
+        public void DrawLine(Pen pen, Point startPoint, Point endPoint)
         {            
         }
 
-        public void FillRectangle(Rect rect, Brush brush)
+        public void FillRectangle(Brush brush, Rect rect)
         {
             throw new System.NotImplementedException();
         }
 
-        public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
+        public void DrawRoundedRectangle(Pen pen, Rect rect, CornerRadius cornerRadius)
         {
             throw new System.NotImplementedException();
         }
 
-        public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
+        public void FillRoundedRectangle(Brush brush, Rect rect, CornerRadius cornerRadius)
         {
             throw new System.NotImplementedException();
         }

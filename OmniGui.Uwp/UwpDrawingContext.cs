@@ -15,7 +15,7 @@ namespace OmniGui.Uwp
 
         private readonly CanvasDrawingSession drawingSession;
 
-        public void FillRectangle(Rect rect, Brush brush)
+        public void FillRectangle(Brush brush, Rect rect)
         {
             var wRect = rect.ToWin2D();
             var wBrush = brush.ToWin2D(drawingSession);
@@ -23,7 +23,7 @@ namespace OmniGui.Uwp
         }
 
 
-        public void DrawRoundedRectangle(Rect rect, Pen pen, CornerRadius cornerRadius)
+        public void DrawRoundedRectangle(Pen pen, Rect rect, CornerRadius cornerRadius)
         {
             var winRect = rect.ToWin2D();
 
@@ -63,7 +63,7 @@ namespace OmniGui.Uwp
             drawingSession.DrawImage(bmp.ToWin2D(drawingSession), rect.ToWin2D());
         }
 
-        public void DrawLine(Point startPoint, Point endPoint, Pen pen)
+        public void DrawLine(Pen pen, Point startPoint, Point endPoint)
         {
             var canvasSolidColorBrush = new CanvasSolidColorBrush(drawingSession, pen.Brush.Color.ToWin2D());
             var start = ((Vector)startPoint).ToWin2D();
@@ -72,12 +72,12 @@ namespace OmniGui.Uwp
             drawingSession.DrawLine(start, end, canvasSolidColorBrush, penThickness);
         }
 
-        public void DrawRectangle(Rect rect, Pen pen)
+        public void DrawRectangle(Pen pen, Rect rect)
         {
             drawingSession.DrawRectangle(rect.ToWin2D(), pen.Brush.Color.ToWin2D());
         }
 
-        public void FillRoundedRectangle(Rect rect, Brush brush, CornerRadius cornerRadius)
+        public void FillRoundedRectangle(Brush brush, Rect rect, CornerRadius cornerRadius)
         {
             var winRect = rect.ToWin2D();
             var radius = (float)cornerRadius.BottomLeft;

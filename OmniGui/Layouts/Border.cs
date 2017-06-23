@@ -59,8 +59,8 @@ namespace OmniGui.Layouts
 
         public override void Render(IDrawingContext drawingContext)
         {
-            drawingContext.FillRoundedRectangle(VisualBounds, Background, new CornerRadius(CornerRadius));
-            drawingContext.DrawRoundedRectangle(VisualBounds, new Pen(BorderBrush, BorderThickness), new CornerRadius(CornerRadius));
+            drawingContext.FillRoundedRectangle(Background, VisualBounds, new CornerRadius(CornerRadius));
+            drawingContext.DrawRoundedRectangle(new Pen(BorderBrush, BorderThickness), VisualBounds, new CornerRadius(CornerRadius));
             
             base.Render(drawingContext);
         }
