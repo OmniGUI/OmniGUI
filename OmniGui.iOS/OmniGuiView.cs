@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
 using CoreGraphics;
+using ObjCRuntime;
 using OmniGui.Xaml;
 using OmniGui.Xaml.Templates;
 using OmniXaml.Services;
@@ -9,28 +11,33 @@ using UIKit;
 
 namespace OmniGui.iOS
 {
-    public class OmniGuiView : UIView
+    [Adopts("UIKeyInput")]
+    public class OmniGuiView : UIView, IUIKeyInput
     {
         private object dataContext;
         private string source;
         private Container container;
         private Exception exception;
         private UIView exceptionView;
+        private ISubject<TextInputArgs> textInputSubject = new Subject<TextInputArgs>();
+        private ISubject<KeyArgs> keySubject = new Subject<KeyArgs>();
 
         public OmniGuiView()
         {
-            XamlLoader = CreateXamlLoader(this);                  
+            XamlLoader = CreateXamlLoader();            
         }
-        
+
+        public override bool CanBecomeFirstResponder => true;
+
         public override void Draw(CGRect rect)
         {
             if (Exception != null)
             {
                 return;
             }
-            
+
             var bounds = rect.ToOmniGui();
-            
+
             Layout.Measure(bounds.Size);
             Layout.Arrange(bounds);
             using (var ctx = UIGraphics.GetCurrentContext())
@@ -39,14 +46,19 @@ namespace OmniGui.iOS
             }
         }
 
+        public ISubject<KeyArgs> KeyInput => keySubject;
+        public ISubject<TextInputArgs> TextInput => textInputSubject;
+
+
         public Layout Layout { get; set; }
 
-        private IXamlLoader CreateXamlLoader(UIView view)
+        private IXamlLoader CreateXamlLoader()
         {
-            var androidEventSource = new iOSEventSource(view);
+            var androidEventSource = new iOSEventSource(this);
             var deps = new FrameworkDependencies(androidEventSource, new iOSRenderSurface(this), new iOSTextEngine());
             var typeLocator = new TypeLocator(() => ControlTemplates, deps);
-            return new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates, typeLocator);
+            return new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates,
+                typeLocator);
         }
 
         public string Source
@@ -63,7 +75,7 @@ namespace OmniGui.iOS
         {
             try
             {
-                var flacidLayout = (Layout)XamlLoader.Load(ReadMixin.ReadText(value));
+                var flacidLayout = (Layout) XamlLoader.Load(ReadMixin.ReadText(value));
                 new TemplateInflator().Inflate(flacidLayout, ControlTemplates);
                 Layout = flacidLayout;
                 Layout.DataContext = DataContext;
@@ -100,7 +112,17 @@ namespace OmniGui.iOS
 
         private Container CreateContainer(string containerAsset)
         {
-            return (Container)XamlLoader.Load(ReadMixin.ReadText(containerAsset));
+            return (Container) XamlLoader.Load(ReadMixin.ReadText(containerAsset));
+        }
+
+        public void InsertText(string text)
+        {
+            textInputSubject.OnNext(new TextInputArgs {Text = text});
+        }
+
+        public void DeleteBackward()
+        {
+            keySubject.OnNext(new KeyArgs(MyKey.Delete));
         }
 
         public IXamlLoader XamlLoader { get; }
@@ -117,6 +139,23 @@ namespace OmniGui.iOS
                 }
             }
         }
-               
+
+        public bool HasText => true;
+
+        public UITextAutocapitalizationType AutocapitalizationType { get; set; } = UITextAutocapitalizationType.None;
+
+        public UITextAutocorrectionType AutocorrectionType { get; set; } = UITextAutocorrectionType.Default;
+
+        public UIKeyboardType KeyboardType { get; set; } = UIKeyboardType.Default;
+
+        public UIKeyboardAppearance KeyboardAppearance { get; set; } = UIKeyboardAppearance.Default;
+
+        public UIReturnKeyType ReturnKeyType { get; set; } = UIReturnKeyType.Default;
+
+        public bool EnablesReturnKeyAutomatically { get; set; } = true;
+
+        public bool SecureTextEntry { get; set; } = false;
+
+        public UITextSpellCheckingType SpellCheckingType { get; set; } = UITextSpellCheckingType.Default;
     }
 }

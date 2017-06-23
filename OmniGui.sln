@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp", "WpfApp\WpfApp.csproj", "{5D7A3C49-8B5C-45FD-8F96-BFDB13CA9328}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniGui", "OmniGui\OmniGui.csproj", "{4F0F11A7-EFFC-4384-98EC-51C6E1FC90B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniGui", "OmniGui\OmniGui.csproj", "{4F0F11A7-EFFC-4384-98EC-51C6E1FC90B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OmniXaml", "OmniXaml", "{1A918918-74FD-45DF-BC4D-61C8ECE6268C}"
 EndProject
@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniXaml.Attributes", "Omni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniXaml.Services", "OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj", "{B9A9C91A-8266-4738-8C54-D4B3955E5DF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniGui.Xaml", "OmniGui.Xaml\OmniGui.Xaml.csproj", "{FF6D5507-1F7C-4161-B5CB-36FA484BBEE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniGui.Xaml", "OmniGui.Xaml\OmniGui.Xaml.csproj", "{FF6D5507-1F7C-4161-B5CB-36FA484BBEE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniGui.Wpf", "OmniGui.Wpf\OmniGui.Wpf.csproj", "{8DF3CF78-57C9-4A80-9FC5-249466573267}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniGui.Console", "OmniGui.Console\OmniGui.Console.csproj", "{65127FA4-29EA-4607-8230-64D856AAB758}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmniGui.Console", "OmniGui.Console\OmniGui.Console.csproj", "{65127FA4-29EA-4607-8230-64D856AAB758}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Zafiro", "Zafiro", "{0AC338D8-7A69-4230-9F4F-2E9D3358E16D}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.Core", "OmniXAML\Zaf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidApp", "AndroidApp\AndroidApp.csproj", "{0785AECE-5C70-4891-86D1-E76D9DC55661}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "ViewModels\Common.csproj", "{ABAA0062-BCF8-456B-A70F-8D2D52C785E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "ViewModels\Common.csproj", "{ABAA0062-BCF8-456B-A70F-8D2D52C785E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test Apps", "Test Apps", "{778E2587-8C58-49FF-B6F0-F9201F5F22FC}"
 EndProject

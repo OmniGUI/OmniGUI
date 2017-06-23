@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Contexts;
 using CoreGraphics;
@@ -85,11 +86,11 @@ namespace OmniGui.iOS
 
         public void DrawLine(Point startPoint, Point endPoint, Pen pen)
         {
-            //CGRect rectangle = rect.ToiOS();
-            //context.SetFillColor((nfloat)1.0, (nfloat)1.0, 0, (nfloat)0.0);
-            //context.SetStrokeColor((nfloat)0.0, (nfloat)0.0, (nfloat)0.0, (nfloat)0.5);
-            //context.FillRect(rectangle);
-
+            context.SetLineWidth((nfloat) pen.Thickness);
+            context.SetStrokeColor(pen.Brush.Color.ToiOS());
+            context.MoveTo((nfloat) startPoint.X, (nfloat) startPoint.Y);
+            context.AddLineToPoint((nfloat) endPoint.X, (nfloat) endPoint.Y);
+            context.StrokePath();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace OmniGui.iOS
 
         public override void ShowVirtualKeyboard()
         {
-            // TODO: Implement this
+            view.BecomeFirstResponder();
         }
     }
 }
