@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -5,8 +6,15 @@ namespace OmniGui.Gtk
 {
     public static class GraphicsMixin
     {
+        private const double PenMinWidthTolerance = 0.1;
+
         public static void DrawRoundedRectangle(this Graphics graphics, Rectangle rect, int radius, System.Drawing.Pen pen)
         {
+            if (Math.Abs(pen.Width) < PenMinWidthTolerance)
+            {
+                return;
+            }
+
             if (radius == 0)
             {
                 graphics.DrawRectangle(pen, rect);

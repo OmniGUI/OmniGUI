@@ -12,8 +12,13 @@ namespace OmniGui.Layouts
 
         public Button(Platform platform) : base(platform)
         {
+            Pointer.Enter.Subscribe(_ => Style = "Button:hover");
+            Pointer.Leave.Subscribe(_ => Style = "Button");
+            Pointer.Up.Subscribe(_ => Style = GetType().Name);
             Pointer.Down.Subscribe(p =>
             {
+                this.Style = "Button:click";
+
                 if (Command?.CanExecute(null) == true)
                 {
                     Command.Execute(null);

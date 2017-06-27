@@ -1,13 +1,12 @@
+using System;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Windows;
+using System.Windows.Input;
+using Point = OmniGui.Geometry.Point;
+
 namespace OmniGui.Wpf
 {
-    using System;
-    using System.Linq;
-    using System.Reactive.Linq;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Threading;
-    using Point = Geometry.Point;
-
     public class WpfEventSource : IEventSource
     {
         private readonly FrameworkElement inputElement;
@@ -21,13 +20,19 @@ namespace OmniGui.Wpf
             ScrollWheel = GetPointerScrollWheelObservable(inputElement);
         }
 
+        public IObservable<PointerInput> Pointer { get; }
+
+        public IObservable<TextInputArgs> TextInput { get; }
+        public IObservable<KeyArgs> KeyInput { get; }
+        public IObservable<ScrollWheelArgs> ScrollWheel { get; }
+
         private IObservable<ScrollWheelArgs> GetPointerScrollWheelObservable(IInputElement element)
         {
             var fromEventPattern = Observable.FromEventPattern<MouseWheelEventHandler, MouseWheelEventArgs>(
                 ev => element.PreviewMouseWheel += ev,
                 ev => element.PreviewMouseWheel -= ev);
 
-            return fromEventPattern.Select(ep => new ScrollWheelArgs { Delta = ep.EventArgs.Delta });
+            return fromEventPattern.Select(ep => new ScrollWheelArgs {Delta = ep.EventArgs.Delta});
         }
 
         private static IObservable<KeyArgs> GetSpecialKeysObservable(IInputElement element)
@@ -37,24 +42,6 @@ namespace OmniGui.Wpf
                 ev => element.PreviewKeyDown -= ev);
 
             return fromEventPattern.Select(ep => new KeyArgs(ep.EventArgs.Key.ToOmniGui()));
-        }
-
-        public IObservable<Point> Pointer { get; }
-
-        public IObservable<TextInputArgs> TextInput { get; }
-        public IObservable<KeyArgs> KeyInput { get; }
-        public IObservable<ScrollWheelArgs> ScrollWheel { get; }
-
-        public void Invalidate()
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                inputElement.InvalidateVisual();
-            }, DispatcherPriority.Render);
-        }
-
-        public void ShowVirtualKeyboard()
-        {            
         }
 
         private static IObservable<TextInputArgs> GetKeyInputObservable(IInputElement element)
@@ -67,16 +54,39 @@ namespace OmniGui.Wpf
                 .Select(ep => new TextInputArgs {Text = ep.EventArgs.Text});
         }
 
-        private static IObservable<Point> GetPointerObservable(IInputElement element)
+        private static IObservable<PointerInput> GetPointerObservable(IInputElement element)
         {
-            var fromEventPattern = Observable.FromEventPattern<MouseButtonEventHandler, MouseEventArgs>(
-                ev => element.PreviewMouseLeftButtonDown += ev,
-                ev => element.PreviewMouseLeftButtonDown -= ev);
-            return fromEventPattern.Select(pattern =>
-            {
-                var position = pattern.EventArgs.GetPosition(element);
-                return new Point(position.X, position.Y);
-            });
+            var down = Observable.FromEventPattern<MouseButtonEventHandler, MouseEventArgs>(
+                    ev => element.PreviewMouseLeftButtonDown += ev,
+                    ev => element.PreviewMouseLeftButtonDown -= ev)
+                .Select(pattern =>
+                {
+                    var position = pattern.EventArgs.GetPosition(element);
+                    var point = new Point(position.X, position.Y);
+                    return new PointerInput {Point = point, PrimaryButtonStatus = PointerStatus.Down};
+                });
+
+            var up = Observable.FromEventPattern<MouseButtonEventHandler, MouseEventArgs>(
+                    ev => element.PreviewMouseLeftButtonUp += ev,
+                    ev => element.PreviewMouseLeftButtonUp -= ev)
+                .Select(pattern =>
+                {
+                    var position = pattern.EventArgs.GetPosition(element);
+                    var point = new Point(position.X, position.Y);
+                    return new PointerInput {Point = point, PrimaryButtonStatus = PointerStatus.Up};
+                });
+
+            var hover = Observable.FromEventPattern<MouseEventHandler, MouseEventArgs>(
+                    ev => element.PreviewMouseMove += ev,
+                    ev => element.PreviewMouseMove -= ev)
+                .Select(pattern =>
+                {
+                    var position = pattern.EventArgs.GetPosition(element);
+                    var point = new Point(position.X, position.Y);
+                    return new PointerInput { Point = point, PrimaryButtonStatus = PointerStatus.Released };
+                });
+
+            return down.Merge(up).Merge(hover);
         }
     }
 }

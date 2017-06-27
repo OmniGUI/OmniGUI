@@ -120,7 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OmniGui.Gtk\OmniGui.Gtk.csproj">
-      <Project>{0343A641-B6DB-4051-B49B-7FB4CB36568F}</Project>
+      <Project>{0343a641-b6db-4051-b49b-7fb4cb36568f}</Project>
       <Name>OmniGui.Gtk</Name>
     </ProjectReference>
     <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">

@@ -29,11 +29,8 @@ namespace OmniGui.Uwp
         public CanvasControl CanvasControl { get; private set; } = new CanvasControl();
         private ResourceStore resourceStore;
         private readonly UwpTextEngine uwpTextEngine;
-
-        static OmniGuiControl()
-        {
-            OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
-        }
+        private StyleWatcher styleWatcher;
+        private Platform platform;
 
         protected override void OnApplyTemplate()
         {
@@ -47,7 +44,7 @@ namespace OmniGui.Uwp
         {
             DefaultStyleKey = typeof(OmniGuiControl);
             Log.Information("Creado control");
-         
+
             Observable
                 .FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(
                     ev => Tapped += ev,
@@ -63,8 +60,8 @@ namespace OmniGui.Uwp
 
             uwpTextEngine = new UwpTextEngine();
             var platform = new Platform(new UwpEventSource(this), new UwpRenderSurface(this), uwpTextEngine);
-            var typeLocator = new TypeLocator(() => ResourceStore, platform);
-            XamlLoader = new OmniGuiXamlLoader(Assemblies, typeLocator);
+            var typeLocator = new TypeLocator(() => ResourceStore, platform, () => XamlLoader.StringSourceValueConverter);
+            XamlLoader = new OmniGuiXamlLoader(Assemblies, typeLocator, () => new StyleWatcher(ResourceStore.Styles));
         }
 
         private IList<Assembly> Assemblies { get; } =
@@ -89,7 +86,7 @@ namespace OmniGui.Uwp
 
         public Uri Source
         {
-            get => (Uri) GetValue(SourceProperty);
+            get => (Uri)GetValue(SourceProperty);
             set => SetValue(SourceProperty, value);
         }
 
@@ -122,7 +119,7 @@ namespace OmniGui.Uwp
             var availableSize = new Size(width, height);
             Layout.Measure(availableSize);
             Layout.Arrange(new Rect(Point.Zero, availableSize));
-            
+
             Layout.Render(new UwpDrawingContext(drawingSession));
         }
 
@@ -151,8 +148,8 @@ namespace OmniGui.Uwp
 
         private static void OnSourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var target = (OmniGuiControl) dependencyObject;
-            var uri = (Uri) args.NewValue;
+            var target = (OmniGuiControl)dependencyObject;
+            var uri = (Uri)args.NewValue;
 
             target.OnSourceChanged(uri);
         }

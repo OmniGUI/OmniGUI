@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
 using Gdk;
 using Gtk;
 using Gtk.DotNet;
 using OmniGui.Default;
-using OmniGui.Uwp;
 using OmniXaml.Services;
 using OmniGui.Xaml;
 using OmniGui.Xaml.Templates;
@@ -17,21 +17,21 @@ namespace OmniGui.Gtk
         private readonly IList<Assembly> assemblies;
         private string source;
         private ResourceStore resourceStore;
-        private readonly GtkTextEngine gtkTextEngine;
+        private readonly GtkTextEngine textEngine;
         private object dataContext;
 
         public OmniGuiWidget(IList<Assembly> assemblies)
         {
             this.assemblies = assemblies;
-            gtkTextEngine = new GtkTextEngine();
+            textEngine = new GtkTextEngine();
             XamlLoader = CreateXamlLoader();            
         }
 
         private IXamlLoader CreateXamlLoader()
         {
-            var deps = new Platform(new GtkEventSource(this), new GtkRenderSurface(this), gtkTextEngine);
-            var typeLocator = new TypeLocator(() => ResourceStore, deps);
-            return new OmniGuiXamlLoader(assemblies, typeLocator);
+            var deps = new Platform(new GtkEventSource(this), new GtkRenderSurface(this), textEngine);
+            var typeLocator = new TypeLocator(() => ResourceStore, deps, () => XamlLoader.StringSourceValueConverter);
+            return new OmniGuiXamlLoader(assemblies, typeLocator, () => new StyleWatcher(ResourceStore.Styles));
         }
 
         public IXamlLoader XamlLoader { get; }
@@ -79,17 +79,19 @@ namespace OmniGui.Gtk
         {
             var size = Allocation.Size;
 
-            gtkTextEngine.Graphics = Graphics.FromDrawable(evnt.Window);
 
-            
             var availableSize = size.ToOmniGui();
-            Layout.Measure(availableSize);
-            Layout.Arrange(new Geometry.Rect(Geometry.Point.Zero, availableSize));
+            
 
-            using (var drawingContext = Graphics.FromDrawable(evnt.Window))
+            using (var graphics = Graphics.FromDrawable(evnt.Window))
             {
-                var context = new GtkDrawingContext(drawingContext);
-                Layout.Render(context);
+                textEngine.Graphics = Graphics.FromDrawable(evnt.Window);
+                Layout.Measure(availableSize);
+                Layout.Arrange(new Geometry.Rect(Geometry.Point.Zero, availableSize));
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.CompositingMode =  CompositingMode.SourceOver;
+                Layout.Render(new GtkDrawingContext(graphics));
             }
             
             return base.OnExposeEvent(evnt);

@@ -56,9 +56,8 @@ namespace OmniGui.iOS
         {
             var androidEventSource = new iOSEventSource(this);
             var deps = new Platform(androidEventSource, new iOSRenderSurface(this), new iOSTextEngine());
-            var typeLocator = new TypeLocator(() => ResourceStore, deps);
-            return new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(),
-                typeLocator);
+            var typeLocator = new TypeLocator(() => ResourceStore, deps, () => XamlLoader.StringSourceValueConverter);
+            return new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), typeLocator, () => new StyleWatcher(ResourceStore.Styles));
         }
 
         public string Source

@@ -1,4 +1,4 @@
-namespace OmniGui.Uwp
+namespace OmniGui.Default
 {
     public class DefaultRenderSurface : RenderSurface
     {

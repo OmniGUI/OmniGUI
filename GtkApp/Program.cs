@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Common;
-using OmniGui;
 using OmniGui.Gtk;
 using Application = Gtk.Application;
 
@@ -11,8 +10,6 @@ namespace GtkApp
     {
         public static void Main(string[] args)
         {
-            OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
-
             var assemblies = typeof(MainClass).Assembly
                 .GetReferencedAssemblies()
                 .Concat(new[] { new AssemblyName("OmniGui.Xaml"), new AssemblyName("OmniGui"),  })
@@ -20,23 +17,13 @@ namespace GtkApp
                 .ToList();
 
             Application.Init();
-            //var win = new Window("System.Drawing and Gtk#");
-
-            //var dw = new DrawingArea();
-            //dw.ConfigureEvent += Dw_ConfigureEvent;
-            //win.Add(dw);
-
-            //dw.ExposeEvent += (o, a) => Dw_ExposeEvent(a);
-
-            //dw.SetSizeRequest(300, 300);
-            //win.Show();
-            //dw.Show();
+            
             var window = new MainWindow();
-            var something = new OmniGuiWidget(assemblies) { Source = "layout.xaml", DataContext = new SampleViewModel(new GtkMessageService())};
+            var omniGuiWidget = new OmniGuiWidget(assemblies) { Source = "layout.xaml", DataContext = new SampleViewModel(new GtkMessageService(window))};
 
-            window.Add(something);
+            window.Add(omniGuiWidget);
             window.Show();
-            something.Show();
+            omniGuiWidget.Show();
             Application.Run();
         }
     }

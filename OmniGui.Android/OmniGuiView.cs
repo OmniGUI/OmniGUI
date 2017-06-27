@@ -73,9 +73,9 @@ namespace OmniGui.Android
             var androidEventSource = new AndroidEventSource(view);
             var deps = new Platform(androidEventSource, new AndroidRenderSurface(this, activity),
                 new AndroidTextEngine());
-            var typeLocator = new TypeLocator(() => ResourceStore, deps);
+            var typeLocator = new TypeLocator(() => ResourceStore, deps, () => XamlLoader.StringSourceValueConverter);
 
-            return new OmniGuiXamlLoader(assemblies, typeLocator);
+            return new OmniGuiXamlLoader(assemblies, typeLocator, () => new StyleWatcher(ResourceStore.Styles));
         }
 
         private void SetSource(string value)

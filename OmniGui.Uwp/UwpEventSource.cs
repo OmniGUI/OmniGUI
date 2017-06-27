@@ -21,22 +21,41 @@ namespace OmniGui.Uwp
             TextInput = GetTextInput();
         }
 
-        public IObservable<Point> Pointer { get; }
+        public IObservable<PointerInput> Pointer { get; }
         public IObservable<TextInputArgs> TextInput { get; }
         public IObservable<KeyArgs> KeyInput { get; }
         public IObservable<ScrollWheelArgs> ScrollWheel { get; } = Observable.Never<ScrollWheelArgs>();
 
-        private IObservable<Point> GetPointerObservable()
+        private IObservable<PointerInput> GetPointerObservable()
         {
-            var fromEventPattern = Observable.FromEventPattern<TappedEventHandler, TappedRoutedEventArgs>(
-                ev => control.Tapped += ev,
-                ev => control.Tapped -= ev);
-            var observable = fromEventPattern.Select(pattern =>
+            var pressed = Observable.FromEventPattern<PointerEventHandler, PointerRoutedEventArgs>(
+                ev => control.PointerPressed += ev,
+                ev => control.PointerPressed -= ev).Select(pattern =>
             {
-                var position = pattern.EventArgs.GetPosition(control);
-                return new Point(position.X, position.Y);
+                var pointerPoint = pattern.EventArgs.GetCurrentPoint(control);
+                var point1 = new Point(pointerPoint.Position.X, pointerPoint.Position.Y);
+                return new PointerInput {Point = point1, PrimaryButtonStatus = PointerStatus.Down};
             });
-            return observable;
+
+            var released = Observable.FromEventPattern<PointerEventHandler, PointerRoutedEventArgs>(
+                ev => control.PointerReleased += ev,
+                ev => control.PointerReleased -= ev).Select(pattern =>
+            {
+                var pointerPoint = pattern.EventArgs.GetCurrentPoint(control);
+                var point = new Point(pointerPoint.Position.X, pointerPoint.Position.Y);
+                return new PointerInput { Point = point, PrimaryButtonStatus = PointerStatus.Up };
+            });
+
+            var moved = Observable.FromEventPattern<PointerEventHandler, PointerRoutedEventArgs>(
+                ev => control.PointerMoved += ev,
+                ev => control.PointerMoved -= ev).Select(pattern =>
+            {
+                var pointerPoint1 = pattern.EventArgs.GetCurrentPoint(control);
+                var point = new Point(pointerPoint1.Position.X, pointerPoint1.Position.Y);
+                return new PointerInput { Point = point, PrimaryButtonStatus = PointerStatus.Released };
+            });
+
+            return pressed.Merge(released).Merge(moved);
         }
 
         private static IObservable<KeyArgs> GetKeysObservable()
@@ -59,7 +78,7 @@ namespace OmniGui.Uwp
                     ev => element.CharacterReceived += ev,
                     ev => element.CharacterReceived -= ev);
             return fromEventPattern.Select(
-                ep => new TextInputArgs {Text = new string(new[] {(char) ep.EventArgs.KeyCode})});
+                ep => new TextInputArgs { Text = new string(new[] { (char)ep.EventArgs.KeyCode }) });
         }
     }
 }

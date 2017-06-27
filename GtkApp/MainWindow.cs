@@ -2,6 +2,6 @@
 {
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
-		Build();
-	}    
+		Build();        
+	}  
 }

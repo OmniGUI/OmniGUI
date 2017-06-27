@@ -8,7 +8,6 @@ namespace OmniGui
 
     public abstract class ExtendedObject : IPropertyHost
     {
-
         public void SetValue(AttachedProperty property, object value)
         {
             OmniGuiPlatform.PropertyEngine.SetValue(property, this, value);

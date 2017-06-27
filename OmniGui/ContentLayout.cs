@@ -1,7 +1,6 @@
 ﻿namespace OmniGui
 {
     using System;
-    using Layouts;
     using OmniXaml.Attributes;
     using Zafiro.PropertySystem.Standard;
 

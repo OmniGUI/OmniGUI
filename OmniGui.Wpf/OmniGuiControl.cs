@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using OmniGui.Xaml;
+using OmniXaml;
 using OmniXaml.Services;
 using ControlTemplate = OmniGui.Xaml.Templates.ControlTemplate;
 using Point = OmniGui.Geometry.Point;
@@ -24,12 +25,9 @@ namespace OmniGui.Wpf
 
         private static Layout layout;
         private static Exception setSourceException;
+        private StyleWatcher styleWatcher;
+        private Platform deps;
         private ResourceStore resourceStore;
-
-        static OmniGuiControl()
-        {
-            OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
-        }
 
         public OmniGuiControl()
         {
@@ -48,9 +46,9 @@ namespace OmniGui.Wpf
                 .Subscribe(TrySetDataContext);
 
             var deps = new Platform(new WpfEventSource(this), new WpfRenderSurface(this), new WpfTextEngine());
-            var typeLocator = new TypeLocator(() => ResourceStore, deps);
-            XamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(),
-                typeLocator);
+            var typeLocator = new TypeLocator(() => ResourceStore, deps, () => XamlLoader.StringSourceValueConverter);
+
+            XamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), typeLocator, () => new StyleWatcher(ResourceStore.Styles));
         }
 
         private void TrySetDataContext(EventPattern<DependencyPropertyChangedEventArgs> dc)

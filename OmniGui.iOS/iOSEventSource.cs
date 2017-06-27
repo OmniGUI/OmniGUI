@@ -9,7 +9,7 @@ namespace OmniGui.iOS
     internal class iOSEventSource : IEventSource
     {
         private readonly OmniGuiView view;
-        private readonly ISubject<Point> pointSubject = new Subject<Point>();
+        private readonly ISubject<PointerInput> pointSubject = new Subject<PointerInput>();
 
         public iOSEventSource(OmniGuiView view)
         {
@@ -24,10 +24,10 @@ namespace OmniGui.iOS
         private void Action(UITapGestureRecognizer gestureRecognizer)
         {
             var p = gestureRecognizer.LocationOfTouch(0, view);
-            pointSubject.OnNext(new Point(p.X, p.Y));
+            pointSubject.OnNext(new PointerInput() { Point = new Point(p.X, p.Y) , PrimaryButtonStatus = PointerStatus.Down});
         }
 
-        public IObservable<Point> Pointer { get; } 
+        public IObservable<PointerInput> Pointer { get; } 
         public IObservable<TextInputArgs> TextInput { get; } = Observable.Never<TextInputArgs>();
         public IObservable<KeyArgs> KeyInput { get; } = Observable.Never<KeyArgs>();
         public IObservable<ScrollWheelArgs> ScrollWheel { get; } = Observable.Never<ScrollWheelArgs>();

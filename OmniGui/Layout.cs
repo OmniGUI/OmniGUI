@@ -11,6 +11,10 @@ namespace OmniGui
     {
         public Platform Platform { get; }
         public static readonly ExtendedProperty DataContextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("DataContext", typeof(Layout), typeof(object), new PropertyMetadata());
+        public static readonly ExtendedProperty StyleProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Style", typeof(Layout), typeof(string), new PropertyMetadata() { DefaultValue = string.Empty });
+        public static readonly ExtendedProperty BackgroundProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Background", typeof(Layout), typeof(Brush), new PropertyMetadata() { DefaultValue = new Brush(Colors.Transparent) });
+        public static readonly ExtendedProperty ForegroundProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Foreground", typeof(Layout), typeof(Brush), new PropertyMetadata() { DefaultValue = new Brush(Colors.Black) });
+        
 
         protected Layout(Platform platform)
         {
@@ -22,8 +26,11 @@ namespace OmniGui
                 layout.DataContext = DataContext;
                 GetChangedObservable(DataContextProperty).Subscribe(o => layout.DataContext = o);
             });
+
             Pointer = new PointerEvents(this, Platform.EventSource);
             Keyboard = new KeyboardEvents(this, Platform.EventSource, Platform.RenderSurface.FocusedElement);
+            Style = this.GetType().Name;
+            this.NotifyRenderAffectedBy(BackgroundProperty, ForegroundProperty);
         }
 
         public object DataContext
@@ -36,7 +43,6 @@ namespace OmniGui
 
         public PointerEvents Pointer { get; }
 
-        public Brush Background { get; set; } = new Brush(Color.Transparent);
         public Size RequestedSize { get; set; } = Size.Unspecified;
         public Size DesiredSize { get; set; }
 
@@ -53,7 +59,7 @@ namespace OmniGui
                 {
                     return Bounds;
                 }
-                var parent = (Layout) Parent;
+                var parent = (Layout)Parent;
                 var offset = parent.VisualBounds.Point.Offset(Bounds.Point);
                 return new Rect(offset, Bounds.Size);
             }
@@ -75,6 +81,7 @@ namespace OmniGui
 
         public double MinHeight => MinSize.Height;
         public object Parent { get; set; }
+
 
         protected void NotifyRenderAffectedBy(params ExtendedProperty[] properties)
         {
@@ -257,6 +264,24 @@ namespace OmniGui
             {
                 layout.Render(drawingContext);
             }
-        }     
+        }
+
+        public Brush Foreground
+        {
+            get { return (Brush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
+        }
+
+        public Brush Background
+        {
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
+        }
+
+        public string Style
+        {
+            get { return (string)GetValue(StyleProperty); }
+            set { SetValue(StyleProperty, value); }
+        }
     }
 }

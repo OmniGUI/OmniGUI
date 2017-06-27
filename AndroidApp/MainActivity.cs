@@ -22,7 +22,6 @@ namespace AndroidApp
 
             AttachUnhandleExceptions();
 
-            OmniGuiPlatform.PropertyEngine = new OmniGuiPropertyEngine();
             AndroidPlatform.Current.Assets = Assets;
 
             ActionBar.Hide();

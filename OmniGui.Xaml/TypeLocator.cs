@@ -1,3 +1,5 @@
+using OmniXaml;
+
 namespace OmniGui.Xaml
 {
     using System;
@@ -8,11 +10,12 @@ namespace OmniGui.Xaml
     {
         private readonly DependencyInjectionContainer container;
 
-        public TypeLocator(Func<ResourceStore> containerFactory, Platform dependencies)
+        public TypeLocator(Func<ResourceStore> containerFactory, Platform dependencies, Func<IStringSourceValueConverter> converter)
         {
             var injectionContainer = new DependencyInjectionContainer();
             injectionContainer.Configure(block =>
             {
+                block.ExportFactory(converter).As<IStringSourceValueConverter>();
                 block.ExportFactory(() => dependencies);
                 block.ExportFactory(() => containerFactory);
             });

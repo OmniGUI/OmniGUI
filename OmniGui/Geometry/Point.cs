@@ -11,8 +11,7 @@ namespace OmniGui.Geometry
         public double X { get; }
         public double Y { get; }
         public static Point Zero => new Point(0, 0);
-
-
+        
         public Point Offset(Point offset)
         {
             return new Point(offset.X + X, offset.Y + Y);

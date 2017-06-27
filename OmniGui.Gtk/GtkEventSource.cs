@@ -14,27 +14,50 @@ namespace OmniGui.Gtk
         {
             this.widget = widget;
 
-            widget.AddEvents((int)EventMask.ButtonPressMask);
+            widget.AddEvents((int)(EventMask.ButtonPressMask | EventMask.PointerMotionMask));
 
             Pointer = GetPointerObservable();
         }
 
-        private IObservable<Point> GetPointerObservable()
+        private IObservable<PointerInput> GetPointerObservable()
         {
-            var fromEventPattern = Observable.FromEventPattern<ButtonPressEventHandler, ButtonPressEventArgs>(
+            var down = Observable.FromEventPattern<ButtonPressEventHandler, ButtonPressEventArgs>(
                 ev => widget.ButtonPressEvent += ev,
-                ev => widget.ButtonPressEvent -= ev);
-            return fromEventPattern.Select(payload =>
+                ev => widget.ButtonPressEvent -= ev).Select(ev =>
             {
-                var x = payload.EventArgs.Event.X;
-                var y = payload.EventArgs.Event.Y;
+                var x = ev.EventArgs.Event.X;
+                var y = ev.EventArgs.Event.Y;
 
                 var point = new Point(x, y);
-                return point;
+                return new PointerInput { Point = point, PrimaryButtonStatus = PointerStatus.Down};
             });
+
+            var up = Observable.FromEventPattern<ButtonReleaseEventHandler, ButtonReleaseEventArgs>(
+                ev => widget.ButtonReleaseEvent += ev,
+                ev => widget.ButtonReleaseEvent -= ev).Select(ev =>
+            {
+                var x = ev.EventArgs.Event.X;
+                var y = ev.EventArgs.Event.Y;
+
+                var point = new Point(x, y);
+                return new PointerInput { Point = point, PrimaryButtonStatus = PointerStatus.Up };
+            });
+
+            var move = Observable.FromEventPattern<MotionNotifyEventHandler, MotionNotifyEventArgs>(
+                ev => widget.MotionNotifyEvent += ev,
+                ev => widget.MotionNotifyEvent -= ev).Select(ev =>
+            {
+                var x = ev.EventArgs.Event.X;
+                var y = ev.EventArgs.Event.Y;
+
+                var point = new Point(x, y);
+                return new PointerInput { Point = point, PrimaryButtonStatus = PointerStatus.Released };
+            });
+
+            return down.Merge(up).Merge(move);
         }
 
-        public IObservable<Point> Pointer { get; }
+        public IObservable<PointerInput> Pointer { get; }
         public IObservable<TextInputArgs> TextInput { get; } = Observable.Never<TextInputArgs>();
         public IObservable<KeyArgs> KeyInput { get; } = Observable.Never<KeyArgs>();
         public IObservable<ScrollWheelArgs> ScrollWheel { get; } = Observable.Never<ScrollWheelArgs>();

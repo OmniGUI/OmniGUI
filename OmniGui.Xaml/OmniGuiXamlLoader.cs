@@ -1,4 +1,6 @@
-﻿namespace OmniGui.Xaml
+﻿using System;
+
+namespace OmniGui.Xaml
 {
     using OmniXaml;
     using System.Collections.Generic;
@@ -8,9 +10,9 @@
     public class OmniGuiXamlLoader : ExtendedXamlLoader
     {
 
-        public OmniGuiXamlLoader(IList<Assembly> assemblies, ITypeLocator locator) : base(assemblies)
+        public OmniGuiXamlLoader(IList<Assembly> assemblies, ITypeLocator locator, Func<StyleWatcher> styleWatcherSelector) : base(assemblies)
         {
-            InstanceCreator = new OmniGuiInstanceCreator(locator);
+            InstanceCreator = new OmniGuiInstanceCreator(locator, styleWatcherSelector);
         }
 
         public override IInstanceCreator InstanceCreator { get; } 
