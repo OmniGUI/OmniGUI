@@ -27,7 +27,7 @@ namespace OmniGui.Uwp
 
         private static Exception setSourceException;
         public CanvasControl CanvasControl { get; private set; } = new CanvasControl();
-        private Container container;
+        private ResourceStore resourceStore;
         private readonly UwpTextEngine uwpTextEngine;
 
         static OmniGuiControl()
@@ -62,9 +62,9 @@ namespace OmniGui.Uwp
                 .Subscribe(dc => TrySetDataContext(dc.EventArgs.NewValue));
 
             uwpTextEngine = new UwpTextEngine();
-            var deps = new FrameworkDependencies(new UwpEventSource(this), new UwpRenderSurface(this), uwpTextEngine);
-            var typeLocator = new TypeLocator(() => ControlTemplates, deps);
-            XamlLoader = new OmniGuiXamlLoader(Assemblies, () => ControlTemplates, typeLocator);
+            var platform = new Platform(new UwpEventSource(this), new UwpRenderSurface(this), uwpTextEngine);
+            var typeLocator = new TypeLocator(() => ResourceStore, platform);
+            XamlLoader = new OmniGuiXamlLoader(Assemblies, typeLocator);
         }
 
         private IList<Assembly> Assemblies { get; } =
@@ -77,11 +77,11 @@ namespace OmniGui.Uwp
                 Assembly.Load(new AssemblyName("Common"))
             };
 
-        public ICollection<ControlTemplate> ControlTemplates => Container.ControlTemplates;
+        public ICollection<ControlTemplate> ControlTemplates => ResourceStore.ControlTemplates;
 
-        public Container Container => container ??
-                                      (container =
-                                          CreateContainer(new Uri("ms-appx:///Container.xaml",
+        public ResourceStore ResourceStore => resourceStore ??
+                                      (resourceStore =
+                                          CreateContainer(new Uri("ms-appx:///ResourceStore.xaml",
                                               UriKind.RelativeOrAbsolute)));
 
 
@@ -96,7 +96,7 @@ namespace OmniGui.Uwp
 
         public IXamlLoader XamlLoader { get; }
 
-        private Exception Exception
+        private Exception LoadException
         {
             get => setSourceException;
             set => setSourceException = value;
@@ -104,9 +104,9 @@ namespace OmniGui.Uwp
 
         private void OnDraw(CanvasDrawingSession drawingSession)
         {
-            if (Exception != null)
+            if (LoadException != null)
             {
-                RenderException(drawingSession, Exception);
+                DrawException(drawingSession);
             }
 
             if (Layout == null)
@@ -126,9 +126,9 @@ namespace OmniGui.Uwp
             Layout.Render(new UwpDrawingContext(drawingSession));
         }
 
-        private void RenderException(CanvasDrawingSession drawingSession, Exception exception)
+        private void DrawException(CanvasDrawingSession drawingSession)
         {
-            var text = $"XAML load error in {Source}: {exception}";
+            var text = $"XAML load error in {Source}: {LoadException}";
             drawingSession.DrawText(text, new Vector2(0,0), Windows.UI.Color.FromArgb(255, 255, 0, 0));
         }
 
@@ -140,13 +140,13 @@ namespace OmniGui.Uwp
             }
         }
 
-        private Container CreateContainer(Uri uri)
+        private ResourceStore CreateContainer(Uri uri)
         {
-            Log.Information("Loading Container");
+            Log.Debug("Loading ResourceStore");
             var readFromContent = Task.Run(uri.ReadFromContent).Result;
             var load = XamlLoader.Load(readFromContent);
-            Log.Information("Container loaded");
-            return (Container) load;
+            Log.Debug("ResourceStore loaded");
+            return (ResourceStore) load;
         }
 
         private static void OnSourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
@@ -154,52 +154,28 @@ namespace OmniGui.Uwp
             var target = (OmniGuiControl) dependencyObject;
             var uri = (Uri) args.NewValue;
 
+            target.OnSourceChanged(uri);
+        }
+
+        private void OnSourceChanged(Uri uri)
+        {
             try
             {
+                LoadException = null;
                 Log.Information("Cargando archivo XAML desde {Uri}", uri);
                 var xaml = Task.Run(uri.ReadFromContent).Result;
-                var flacidLayout = (Layout) target.XamlLoader.Load(xaml);
+                var flacidLayout = (Layout)XamlLoader.Load(xaml);
                 Log.Information("Archivo cargado", uri);
 
                 Log.Information("Inflando...");
-                new TemplateInflator().Inflate(flacidLayout, target.ControlTemplates);
+                new TemplateInflator().Inflate(flacidLayout, ControlTemplates);
                 Log.Information("Inflado: fin de carga");
-                target.Layout = flacidLayout;
+                Layout = flacidLayout;
             }
             catch (Exception e)
             {
-                target.Exception = e;
+                LoadException = e;
             }
-        }
-
-        //private void RenderException(Exception exception, DrawingContext drawingContext)
-        //}
-
-        //protected override void OnRender(DrawingContext drawingContext)
-        //{
-        //    if (Exception != null)
-        //    {
-        //        RenderException(Exception, drawingContext);
-        //    }
-
-        //    if (Layout == null)
-        //    {
-        //        return;
-        //    }
-
-        //    var width = ActualWidth;
-        //    var height = ActualHeight;
-
-        //    var availableSize = new Size(width, height);
-        //    Layout.Measure(availableSize);
-        //    Layout.Arrange(new Rect(Point.Zero, availableSize));
-        //    Layout.Render(new WpfDrawingContext(drawingContext));
-        //{
-        //    var textToFormat = $"XAML load error in {Source}: {exception}";
-        //    var formattedText = new System.Windows.Media.FormattedText(textToFormat, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(SystemFonts.MenuFontFamily.Source), FontSize, Brushes.Red, new NumberSubstitution(), TextFormattingMode.Display, 96);
-        //    formattedText.MaxTextWidth = ActualWidth;
-
-        //    drawingContext.DrawText(formattedText, new System.Windows.Point((ActualWidth - formattedText.Width) / 2, (ActualHeight - formattedText.Height) / 2));
-        //}
+        }        
     }
 }

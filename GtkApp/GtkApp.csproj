@@ -149,11 +149,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\ViewModels\container.xaml">
-      <Link>container.xaml</Link>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="..\ViewModels\layout.xaml">
       <Link>layout.xaml</Link>
       <SubType>Designer</SubType>
@@ -167,6 +162,13 @@
     </None>
     <None Include="..\ViewModels\smiley.png">
       <Link>smiley.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ViewModels\resourcestore.xaml">
+      <Link>resourcestore.xaml</Link>
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

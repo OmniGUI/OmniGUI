@@ -2,7 +2,7 @@
 {
     public class HorizontalScrollBar : Layout
     {
-        public HorizontalScrollBar(FrameworkDependencies deps) : base(deps)
+        public HorizontalScrollBar(Platform platform) : base(platform)
         {
         }
     }

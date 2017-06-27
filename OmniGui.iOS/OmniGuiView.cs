@@ -16,7 +16,7 @@ namespace OmniGui.iOS
     {
         private object dataContext;
         private string source;
-        private Container container;
+        private ResourceStore resourceStore;
         private Exception exception;
         private UIView exceptionView;
         private ISubject<TextInputArgs> textInputSubject = new Subject<TextInputArgs>();
@@ -55,9 +55,9 @@ namespace OmniGui.iOS
         private IXamlLoader CreateXamlLoader()
         {
             var androidEventSource = new iOSEventSource(this);
-            var deps = new FrameworkDependencies(androidEventSource, new iOSRenderSurface(this), new iOSTextEngine());
-            var typeLocator = new TypeLocator(() => ControlTemplates, deps);
-            return new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates,
+            var deps = new Platform(androidEventSource, new iOSRenderSurface(this), new iOSTextEngine());
+            var typeLocator = new TypeLocator(() => ResourceStore, deps);
+            return new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(),
                 typeLocator);
         }
 
@@ -106,13 +106,13 @@ namespace OmniGui.iOS
             }
         }
 
-        public ICollection<ControlTemplate> ControlTemplates => Container.ControlTemplates;
+        public ICollection<ControlTemplate> ControlTemplates => ResourceStore.ControlTemplates;
 
-        public Container Container => container ?? (container = CreateContainer("Container.xaml"));
+        public ResourceStore ResourceStore => resourceStore ?? (resourceStore = CreateContainer("ResourceStore.xaml"));
 
-        private Container CreateContainer(string containerAsset)
+        private ResourceStore CreateContainer(string containerAsset)
         {
-            return (Container) XamlLoader.Load(ReadMixin.ReadText(containerAsset));
+            return (ResourceStore) XamlLoader.Load(ReadMixin.ReadText(containerAsset));
         }
 
         public void InsertText(string text)

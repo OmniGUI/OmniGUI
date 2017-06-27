@@ -2,7 +2,7 @@
 {
     public class VerticalScrollBar : Layout
     {
-        public VerticalScrollBar(FrameworkDependencies deps) : base(deps)
+        public VerticalScrollBar(Platform platform) : base(platform)
         {
         }
     }

@@ -27,11 +27,11 @@
         private bool isCursorVisible;
         private bool isFocused;
 
-        public TextBoxView(FrameworkDependencies deps) : base(deps)
+        public TextBoxView(Platform platform) : base(platform)
         {
             var changedObservable = GetChangedObservable(TextProperty);
 
-            FormattedText = new FormattedText(Deps.TextEngine)
+            FormattedText = new FormattedText(Platform.TextEngine)
             {
                 FontSize = 16,
                 Brush = new Brush(Colors.Black),
@@ -42,14 +42,14 @@
 
             Pointer.Down.Subscribe(point =>
             {
-                Deps.RenderSurface.ShowVirtualKeyboard();
-                Deps.RenderSurface.SetFocusedElement(this);
+                Platform.RenderSurface.ShowVirtualKeyboard();
+                Platform.RenderSurface.SetFocusedElement(this);
             });
 
             Keyboard.KeyInput.Where(Filter).Subscribe(args => AddText(args.Text));
             Keyboard.SpecialKeys.Subscribe(ProcessSpecialKey);
             NotifyRenderAffectedBy(TextProperty, FontSizeProperty);
-            Deps.RenderSurface.FocusedElement.Select(layout => layout == this)
+            Platform.RenderSurface.FocusedElement.Select(layout => layout == this)
                 .Subscribe(isFocused => IsFocused = isFocused);
 
             GetChangedObservable(FontSizeProperty).Subscribe(o =>
@@ -220,7 +220,7 @@
 
         private double GetCursorY()
         {
-            return Deps.TextEngine.GetHeight(FormattedText.FontName, FormattedText.FontSize);
+            return Platform.TextEngine.GetHeight(FormattedText.FontName, FormattedText.FontSize);
         }
 
         private double GetCursorX()
@@ -231,7 +231,7 @@
             }
 
             var textBeforeCursor = Text.Substring(0, CursorPositionOrdinal);
-            var formattedTextCopy = new FormattedText(FormattedText, Deps.TextEngine)
+            var formattedTextCopy = new FormattedText(FormattedText, Platform.TextEngine)
             {
                 Text = textBeforeCursor
             };
@@ -242,7 +242,7 @@
 
         private void ForceRender()
         {
-            Deps.RenderSurface.ForceRender();
+            Platform.RenderSurface.ForceRender();
         }
 
         public void AddText(string text)
@@ -315,7 +315,7 @@
         {
             var textDesired = FormattedText.Text != null ? FormattedText.DesiredSize : Size.Empty;
 
-            var height = Math.Max(textDesired.Height, Deps.TextEngine.GetHeight(FontFamily, FormattedText.FontSize));
+            var height = Math.Max(textDesired.Height, Platform.TextEngine.GetHeight(FontFamily, FormattedText.FontSize));
             return new Size(textDesired.Width, height);
         }
     }

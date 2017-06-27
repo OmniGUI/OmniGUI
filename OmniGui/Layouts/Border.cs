@@ -6,7 +6,7 @@ namespace OmniGui.Layouts
 
     public class Border : Layout
     {
-        public static ExtendedProperty BorderBrushProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("BorderBrush", typeof(Border), typeof(Brush), new PropertyMetadata() { DefaultValue = new Brush(Colors.Black) });
+        public static readonly ExtendedProperty BorderBrushProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("BorderBrush", typeof(Border), typeof(Brush), new PropertyMetadata() { DefaultValue = new Brush(Colors.Black) });
 
         protected override Size MeasureOverride(Size availableSize)
         {
@@ -71,7 +71,7 @@ namespace OmniGui.Layouts
             set { SetValue(BorderBrushProperty, value); }
         }
 
-        public Border(FrameworkDependencies deps) : base(deps)
+        public Border(Platform platform) : base(platform)
         {
         }
     }

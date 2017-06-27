@@ -1,25 +1,20 @@
-using Zafiro.PropertySystem.Standard;
-
 namespace OmniGui.Xaml
 {
     using System;
-    using System.Collections.Generic;
     using Grace.DependencyInjection;
     using Serilog;
-    using Templates;
 
     public class TypeLocator : ITypeLocator
     {
         private readonly DependencyInjectionContainer container;
 
-        public TypeLocator(Func<ICollection<ControlTemplate>> getControlTemplates, FrameworkDependencies dependencies)
+        public TypeLocator(Func<ResourceStore> containerFactory, Platform dependencies)
         {
             var injectionContainer = new DependencyInjectionContainer();
             injectionContainer.Configure(block =>
             {
                 block.ExportFactory(() => dependencies);
-                block.Export<TemplateInflator>().As<ITemplateInflator>().Lifestyle.Singleton();
-                block.ExportFactory(() => getControlTemplates);                
+                block.ExportFactory(() => containerFactory);
             });
             
             container = injectionContainer;

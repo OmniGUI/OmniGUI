@@ -50,7 +50,7 @@
             return Stretch.CalculateSize(availableSize, sourceSize);
         }
 
-        public Image(FrameworkDependencies deps) : base(deps)
+        public Image(Platform platform) : base(platform)
         {
         }
     }

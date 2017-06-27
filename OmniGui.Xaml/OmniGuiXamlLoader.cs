@@ -1,22 +1,15 @@
-﻿using OmniXaml;
-
-namespace OmniGui.Xaml
+﻿namespace OmniGui.Xaml
 {
-    using System;
+    using OmniXaml;
     using System.Collections.Generic;
     using System.Reflection;
     using OmniXaml.Services;
-    using Templates;
 
     public class OmniGuiXamlLoader : ExtendedXamlLoader
     {
-        private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
-        private readonly ITypeLocator locator;
 
-        public OmniGuiXamlLoader(IList<Assembly> assemblies, Func<ICollection<ControlTemplate>> getControlTemplates, ITypeLocator locator) : base(assemblies)
+        public OmniGuiXamlLoader(IList<Assembly> assemblies, ITypeLocator locator) : base(assemblies)
         {
-            this.getControlTemplates = getControlTemplates;
-            this.locator = locator;
             InstanceCreator = new OmniGuiInstanceCreator(locator);
         }
 

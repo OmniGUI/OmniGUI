@@ -23,9 +23,9 @@ namespace OmniGui.Layouts
         private string currentText;
         private Brush foreground;
 
-        public TextBlock(FrameworkDependencies deps) : base(deps)
+        public TextBlock(Platform platform) : base(platform)
         {
-            FormattedText = new FormattedText(Deps.TextEngine) {FontSize = 16};
+            FormattedText = new FormattedText(Platform.TextEngine) {FontSize = 16};
             Foreground = new Brush(Colors.Black);
             GetChangedObservable(TextProperty).Subscribe(t => Text = (string) t);
             NotifyRenderAffectedBy(TextProperty);
@@ -101,7 +101,7 @@ namespace OmniGui.Layouts
         {
             if (Text == null)
             {
-                var height = Deps.TextEngine.GetHeight(FontName, FontSize);
+                var height = Platform.TextEngine.GetHeight(FontName, FontSize);
                 return new Size(0, height);
             }
 

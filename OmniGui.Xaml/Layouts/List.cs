@@ -3,30 +3,25 @@
 namespace OmniGui.Xaml.Layouts
 {
     using System;
-    using System.Collections.Generic;
     using DynamicData;
     using DynamicData.Binding;
-    using global::OmniGui.Layouts;
+    using OmniGui.Layouts;
     using Templates;
-    using Xaml;
-    using Zafiro.PropertySystem;
     using Zafiro.PropertySystem.Standard;
 
     public class List : Layout
     {
-        private readonly TemplateInflator controlTemplateInflator;
-
+        private readonly Func<ResourceStore> containerFactory;
+        private readonly Action<Layout> inflate;
         public static readonly ExtendedProperty SourceProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Source", typeof(List), typeof(IObservableCollection<object>), new PropertyMetadata());
         public static readonly ExtendedProperty ItemTemplateProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("ItemTemplate", typeof(List), typeof(DataTemplate), new PropertyMetadata());
 
         private IDisposable subscription;
         private readonly StackPanel panel;
-        private readonly Func<ICollection<ControlTemplate>> getControlTemplates;
-        public List(TemplateInflator controlTemplateInflator, Func<ICollection<ControlTemplate>> getControlTemplates, FrameworkDependencies deps) : base(deps)
+        public List(Func<ResourceStore> containerFactory, Platform platform) : base(platform)
         {
-            this.controlTemplateInflator = controlTemplateInflator;
-            this.getControlTemplates = getControlTemplates;
-            panel = new StackPanel(deps);
+            this.containerFactory = containerFactory;
+            panel = new StackPanel(platform);
             this.AddChild(panel);
 
             subscription = GetChangedObservable(SourceProperty)
@@ -35,11 +30,11 @@ namespace OmniGui.Xaml.Layouts
             {
                 var source = (ISourceList<object>)obj;
 
-                Deps.RenderSurface.ForceRender();
+                Platform.RenderSurface.ForceRender();
 
                 source.Connect()
                     .OnItemAdded(AddItem)                    
-                    .ForEachChange(_ => Deps.RenderSurface.ForceRender())
+                    .ForEachChange(_ => Platform.RenderSurface.ForceRender())
                     .Subscribe();
             });
         }
@@ -58,12 +53,12 @@ namespace OmniGui.Xaml.Layouts
             if (ItemTemplate != null)
             {
                 var withDataTemplateApplied = (Layout) ItemTemplate.ApplyTo(item);
-                controlTemplateInflator.Inflate(withDataTemplateApplied, getControlTemplates());
+                containerFactory().Inflate(withDataTemplateApplied);
                 
                 return withDataTemplateApplied;
             }
 
-            return new TextBlock(Deps)
+            return new TextBlock(Platform)
             {
                 Text = item.ToString(),
             };

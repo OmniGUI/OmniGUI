@@ -24,7 +24,7 @@ namespace OmniGui.Wpf
 
         private static Layout layout;
         private static Exception setSourceException;
-        private Container container;
+        private ResourceStore resourceStore;
 
         static OmniGuiControl()
         {
@@ -45,11 +45,11 @@ namespace OmniGui.Wpf
                 .FromEventPattern<DependencyPropertyChangedEventHandler, DependencyPropertyChangedEventArgs>(
                     ev => DataContextChanged += ev,
                     ev => DataContextChanged -= ev)
-                .Subscribe(dc => TrySetDataContext(dc));
+                .Subscribe(TrySetDataContext);
 
-            var deps = new FrameworkDependencies(new WpfEventSource(this), new WpfRenderSurface(this), new WpfTextEngine());
-            var typeLocator = new TypeLocator(() => ControlTemplates, deps);
-            XamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(), () => ControlTemplates,
+            var deps = new Platform(new WpfEventSource(this), new WpfRenderSurface(this), new WpfTextEngine());
+            var typeLocator = new TypeLocator(() => ResourceStore, deps);
+            XamlLoader = new OmniGuiXamlLoader(Assemblies.AssembliesInAppFolder.ToArray(),
                 typeLocator);
         }
 
@@ -61,11 +61,11 @@ namespace OmniGui.Wpf
             }
         }
 
-        public ICollection<ControlTemplate> ControlTemplates => Container.ControlTemplates;
+        public ICollection<ControlTemplate> ControlTemplates => ResourceStore.ControlTemplates;
 
-        public Container Container => container ??
-                                      (container =
-                                          CreateContainer(new Uri("Container.xaml", UriKind.RelativeOrAbsolute)));
+        public ResourceStore ResourceStore => resourceStore ??
+                                      (resourceStore =
+                                          CreateContainer(new Uri("ResourceStore.xaml", UriKind.RelativeOrAbsolute)));
 
 
         public Layout Layout { get; set; }
@@ -79,9 +79,9 @@ namespace OmniGui.Wpf
 
         public IXamlLoader XamlLoader { get; }
 
-        private Container CreateContainer(Uri uri)
+        private ResourceStore CreateContainer(Uri uri)
         {
-            return (Container) XamlLoader.Load(uri.ReadFromContent());
+            return (ResourceStore) XamlLoader.Load(uri.ReadFromContent());
         }
 
         private static void OnSourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)

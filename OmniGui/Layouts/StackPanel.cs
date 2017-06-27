@@ -123,7 +123,7 @@ namespace OmniGui.Layouts
             base.Render(drawingContext);
         }
 
-        public StackPanel(FrameworkDependencies deps) : base(deps)
+        public StackPanel(Platform platform) : base(platform)
         {
         }
     }

@@ -8,7 +8,17 @@ namespace OmniGui.Wpf
     {
         public static string ReadFromContent(this Uri uriContent)
         {
+            if (uriContent == null)
+            {
+                throw new ArgumentNullException(nameof(uriContent));
+            }
+
             var contentStream = Application.GetContentStream(uriContent);
+            if (contentStream == null)
+            {
+                throw new ArgumentNullException(nameof(contentStream));
+            }
+
             using (var stream = contentStream.Stream)
             {
                 var l = stream.Length;

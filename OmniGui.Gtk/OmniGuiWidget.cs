@@ -9,7 +9,6 @@ using OmniGui.Uwp;
 using OmniXaml.Services;
 using OmniGui.Xaml;
 using OmniGui.Xaml.Templates;
-using Container = OmniGui.Xaml.Container;
 
 namespace OmniGui.Gtk
 {
@@ -17,7 +16,7 @@ namespace OmniGui.Gtk
     {
         private readonly IList<Assembly> assemblies;
         private string source;
-        private Container container;
+        private ResourceStore resourceStore;
         private readonly GtkTextEngine gtkTextEngine;
         private object dataContext;
 
@@ -30,9 +29,9 @@ namespace OmniGui.Gtk
 
         private IXamlLoader CreateXamlLoader()
         {
-            var deps = new FrameworkDependencies(new GtkEventSource(this), new GtkRenderSurface(this), gtkTextEngine);
-            var typeLocator = new TypeLocator(() => ControlTemplates, deps);
-            return new OmniGuiXamlLoader(assemblies, () => ControlTemplates, typeLocator);
+            var deps = new Platform(new GtkEventSource(this), new GtkRenderSurface(this), gtkTextEngine);
+            var typeLocator = new TypeLocator(() => ResourceStore, deps);
+            return new OmniGuiXamlLoader(assemblies, typeLocator);
         }
 
         public IXamlLoader XamlLoader { get; }
@@ -47,11 +46,11 @@ namespace OmniGui.Gtk
             }
         }
 
-        public Container Container => container ?? (container = CreateContainer("container.xaml"));
+        public ResourceStore ResourceStore => resourceStore ?? (resourceStore = CreateContainer("resourceStore.xaml"));
 
-        private Container CreateContainer(string fileName)
+        private ResourceStore CreateContainer(string fileName)
         {
-            return (Container)XamlLoader.Load(File.ReadAllText(fileName));
+            return (ResourceStore)XamlLoader.Load(File.ReadAllText(fileName));
         }
 
         private void SetSource(string fileName)
@@ -62,7 +61,7 @@ namespace OmniGui.Gtk
             Layout.DataContext = DataContext;
         }
 
-        public ICollection<ControlTemplate> ControlTemplates => Container.ControlTemplates;
+        public ICollection<ControlTemplate> ControlTemplates => ResourceStore.ControlTemplates;
 
         public Layout Layout { get; set; }
 

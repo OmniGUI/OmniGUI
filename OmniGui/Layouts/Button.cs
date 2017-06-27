@@ -10,7 +10,7 @@ namespace OmniGui.Layouts
     {
         public static readonly ExtendedProperty CommandProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Command", typeof(Button), typeof(ICommand), new PropertyMetadata());
 
-        public Button(FrameworkDependencies deps) : base(deps)
+        public Button(Platform platform) : base(platform)
         {
             Pointer.Down.Subscribe(p =>
             {
