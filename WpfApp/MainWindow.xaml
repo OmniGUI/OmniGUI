@@ -11,7 +11,7 @@
         RenderOptions.EdgeMode="Aliased"
         Title="MainWindow">
     
-    <wpf:OmniGuiControl Source="Layout.xaml" />
+    <wpf:OmniGuiControl Source="Layout.xaml" Background="Red" />
 
     <!--<Grid>
         <Grid.RowDefinitions>

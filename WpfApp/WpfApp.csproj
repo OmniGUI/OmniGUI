@@ -51,6 +51,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="WpfMessageBoxService.cs" />
+    <None Include="..\ViewModels\wallpaper.png">
+      <Link>wallpaper.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\ViewModels\smiley.png">
       <Link>smiley.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

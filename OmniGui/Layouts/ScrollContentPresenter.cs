@@ -17,6 +17,7 @@ namespace OmniGui.Layouts
         {
             NotifyRenderAffectedBy(OffsetProperty);
             Platform.EventSource.ScrollWheel.Subscribe(args => Offset = new Vector(0, Offset.Y - args.Delta /2));
+            GetChangedObservable(OffsetProperty);
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -27,7 +28,7 @@ namespace OmniGui.Layouts
                 return Size.Zero;
             }
 
-            child.Measure(availableSize);
+            child.Measure(availableSize.WithHeight(double.PositiveInfinity));
             Extent = child.DesiredSize;
 
             return availableSize;
