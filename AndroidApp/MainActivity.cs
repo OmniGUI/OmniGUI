@@ -29,7 +29,7 @@ namespace AndroidApp
 
             var assemblies = typeof(MainActivity).Assembly
                 .GetReferencedAssemblies()
-                .Concat(new[] { new AssemblyName("OmniGui.Xaml") })
+                .Concat(new[] { new AssemblyName("OmniGui.Xaml"), new AssemblyName("OmniGui") })
                 .Select(Assembly.Load)
                 .ToList();
 
