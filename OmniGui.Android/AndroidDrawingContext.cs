@@ -73,5 +73,15 @@ namespace OmniGui.Android
             canvas.DrawLine((float)startPoint.X, (float)startPoint.Y, (float)endPoint.X, (float)endPoint.Y,
                 new Paint { Color = pen.Brush.Color.ToAndroid(), StrokeWidth = (float)pen.Thickness });
         }
+
+        public void PushClip(Rect rect)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Pop()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

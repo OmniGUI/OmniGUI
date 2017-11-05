@@ -65,19 +65,24 @@
         {            
         }
 
+        public void PushClip(Rect rect)
+        {            
+        }
+
+        public void Pop()
+        {
+        }
+
         public void FillRectangle(Brush brush, Rect rect)
         {
-            throw new System.NotImplementedException();
         }
 
         public void DrawRoundedRectangle(Pen pen, Rect rect, CornerRadius cornerRadius)
         {
-            throw new System.NotImplementedException();
         }
 
         public void FillRoundedRectangle(Brush brush, Rect rect, CornerRadius cornerRadius)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

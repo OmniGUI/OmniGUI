@@ -50,5 +50,15 @@ namespace OmniGui.Gtk
         {
             graphics.DrawLine(pen.ToPlatform(), startPoint.ToDrawing(), endPoint.ToDrawing());
         }
+
+        public void PushClip(Rect rect)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Pop()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

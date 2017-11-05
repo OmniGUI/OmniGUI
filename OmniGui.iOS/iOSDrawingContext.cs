@@ -92,5 +92,15 @@ namespace OmniGui.iOS
             context.AddLineToPoint((nfloat) endPoint.X, (nfloat) endPoint.Y);
             context.StrokePath();
         }
+
+        public void PushClip(Rect rect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Pop()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

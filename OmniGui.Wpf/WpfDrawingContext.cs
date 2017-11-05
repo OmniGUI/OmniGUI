@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 
 namespace OmniGui.Wpf
 {
@@ -64,7 +65,17 @@ namespace OmniGui.Wpf
 
         public void DrawText(FormattedText formattedText, Point point, Rect? clipRegion = null)
         {
-            context.DrawText(formattedText.ToWpf(), point.ToWpf());
+            if (clipRegion.HasValue)
+            {
+                using (new Popper(this, clipRegion.Value))
+                {
+                    context.DrawText(formattedText.ToWpf(), point.ToWpf());
+                }
+            }
+            else
+            {
+                context.DrawText(formattedText.ToWpf(), point.ToWpf());
+            }                       
         }
 
         public void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect)
@@ -86,9 +97,35 @@ namespace OmniGui.Wpf
             context.DrawLine(pen.ToWpf(), startPoint.ToWpf(), endPoint.ToWpf());
         }
 
+        public void PushClip(Rect rect)
+        {
+            context.PushClip(new RectangleGeometry(rect.ToWpf()));            
+        }
+
+        public void Pop()
+        {
+            context.Pop();
+        }
+
         public void FillRectangle(Brush brush, Rect rect)
         {
             context.DrawRectangle(brush.ToWpf(), null, rect.ToWpf());
+        }
+
+        public class Popper : IDisposable
+        {
+            private readonly IDrawingContext context;
+
+            public Popper(IDrawingContext context, Rect rect)
+            {
+                this.context = context;
+                context.PushClip(rect);
+            }
+
+            public void Dispose()
+            {
+                context.Pop();
+            }
         }
     }
 }

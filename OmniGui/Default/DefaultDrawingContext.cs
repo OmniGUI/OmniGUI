@@ -31,5 +31,14 @@ namespace OmniGui.Default
         public void DrawLine(Pen pen, Point startPoint, Point endPoint)
         {
         }
+
+        public void PushClip(Rect rect)
+        {            
+        }
+
+        public void Pop()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace OmniGui
         void DrawText(FormattedText formattedText, Point point, Rect? clipRegion = null);
         void DrawBitmap(Bitmap bmp, Rect sourceRect, Rect rect);
         void DrawLine(Pen pen, Point startPoint, Point endPoint);
+        void PushClip(Rect rect);
+        void Pop();
     }
 }

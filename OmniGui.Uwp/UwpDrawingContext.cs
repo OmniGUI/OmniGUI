@@ -72,6 +72,16 @@ namespace OmniGui.Uwp
             drawingSession.DrawLine(start, end, canvasSolidColorBrush, penThickness);
         }
 
+        public void PushClip(Rect rect)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Pop()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void DrawRectangle(Pen pen, Rect rect)
         {
             drawingSession.DrawRectangle(rect.ToWin2D(), pen.Brush.Color.ToWin2D());
