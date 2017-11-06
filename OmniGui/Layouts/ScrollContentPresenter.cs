@@ -16,8 +16,20 @@ namespace OmniGui.Layouts
         public ScrollContentPresenter(Platform platform) : base(platform)
         {
             NotifyRenderAffectedBy(OffsetProperty);
-            Platform.EventSource.ScrollWheel.Subscribe(args => Offset = new Vector(0, Offset.Y - args.Delta /2));
-            GetChangedObservable(OffsetProperty);
+            Platform.EventSource.ScrollWheel.Subscribe(args =>
+            {
+                var desired = new Vector(0, Offset.Y - args.Delta / 2);
+                var offset = CoerceOffset(desired);
+                Offset = offset;
+            });            
+        }
+
+        private Vector CoerceOffset(Vector desired)
+        {
+            var y = Math.Max(desired.Y, 0);
+            y = Math.Min(Extent.Height - DesiredSize.Height, y);
+
+            return new Vector(desired.X, y);
         }
 
         protected override Size MeasureOverride(Size availableSize)
