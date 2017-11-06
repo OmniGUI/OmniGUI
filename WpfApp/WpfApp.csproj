@@ -38,9 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -114,37 +112,9 @@
       <Project>{8df3cf78-57c9-4a80-9fc5-249466573267}</Project>
       <Name>OmniGui.Wpf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OmniGui.Xaml\OmniGui.Xaml.csproj">
-      <Project>{ff6d5507-1f7c-4161-b5cb-36fa484bbee9}</Project>
-      <Name>OmniGui.Xaml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OmniGui\OmniGui.csproj">
-      <Project>{4f0f11a7-effc-4384-98ec-51c6e1fc90b2}</Project>
-      <Name>OmniGui</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OmniXAML\OmniXaml.Attributes\OmniXaml.Attributes.csproj">
-      <Project>{987b8746-b2a9-4a84-bba5-482ffcc6399e}</Project>
-      <Name>OmniXaml.Attributes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OmniXAML\OmniXaml.Services\OmniXaml.Services.csproj">
-      <Project>{b9a9c91a-8266-4738-8c54-d4b3955e5df8}</Project>
-      <Name>OmniXaml.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OmniXAML\OmniXaml\OmniXaml.csproj">
-      <Project>{74503677-d755-47d7-a56c-4fc7c6fa1f7d}</Project>
-      <Name>OmniXaml</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ViewModels\Common.csproj">
       <Project>{abaa0062-bcf8-456b-a70f-8d2d52c785e7}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Zafiro\Zafiro.Core\Zafiro.Core.csproj">
-      <Project>{1d971911-3c12-461d-8b96-c4e631ec1b7c}</Project>
-      <Name>Zafiro.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Zafiro\Zafiro.PropertySystem\Zafiro.PropertySystem.csproj">
-      <Project>{E9A9DCFF-5B62-4F12-ABC7-148E384FF805}</Project>
-      <Name>Zafiro.PropertySystem</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
