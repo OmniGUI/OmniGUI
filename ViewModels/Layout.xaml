@@ -1,40 +1,12 @@
-<Grid xmlns="root" Background="Azure" xmlns:local="using:Common;assembly=Common" >
+<Grid xmlns="root" >
     <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition />
+        <RowDefinition Height="30"></RowDefinition>
+        <RowDefinition Height="120"></RowDefinition>
+        <RowDefinition Height="30"></RowDefinition>
     </Grid.RowDefinitions>
-
-
-    <StackPanel Gap="8" Margin="8">
-
-        <TextBlock Text="{Bind TargetProperty=Title}" HorizontalAlignment="Center" />
-        <TextBox FontSize="30" />
-        <Button Command="{Bind TargetProperty=ShowMessageCommand}">Click me!</Button>
-
-    </StackPanel>
-
-    <List Grid.Row="1" Source="{Bind TargetProperty=People}" Margin="8">
-        <List.ItemTemplate>
-            <DataTemplate>
-                <Border BorderThickness="1" BorderBrush="#6BB0FF" Background="White">
-                    <Grid Margin="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="smiley.png" />
-                        <TextBlock Margin="15" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center"
-                                   Text="{Bind TargetProperty=Name}" />
-                        <TextBlock FontWeight="Bold" Margin="15" VerticalAlignment="Center" Grid.Column="2"
-                                   Text="{Bind TargetProperty=Surname}" />
-                    </Grid>
-                </Border>
-            </DataTemplate>
-        </List.ItemTemplate>
-    </List>
-
-    <Image Grid.Row="2" Margin="20" VerticalAlignment="Center" RequestedSize="240,-" Source="mario.png" />
-
+    <Border Background="Red"></Border>
+    <ScrollContentPresenter Grid.Row="1" Background="Azure">
+        <Image Source="wallpaper.png" Stretch="None" />
+    </ScrollContentPresenter>
+    <Border Background="Blue" Grid.Row="2"></Border>
 </Grid>

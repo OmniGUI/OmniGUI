@@ -57,5 +57,13 @@ namespace OmniGui.Layouts
         }
 
         public Size Viewport { get; set; }
+
+        public override void Render(IDrawingContext drawingContext)
+        {
+            using (new ClippingArea(drawingContext, Bounds))
+            {
+                base.Render(drawingContext);
+            }
+        }
     }
 }

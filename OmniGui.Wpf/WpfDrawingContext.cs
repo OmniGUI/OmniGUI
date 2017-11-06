@@ -67,7 +67,7 @@ namespace OmniGui.Wpf
         {
             if (clipRegion.HasValue)
             {
-                using (new Popper(this, clipRegion.Value))
+                using (new ClippingArea(this, clipRegion.Value))
                 {
                     context.DrawText(formattedText.ToWpf(), point.ToWpf());
                 }
@@ -110,22 +110,6 @@ namespace OmniGui.Wpf
         public void FillRectangle(Brush brush, Rect rect)
         {
             context.DrawRectangle(brush.ToWpf(), null, rect.ToWpf());
-        }
-
-        public class Popper : IDisposable
-        {
-            private readonly IDrawingContext context;
-
-            public Popper(IDrawingContext context, Rect rect)
-            {
-                this.context = context;
-                context.PushClip(rect);
-            }
-
-            public void Dispose()
-            {
-                context.Pop();
-            }
-        }
+        }       
     }
 }
