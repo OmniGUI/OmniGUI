@@ -2,7 +2,7 @@
 {
     using System.Collections.ObjectModel;
 
-    public class SetterCollection : Collection<Setter>
+    public class SetterCollection : Collection<OldSetter>
     {
     
     }

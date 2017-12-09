@@ -51,15 +51,15 @@
     <ResourceStore.Styles>
 
         <Style Selector="Button">
-            <NewSetter PropertyName="Background" Value="#82CAFF" />
+            <Setter PropertyName="Background" Value="#82CAFF" />
         </Style>
 
         <Style Selector="Button:click">
-            <NewSetter PropertyName="Background" Value="#72BAEE" />
+            <Setter PropertyName="Background" Value="#72BAEE" />
         </Style>
 
         <Style Selector="Button:hover">
-            <NewSetter PropertyName="Background" Value="#BAE2FF" />
+            <Setter PropertyName="Background" Value="#BAE2FF" />
         </Style>
 
     </ResourceStore.Styles>

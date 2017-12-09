@@ -13,7 +13,6 @@ namespace OmniGui
             this.styles = styles;
         }
 
-
         public void Watch(Layout layout)
         {
             var selectorChanged = layout.GetChangedObservable(Layout.StyleProperty);

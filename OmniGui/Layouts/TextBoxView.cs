@@ -1,24 +1,26 @@
-﻿namespace OmniGui.Layouts
-{
-    using System;
-    using System.Linq;
-    using System.Reactive.Linq;
-    using Geometry;
-    using Zafiro.PropertySystem.Standard;
+﻿using System;
+using System.Linq;
+using System.Reactive.Linq;
+using OmniGui.Geometry;
+using Zafiro.PropertySystem.Standard;
 
+namespace OmniGui.Layouts
+{
     public class TextBoxView : Layout
     {
         public static readonly ExtendedProperty TextProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("Text",
             typeof(TextBoxView),
-            typeof(string), new PropertyMetadata { DefaultValue = null });
+            typeof(string), new PropertyMetadata {DefaultValue = null});
 
-        public static readonly ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("FontSize",
+        public static readonly ExtendedProperty FontSizeProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty(
+            "FontSize",
             typeof(TextBoxView),
-            typeof(string), new PropertyMetadata { DefaultValue = 16F });
+            typeof(string), new PropertyMetadata {DefaultValue = 16F});
 
-        public static readonly ExtendedProperty AcceptsReturnProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty("AcceptsReturn",
+        public static readonly ExtendedProperty AcceptsReturnProperty = OmniGuiPlatform.PropertyEngine.RegisterProperty(
+            "AcceptsReturn",
             typeof(TextBoxView),
-            typeof(bool), new PropertyMetadata { DefaultValue = false });
+            typeof(bool), new PropertyMetadata {DefaultValue = false});
 
         private IDisposable changedSubscription;
         private int cursorPositionOrdinal;
@@ -56,14 +58,14 @@
             {
                 if (FormattedText != null && o != null)
                 {
-                    FormattedText.FontSize = (float)o;
+                    FormattedText.FontSize = (float) o;
                 }
             });
 
             changedSubscription = changedObservable
                 .Subscribe(o =>
                 {
-                    FormattedText.Text = (string)o;
+                    FormattedText.Text = (string) o;
                     EnforceCursorLimits();
                     ForceRender();
                 });
@@ -74,10 +76,10 @@
             get
             {
                 return args =>
-          {
-              var isFiltered = args.Text.ToCharArray().First() != Chars.Backspace;
-              return isFiltered;
-          };
+                {
+                    var isFiltered = args.Text.ToCharArray().First() != Chars.Backspace;
+                    return isFiltered;
+                };
             }
         }
 
@@ -114,7 +116,7 @@
 
         public string Text
         {
-            get => (string)GetValue(TextProperty);
+            get => (string) GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 
@@ -127,6 +129,7 @@
                 {
                     return;
                 }
+
                 cursorPositionOrdinal = value;
                 ForceRender();
             }
@@ -135,6 +138,18 @@
         public string FontFamily => FormattedText.FontName;
 
         private FormattedText FormattedText { get; }
+
+        public double FontSize
+        {
+            get => (double) GetValue(FontSizeProperty);
+            set => SetValue(FontSizeProperty, value);
+        }
+
+        public bool AcceptsReturn
+        {
+            get => (bool) GetValue(AcceptsReturnProperty);
+            set => SetValue(AcceptsReturnProperty, value);
+        }
 
         private void DisableCaretBlink()
         {
@@ -180,12 +195,6 @@
         private void SwitchCursorVisibility()
         {
             IsCursorVisible = !IsCursorVisible;
-        }
-
-        public double FontSize
-        {
-            get { return (double)GetValue(FontSizeProperty); }
-            set { SetValue(FontSizeProperty, value); }
         }
 
         public override void Render(IDrawingContext drawingContext)
@@ -235,7 +244,7 @@
             {
                 Text = textBeforeCursor
             };
-            
+
             var x = formattedTextCopy.DesiredSize.Width;
             return x;
         }
@@ -268,12 +277,6 @@
             }
 
             CursorPositionOrdinal++;
-        }
-
-        public bool AcceptsReturn
-        {
-            get => (bool) GetValue(AcceptsReturnProperty);
-            set => SetValue(AcceptsReturnProperty, value);
         }
 
         public void RemoveBefore()
@@ -315,7 +318,8 @@
         {
             var textDesired = FormattedText.Text != null ? FormattedText.DesiredSize : Size.Empty;
 
-            var height = Math.Max(textDesired.Height, Platform.TextEngine.GetHeight(FontFamily, FormattedText.FontSize));
+            var height = Math.Max(textDesired.Height,
+                Platform.TextEngine.GetHeight(FontFamily, FormattedText.FontSize));
             return new Size(textDesired.Width, height);
         }
     }

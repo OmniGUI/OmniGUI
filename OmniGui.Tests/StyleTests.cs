@@ -14,13 +14,13 @@ namespace OmniGui.Tests
 
             var styleWatcher = new StyleWatcher(new List<Style>()
             {
-                new Style() {Selector = "Button", Setters = new List<NewSetter>()
+                new Style() {Selector = "Button", Setters = new List<Setter>()
                 {
-                    new NewSetter(converter) {  PropertyName = "VerticalAlignment", Value = "Center"},
+                    new Setter(converter) {  PropertyName = "VerticalAlignment", Value = "Center"},
                 }},
-                new Style() {Selector = "Button:hover", Setters = new List<NewSetter>()
+                new Style() {Selector = "Button:hover", Setters = new List<Setter>()
                 {
-                    new NewSetter(converter) {  PropertyName = "VerticalAlignment", Value = "Bottom"},
+                    new Setter(converter) {  PropertyName = "VerticalAlignment", Value = "Bottom"},
                 }},
             });
 

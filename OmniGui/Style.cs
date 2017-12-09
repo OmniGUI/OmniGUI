@@ -8,7 +8,7 @@ namespace OmniGui
         public string Selector { get; set; }
 
         [Content]
-        public List<NewSetter> Setters { get; set; } = new List<NewSetter>();
+        public List<Setter> Setters { get; set; } = new List<Setter>();
 
         public bool IsApplicable(string selector)
         {

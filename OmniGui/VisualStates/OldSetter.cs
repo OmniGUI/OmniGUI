@@ -1,6 +1,6 @@
 ﻿namespace OmniGui.VisualStates
 {
-    public class Setter
+    public class OldSetter
     {
         public void Apply()
         {         

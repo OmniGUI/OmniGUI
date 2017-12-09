@@ -11,7 +11,7 @@ namespace OmniGui.Tests
         [Fact]
         public void CompatibleValue()
         {
-            var sut = new NewSetter(new ComponentModelTypeConverterBasedSourceValueConverter());
+            var sut = new Setter(new ComponentModelTypeConverterBasedSourceValueConverter());
             sut.PropertyName = "Content";
             sut.Value = "Pepito";
             var instance = new Button(new TestingPlatform());
@@ -22,7 +22,7 @@ namespace OmniGui.Tests
         [Fact]
         public void IncompatibleValue()
         {
-            var sut = new NewSetter(new ComponentModelTypeConverterBasedSourceValueConverter())
+            var sut = new Setter(new ComponentModelTypeConverterBasedSourceValueConverter())
             {
                 PropertyName = "VerticalAlignment",
                 Value = "Top"

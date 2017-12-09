@@ -3,11 +3,11 @@ using OmniXaml;
 
 namespace OmniGui
 {
-    public class NewSetter
+    public class Setter
     {
         private readonly IStringSourceValueConverter converter;
 
-        public NewSetter(IStringSourceValueConverter converter)
+        public Setter(IStringSourceValueConverter converter)
         {
             this.converter = converter;
         }
